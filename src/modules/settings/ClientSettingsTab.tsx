@@ -1,5 +1,6 @@
 import Breadcrumbs from "@components/Breadcrumbs";
 import Button from "@components/Button";
+import { Callout } from "@components/Callout";
 import FancyToggleSwitch from "@components/FancyToggleSwitch";
 import HelpText from "@components/HelpText";
 import InlineLink from "@components/InlineLink";
@@ -11,31 +12,30 @@ import {
 	SelectDropdown,
 	SelectOption,
 } from "@components/select/SelectDropdown";
-import { Callout } from "@components/Callout";
+import { SkeletonSettings } from "@components/skeletons/SkeletonSettings";
+import { SmallBadge } from "@components/ui/SmallBadge";
 import { useHasChanges } from "@hooks/useHasChanges";
 import * as Tabs from "@radix-ui/react-tabs";
 import { useApiCall } from "@utils/api";
 import { cn, validator } from "@utils/helpers";
 import { useTranslations } from "next-intl";
 import {
+	AlertTriangle,
 	ClockFadingIcon,
 	ExternalLinkIcon,
 	MonitorSmartphoneIcon,
-	AlertTriangle,
 	RefreshCcw,
 } from "lucide-react";
 import React, { useMemo, useState } from "react";
 import { useSWRConfig } from "swr";
 import AgentNetworkIcon from "@/assets/icons/AgentNetworkIcon";
+import ReverseProxyIcon from "@/assets/icons/ReverseProxyIcon";
 import SettingsIcon from "@/assets/icons/SettingsIcon";
+import { useGroups } from "@/contexts/GroupsProvider";
 import { usePermissions } from "@/contexts/PermissionsProvider";
 import { Account } from "@/interfaces/Account";
-import { SmallBadge } from "@components/ui/SmallBadge";
-import ReverseProxyIcon from "@/assets/icons/ReverseProxyIcon";
 import { useAgentNetworkMode } from "@/modules/agent-network/useAgentNetworkMode";
 import useGroupHelper from "@/modules/groups/useGroupHelper";
-import { useGroups } from "@/contexts/GroupsProvider";
-import { SkeletonSettings } from "@components/skeletons/SkeletonSettings";
 
 type Props = {
 	account: Account;
@@ -77,6 +77,7 @@ function ClientSettingsTabContent({ account }: Readonly<Props>) {
 	const [lazyConnection, setLazyConnection] = useState(
 		account.settings?.lazy_connection_enabled ?? false,
 	);
+
 	const [agentNetworkOnly, setAgentNetworkOnly] = useState(
 		account.settings?.agent_network_only ?? false,
 	);
@@ -248,13 +249,12 @@ function ClientSettingsTabContent({ account }: Readonly<Props>) {
 						active
 					/>
 				</Breadcrumbs>
-				<div className={"flex items-start justify-between"}>
+				<div className={"flex items-start justify-between -mt-1"}>
 					<h1>{t("clients")}</h1>
 					<Button
 						variant={"primary"}
 						disabled={isSaveButtonDisabled}
 						onClick={saveChanges}
-						data-cy={"save-clients-settings"}
 						data-testid={"save-clients-settings"}
 					>
 						{t("saveChanges")}
@@ -288,6 +288,7 @@ function ClientSettingsTabContent({ account }: Readonly<Props>) {
 								value={autoUpdateMethod}
 								onChange={handleUpdateMethodChange}
 								options={latestOrCustomVersion}
+								data-testid="auto-update-method"
 							/>
 							<Input
 								value={autoUpdateCustomVersion}
@@ -296,6 +297,7 @@ function ClientSettingsTabContent({ account }: Readonly<Props>) {
 								error={versionError}
 								errorTooltip={true}
 								disabled={autoUpdateMethod !== "custom"}
+								data-testid="auto-update-version-input"
 								onChange={(v) => {
 									setAutoUpdateCustomVersion(v.target.value);
 								}}
@@ -305,6 +307,7 @@ function ClientSettingsTabContent({ account }: Readonly<Props>) {
 							className={"mt-4"}
 							value={autoUpdateAlways}
 							onChange={setAutoUpdateAlways}
+							data-testid="force-auto-updates"
 							label={
 								<>
 									<AlertTriangle size={15} className={"text-yellow-400"} />
@@ -335,7 +338,7 @@ function ClientSettingsTabContent({ account }: Readonly<Props>) {
 					<div>
 						<div>
 							<Label>
-								<ReverseProxyIcon size={15} className={"fill-nb-gray-300"} />
+								<ReverseProxyIcon size={15} className={"text-nb-gray-300"} />
 								{t("exposeServicesFromCli")}
 							</Label>
 							<HelpText>
@@ -356,6 +359,7 @@ function ClientSettingsTabContent({ account }: Readonly<Props>) {
 							className={"mt-2"}
 							value={peerExposeEnabled}
 							onChange={setPeerExposeEnabled}
+							data-testid="peer-expose"
 							label={t("enablePeerExpose")}
 							helpText={t("enablePeerExposeHelp")}
 							disabled={!permission.settings.update}
@@ -376,6 +380,7 @@ function ClientSettingsTabContent({ account }: Readonly<Props>) {
 									values={peerExposeGroups}
 									onChange={setPeerExposeGroups}
 									placeholder={t("selectPeerGroups")}
+									data-testid="peer-expose-groups-selector"
 								/>
 							</div>
 						</div>

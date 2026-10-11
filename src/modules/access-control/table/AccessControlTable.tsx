@@ -10,6 +10,12 @@ import DataTableHeader from "@components/table/DataTableHeader";
 import DataTableRefreshButton from "@components/table/DataTableRefreshButton";
 import DataTableResetFilterButton from "@components/table/DataTableResetFilterButton";
 import {
+  ENABLED_COLUMN_ID,
+  fadeDisabledRowCells,
+  isInteractiveCell,
+} from "@components/table/disabledRowCells";
+import { ENABLED_COLUMN_CLASS } from "@components/table/enabledColumnClass";
+import {
   CheckboxListPicker,
   CheckboxOption,
   formatCheckboxChip,
@@ -49,12 +55,12 @@ import AccessControlModal, {
   AccessControlUpdateModal,
 } from "@/modules/access-control/AccessControlModal";
 import AccessControlActionCell from "@/modules/access-control/table/AccessControlActionCell";
+import AccessControlActiveCell from "@/modules/access-control/table/AccessControlActiveCell";
 import AccessControlDestinationsCell from "@/modules/access-control/table/AccessControlDestinationsCell";
 import AccessControlDirectionCell from "@/modules/access-control/table/AccessControlDirectionCell";
 import AccessControlNameCell from "@/modules/access-control/table/AccessControlNameCell";
 import AccessControlProtoPortsCell from "@/modules/access-control/table/AccessControlProtoPortsCell";
 import AccessControlSourcesCell from "@/modules/access-control/table/AccessControlSourcesCell";
-import { FirewallGPTModal } from "@/modules/firewall-gpt/FirewallGPTModal";
 
 type Props = {
   policies?: Policy[];
@@ -85,10 +91,19 @@ function createAccessControlTableColumns(
       filterFn: "fuzzy",
     },
     {
-      id: "enabled",
+      id: ENABLED_COLUMN_ID,
       accessorKey: "enabled",
       accessorFn: (row) => row.enabled,
-      sortingFn: "basic",
+      enableSorting: false,
+      meta: { className: ENABLED_COLUMN_CLASS.xl },
+      header: ({ column }) => {
+        return (
+          <DataTableHeader column={column} sorting={false}>
+            Active
+          </DataTableHeader>
+        );
+      },
+      cell: ({ cell }) => <AccessControlActiveCell policy={cell.row.original} />,
     },
     {
       id: "sources",
@@ -246,10 +261,9 @@ export default function AccessControlTable({
   const [currentRow, setCurrentRow] = useState<Policy>();
   const [currentCellClicked, setCurrentCellClicked] = useState("");
 
-  const [firewallGPTOpen, setFirewallGPTOpen] = useState(false);
-
   const t = useTranslations("policies");
   const tCommon = useTranslations("common");
+
   const [showTemporaryPolicies, setShowTemporaryPolicies] = useState(false);
 
   const withTemporaryPolicies = useCallback(
@@ -462,8 +476,6 @@ export default function AccessControlTable({
 
   return (
     <>
-      <FirewallGPTModal open={firewallGPTOpen} setOpen={setFirewallGPTOpen} />
-
       {editModal && currentRow && (
         <AccessControlUpdateModal
           policy={currentRow}
@@ -505,7 +517,6 @@ export default function AccessControlTable({
         columnVisibility={{
           description: false,
           id: false,
-          enabled: false,
           temporary: false,
           source_group_names: false,
           destination_group_names: false,
@@ -514,9 +525,10 @@ export default function AccessControlTable({
           has_posture_checks: false,
           direction_filter: false,
         }}
-        rowClassName={(row) => (row.original.enabled ? "" : "opacity-50")}
+        cellClassName={fadeDisabledRowCells}
         data={showTemporaryPolicies ? tempPolicies : regularPolicies}
         onRowClick={(row, cell) => {
+          if (isInteractiveCell(cell)) return;
           setCurrentRow(row.original);
           setEditModal(true);
           setCurrentCellClicked(cell);

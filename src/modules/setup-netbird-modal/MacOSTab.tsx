@@ -24,6 +24,7 @@ import Link from "next/link";
 import React from "react";
 import { OperatingSystem } from "@/interfaces/OperatingSystem";
 import {
+  ManagementUrlStep,
   NetBirdUpCommand,
   RoutingPeerSetupKeyInfo,
 } from "@/modules/setup-netbird-modal/SetupModal";
@@ -79,12 +80,7 @@ export default function MacOSTab({
 
           {GRPC_API_ORIGIN && (
             <Steps.Step step={baseMgmtStep}>
-              <p>
-                {t("managementUrlInstruction")}
-              </p>
-              <Code>
-                <Code.Line>{GRPC_API_ORIGIN}</Code.Line>
-              </Code>
+              <ManagementUrlStep trayName={"menu bar"} />
             </Steps.Step>
           )}
 
@@ -110,7 +106,7 @@ export default function MacOSTab({
               <Steps.Step step={runStep}>
                 <p>
                   {/* eslint-disable-next-line react/no-unescaped-entities */}
-                  {t("clickConnectTray")}
+                  Click on "Connect" from the NetBird icon in your menu bar
                 </p>
               </Steps.Step>
               <Steps.Step step={runStep + 1} line={false}>

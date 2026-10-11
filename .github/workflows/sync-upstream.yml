@@ -1,0 +1,297 @@
+name: sync upstream
+
+# Keeps the fork's i18n branch current with netbirdio/dashboard.
+#
+# Design notes
+# ------------
+# * `github.repository == 'SupportSpark/dashboard'` guards every write step, so the
+#   schedule only acts on this fork (a schedule also fires on any other fork that
+#   copies this file, and `gh` writes there would be pointless noise).
+# * Only upstream *releases* are tracked for auto-sync. Between releases upstream
+#   `main` moves many times a day with day-to-day feature work; merging every one
+#   would spam the i18n branch with conflicts. A release is the unit of change we
+#   actually deploy, so sync on tags and let `workflow_dispatch` cover the rest.
+# * The merge is attempted with `-X theirs` ONLY for the paths we know are
+#   translation-catalog-owned; everything else uses a normal merge so a genuine
+#   conflict stops the job and opens an issue instead of silently picking a side.
+# * A failed merge never leaves the branch dirty: it aborts, then reports.
+
+on:
+  schedule:
+    # 03:17 UTC daily — matches the offset the repo's other nightly jobs use.
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+    inputs:
+      upstream_ref:
+        description: "upstream ref to merge (branch, tag, or SHA)"
+        required: false
+        default: ""
+      dry_run:
+        description: "resolve and build, but do not push"
+        type: boolean
+        required: false
+        default: false
+
+concurrency:
+  group: sync-upstream-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+
+env:
+  UPSTREAM_REPO: netbirdio/dashboard
+  SYNC_BRANCH: i18n-zh
+
+jobs:
+  sync:
+    # Never run the write-side logic on a fork that merely copied this workflow.
+    if: github.repository == 'SupportSpark/dashboard'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the i18n branch
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ env.SYNC_BRANCH }}
+          fetch-depth: 0
+          # The push below needs the token, and the merge needs real history.
+          persist-credentials: true
+
+      - name: Configure git identity
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Add upstream and fetch
+        id: fetch
+        run: |
+          git remote add upstream "https://github.com/${UPSTREAM_REPO}.git" 2>/dev/null || \
+            git remote set-url upstream "https://github.com/${UPSTREAM_REPO}.git"
+          git fetch upstream --tags --prune
+
+          # Resolve the ref to merge: explicit input, else the newest release tag,
+          # else upstream/main.
+          REQ='${{ inputs.upstream_ref }}'
+          if [[ -n "$REQ" ]]; then
+            TARGET="$REQ"
+          else
+            TARGET=$(git tag -l 'v[0-9]*' --sort=-v:refname \
+                     | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n1 || true)
+            [[ -n "$TARGET" ]] || TARGET="upstream/main"
+          fi
+
+          # Translate a tag/branch name into a fetchable ref.
+          if git rev-parse --verify --quiet "refs/tags/${TARGET}" >/dev/null; then
+            REF="refs/tags/${TARGET}"
+            SHA=$(git rev-parse "${REF}^{commit}")
+          elif git rev-parse --verify --quiet "upstream/${TARGET}" >/dev/null; then
+            REF="upstream/${TARGET}"
+            SHA=$(git rev-parse "${REF}^{commit}")
+          else
+            REF="$TARGET"
+            SHA=$(git rev-parse "${REF}^{commit}")
+          fi
+
+          echo "target=${TARGET}" >> "$GITHUB_OUTPUT"
+          echo "sha=${SHA}"       >> "$GITHUB_OUTPUT"
+          echo "Resolved ${TARGET} -> ${SHA}"
+
+      - name: Skip when already up to date
+        id: guard
+        run: |
+          if git merge-base --is-ancestor "${{ steps.fetch.outputs.sha }}" HEAD; then
+            echo "up_to_date=true" >> "$GITHUB_OUTPUT"
+            echo "Already contains ${{ steps.fetch.outputs.target }}; nothing to do."
+          else
+            echo "up_to_date=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Setup Node
+        if: steps.guard.outputs.up_to_date == 'false'
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: "npm"
+
+      # ---------------------------------------------------------------------
+      # The i18n layer is a *patch* on upstream: every conflict means "upstream
+      # changed code we had wrapped in t()". The policy is therefore
+      #   * message catalogs  -> ours wins (-X ours) ; they are additive and the
+      #                          automation must never drop zh translations
+      #   * all other files   -> plain merge; if it conflicts, stop and ask a
+      #                          human via an issue (see the failure step below)
+      # ---------------------------------------------------------------------
+      - name: Merge upstream
+        id: merge
+        continue-on-error: true
+        env:
+          TARGET: ${{ steps.fetch.outputs.target }}
+          TARGET_SHA: ${{ steps.fetch.outputs.sha }}
+        run: |
+          git merge \
+            --no-edit \
+            -m "chore(sync): merge ${UPSTREAM_REPO} ${TARGET} (${TARGET_SHA}) into ${SYNC_BRANCH}" \
+            "${TARGET_SHA}"
+        # NB: `-X ours` is deliberately NOT used globally. Message catalogs merge
+        # cleanly because they are additive; a global `-X ours` would also
+        # silently discard upstream logic fixes, which is exactly the drift this
+        # workflow exists to prevent.
+
+      - name: Resolve translation-catalog conflicts in our favour
+        if: steps.merge.outcome == 'failure'
+        id: ours
+        run: |
+          set -euo pipefail
+
+          # Only ever do this for catalog + i18n-plumbing paths.
+          PATHS='src/i18n/messages/ src/i18n/config.ts src/i18n/request.ts edge-runtime.d.ts'
+
+          conflicted=$(git diff --name-only --diff-filter=U)
+          if [[ -z "$conflicted" ]]; then
+            echo "Nothing conflicted; merge succeeded."; exit 0
+          fi
+
+          echo "Conflicted files:"; echo "$conflicted"
+
+          remaining=""
+          for f in $conflicted; do
+            keep_ours=false
+            for p in $PATHS; do
+              case "$f" in "$p"*) keep_ours=true ;; esac
+            done
+            if [[ "$keep_ours" == true ]]; then
+              echo "  ours  : $f"
+              git checkout --ours -- "$f"
+              git add -- "$f"
+            else
+              echo "  manual: $f"
+              remaining="${remaining}${f}"$'\n'
+            fi
+          done
+
+          if [[ -n "$remaining" ]]; then
+            echo "remaining<<EOF" >> "$GITHUB_OUTPUT"
+            echo "$remaining"     >> "$GITHUB_OUTPUT"
+            echo "EOF"            >> "$GITHUB_OUTPUT"
+            echo "manual=true"    >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          git commit --no-edit
+          echo "manual=false" >> "$GITHUB_OUTPUT"
+          echo "All conflicts were catalog-owned; merge committed."
+
+      - name: Install dependencies
+        if: steps.guard.outputs.up_to_date == 'false' && (steps.merge.outcome == 'success' || steps.ours.outputs.manual == 'false')
+        run: |
+          echo '{}' > .local-config.json
+          npm ci --no-audit --no-fund || npm install --no-audit --no-fund
+
+      # The merge is only accepted if it still builds. This is the gate that
+      # makes unattended syncing safe: a bad auto-merge fails here, and the
+      # branch is never pushed.
+      - name: Build (merge gate)
+        if: steps.guard.outputs.up_to_date == 'false' && (steps.merge.outcome == 'success' || steps.ours.outputs.manual == 'false')
+        run: npm run build
+        env:
+          NEXT_PUBLIC_DASHBOARD_VERSION: ci-${{ steps.fetch.outputs.sha }}
+
+      - name: Typecheck (merge gate)
+        if: steps.guard.outputs.up_to_date == 'false' && (steps.merge.outcome == 'success' || steps.ours.outputs.manual == 'false')
+        run: npx tsc --noEmit
+
+      - name: Push the merge
+        id: push
+        if: >-
+          steps.guard.outputs.up_to_date == 'false' &&
+          (steps.merge.outcome == 'success' || steps.ours.outputs.manual == 'false') &&
+          inputs.dry_run != true
+        run: |
+          git push origin "HEAD:${SYNC_BRANCH}"
+          echo "pushed=true"  >> "$GITHUB_OUTPUT"
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Retry push with a rebase on rejection
+        if: steps.push.outcome == 'failure' && inputs.dry_run != true
+        run: |
+          git fetch origin "${SYNC_BRANCH}"
+          git rebase "origin/${SYNC_BRANCH}"
+          git push origin "HEAD:${SYNC_BRANCH}"
+
+      # ---------------------------------------------------------------------
+      # Reporting: open (or update) one issue per unresolved sync so the fork
+      # owner sees it without watching Actions.
+      # ---------------------------------------------------------------------
+      - name: Report conflicts as an issue
+        if: steps.ours.outputs.manual == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TARGET: ${{ steps.fetch.outputs.target }}
+          TARGET_SHA: ${{ steps.fetch.outputs.sha }}
+          REMAINING: ${{ steps.ours.outputs.remaining }}
+        run: |
+          set -euo pipefail
+          git merge --abort 2>/dev/null || true
+
+          TITLE="Upstream sync needs a manual merge: ${TARGET}"
+          BODY=$(cat <<EOF | sed 's/^ *//'
+          Automatic sync of \`${UPSTREAM_REPO}\` **${TARGET}** (\`${TARGET_SHA}\`) into
+          \`${SYNC_BRANCH}\` hit conflicts that are not translation-catalog-owned, so it was
+          aborted and nothing was pushed.
+
+          ## Conflicted files
+
+          \`\`\`
+          ${REMAINING}
+          \`\`\`
+
+          ## How to fix
+
+          \`\`\`bash
+          git fetch upstream --tags
+          git checkout ${SYNC_BRANCH}
+          git merge ${TARGET}
+          # per file: keep upstream's structure, re-apply our t() calls
+          git add <files> && git commit
+          git push origin ${SYNC_BRANCH}
+          \`\`\`
+
+          See \`docs/I18N-SYNC.md\` in this repo for the resolution policy, then re-run
+          this workflow (\`workflow_dispatch\`) to confirm.
+
+          <sub>Opened automatically by \`.github/workflows/sync-upstream.yml\`.</sub>
+          EOF
+          )
+
+          existing=$(gh issue list --state open --search "$TITLE in:title" \
+                     --json number --jq '.[0].number // empty')
+          if [[ -n "$existing" ]]; then
+            gh issue comment "$existing" --body "$BODY"
+          else
+            gh issue create --title "$TITLE" --body "$BODY"
+          fi
+
+      - name: Report a failed build
+        if: failure() && steps.ours.outputs.manual != 'true' && steps.guard.outputs.up_to_date == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TARGET: ${{ steps.fetch.outputs.target }}
+        run: |
+          set -euo pipefail
+          TITLE="Upstream sync built and failed: ${TARGET}"
+          BODY=$(cat <<EOF | sed 's/^ *//'
+          Merging \`${TARGET}\` into \`${SYNC_BRANCH}\` merged without conflicts, but the
+          \`npm run build\` / \`tsc --noEmit\` gate failed, so nothing was pushed.
+
+          The i18n layer probably needs a call site updated for a new upstream component
+          or signature. See \`docs/I18N-SYNC.md\` for the resolution policy.
+          EOF
+          )
+          existing=$(gh issue list --state open --search "$TITLE in:title" \
+                     --json number --jq '.[0].number // empty')
+          if [[ -n "$existing" ]]; then
+            gh issue comment "$existing" --body "$BODY"
+          else
+            gh issue create --title "$TITLE" --body "$BODY"
+          fi

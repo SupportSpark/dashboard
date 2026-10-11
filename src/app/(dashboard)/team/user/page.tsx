@@ -31,6 +31,7 @@ import React, { useMemo, useState } from "react";
 import { useSWRConfig } from "swr";
 import { useTranslations } from "next-intl";
 import TeamIcon from "@/assets/icons/TeamIcon";
+import { UserMfaListItem } from "@/cloud/mfa/UserMFAListItem";
 import { usePermissions } from "@/contexts/PermissionsProvider";
 import { useLoggedInUser } from "@/contexts/UsersProvider";
 import { useHasChanges } from "@/hooks/useHasChanges";
@@ -94,9 +95,14 @@ function UserOverview({ user, initialGroups }: Readonly<Props>) {
 	const userRequest = useApiCall<User>("/users");
 	const isServiceUser = !!user?.is_service_user;
 	const { mutate } = useSWRConfig();
-	const { loggedInUser, isOwnerOrAdmin, isUser } = useLoggedInUser();
+	const { loggedInUser, isOwner, isOwnerOrAdmin, isUser } = useLoggedInUser();
 	const isLoggedInUser = loggedInUser ? loggedInUser?.id === user.id : false;
 	const { permission } = usePermissions();
+
+	// The management API rejects taking the owner role away from a user unless
+	// the caller is an owner themselves ("only owners can remove owner role from
+	// their user"), so don't offer the change to anyone else.
+	const cannotChangeOwnerRole = user.role === Role.Owner && !isOwner;
 
 	const [selectedGroups, setSelectedGroups, { save: saveGroups }] =
 		useGroupHelper({
@@ -127,6 +133,7 @@ function UserOverview({ user, initialGroups }: Readonly<Props>) {
 				)
 				.then(() => {
 					mutate(`/users?service_user=${isServiceUser}`);
+					mutate(`/integrations/msp/switcher`);
 					updateChangesRef([role, selectedGroups]);
 				}),
 			loadingMessage: "Saving changes...",
@@ -224,7 +231,7 @@ function UserOverview({ user, initialGroups }: Readonly<Props>) {
 								className={"w-full"}
 								disabled={!hasChanges || !permission.users.update}
 								onClick={save}
-								data-cy={"save-changes"}
+								data-testid={"save-changes"}
 							>
 								Save Changes
 							</Button>
@@ -246,22 +253,30 @@ function UserOverview({ user, initialGroups }: Readonly<Props>) {
 									onChange={setSelectedGroups}
 									values={selectedGroups}
 									hideAllGroup={true}
-									dataCy={"user-group-selector"}
+									data-testid={"user-group-selector"}
 								/>
 							</div>
 						)}
-						<div className={"flex items-start"}>
-							<div className={"w-2/3"}>
-								<Label>{t("userRole")}</Label>
-								<HelpText>{t("userRoleHelp")}</HelpText>
-							</div>
-							<div className={"w-1/3"}>
+						<div>
+							<Label>{t("userRole")}</Label>
+							<HelpText>
+								{cannotChangeOwnerRole
+									? "Only the account owner can change the owner's role."
+									: t("userRoleHelp")}
+							</HelpText>
+							{/* 320px: enough for the longest role name and for the tab row
+							in the dropdown, without stretching across the column. */}
+							<div className={"max-w-[320px]"}>
 								<UserRoleSelector
 									value={role}
 									onChange={setRole}
 									hideOwner={isServiceUser}
 									currentUser={user}
-									disabled={isLoggedInUser || !permission.users.update}
+									disabled={
+										isLoggedInUser ||
+										!permission.users.update ||
+										cannotChangeOwnerRole
+									}
 								/>
 							</div>
 						</div>
@@ -279,13 +294,16 @@ function UserOverview({ user, initialGroups }: Readonly<Props>) {
 			>
 				<TabsList justify={"start"} className={"px-8"} hidden={!showTabs}>
 					{showPeers && (
-						<TabsTrigger value={"peers"}>
+						<TabsTrigger value={"peers"} data-testid={"user-tab-peers"}>
 							<MonitorSmartphoneIcon size={16} />
 							Peers
 						</TabsTrigger>
 					)}
 					{showAccessTokens && (
-						<TabsTrigger value={"access-tokens"}>
+						<TabsTrigger
+							value={"access-tokens"}
+							data-testid={"user-tab-access-tokens"}
+						>
 							<KeyRoundIcon size={16} />
 							{t("accessTokens")}
 						</TabsTrigger>
@@ -310,7 +328,7 @@ function UserOverview({ user, initialGroups }: Readonly<Props>) {
 											<CreateAccessTokenModal user={user}>
 												<Button
 													variant={"primary"}
-													data-cy={"access-token-open-modal"}
+													data-testid={"access-token-open-modal"}
 													disabled={!permission.pats.create}
 												>
 													<IconCirclePlus size={16} />
@@ -372,6 +390,8 @@ function UserInformationCard({ user }: Readonly<{ user: User }>) {
 					}
 					value={<UserStatusCell user={user} />}
 				/>
+
+				{!isServiceUser && user && <UserMfaListItem userId={user.id} />}
 
 				{!isServiceUser && (
 					<>

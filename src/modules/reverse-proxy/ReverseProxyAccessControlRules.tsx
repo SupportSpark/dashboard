@@ -3,8 +3,7 @@ import { Label } from "@components/Label";
 import HelpText from "@components/HelpText";
 import Button from "@components/Button";
 import { Input } from "@components/Input";
-import cidr from "ip-cidr";
-import { isIPv6 } from "@utils/ip";
+import { hostSuffixFor, isIPv6, isValidIP } from "@utils/ip";
 import {
 	FlagIcon,
 	MinusCircleIcon,
@@ -187,11 +186,11 @@ function validateRule(rule: AccessRule): string {
 			const suffix = isIPv6(val) ? 128 : 32;
 			val = `${val}/${suffix}`;
 		}
-		if (!cidr.isValidAddress(val)) {
+		if (!isValidIP(val)) {
 			return "Please enter a valid IP address, e.g., 85.203.15.42 or 2001:db8::1";
 		}
 	} else {
-		if (!rule.value.includes("/") || !cidr.isValidAddress(rule.value)) {
+		if (!rule.value.includes("/") || !isValidIP(rule.value)) {
 			return "Please enter a valid CIDR block, e.g., 74.125.0.0/16 or 2001:db8::/64";
 		}
 	}
@@ -265,9 +264,16 @@ export const ReverseProxyAccessControlRules = ({
 			</div>
 			{rules.length > 0 && (
 				<div className="flex flex-col gap-3 mt-1 mb-4">
-					{rules.map((rule) => (
-						<div key={rule.id} className="flex items-center">
-							<div className="w-[160px] shrink-0 [&_button]:rounded-r-none [&_button]:w-[160px]">
+					{rules.map((rule, ruleIndex) => (
+						<div
+							key={rule.id}
+							className="flex items-center"
+							data-testid={`access-rule-${ruleIndex}`}
+						>
+							<div
+								className="w-[160px] shrink-0 [&_button]:rounded-r-none [&_button]:w-[160px]"
+								data-testid={"access-rule-action"}
+							>
 								<SelectDropdown
 									value={rule.action}
 									onChange={(v) =>
@@ -283,7 +289,10 @@ export const ReverseProxyAccessControlRules = ({
 								/>
 							</div>
 
-							<div className="w-[160px] shrink-0 -ml-px [&_button]:rounded-none [&_button]:w-[160px]">
+							<div
+								className="w-[160px] shrink-0 -ml-px [&_button]:rounded-none [&_button]:w-[160px]"
+								data-testid={"access-rule-type"}
+							>
 								<SelectDropdown
 									value={rule.type}
 									onChange={(v) =>
@@ -334,6 +343,7 @@ export const ReverseProxyAccessControlRules = ({
 										error={errors[rule.id]}
 										errorTooltip={true}
 										maxWidthClass="w-full"
+										data-testid="access-rule-value"
 									/>
 								)}
 							</div>
@@ -343,6 +353,7 @@ export const ReverseProxyAccessControlRules = ({
 								className="h-[42px] w-[42px] !px-0 shrink-0 ml-2"
 								onClick={() => dispatch({ type: "remove", id: rule.id })}
 								aria-label={t("removeRule")}
+								data-testid="remove-access-rule"
 							>
 								<MinusCircleIcon size={14} />
 							</Button>
@@ -356,6 +367,7 @@ export const ReverseProxyAccessControlRules = ({
 					className="flex-1"
 					size="sm"
 					onClick={() => dispatch({ type: "add" })}
+					data-testid="add-access-rule"
 				>
 					<PlusIcon size={14} />
 					Add Rule

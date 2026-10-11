@@ -9,7 +9,7 @@ import {
   ModalFooter,
 } from "@components/modal/Modal";
 import ModalHeader from "@components/modal/ModalHeader";
-import cidr from "ip-cidr";
+import { isValidIP } from "@utils/ip";
 import { trim } from "lodash";
 import React, { useMemo, useState } from "react";
 
@@ -61,7 +61,7 @@ export function PeerEditIPModal({
         description: t("updatePeerIPv6Description"),
         placeholder: t("editPeerIPv6Placeholder"),
         errorMessage: t("editPeerIPv6ErrorMessage"),
-        validate: (ip: string) => cidr.isValidAddress(ip) && ip.includes(":"),
+        validate: (ip: string) => isValidIP(ip) && ip.includes(":"),
       },
     }),
     [t, version],

@@ -1,6 +1,8 @@
 export default {
   common: {
     loading: "Loading...",
+    allow: "Allow",
+    block: "Block",
     restrictedAccessHeading: "You don't have access to",
     restrictedAccessDescription:
       "Seems like you don't have access to this page. Only users with proper permissions can visit this page. Please contact your network administrator for further information.",
@@ -469,7 +471,7 @@ export default {
     inactivityExpirationDescription:
       "Enable to require authentication after users disconnect from management for 10 minutes.",
     setupKeyPeerExpirationDisabled:
-      "This setting is disabled for all peers added with an setup-key.",
+      "This setting is disabled for all peers added with a setup-key.",
     noPermissionToUpdateSetting:
       "You don't have the required permissions to update this setting.",
     globalSettingDisabled:

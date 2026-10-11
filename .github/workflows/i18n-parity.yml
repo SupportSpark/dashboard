@@ -1,0 +1,67 @@
+name: i18n catalog parity
+
+# Guard rail for the localization layer.
+#
+# Two invariants make the whole fork viable, and both are cheap to check:
+#   1. `zh.ts` covers every key path in `en.ts` — otherwise next-intl silently
+#      falls back to English and a translation regresses without anyone noticing.
+#   2. No conflict markers or unmerged paths survive a sync merge.
+#
+# `tsc --noEmit` also catches (1) through the IntlMessages type augmentation, but
+# only for keys actually referenced by a component; this check covers the whole
+# catalog, including keys added ahead of their call sites.
+
+on:
+  pull_request:
+    paths:
+      - "src/i18n/**"
+      - "tools/check-catalog-parity.mjs"
+      - ".github/workflows/i18n-parity.yml"
+  push:
+    branches: ["i18n-zh"]
+    paths:
+      - "src/i18n/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  parity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund || npm install --no-audit --no-fund
+
+      - name: No conflict markers
+        run: |
+          set -euo pipefail
+          hits=$(git grep -n -E '^(<<<<<<< |>>>>>>> )' -- . \
+                 || true)
+          if [[ -n "$hits" ]]; then
+            echo "::error::conflict markers found"
+            echo "$hits"
+            exit 1
+          fi
+          echo "No conflict markers."
+
+      - name: Catalog parity (en → zh)
+        run: node tools/check-catalog-parity.mjs .
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "### i18n catalog parity"
+            echo
+            echo '```'
+            node tools/check-catalog-parity.mjs . 2>&1 | head -n 12
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY" || true

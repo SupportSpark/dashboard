@@ -7,22 +7,23 @@ import { Input } from "@components/Input";
 import { Label } from "@components/Label";
 import { notify } from "@components/Notification";
 import { PeerGroupSelector } from "@components/PeerGroupSelector";
+import { SkeletonSettings } from "@components/skeletons/SkeletonSettings";
 import { useHasChanges } from "@hooks/useHasChanges";
 import * as Tabs from "@radix-ui/react-tabs";
 import { useApiCall } from "@utils/api";
 import { validator } from "@utils/helpers";
+import { isValidCIDR } from "@utils/ip";
 import { isNetBirdCloud } from "@utils/netbird";
-import cidr from "ip-cidr";
 import { ExternalLinkIcon, GlobeIcon, NetworkIcon } from "lucide-react";
 import React, { useMemo, useState } from "react";
 import { useSWRConfig } from "swr";
 import { useTranslations } from "next-intl";
 import SettingsIcon from "@/assets/icons/SettingsIcon";
+import { TrafficEventSetting } from "@/cloud/traffic-events/TrafficEventSetting";
+import { useGroups } from "@/contexts/GroupsProvider";
 import { usePermissions } from "@/contexts/PermissionsProvider";
 import { Account } from "@/interfaces/Account";
 import useGroupHelper from "@/modules/groups/useGroupHelper";
-import { useGroups } from "@/contexts/GroupsProvider";
-import { SkeletonSettings } from "@components/skeletons/SkeletonSettings";
 
 type Props = {
 	account: Account;
@@ -68,8 +69,8 @@ function NetworkSettingsTabContent({ account }: Readonly<Props>) {
 
 	const toggleNetworkDNSSetting = async (toggle: boolean) => {
 		notify({
-			title: "DNS Wildcard Routing",
-			description: `DNS Wildcard Routing successfully ${
+			title: "Routing Peer DNS Resolution",
+			description: `Routing Peer DNS Resolution successfully ${
 				toggle ? "enabled" : "disabled"
 			}.`,
 			promise: saveRequest
@@ -84,7 +85,7 @@ function NetworkSettingsTabContent({ account }: Readonly<Props>) {
 					setRoutingPeerDNSSetting(toggle);
 					mutate("/accounts");
 				}),
-			loadingMessage: "Updating DNS wildcard setting...",
+			loadingMessage: "Updating routing peer DNS resolution setting...",
 		});
 	};
 
@@ -165,7 +166,7 @@ function NetworkSettingsTabContent({ account }: Readonly<Props>) {
 		}
 
 		try {
-			const validCIDR = cidr.isValidCIDR(networkRange);
+			const validCIDR = isValidCIDR(networkRange);
 			if (!validCIDR) {
 				return "Please enter a valid IPv4 CIDR range, e.g. 100.64.0.0/16 or 192.168.1.0/24";
 			}
@@ -176,7 +177,7 @@ function NetworkSettingsTabContent({ account }: Readonly<Props>) {
 
 	const networkRangeV6Error = useMemo(() => {
 		if (networkRangeV6 == "") return "";
-		if (!networkRangeV6.includes(":") || !cidr.isValidCIDR(networkRangeV6)) {
+		if (!networkRangeV6.includes(":") || !isValidCIDR(networkRangeV6)) {
 			return t("ipv6FormatError");
 		}
 		const prefixLen = parseInt(networkRangeV6.split("/")[1], 10);
@@ -201,7 +202,7 @@ function NetworkSettingsTabContent({ account }: Readonly<Props>) {
 						active
 					/>
 				</Breadcrumbs>
-				<div className={"flex items-start justify-between"}>
+				<div className={"flex items-start justify-between -mt-1"}>
 					<div>
 						<h1>{t("networksTab")}</h1>
 					</div>
@@ -215,6 +216,7 @@ function NetworkSettingsTabContent({ account }: Readonly<Props>) {
 							!!networkRangeV6Error
 						}
 						onClick={saveChanges}
+						data-testid="save-network-settings"
 					>
 						{t("saveChanges")}
 					</Button>
@@ -244,6 +246,7 @@ function NetworkSettingsTabContent({ account }: Readonly<Props>) {
 									value={customDNSDomain}
 									disabled={!permission.settings.update}
 									onChange={(e) => setCustomDNSDomain(e.target.value)}
+									data-testid="dns-domain-input"
 								/>
 							</div>
 						</div>
@@ -268,6 +271,7 @@ function NetworkSettingsTabContent({ account }: Readonly<Props>) {
 									value={networkRange}
 									disabled={!permission.settings.update}
 									onChange={(e) => setNetworkRange(e.target.value)}
+									data-testid="network-range-input"
 								/>
 							</div>
 						</div>
@@ -292,6 +296,7 @@ function NetworkSettingsTabContent({ account }: Readonly<Props>) {
 									value={networkRangeV6}
 									disabled={!permission.settings.update}
 									onChange={(e) => setNetworkRangeV6(e.target.value)}
+									data-testid="network-range-v6-input"
 								/>
 							</div>
 						</div>
@@ -306,6 +311,7 @@ function NetworkSettingsTabContent({ account }: Readonly<Props>) {
 							placeholder={t("selectIpv6Groups")}
 							showResourceCounter={false}
 							disabled={!permission.settings.update}
+							data-testid="ipv6-enabled-groups-selector"
 						/>
 					</div>
 
@@ -314,6 +320,7 @@ function NetworkSettingsTabContent({ account }: Readonly<Props>) {
 					<FancyToggleSwitch
 						value={routingPeerDNSSetting}
 						onChange={toggleNetworkDNSSetting}
+						data-testid="dns-wildcard-routing"
 						label={
 							<>
 								<GlobeIcon size={15} />
@@ -337,6 +344,7 @@ function NetworkSettingsTabContent({ account }: Readonly<Props>) {
 						}
 						disabled={!permission.settings.update}
 					/>
+					{account && <TrafficEventSetting account={account} />}
 				</div>
 			</div>
 		</Tabs.Content>

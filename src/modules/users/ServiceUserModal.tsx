@@ -96,7 +96,7 @@ export function ServiceUserModalContent({ onSuccess }: Readonly<ModalProps>) {
 							}
 							placeholder={t("serviceUserNamePlaceholder")}
 							value={name}
-							data-cy={"service-user-name"}
+							data-testid={"service-user-name"}
 							onChange={(e) => setName(e.target.value)}
 						/>
 					</div>
@@ -132,7 +132,7 @@ export function ServiceUserModalContent({ onSuccess }: Readonly<ModalProps>) {
 						variant={"primary"}
 						disabled={isDisabled}
 						onClick={create}
-						data-cy={"create-service-user"}
+						data-testid={"create-service-user"}
 					>
 						<PlusCircle size={16} />
 						{t("create")}

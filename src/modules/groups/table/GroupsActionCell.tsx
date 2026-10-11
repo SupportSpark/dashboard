@@ -55,7 +55,11 @@ export default function GroupsActionCell({ group, inUse }: Readonly<Props>) {
 							e.preventDefault();
 						}}
 					>
-						<Button variant={"secondary"} className={"!px-3"}>
+						<Button
+							variant={"secondary"}
+							className={"!px-3"}
+							data-testid="group-actions"
+						>
 							<MoreVertical size={16} className={"shrink-0"} />
 						</Button>
 					</DropdownMenuTrigger>
@@ -89,6 +93,7 @@ export default function GroupsActionCell({ group, inUse }: Readonly<Props>) {
 									<DropdownMenuItem
 										onClick={openGroupRenameModal}
 										disabled={!isAllowedToRename}
+										data-testid="rename-group"
 									>
 										<div className="flex gap-3 items-center">
 											<Pencil size={14} className="shrink-0" />
@@ -115,6 +120,7 @@ export default function GroupsActionCell({ group, inUse }: Readonly<Props>) {
 									onClick={deleteGroup}
 									variant={"danger"}
 									disabled={!canDelete}
+									data-testid="delete-group"
 								>
 									<div className="flex gap-3 items-center">
 										<Trash2 size={14} className="shrink-0" />

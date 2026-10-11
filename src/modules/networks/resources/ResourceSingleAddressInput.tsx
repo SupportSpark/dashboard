@@ -5,7 +5,7 @@ import { Input } from "@components/Input";
 import { Label } from "@components/Label";
 import { useTranslations } from "next-intl";
 import { validator } from "@utils/helpers";
-import cidr from "ip-cidr";
+import { isValidIP } from "@utils/ip";
 import { GlobeIcon, NetworkIcon, WorkflowIcon } from "lucide-react";
 import * as React from "react";
 import { useEffect, useMemo } from "react";
@@ -65,7 +65,7 @@ export const ResourceSingleAddressInput = ({
     }
 
     // Case 2: If it's not a valid domain, check if it's a valid CIDR
-    if (!cidr.isValidAddress(value)) {
+    if (!isValidIP(value)) {
       return t("ipCidrError");
     }
 

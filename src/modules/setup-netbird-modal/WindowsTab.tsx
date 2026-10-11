@@ -1,7 +1,6 @@
 "use client";
 
 import Button from "@components/Button";
-import Code from "@components/Code";
 import { SelectDropdown } from "@components/select/SelectDropdown";
 import Steps from "@components/Steps";
 import TabsContentPadding, { TabsContent } from "@components/Tabs";
@@ -12,6 +11,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { OperatingSystem } from "@/interfaces/OperatingSystem";
 import {
+  ManagementUrlStep,
   NetBirdUpCommand,
   RoutingPeerSetupKeyInfo,
 } from "@/modules/setup-netbird-modal/SetupModal";
@@ -92,12 +92,7 @@ export default function WindowsTab({
 
           {GRPC_API_ORIGIN && (
             <Steps.Step step={baseMgmtStep}>
-              <p>
-                {t("managementUrlInstruction")}
-              </p>
-              <Code>
-                <Code.Line>{GRPC_API_ORIGIN}</Code.Line>
-              </Code>
+              <ManagementUrlStep trayName={"system tray"} />
             </Steps.Step>
           )}
 

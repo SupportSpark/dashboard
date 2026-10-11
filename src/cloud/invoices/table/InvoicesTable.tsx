@@ -94,7 +94,7 @@ export default function InvoicesTable({
           className={"py-4"}
           title={t("noInvoicesTitle")}
           description={t("noInvoicesDescription")}
-          icon={<ReceiptTextIcon size={20} />}
+          icon={<ReceiptTextIcon size={20} className={"text-nb-gray-300"} />}
         />
       }
       columnVisibility={{

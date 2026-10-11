@@ -65,7 +65,10 @@ export default function NetBirdSettings() {
 				<VerticalTabs.List>
 					{permission.settings.read && (
 						<>
-							<VerticalTabs.Trigger value="authentication" data-testid="settings-tab-authentication">
+							<VerticalTabs.Trigger
+								value="authentication"
+								data-testid="settings-tab-authentication"
+							>
 								<ShieldIcon size={14} />
 								{t("authentication")}
 							</VerticalTabs.Trigger>
@@ -82,33 +85,47 @@ export default function NetBirdSettings() {
 										{t("identityProviders")}
 									</VerticalTabs.Trigger>
 								)}
-							<VerticalTabs.Trigger value="groups" data-testid="settings-tab-groups">
+							<VerticalTabs.Trigger
+								value="groups"
+								data-testid="settings-tab-groups"
+							>
 								<FolderGit2Icon size={14} />
 								{t("groupsTab")}
 							</VerticalTabs.Trigger>
-							<VerticalTabs.Trigger value="permissions" data-testid="settings-tab-permissions">
+							<VerticalTabs.Trigger
+								value="permissions"
+								data-testid="settings-tab-permissions"
+							>
 								<LockIcon size={14} />
 								{t("permissions")}
 							</VerticalTabs.Trigger>
-							<VerticalTabs.Trigger value="networks" data-testid="settings-tab-networks">
+							<VerticalTabs.Trigger
+								value="networks"
+								data-testid="settings-tab-networks"
+							>
 								<NetworkIcon size={14} />
 								{t("networksTab")}
 							</VerticalTabs.Trigger>
-							<VerticalTabs.Trigger value="clients" data-testid="settings-tab-clients">
+							<VerticalTabs.Trigger
+								value="clients"
+								data-testid="settings-tab-clients"
+							>
 								<MonitorSmartphoneIcon size={14} />
 								{t("clients")}
 							</VerticalTabs.Trigger>
-							<VerticalTabs.Trigger value="language" data-testid="settings-tab-language">
+							<VerticalTabs.Trigger
+								value="language"
+								data-testid="settings-tab-language"
+							>
 								<LanguagesIcon size={14} />
 								{t("language")}
 							</VerticalTabs.Trigger>
-							<VerticalTabs.Trigger value="metrics" data-testid="settings-tab-metrics">
+							<VerticalTabs.Trigger value="metrics">
 								<ChartNoAxesCombined size={14} />
 								{t("metrics")}
 							</VerticalTabs.Trigger>
 						</>
 					)}
-
 					<CloudSettingsTabTrigger />
 					<DangerZoneTabTrigger />
 				</VerticalTabs.List>
@@ -120,7 +137,7 @@ export default function NetBirdSettings() {
 						{account && <AuthenticationTab account={account} />}
 						{permission.setup_keys.read && <SetupKeysTab />}
 						{account?.settings?.embedded_idp_enabled &&
-							permission.identity_providers.read && <IdentityProvidersTab />}
+							permission?.identity_providers?.read && <IdentityProvidersTab />}
 						{account && <PermissionsTab account={account} />}
 						{account && <GroupsSettings account={account} />}
 						{account && <NetworkSettingsTab account={account} />}

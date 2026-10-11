@@ -6,6 +6,11 @@ import { DataTable } from "@components/table/DataTable";
 import DataTableHeader from "@components/table/DataTableHeader";
 import DataTableResetFilterButton from "@components/table/DataTableResetFilterButton";
 import {
+  ENABLED_COLUMN_ID,
+  fadeDisabledRowCells,
+} from "@components/table/disabledRowCells";
+import { ENABLED_COLUMN_CLASS } from "@components/table/enabledColumnClass";
+import {
   formatGroupsChip,
   GroupsPicker,
 } from "@components/table/filters/GroupsPicker";
@@ -20,11 +25,10 @@ import {
   TableFiltersButton,
 } from "@components/table/TableFilters";
 import NoResults from "@components/ui/NoResults";
-import { IconCirclePlus } from "@tabler/icons-react";
 import { ColumnDef, SortingState } from "@tanstack/react-table";
 import { removeAllSpaces } from "@utils/helpers";
 import { useTranslations } from "next-intl";
-import { ArrowUpRightIcon, Layers3Icon } from "lucide-react";
+import { ArrowUpRightIcon, Layers3Icon, PlusCircle } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import * as React from "react";
 import { useMemo, useState } from "react";
@@ -37,8 +41,9 @@ import { Group } from "@/interfaces/Group";
 import { NetworkResource } from "@/interfaces/Network";
 import { useNetworksContext } from "@/modules/networks/NetworkProvider";
 import { ResourceActionCell } from "@/modules/networks/resources/ResourceActionCell";
-import { ResourceExposeServiceCell } from "@/modules/networks/resources/ResourceExposeServiceCell";
 import ResourceAddressCell from "@/modules/networks/resources/ResourceAddressCell";
+import { ResourceEnabledCell } from "@/modules/networks/resources/ResourceEnabledCell";
+import { ResourceExposeServiceCell } from "@/modules/networks/resources/ResourceExposeServiceCell";
 import { ResourceGroupCell } from "@/modules/networks/resources/ResourceGroupCell";
 import ResourceNameCell from "@/modules/networks/resources/ResourceNameCell";
 import { ResourcePolicyCell } from "@/modules/networks/resources/ResourcePolicyCell";
@@ -49,6 +54,107 @@ type Props = {
   headingTarget?: HTMLHeadingElement | null;
   isGroupPage?: boolean;
 };
+
+function NetworkResourceColumns(
+  t: ReturnType<typeof useTranslations>,
+  tCommon: ReturnType<typeof useTranslations>,
+): ColumnDef<NetworkResource>[] {
+  return [
+    {
+      id: "id",
+      accessorKey: "id",
+      filterFn: "exactMatch",
+    },
+    {
+      id: "name",
+      accessorKey: "name",
+      header: ({ column }) => {
+        return <DataTableHeader column={column}>{t("resourceColumn")}</DataTableHeader>;
+      },
+      cell: ({ row }) => {
+        return <ResourceNameCell resource={row.original} />;
+      },
+    },
+    {
+      id: "description",
+      accessorKey: "description",
+      accessorFn: (resource) =>
+        removeAllSpaces(resource?.description || "").toLowerCase(),
+    },
+    {
+      id: "address",
+      accessorKey: "address",
+      header: ({ column }) => {
+        return <DataTableHeader column={column}>{t("address")}</DataTableHeader>;
+      },
+      cell: ({ row }) => {
+        return <ResourceAddressCell resource={row.original} />;
+      },
+    },
+    {
+      id: ENABLED_COLUMN_ID,
+      accessorKey: "enabled",
+      enableSorting: false,
+      meta: { className: ENABLED_COLUMN_CLASS.xl },
+      header: ({ column }) => {
+        return (
+          <DataTableHeader column={column} sorting={false}>
+            Active
+          </DataTableHeader>
+        );
+      },
+      cell: ({ row }) => <ResourceEnabledCell resource={row.original} />,
+    },
+    {
+      id: "groups",
+      accessorFn: (resource) => {
+        let groups = (resource?.groups ?? []) as Group[];
+        return groups.map((group) => group.name).join(", ");
+      },
+      header: ({ column }) => {
+        return <DataTableHeader column={column}>{tCommon("groups")}</DataTableHeader>;
+      },
+      cell: ({ row }) => {
+        return <ResourceGroupCell resource={row.original} />;
+      },
+    },
+    {
+      id: "group_names",
+      accessorFn: (resource) => {
+        const groups = (resource?.groups ?? []) as Group[];
+        return groups.map((g) => g.name).filter((n): n is string => !!n);
+      },
+      filterFn: "arrIncludesSome",
+    },
+    {
+      id: "policies",
+      accessorKey: "id",
+      header: ({ column }) => {
+        return <DataTableHeader column={column}>{t("policiesColumn")}</DataTableHeader>;
+      },
+      cell: ({ row }) => {
+        return <ResourcePolicyCell resource={row.original} />;
+      },
+    },
+    {
+      id: "expose_service",
+      accessorKey: "id",
+      header: "",
+      cell: ({ row }) => {
+        return <ResourceExposeServiceCell resource={row.original} />;
+      },
+    },
+    {
+      id: "actions",
+      accessorKey: "id",
+      header: "",
+      cell: ({ row }) => {
+        return <ResourceActionCell resource={row.original} />;
+      },
+    },
+  ];
+}
+
 
 export default function ResourcesTable({
   resources,
@@ -101,88 +207,7 @@ export default function ResourcesTable({
 
   const columns = useMemo<ColumnDef<NetworkResource>[]>(
     () => [
-      {
-        id: "id",
-        accessorKey: "id",
-        filterFn: "exactMatch",
-      },
-      {
-        id: "name",
-        accessorKey: "name",
-        header: ({ column }) => {
-          return <DataTableHeader column={column}>{t("resourceColumn")}</DataTableHeader>;
-        },
-        cell: ({ row }) => {
-          return <ResourceNameCell resource={row.original} />;
-        },
-      },
-      {
-        id: "description",
-        accessorKey: "description",
-        accessorFn: (resource) =>
-          removeAllSpaces(resource?.description || "").toLowerCase(),
-      },
-      {
-        id: "address",
-        accessorKey: "address",
-        header: ({ column }) => {
-          return <DataTableHeader column={column}>{t("address")}</DataTableHeader>;
-        },
-        cell: ({ row }) => {
-          return <ResourceAddressCell resource={row.original} />;
-        },
-      },
-      {
-        id: "enabled",
-        accessorKey: "enabled",
-      },
-      {
-        id: "groups",
-        accessorFn: (resource) => {
-          let groups = (resource?.groups ?? []) as Group[];
-          return groups.map((group) => group.name).join(", ");
-        },
-        header: ({ column }) => {
-          return <DataTableHeader column={column}>{tCommon("groups")}</DataTableHeader>;
-        },
-        cell: ({ row }) => {
-          return <ResourceGroupCell resource={row.original} />;
-        },
-      },
-      {
-        id: "group_names",
-        accessorFn: (resource) => {
-          const groups = (resource?.groups ?? []) as Group[];
-          return groups.map((g) => g.name).filter((n): n is string => !!n);
-        },
-        filterFn: "arrIncludesSome",
-      },
-      {
-        id: "policies",
-        accessorKey: "id",
-        header: ({ column }) => {
-          return <DataTableHeader column={column}>{t("policiesColumn")}</DataTableHeader>;
-        },
-        cell: ({ row }) => {
-          return <ResourcePolicyCell resource={row.original} />;
-        },
-      },
-      {
-        id: "expose_service",
-        accessorKey: "id",
-        header: "",
-        cell: ({ row }) => {
-          return <ResourceExposeServiceCell resource={row.original} />;
-        },
-      },
-      {
-        id: "actions",
-        accessorKey: "id",
-        header: "",
-        cell: ({ row }) => {
-          return <ResourceActionCell resource={row.original} />;
-        },
-      },
+      ...NetworkResourceColumns(t, tCommon),
       {
         id: "exposed",
         accessorFn: (resource) =>
@@ -323,11 +348,10 @@ export default function ResourcesTable({
       columnVisibility={{
         description: false,
         id: false,
-        enabled: false,
         group_names: false,
         exposed: false,
       }}
-      rowClassName={(row) => (row.original.enabled ? "" : "opacity-50")}
+      cellClassName={fadeDisabledRowCells}
       paginationPaddingClassName={"px-0 pt-8"}
       rightSide={
         !isGroupPage
@@ -339,7 +363,7 @@ export default function ResourcesTable({
                 disabled={!permission.networks.update}
                 data-testid={"add-resource"}
               >
-                <IconCirclePlus size={16} />
+                <PlusCircle size={16} />
                 {t("addResourceBtn")}
               </Button>
             )

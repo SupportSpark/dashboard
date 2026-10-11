@@ -6,6 +6,11 @@ import { DataTable } from "@components/table/DataTable";
 import DataTableHeader from "@components/table/DataTableHeader";
 import DataTableResetFilterButton from "@components/table/DataTableResetFilterButton";
 import {
+  ENABLED_COLUMN_ID,
+  fadeDisabledRowCells,
+} from "@components/table/disabledRowCells";
+import { ENABLED_COLUMN_CLASS } from "@components/table/enabledColumnClass";
+import {
   formatRadioChip,
   RadioOption,
   RadioPicker,
@@ -16,8 +21,8 @@ import {
   TableFiltersButton,
 } from "@components/table/TableFilters";
 import NoResults from "@components/ui/NoResults";
-import { IconCirclePlus } from "@tabler/icons-react";
 import { ColumnDef, SortingState } from "@tanstack/react-table";
+import { PlusCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useMemo, useState } from "react";
@@ -27,6 +32,7 @@ import { NetworkRouter } from "@/interfaces/Network";
 import { useNetworksContext } from "@/modules/networks/NetworkProvider";
 import { NetworkRoutingPeerName } from "@/modules/networks/routing-peers/NetworkRoutingPeerName";
 import { RoutingPeersActionCell } from "@/modules/networks/routing-peers/RoutingPeersActionCell";
+import { RoutingPeersEnabledCell } from "@/modules/networks/routing-peers/RoutingPeersEnabledCell";
 import { RoutingPeersMasqueradeCell } from "@/modules/networks/routing-peers/RoutingPeersMasqueradeCell";
 import RouteMetricCell from "@/modules/routes/RouteMetricCell";
 
@@ -35,6 +41,68 @@ type Props = {
   isLoading: boolean;
   headingTarget?: HTMLHeadingElement | null;
 };
+
+function NetworkRouterColumns(
+  t: ReturnType<typeof useTranslations>,
+): ColumnDef<NetworkRouter>[] {
+  return [
+    {
+      id: "name",
+      accessorKey: "id",
+      header: ({ column }) => {
+        return <DataTableHeader column={column}>{t("peer")}</DataTableHeader>;
+      },
+      sortingFn: "text",
+      cell: ({ row }) => <NetworkRoutingPeerName router={row.original} />,
+    },
+    {
+      id: ENABLED_COLUMN_ID,
+      accessorKey: "enabled",
+      enableSorting: false,
+      meta: { className: ENABLED_COLUMN_CLASS.xl },
+      header: ({ column }) => {
+        return (
+          <DataTableHeader column={column} sorting={false}>
+            Active
+          </DataTableHeader>
+        );
+      },
+      cell: ({ row }) => <RoutingPeersEnabledCell router={row.original} />,
+    },
+    {
+      id: "metric",
+      accessorKey: "metric",
+      header: ({ column }) => {
+        return <DataTableHeader column={column}>{t("metric")}</DataTableHeader>;
+      },
+      cell: ({ row }) => (
+        <RouteMetricCell metric={row.original.metric} useHoverStyle={false} />
+      ),
+    },
+    {
+      id: "masquerade",
+      accessorKey: "masquerade",
+      header: ({ column }) => {
+        return <DataTableHeader column={column}>{t("masquerade")}</DataTableHeader>;
+      },
+      cell: ({ row }) => <RoutingPeersMasqueradeCell router={row.original} />,
+    },
+    {
+      id: "actions",
+      accessorKey: "id",
+      header: "",
+      cell: ({ row }) => {
+        return <RoutingPeersActionCell router={row.original} />;
+      },
+    },
+    {
+      id: "search",
+      accessorKey: "search",
+      header: "",
+      filterFn: "fuzzy",
+    },
+  ];
+}
 
 export default function NetworkRoutingPeersTable({
   routers,
@@ -83,53 +151,7 @@ export default function NetworkRoutingPeersTable({
   );
 
   const columns = useMemo<ColumnDef<NetworkRouter>[]>(
-    () => [
-      {
-        id: "name",
-        accessorKey: "id",
-        header: ({ column }) => {
-          return <DataTableHeader column={column}>{t("peer")}</DataTableHeader>;
-        },
-        sortingFn: "text",
-        cell: ({ row }) => <NetworkRoutingPeerName router={row.original} />,
-      },
-      {
-        id: "enabled",
-        accessorKey: "enabled",
-      },
-      {
-        id: "metric",
-        accessorKey: "metric",
-        header: ({ column }) => {
-          return <DataTableHeader column={column}>{t("metric")}</DataTableHeader>;
-        },
-        cell: ({ row }) => (
-          <RouteMetricCell metric={row.original.metric} useHoverStyle={false} />
-        ),
-      },
-      {
-        id: "masquerade",
-        accessorKey: "masquerade",
-        header: ({ column }) => {
-          return <DataTableHeader column={column}>{t("masquerade")}</DataTableHeader>;
-        },
-        cell: ({ row }) => <RoutingPeersMasqueradeCell router={row.original} />,
-      },
-      {
-        id: "actions",
-        accessorKey: "id",
-        header: "",
-        cell: ({ row }) => {
-          return <RoutingPeersActionCell router={row.original} />;
-        },
-      },
-      {
-        id: "search",
-        accessorKey: "search",
-        header: "",
-        filterFn: "fuzzy",
-      },
-    ],
+    () => NetworkRouterColumns(t),
     [t],
   );
 
@@ -163,8 +185,8 @@ export default function NetworkRoutingPeersTable({
           icon={<PeerIcon size={18} className={"fill-nb-gray-400"} />}
         />
       }
-      columnVisibility={{ search: false, enabled: false }}
-      rowClassName={(row) => (row.original.enabled ? "" : "opacity-50")}
+      columnVisibility={{ search: false }}
+      cellClassName={fadeDisabledRowCells}
       paginationPaddingClassName={"px-0 pt-8"}
       rightSide={() => (
         <Button
@@ -173,7 +195,7 @@ export default function NetworkRoutingPeersTable({
           onClick={() => network && openAddRoutingPeerModal(network)}
           disabled={!permission.networks.update}
         >
-          <IconCirclePlus size={16} />
+          <PlusCircle size={16} />
           {t("addRoutingPeerBtn")}
         </Button>
       )}

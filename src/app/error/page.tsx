@@ -9,6 +9,7 @@ import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import NetBirdIcon from "@/assets/icons/NetBirdIcon";
+import { PendingApproval } from "@/modules/users/PendingApproval";
 
 const config = loadConfig();
 
@@ -61,6 +62,18 @@ export default function ErrorPage() {
     error?.code === 403 &&
     error?.message?.toLowerCase().includes("pending approval");
 
+  // Waiting for an approval is an expected part of signing up, so it gets a
+  // welcoming screen of its own instead of the error treatment.
+  if (isPendingApproval) {
+    return (
+      <PendingApproval
+        error={error}
+        onRefresh={handleRetry}
+        onLogout={handleLogout}
+      />
+    );
+  }
+
   const getTitle = () => {
     if (isBlockedUser) return t("userAccountBlocked");
     if (isPendingApproval) return t("userApprovalPending");
@@ -102,7 +115,7 @@ export default function ErrorPage() {
       </Paragraph>
 
       <div className="mt-5 space-y-3">
-        {!isBlockedUser && !isPendingApproval && (
+        {!isBlockedUser && (
           <Button variant="default-outline" size="sm" onClick={handleRetry}>
             <RefreshCw size={16} className="mr-2" />
             {tCommon("tryAgain")}

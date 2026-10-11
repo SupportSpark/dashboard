@@ -918,9 +918,10 @@ export default function ActivityDescription({ event }: Props) {
 	if (event.activity_code == "resource.group.add")
 		return (
 			<div className={"inline"}>
+				{/* meta.name is the group, meta.resource_name the resource (#804). */}
 				{t.rich("desc_resource_group_add", {
-					resource_name: m.resource_name,
-					name: m.name,
+					resource_name: m.name,
+					name: m.resource_name,
 					Value: (chunks) => <Value>{chunks}</Value>,
 				})}
 			</div>
@@ -929,9 +930,10 @@ export default function ActivityDescription({ event }: Props) {
 	if (event.activity_code == "resource.group.delete")
 		return (
 			<div className={"inline"}>
+				{/* meta.name is the group, meta.resource_name the resource (#804). */}
 				{t.rich("desc_resource_group_delete", {
-					resource_name: m.resource_name,
-					name: m.name,
+					resource_name: m.name,
+					name: m.resource_name,
 					Value: (chunks) => <Value>{chunks}</Value>,
 				})}
 			</div>
