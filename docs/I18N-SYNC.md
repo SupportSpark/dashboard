@@ -3,11 +3,31 @@
 本仓库是 [`netbirdio/dashboard`](https://github.com/netbirdio/dashboard) 的 fork，
 在官方代码之上叠加了一层 **next-intl 中英双语本地化**，主要为简体中文服务。
 
-- **fork**：https://github.com/SupportSpark/dashboard
-- **本地化分支**：`i18n-zh`
+- **fork**：https://github.com/SupportSpark/dashboard（默认分支已设为 `i18n-zh`）
+- **本地化分支**：`i18n-zh` ← **部署用的就是这个**
+- **上游镜像分支**：`main`（只做快进，不放本地化改动）
 - **上游**：`netbirdio/dashboard`（默认分支 `main`）
 - **本地化基线**：上游 `v2.90.7` + [`PR #671`](https://github.com/netbirdio/dashboard/pull/671)（作者 `sakuradairong`）的完整实现
+- **当前状态**：已同步到上游 `d6241304`（2026-10-09），与上游 `main` 的差异为 **0 落后 / 63 领先**
 - **许可证**：AGPL-3.0（与上游一致；对外提供网络服务时须遵守 AGPL 的源码提供义务）
+
+> **为什么把默认分支设为 `i18n-zh`**：GitHub 只在**默认分支**上运行 `schedule`
+> 与 `workflow_dispatch` 触发的工作流。这个 fork 存在的意义就是维护本地化分支，
+> 所以默认分支指向它，定时同步才能真正自动跑起来。
+
+---
+
+## 0. 现状速查（均已验证）
+
+| 项 | 状态 |
+| --- | --- |
+| 构建 | ✅ `npm run build` 通过，54 个静态路由预渲染 |
+| 单元测试 | ✅ 884/884 通过（70 个文件） |
+| 目录一致性 | ✅ en/zh 各 2625 个 key，无缺失、无孤立 |
+| key 解析 | ✅ 2221 个命名空间内字面量 key 全部可解析 |
+| 语言探测断言 | ✅ `npm run test:i18n` 全通过 |
+| CI（parity + 镜像构建） | ✅ 已跑绿 |
+| 线上部署 | ✅ `https://1.13.193.126` 返回 200，中文包随镜像下发 |
 
 ---
 
@@ -192,51 +212,110 @@ src/components/ui/LocaleSwitcher.tsx  # 头部语言切换器
 
 ## 7. 部署到自建 NetBird
 
-本部署在 `1.13.193.126`，dashboard 目前跑 `netbirdio/dashboard:v2.94.0`。
+本部署在 `1.13.193.126`（单节点，Debian 13，Traefik v3.6 反代，IP 证书）。
+**已完成本地化部署**：dashboard 容器现在跑
+`ghcr.io/supportspark/dashboard:zh-latest`，回滚只需回到 `netbirdio/dashboard:v2.94.0`。
 
-### 方案 A：拉构建好的镜像（推荐）
+### 方案 A：拉构建好的镜像（推荐，已采用）
 
-```yaml
-# docker-compose.yml
-netbird-dashboard:
-  image: ghcr.io/supportspark/dashboard:zh-latest
-  # 其余环境变量沿用 dashboard.env，无需改动
-```
+服务器上已有覆盖文件 `/opt/netbird/docker-compose.i18n.yml`：
 
 ```bash
 cd /opt/netbird
-docker compose pull netbird-dashboard
-docker compose up -d netbird-dashboard
+
+# 部署 / 升级
+docker compose -f docker-compose.yml -f docker-compose.i18n.yml up -d dashboard
+
+# 回滚到官方镜像（只用主 compose 文件即可）
+docker compose up -d dashboard
 ```
 
-### 方案 B：本地构建
+覆盖文件只改 dashboard 服务的 `image`，其余标签与网络沿用主 compose，
+所以 Traefik 路由、`dashboard.env`、CSP 生成逻辑全部不变。
+
+### 方案 B：离线传输镜像（GHCR 慢时）
+
+服务器在国际链路上拉 GHCR 可能较慢（镜像约 140MB 压缩 / 1.1GB 未压缩）。
+若拉取困难，可在能访问的网络里构建后 `docker save` 传过去：
 
 ```bash
-git clone https://github.com/SupportSpark/dashboard.git
-cd dashboard
+# 在有网且快的机器上
+git clone https://github.com/SupportSpark/dashboard.git && cd dashboard
 git checkout i18n-zh
 docker build -f docker/Dockerfile -t netbird-dashboard-zh:local .
+docker save netbird-dashboard-zh:local | gzip > zh.tar.gz
+
+# 传到服务器
+scp zh.tar.gz root@1.13.193.126:/root/
+ssh root@1.13.193.126 'gunzip -c /root/zh.tar.gz | docker load'
+# 然后把 docker-compose.i18n.yml 里的 image 改成 netbird-dashboard-zh:local
 ```
 
-`docker/init_react_envs.sh` 会在容器启动时从环境变量生成运行时配置
-（同时支持 `$VAR` 与 `$$VAR` 两种占位符），所以既有的 `dashboard.env` 可直接复用。
+### 部署后验证（实测步骤）
 
-> 若自定义了管理端域名，注意镜像内的 CSP 由 `docker/init_react_envs.sh` 依据
-> `NETBIRD_MGMT_API_ENDPOINT` / `AUTH_AUTHORITY` 生成；换域名只需改环境变量。
+```bash
+docker inspect netbird-dashboard --format 'image={{.Config.Image}} status={{.State.Status}} health={{.State.Health.Status}}'
+curl -sSk -o /dev/null -w '%{http_code}\n' https://1.13.193.126/                    # 期望 200
+curl -sSk -o /dev/null -w '%{http_code}\n' https://1.13.193.126/api/users           # 期望 401
+curl -sSk -o /dev/null -w '%{http_code}\n' https://1.13.193.126/oauth2/.well-known/openid-configuration  # 期望 200
+```
+
+确认中文确实上线（扫描公开的 JS 分片里是否有中文串）：
+
+```bash
+curl -sSk https://1.13.193.126/ | grep -oE '/_next/static/chunks/[A-Za-z0-9_.-]+\.js' | while read -r c; do
+  curl -sSk "https://1.13.193.126$c" | grep -q '保存\|取消\|节点' && echo "zh in $c"
+done
+```
+
+### 实测注意事项
+
+- **容器重建后 Traefik 需要几秒重新发现 router**，期间访问可能短暂 404。
+  日志里表现为 `"-" "-"`（没有匹配到 router），而不是后端错误——等几秒即可。
+- 镜像内的 nginx 会在启动脚本里 reload 一次以应用 CSP，日志中能看到
+  `Reloaded nginx to apply updated CSP configuration`，属正常现象。
+- `docker/init_react_envs.sh` 在容器启动时从环境变量生成运行时配置
+  （同时支持 `$VAR` 与 `$$VAR` 两种占位符），既有 `dashboard.env` 可直接复用。
+- 自定义管理端域名时，镜像内 CSP 由 `docker/init_react_envs.sh` 依据
+  `NETBIRD_MGMT_API_ENDPOINT` / `AUTH_AUTHORITY` 生成；换域名只需改环境变量。
+- `/opt/netbird/docker-compose.yml.bak-before-i18n` 是部署前的备份。
 
 ---
 
 ## 8. 升级流程（每次上游发版）
 
-1. 等 `sync-upstream.yml` 定时跑完，**或**手动触发
+1. 等 `sync-upstream.yml` 定时跑完（每天 03:17 UTC），**或**手动触发
    （`Actions → sync upstream → Run workflow`，可填 `upstream_ref`，可勾 `dry_run`）。
 2. 看 run 结果：
    - ✅ 绿：已自动合并 + 已通过构建 → 直接进第 4 步。
    - ⚠️ 开 issue：进第 3 步。
 3. 按 §4 解决冲突、§5 补文案，push 到 `i18n-zh`，再手动触发一次 workflow 确认。
-4. `build-localized.yml` 会自动出镜像。
-5. 服务器上 `docker compose pull && docker compose up -d`。
-6. 打开面板确认中文渲染正常、语言切换可用、没有漏译的占位符。
+4. `build-localized.yml` 会自动出镜像（push 到 `i18n-zh` 即触发）。
+5. 服务器上：
+   ```bash
+   cd /opt/netbird
+   docker compose -f docker-compose.yml -f docker-compose.i18n.yml pull dashboard
+   docker compose -f docker-compose.yml -f docker-compose.i18n.yml up -d dashboard
+   ```
+6. 按 §7 的验证命令确认 200 / 401 / 200 与中文串存在。
+
+### 合并后一定要跑的四项检查
+
+同步合并**跑绿不等于没问题**。本次同步实测中，`npm run build`、`tsc --noEmit`
+和全部单元测试都通过，但仍有 **31 个翻译 key 根本没定义**、**13 个上游 e2e
+data-testid 被改名**、**两处上游功能被静默删除**。这类问题只有下面这些检查能发现：
+
+```bash
+npm run build                               # 静态导出是否成立
+npm run test:unit                           # 上游单测（884 项）
+npm run test:i18n                           # 语言探测断言
+node tools/check-catalog-parity.mjs .       # en/zh key 是否对齐
+node tools/check-translation-keys.mjs       # 每个 t("key") 是否真的能解析
+node tools/find-dropped-upstream-code.mjs   # 上游代码是否被静默丢弃
+pwsh -File tools/check-merge-integrity.ps1  # 冲突标记 / i18n 接线是否完好
+```
+
+前三项与最后三项都已接进 CI（`i18n-parity.yml`）。
 
 ---
 
@@ -244,18 +323,54 @@ docker build -f docker/Dockerfile -t netbird-dashboard-zh:local .
 
 - **`npm run lint` 目前是坏的**：上游改用 `eslint .`，本地化分支的部分历史提交
   仍按旧脚本调用。以 `npx tsc --noEmit` + `npm run build` 作为准入门槛。
+  ⚠️ 注意 `tsc --noEmit` 在**没跑过 `next build`** 时会误报大量
+  `Cannot find module '@/assets/*.svg'`——那是 `next-env.d.ts`（被 gitignore）
+  还没生成导致的，不是真错误。先 `npm run build` 再 `tsc` 就干净了。
 - **不要用全局 `-X ours` 合并**：会静默丢弃上游修复（见 §3.1）。
 - **翻译目录必须成对更新**：只加 `en.ts` 不加 `zh.ts` 会被 `tsc` 拦下（这是 feature）。
+- **`t("key")` 的命名空间必须对**：key 存在但在别的命名空间下，`tsc` 不报错、
+  构建不报错、测试也不报错，只在运行时显示原始 key。用
+  `tools/check-translation-keys.mjs` 兜住（本次抓到 31 处）。
+- **`useTranslations()` 不写命名空间时**，只能解析点号路径（`t("navigation.peers")`）；
+  写扁平 key 会 MISSING_MESSAGE。构建日志里出现 `MISSING_MESSAGE: xxx (en)`
+  就说明有这种情况。
+- **上游 e2e 选择器用 `data-testid`**：本分支历史提交把部分属性改名成了 `data-cy`，
+  会让上游 e2e 全部失效。已修正到与上游一致（仅保留上游本来就用 `data-cy` 的 8 处）。
+  改动 UI 时不要引入 `data-cy`。
+- **上游单测不带 Provider**：上游组件测试直接 `render(<Component />)`，而本地化
+  组件调用 `useTranslations()`。`vitest.setup.ts` 用 next-intl 自己的
+  `createTranslator` 注入真实英文目录来解决，好处是**上游测试文件保持一字不改**，
+  后续同步不会反复冲突。不要为了修测试去改上游测试文件。
+- **`src/i18n/detection.test.ts` 是脚本不是 vitest 用例**（它调 `process.exit()`），
+  必须留在 `vitest.config.mts` 的 `exclude` 里，否则 vitest 收集它会报
+  "No test suite found in file"；它通过 `npm run test:i18n` 运行。
 - **主题实现已换**：上游删除了 `next-themes` / `GlobalThemeProvider`，改为自研
   `src/contexts/ThemeProvider.tsx`；本地化分支已跟随上游，不要再引入 `next-themes`。
 - **`docker/server.js` 方案已废弃**：上游用 nginx + `envsubst` 取代（见
   `docker/init_react_envs.sh`），且已处理 `$VAR` / `$$VAR` 两种占位符。
+- **上游已删除的功能**：`firewall-gpt` 整个模块、`traffic-events` 的图表组件、
+  `OnboardingDemoCall`、`.eslintrc.json`。同步后不要把它们找回来。
 - **上游 e2e / storybook 门禁**：本分支未跑上游的 Playwright e2e 与视觉回归
-  （需要 Docker 测试环境），CI 只做 build + tsc 门槛。
+  （需要 Docker 测试环境），CI 只做 build + 上面那些静态门禁。
 
 ---
 
-## 10. 参考
+## 10. 翻译覆盖现状
+
+- **已本地化**：导航、Peers/节点详情、Access Control/策略、Groups/组、Users/用户、
+  Service Users、Setup Keys、DNS（nameservers/zones/settings）、Networks/网络、
+  Network Routes/路由、Posture Checks、Reverse Proxy（services/domains/clusters/logs）、
+  Activity/活动日志（含约 105 个事件描述模板）、Settings 全部标签页、
+  Notifications、Invoices、Webhooks、Onboarding、Error/404、语言切换器。
+- **仍是英文**：`src/i18n/messages/*.ts` 里 `untranslated` 命名空间下的 485 条
+  （这是 PR #671 留下的待译基线，**目前没有任何组件引用它**，所以不影响界面）。
+  实际界面上剩余的英文集中在合并后上游新增的模块：`integrations`、
+  `control-center`、`agent-network`、`billing` 的部分文案。
+- 想补译时按 §5 走：`en.ts` 与 `zh.ts` 同名 key 成对添加。
+
+---
+
+## 11. 参考
 
 - 上游仓库：https://github.com/netbirdio/dashboard
 - 采用的本地化 PR：https://github.com/netbirdio/dashboard/pull/671
