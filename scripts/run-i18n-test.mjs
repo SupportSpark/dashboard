@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { rm, writeFile } from "node:fs/promises";
 import { spawnSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 import ts from "typescript";
 
 const detectionPath = new URL("../src/i18n/detection.ts", import.meta.url);
@@ -43,7 +44,10 @@ export const LOCALE_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 await writeFile(detectionOutputPath, compiledDetectionSource);
 await writeFile(outputPath, transpile(testSource));
 
-const result = spawnSync(process.execPath, [outputPath.pathname], {
+// `URL.pathname` yields "/E:/Harness%20Chat/..." on Windows — a leading slash
+// plus percent-encoding — which Node cannot resolve as a filesystem path.
+// `fileURLToPath` converts it correctly on every platform.
+const result = spawnSync(process.execPath, [fileURLToPath(outputPath)], {
   stdio: "inherit",
 });
 
