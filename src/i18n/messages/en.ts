@@ -852,7 +852,7 @@ export default {
     creating: "Creating group...",
     nameHelp: "Set an easily identifiable name for your group",
     namePlaceholder: "e.g., Developers",
-    learnMore: "Learn more about",
+    learnMore: "Learn more",
     edit: "Edit Group",
     delete: "Delete Group",
     confirmDelete: "Are you sure you want to delete this group?",
@@ -3417,7 +3417,7 @@ export default {
   notifications: {
     title: "Notifications",
     description: "Choose how to be notified when important events occur in your account.",
-    learnMore: "Learn more about",
+    learnMore: "Learn more",
     learnMoreAbout: "Learn more about",
     notificationChannels: "Notification Channels",
     inOurDocumentation: "in our documentation.",

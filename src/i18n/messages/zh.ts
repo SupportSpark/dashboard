@@ -814,7 +814,7 @@ export default {
     creating: "正在创建组...",
     nameHelp: "为组设置一个易于识别的名称",
     namePlaceholder: "例如：开发人员",
-    learnMore: "了解更多关于",
+    learnMore: "了解更多",
     edit: "编辑组",
     delete: "删除组",
     confirmDelete: "确定要删除此组吗？",
@@ -3179,7 +3179,7 @@ export default {
   notifications: {
     title: "通知",
     description: "选择在您的账户中发生重要事件时的通知方式。",
-    learnMore: "了解更多关于",
+    learnMore: "了解更多",
     learnMoreAbout: "了解更多关于",
     notificationChannels: "通知渠道",
     inOurDocumentation: "在我们的文档中。",

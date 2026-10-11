@@ -64,11 +64,15 @@ const NotificationsOverview = ({
               href={NOTIFICATION_CHANNELS_DOCS_LINK}
               target={"_blank"}
             >
-              {t("learnMore")}{" "}
-              {t("notificationChannels")}
+              {/* Upstream reads "Get notified when important events happen.
+                  Learn more": the description, then a link holding only the link
+                  text, and nothing after it. This had grown a second fragment
+                  inside the link ("… about Notification Channels") plus a
+                  trailing "in our documentation.", neither of which upstream
+                  has. */}
+              {t("learnMore")}
               <ExternalLinkIcon size={12} />
-            </InlineLink>{" "}
-            {t("inOurDocumentation")}
+            </InlineLink>
           </Paragraph>
         </div>
       </div>
