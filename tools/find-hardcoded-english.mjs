@@ -45,7 +45,35 @@ const VISIBLE_ATTRS = new Set([
   "placeholder", "title", "label", "description", "helpText", "confirmText",
   "cancelText", "loadingMessage", "alt", "aria-label", "emptyState", "text",
   "content", "tooltip", "message", "subtitle", "heading", "buttonText",
+  "noResultsTitle", "noResultsDescription", "subLabel", "hint", "errorMessage",
 ]);
+
+/**
+ * Object-property names whose string value is user-visible even though the
+ * property is not a JSX attribute — e.g. `{ label: "Focus", value: "focus" }`
+ * in a menu definition, or `{ title: "...", description: "..." }` passed to
+ * notify(). The JSX-attribute pass above only sees the `attr="..."` form.
+ */
+const VISIBLE_OBJECT_PROPS = new Set([
+  ...VISIBLE_ATTRS,
+  "title", "shortName", "placeholderText", "confirmButtonText",
+  "cancelButtonText", "emptyMessage", "loadingText",
+]);
+
+/**
+ * TypeScript type positions that are not UI text. Without this, annotations like
+ * `onBeforeSave?: () => Promise<boolean>` and `Partial<Group>` are reported.
+ */
+const TYPE_POSITION_RE =
+  /^\s*(?:\w+\??\s*:\s*)?(?:Promise|Partial|Record|Array|Readonly|Pick|Omit|Exclude|Extract|ReturnType|Awaited|Map|Set|WeakMap|WeakSet|Date|Error|React\.\w+)\b|=>\s*(?:Promise|Partial)|:\s*(?:Promise|Partial|Record|Array|Map|Set)</;
+
+/** True when a line is a TS type annotation rather than rendered output. */
+function isTypePosition(line) {
+  if (TYPE_POSITION_RE.test(line)) return true;
+  // `foo?: SomeType;` / `foo: SomeType[]` with no string literal involved.
+  if (/^\s*\w+\??\s*:\s*[A-Za-z_$][\w$.<>[\], |]*;?\s*$/.test(line)) return true;
+  return false;
+}
 
 /** Check whether a candidate is actually human-readable English prose. */
 function looksLikeProse(s) {
@@ -62,15 +90,23 @@ function looksLikeProse(s) {
   if (/^\d+(\.\d+)*$/.test(t)) return false;
   // Ignore tokens that are just an identifier or a key path.
   if (/^[a-zA-Z0-9_.$:-]+$/.test(t) && !/[A-Z]/.test(t[0])) return false;
+  // Bare TS type names that slipped through as JSX text.
+  if (/^(Promise|Partial|Record|Array|Readonly|Map|Set|Date|Error|Function|Object|String|Number|Boolean|void|null|undefined)$/.test(t)) {
+    return false;
+  }
   return true;
 }
 
-const files = (area
-  ? execFileSync("git", ["ls-files", `src/${area}/**/*.tsx`, `src/${area}/**/*.ts`], { encoding: "utf8" })
-  : execFileSync("git", ["ls-files", "src/**/*.tsx", "src/**/*.ts"], { encoding: "utf8" })
-)
+// `--area` is a plain path prefix, NOT a git pathspec. A pathspec glob like
+// "src/modules/x/**/*.tsx" silently excludes direct children of x, which made
+// --area under-report by ~95%. Filter the full file list instead.
+const allFiles = execFileSync("git", ["ls-files", "src"], { encoding: "utf8" })
   .split("\n")
-  .filter((f) => f && !/\.test\.|\.stories\.|src\/i18n\//.test(f));
+  .filter((f) => f && /\.(tsx?|ts)$/.test(f));
+
+const files = allFiles.filter(
+  (f) => !/\.test\.|\.stories\.|src\/i18n\//.test(f) && (!area || f.startsWith(`src/${area}/`)),
+);
 
 const findings = [];
 
@@ -82,31 +118,39 @@ for (const file of files) {
     const trimmed = line.trim();
     // Skip comments outright.
     if (/^(\/\/|\*|\/\*)/.test(trimmed)) return;
-    // Skip lines that already translate something.
-    if (/\bt[A-Za-z]*\(/.test(line)) return;
+    if (isTypePosition(line)) return;
+    // A line that already translates something is normally done, but it can
+    // still hold a second, untranslated literal (e.g. two props on one line),
+    // so we no longer skip the line wholesale — only lines that are *entirely*
+    // a single t() call are redundant to scan.
+    const lineIsPureTCall = /^\s*\{?\s*t[A-Za-z]*\([^)]*\)\s*\}?,?\s*$/.test(line);
 
-    // 1. JSX text nodes: >Some Text<
-    for (const m of line.matchAll(/>\s*([A-Z][^<>{}]*?[a-zA-Z])\s*</g)) {
-      const s = m[1].trim();
-      if (looksLikeProse(s)) {
-        findings.push({ file, line: idx + 1, kind: "jsx-text", text: s });
+    if (!lineIsPureTCall) {
+      // 1. JSX text nodes: >Some Text<
+      for (const m of line.matchAll(/>\s*([A-Z][^<>{}]*?[a-zA-Z])\s*</g)) {
+        const s = m[1].trim();
+        if (looksLikeProse(s)) {
+          findings.push({ file, line: idx + 1, kind: "jsx-text", text: s });
+        }
       }
     }
 
     // 2. visible string attributes
     for (const m of line.matchAll(/([A-Za-z-]+)\s*=\s*"([^"{}]+)"/g)) {
       const [, attr, val] = m;
-      if (NON_VISIBLE_ATTRS.has(attr)) return;
-      if (!VISIBLE_ATTRS.has(attr)) return;
+      if (NON_VISIBLE_ATTRS.has(attr)) continue;
+      if (!VISIBLE_ATTRS.has(attr)) continue;
       if (looksLikeProse(val)) {
         findings.push({ file, line: idx + 1, kind: `attr:${attr}`, text: val.trim() });
       }
     }
 
-    // 3. notify()/confirm() title/description
-    for (const m of line.matchAll(/\b(title|description|loadingMessage|confirmText|cancelText)\s*:\s*"([^"]+)"/g)) {
-      if (looksLikeProse(m[2])) {
-        findings.push({ file, line: idx + 1, kind: `notify:${m[1]}`, text: m[2].trim() });
+    // 3. object properties: { label: "Focus" }, notify({ title: "..." })
+    for (const m of line.matchAll(/(?:^|[\s,{])([A-Za-z-]+)\s*:\s*"([^"]+)"/g)) {
+      const [, prop, val] = m;
+      if (!VISIBLE_OBJECT_PROPS.has(prop)) continue;
+      if (looksLikeProse(val)) {
+        findings.push({ file, line: idx + 1, kind: `prop:${prop}`, text: val.trim() });
       }
     }
 
@@ -117,11 +161,112 @@ for (const file of files) {
       }
     }
   });
+
+  // 5. Multi-line string values: `description:` then a newline then "Text".
+  //    These are invisible to a line-oriented scan.
+  for (let i = 0; i < lines.length - 1; i++) {
+    const m = lines[i].match(/(?:^|[\s,{])([A-Za-z-]+)\s*:\s*$/);
+    if (!m) continue;
+    if (!VISIBLE_OBJECT_PROPS.has(m[1])) continue;
+    const next = lines[i + 1].trim();
+    const nm = next.match(/^"([^"]+)",?$/);
+    if (nm && looksLikeProse(nm[1])) {
+      findings.push({ file, line: i + 1, kind: `prop:${m[1]}(multiline)`, text: nm[1].trim() });
+    }
+    // Also handle the template-literal form: `title: \`...\` on the next line.`
+  }
+
+  // 6. JSX expression containers holding a bare string: `{cond ? "A" : "B"}`,
+  //    `{x && "Text"}`, `<C label={"Text"} />`. These live inside braces, so
+  //    neither the attribute pass (needs `attr="..."`) nor the JSX-text pass
+  //    (needs `>Text<`) sees them. This was the largest reported blind spot.
+  //
+  //    Careful: a ternary that compares against a literal and returns the same
+  //    literal (`x === "CrowdStrike" ? "CrowdStrike" : "CrowdStrike"`) is an
+  //    identifier comparison, not user-facing prose. Those are filtered below.
+  lines.forEach((line, idx) => {
+    if (/^\s*(\/\/|\*|\/\*)/.test(line)) return;
+    if (isTypePosition(line)) return;
+
+    /**
+     * Reject a candidate that is not itself rendered text:
+     *   - echoing a literal used for comparison
+     *     (`x === "CrowdStrike" ? "CrowdStrike" : "CrowdStrike"`)
+     *   - passed as an interpolation *argument* to t(), e.g.
+     *     `t("key", { name: "CrowdStrike" })` — the brand name is data, and the
+     *     template around it is already translated
+     */
+    const isComparisonEcho = (s) => {
+      const escaped = s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      return new RegExp(
+        `(?:===?\\s*"${escaped}"|!==?\\s*"${escaped}"|includes\\(\\s*"${escaped}"|case\\s+"${escaped}"|startsWith\\(\\s*"${escaped}")`,
+      ).test(line);
+    };
+    const isTArgument = (s) => {
+      const escaped = s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      // `name: "X"` inside a t() interpolation call. We only treat it as an
+      // argument (and not as user-facing prose) when the enclosing call really
+      // is a translator — brand names passed to t("key", { name: "Okta" }) are
+      // data, whereas `{ name: "Europe (EU-1)" }` in a module-level option
+      // array is a rendered dropdown label.
+      const looksLikeArg = new RegExp(`\\b(?:name|value|count|id|setting|provider)\\s*:\\s*"${escaped}"`).test(line);
+      if (!looksLikeArg) return false;
+      // Require the t() call to be on the same line AND to appear before the literal.
+      const tIdx = line.search(/\bt[A-Za-z]*\(/);
+      const litIdx = line.indexOf(`"${s}"`);
+      return tIdx !== -1 && litIdx !== -1 && tIdx < litIdx;
+    };
+    const reject = (s) => isComparisonEcho(s) || isTArgument(s);
+
+    // `? "Then text"` / `: "Else text"` — ternaries in JSX
+    for (const m of line.matchAll(/[?:]\s*"([^"]{3,})"/g)) {
+      const s = m[1].trim();
+      if (!looksLikeProse(s)) continue;
+      if (reject(s)) continue;
+      findings.push({ file, line: idx + 1, kind: "jsx-expr:ternary", text: s });
+    }
+    // `&& "Text"` / `|| "Text"` — short-circuit rendering
+    for (const m of line.matchAll(/&&\s*"([^"]{3,})"|\|\|\s*"([^"]{3,})"/g)) {
+      const s = (m[1] ?? m[2]).trim();
+      if (!looksLikeProse(s)) continue;
+      if (reject(s)) continue;
+      findings.push({ file, line: idx + 1, kind: "jsx-expr:shortcircuit", text: s });
+    }
+    // `attr={"Text"}` — same as an attribute but brace-wrapped
+    for (const m of line.matchAll(/([A-Za-z-]+)=\{\s*"([^"]+)"\s*\}/g)) {
+      const [, attr, val] = m;
+      if (NON_VISIBLE_ATTRS.has(attr)) continue;
+      if (!VISIBLE_ATTRS.has(attr)) continue;
+      const s = val.trim();
+      if (!looksLikeProse(s)) continue;
+      if (reject(s)) continue;
+      findings.push({ file, line: idx + 1, kind: `jsx-expr:attr(${attr})`, text: s });
+    }
+    // `<Text>{"literal"}</Text>` — a string inside a JSX child expression
+    for (const m of line.matchAll(/>\s*\{\s*"([^"]{3,})"\s*\}\s*</g)) {
+      const s = m[1].trim();
+      if (!looksLikeProse(s)) continue;
+      findings.push({ file, line: idx + 1, kind: "jsx-expr:child", text: s });
+    }
+  });
 }
 
-// Group by file, then by area.
-const byFile = new Map();
+// Group by file, then by area. Dedupe first: the same literal is legitimately
+// reachable from more than one pass (an object property `label: "X"` also looks
+// like a ternary else-branch), and the work list should count it once.
+const deduped = [];
+const seenAt = new Set();
 for (const f of findings) {
+  // The same English text at the same line is one piece of work, whatever pass
+  // found it. Keep the first (passes run in usefulness order).
+  const id = `${f.file}\u0000${f.line}\u0000${f.text}`;
+  if (seenAt.has(id)) continue;
+  seenAt.add(id);
+  deduped.push(f);
+}
+
+const byFile = new Map();
+for (const f of deduped) {
   if (!byFile.has(f.file)) byFile.set(f.file, []);
   byFile.get(f.file).push(f);
 }
@@ -137,9 +282,11 @@ for (const [file, items] of byFile) {
 }
 
 if (asJson) {
-  console.log(JSON.stringify({ total: findings.length, files: byFile.size, byArea: [...byArea], findings }, null, 2));
+  console.log(
+    JSON.stringify({ total: deduped.length, files: byFile.size, byArea: [...byArea], findings: deduped }, null, 2),
+  );
 } else {
-  console.log(`Hardcoded user-visible English: ${findings.length} string(s) in ${byFile.size} file(s)\n`);
+  console.log(`Hardcoded user-visible English: ${deduped.length} distinct string(s) in ${byFile.size} file(s)\n`);
   console.log("By area:");
   for (const [k, v] of [...byArea].sort((a, b) => b[1].strings - a[1].strings)) {
     console.log(`  ${String(v.strings).padStart(4)}  in ${String(v.files).padStart(3)} file(s)  ${k}`);
