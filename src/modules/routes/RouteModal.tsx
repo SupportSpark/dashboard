@@ -812,7 +812,11 @@ export function RouteModalContent({
 							}
 							target={"_blank"}
 						>
-							{tr("learnMore")} {exitNode ? tr("exitNodes") : tr("tableTitle")}
+							{/* The link stands alone, so it takes the capitalized noun
+							    phrase. routes.exitNodes stays lowercase — it is
+							    interpolated mid-sentence at L655 ("... exit nodes."),
+							    where a capital would be wrong. */}
+							{exitNode ? tr("exitNodesLink") : tr("tableTitle")}
 							<ExternalLinkIcon size={12} />
 						</InlineLink>
 					</Paragraph>

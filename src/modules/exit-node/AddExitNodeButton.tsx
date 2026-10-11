@@ -1,6 +1,7 @@
 import Button from "@components/Button";
 import { Modal } from "@components/modal/Modal";
 import { IconCirclePlus, IconDirectionSign } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useState } from "react";
 import { usePermissions } from "@/contexts/PermissionsProvider";
@@ -21,6 +22,7 @@ export const AddExitNodeButton = ({
 }: Props) => {
   const [modal, setModal] = useState(false);
   const { permission } = usePermissions();
+  const tr = useTranslations("routes");
 
   return (
     <>
@@ -33,12 +35,12 @@ export const AddExitNodeButton = ({
           {!firstTime ? (
             <>
               <IconCirclePlus size={16} />
-              Add Exit Node
+              {tr("addExitNode")}
             </>
           ) : (
             <>
               <IconDirectionSign size={16} className={"text-yellow-400"} />
-              Set Up Exit Node
+              {tr("setupExitNode")}
             </>
           )}
         </Button>

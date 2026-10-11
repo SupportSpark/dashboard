@@ -1,6 +1,7 @@
 import { DropdownMenuItem } from "@components/DropdownMenu";
 import { Modal } from "@components/modal/Modal";
 import { IconCirclePlus, IconDirectionSign } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useState } from "react";
 import { usePermissions } from "@/contexts/PermissionsProvider";
@@ -17,6 +18,7 @@ export const ExitNodeDropdownButton = ({ peer }: Props) => {
   const [modal, setModal] = useState(false);
   const exitNodeInfo = useHasExitNodes(peer);
   const { permission } = usePermissions();
+  const tr = useTranslations("routes");
 
   return (
     <>
@@ -29,7 +31,7 @@ export const ExitNodeDropdownButton = ({ peer }: Props) => {
             <>
               <IconCirclePlus size={14} className={"shrink-0"} />
               <div className={"flex justify-between items-center w-full"}>
-                Add Exit Node
+                {tr("addExitNode")}
               </div>
             </>
           ) : (
@@ -39,7 +41,7 @@ export const ExitNodeDropdownButton = ({ peer }: Props) => {
                 className={"shrink-0 text-yellow-400"}
               />
               <div className={"flex justify-between items-center w-full"}>
-                Set Up Exit Node
+                {tr("setupExitNode")}
               </div>
             </>
           )}

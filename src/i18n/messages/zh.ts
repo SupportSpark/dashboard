@@ -3523,6 +3523,9 @@ export default {
     routeCreatedSuccess: "网络路由已成功创建",
     routeUpdatedSuccess: "网络路由已成功更新",
     updatingRoute: "正在更新路由...",
+    exitNodeIntro: "出口节点是一种网络路由，它会将您的全部互联网流量经由其中一个节点转发。",
+    exitNodeDocsLine: "了解更多关于<link>出口节点</link>的信息，请参阅我们的文档。",
+    exitNodesLink: "出口节点",
   },
   onboarding: {
     title: "开始使用 NetBird",

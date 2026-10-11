@@ -3765,6 +3765,11 @@ export default {
     routeCreatedSuccess: "The network route was successfully created",
     routeUpdatedSuccess: "The network route was successfully updated",
     updatingRoute: "Updating route...",
+    exitNodeIntro:
+      "An exit node is a network route that routes all your internet traffic through one of your peers.",
+    exitNodeDocsLine:
+      "Learn more about <link>Exit Nodes</link> in our documentation.",
+    exitNodesLink: "Exit Nodes",
   },
   onboarding: {
     title: "Get started with NetBird",
