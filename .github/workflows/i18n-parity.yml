@@ -16,6 +16,8 @@ on:
     paths:
       - "src/i18n/**"
       - "tools/check-catalog-parity.mjs"
+      - "tools/check-translation-keys.mjs"
+      - "tools/check-message-rendering.mjs"
       - ".github/workflows/i18n-parity.yml"
   push:
     branches: ["i18n-zh"]
@@ -61,6 +63,16 @@ jobs:
       - name: Translation keys resolve
         run: node tools/check-translation-keys.mjs
 
+      # A key that RESOLVES can still crash the page. next-intl throws at render
+      # time for malformed ICU (an unclosed rich tag, a lone apostrophe opening a
+      # quoted literal) and for a t.rich() whose tag the call site did not pass;
+      # Next.js then shows its "This page couldn't load" screen, which looks like
+      # a network failure. This also catches React hooks called at module scope,
+      # which throw on import — that one took a production page down, and none of
+      # tsc, the key checker, or the build could see it.
+      - name: Messages render without throwing
+        run: node tools/check-message-rendering.mjs
+
       - name: Summary
         if: always()
         run: |
@@ -75,5 +87,11 @@ jobs:
             echo
             echo '```'
             node tools/check-translation-keys.mjs 2>&1 | head -n 12
+            echo '```'
+            echo
+            echo "### Render-time message safety"
+            echo
+            echo '```'
+            node tools/check-message-rendering.mjs 2>&1 | head -n 20
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY" || true

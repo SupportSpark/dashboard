@@ -4934,7 +4934,7 @@ export default {
     portkeyConfigId: "Portkey Config ID",
     portkeyConfigHelp: "Saved Portkey config (pc-...).",
     portkeyConfigDescription:
-      "Encapsulates upstream provider + virtual key on Portkey's hosted side. Stamped on every request as x-portkey-config: <id>. Leave blank if your callers author @org/model in the request body instead.",
+      "Encapsulates upstream provider + virtual key on Portkey's hosted side. Stamped on every request as x-portkey-config: id. Leave blank if your callers author @org/model in the request body instead.",
     appUrl: "App URL",
     appUrlHelp: "Your app's URL — OpenRouter's primary app identifier.",
     appUrlDescription:
@@ -5673,7 +5673,7 @@ export default {
       "Start streaming your NetBird audit & traffic events to Datadog. Follow the steps below to get started.",
     datadogSelectRegion: "Select your Datadog region",
     datadogRegionHelp:
-      "To identify which region you are on please check out the <link>Datadog Documentation.</link>",
+      "To identify which region you are on please check out the <docs>Datadog Documentation.</docs>",
     datadogGetApiKeyTitle: "Get your Datadog API Key",
     datadogNavigateApiKeys: "Navigate to Datadogs API Keys page",
     datadogApiKeysButton: "Open API Keys",
@@ -5896,7 +5896,7 @@ export default {
       "Once the application is created, click <mark>Manage</mark>, then click <mark>Provisioning</mark>. Under the Create configuration section, click <mark>Connect your application</mark>",
     entraScimFillFormStep: "Fill in the form with the following details",
     entraScimTenantUrlCallout:
-      "The <accent>'?aadOptscim062020'</accent> flag appended to the Tenant URL is required to ensure Microsoft Entra ID sends SCIM 2.0 compliant requests. <link>Learn more</link>",
+      "The <accent>''?aadOptscim062020''</accent> flag appended to the Tenant URL is required to ensure Microsoft Entra ID sends SCIM 2.0 compliant requests. <link>Learn more</link>",
     entraScimTestConnectionStep:
       "After that click <mark>Test Connection</mark> to verify the SCIM connection. If the connection is successful click <mark>Create</mark> to save the configuration.",
     groupAttributeMapping: "Group Attribute Mapping",

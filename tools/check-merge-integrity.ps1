@@ -206,7 +206,24 @@ if (Test-Path $fragDir) {
   }
 } else { Pass "no fragment directory (nothing to reconcile)" }
 
-# ------------------------------------------------------------ 6. i18n plumbing
+# ------------------------------------------------- 6. render-time crashes
+Section "messages render without throwing"
+# A key that RESOLVES can still crash the page: next-intl throws at render time
+# for malformed ICU (an unclosed rich tag, a lone apostrophe starting a quoted
+# literal) and for a t.rich() whose tag the call site did not provide. Next.js
+# then swaps the page for its "This page couldn't load" screen, which reads as a
+# network problem but is a crash. This check also catches React hooks called at
+# module scope, which throw on import — that one took a production page down.
+$renderOut = & node tools/check-message-rendering.mjs 2>&1
+$renderCode = $LASTEXITCODE
+if ($renderCode -eq 0) {
+  Pass ($renderOut | Select-Object -First 1)
+} else {
+  Fail "catalog messages throw at render time - page will show Next.js's error screen"
+  $renderOut | Select-Object -First 25 | ForEach-Object { Write-Host "           $_" -ForegroundColor Red }
+}
+
+# ------------------------------------------------------------ 7. i18n plumbing
 Section "i18n plumbing"
 $required = @(
   'src/i18n/config.ts',

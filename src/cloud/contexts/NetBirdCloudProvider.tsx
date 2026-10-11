@@ -24,10 +24,10 @@ import { useAccount } from "@/modules/account/useAccount";
 import { requestAgentNetworkOnboarding } from "@/modules/onboarding/agent-network/existingAccountOnboarding";
 import { OnboardingProvider } from "@/modules/onboarding/OnboardingProvider";
 
-  const t = useTranslations("agentNetworkLabels");
 export const NetBirdCloudProvider = () => {
   const { mutate } = useSWRConfig();
   const { subscription } = useBilling();
+  const t = useTranslations("agentNetworkLabels");
   const [awsUserId, setAwsUserId] = useState<string | undefined>();
   const { trackEvent, trackEventV2 } = useAnalytics();
   const { domainCategory } = useDomainCategory();

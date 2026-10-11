@@ -4657,7 +4657,7 @@ export default {
     portkeyConfigId: "Portkey 配置 ID",
     portkeyConfigHelp: "已保存的 Portkey 配置（pc-...）。",
     portkeyConfigDescription:
-      "在 Portkey 托管侧封装上游提供商与虚拟密钥。每次请求都会以 x-portkey-config: <id> 标记。如果调用方改为在请求体中指定 @org/model，可留空。",
+      "在 Portkey 托管侧封装上游提供商与虚拟密钥。每次请求都会以 x-portkey-config: id 标记。如果调用方改为在请求体中指定 @org/model，可留空。",
     appUrl: "应用 URL",
     appUrlHelp: "你的应用 URL——OpenRouter 的主要应用标识。",
     appUrlDescription:
@@ -5292,7 +5292,7 @@ export default {
     datadogDescription: "Datadog 是面向云规模应用的监控服务。",
     datadogSetupDescription: "开始将 NetBird 的审计与流量事件流式传输到 Datadog。请按以下步骤开始配置。",
     datadogSelectRegion: "选择您的 Datadog 地区",
-    datadogRegionHelp: "要确定您所在的地区，请查看<link>Datadog 文档。</link>",
+    datadogRegionHelp: "要确定您所在的地区，请查看<docs>Datadog 文档。</docs>",
     datadogGetApiKeyTitle: "获取您的 Datadog API 密钥",
     datadogNavigateApiKeys: "前往 Datadog 的 API Keys 页面",
     datadogApiKeysButton: "打开 API Keys",
@@ -5491,7 +5491,7 @@ export default {
       "应用程序创建后，点击<mark>Manage</mark>，然后点击<mark>Provisioning</mark>。在 Create configuration 部分中，点击<mark>Connect your application</mark>",
     entraScimFillFormStep: "使用以下信息填写表单",
     entraScimTenantUrlCallout:
-      "必须在租户 URL 后附加 <accent>'?aadOptscim062020'</accent>标记，以确保 Microsoft Entra ID 发送符合 SCIM 2.0 的请求。<link>了解更多</link>",
+      "必须在租户 URL 后附加 <accent>''?aadOptscim062020''</accent>标记，以确保 Microsoft Entra ID 发送符合 SCIM 2.0 的请求。<link>了解更多</link>",
     entraScimTestConnectionStep:
       "之后点击<mark>Test Connection</mark>验证 SCIM 连接。如果连接成功，请点击<mark>Create</mark>保存配置。",
     groupAttributeMapping: "组属性映射",
