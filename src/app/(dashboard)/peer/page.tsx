@@ -679,7 +679,7 @@ function PeerInformationCard({ peer }: Readonly<{ peer: Peer }>) {
 							label={
 								<>
 									<NetworkIcon size={16} className={"shrink-0"} />
-									MAC Address
+									{tCommon("macAddress")}
 								</>
 							}
 							className={

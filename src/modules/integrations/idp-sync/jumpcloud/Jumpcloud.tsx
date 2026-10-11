@@ -116,6 +116,7 @@ type ConfigurationProps = {
   config: ScimIntegration;
 };
 const ConfigurationButton = ({ config }: ConfigurationProps) => {
+  const t = useTranslations("idpSync");
   const { data: logs } = useFetchApi<IdentityProviderLog[]>(
     `/integrations/scim-idp/${config.id}/logs`,
   );
@@ -123,9 +124,9 @@ const ConfigurationButton = ({ config }: ConfigurationProps) => {
   const [configModal, setConfigModal] = useState(false);
 
   const lastSync = useMemo(() => {
-    if (isEmpty(logs)) return "Not synchronized";
-    return "Synced " + dayjs().to(logs?.[0]?.timestamp);
-  }, [logs]);
+    if (isEmpty(logs)) return t("notSynchronized");
+    return t("syncedRelative", { time: dayjs().to(logs?.[0]?.timestamp) });
+  }, [logs, t]);
 
   return (
     <>

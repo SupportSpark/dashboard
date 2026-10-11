@@ -17,6 +17,7 @@ type Props = {
 export const OnboardingAgentPolicy = ({
 onBack, onNext }: Props) => {
   const tonb = useTranslations("onboarding");
+  const tCommon = useTranslations("common");
   const { policies } = useAIProviders();
   const [open, setOpen] = useState(false);
   const hasPolicy = policies.length > 0;
@@ -30,9 +31,7 @@ onBack, onNext }: Props) => {
             "text-sm text-nb-gray-300 font-light mt-2 block text-center sm:px-4"
           }
         >
-          {`By default Agent Network denies every request. Policies connect source
-          groups, your users or agents, to providers, with optional token
-          and budget limits and guardrails.`}
+          {tonb("agentPolicyIntro")}
         </div>
       </div>
 
@@ -41,26 +40,26 @@ onBack, onNext }: Props) => {
           <CheckCircle2Icon size={16} className={"text-green-500"} />
           <span>
             {policies.length > 1
-              ? `${policies.length} policies created.`
-              : "Policy created."}{" "}
-            Authorized agents can now reach the provider.
+              ? tonb("policiesCreatedCount", { count: policies.length })
+              : tonb("policyCreated")}{" "}
+            {tonb("authorizedAgentsCanReachProvider")}
           </span>
         </div>
       ) : (
         <div className={"mt-4 flex items-center justify-center"}>
           <Button variant={"primary"} onClick={() => setOpen(true)}>
             <PlusIcon size={16} />
-            Add Policy
+            {tCommon("addPolicy")}
           </Button>
         </div>
       )}
 
       <div className={"flex items-center justify-center mt-4 gap-3"}>
         <Button variant={"secondary"} onClick={onBack}>
-          Go Back
+          {tonb("goBack")}
         </Button>
         <Button variant={"primary"} disabled={!hasPolicy} onClick={onNext}>
-          Continue
+          {tonb("continue")}
           <ArrowRightIcon size={16} />
         </Button>
       </div>

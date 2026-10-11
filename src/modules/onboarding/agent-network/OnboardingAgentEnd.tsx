@@ -55,6 +55,7 @@ export const OnboardingAgentEnd = ({
   onBack,
   onFinish,
 }: Props) => {
+  const tonb = useTranslations("onboarding");
   const outcome = useTestRequest(userId);
 
   if (outcome.kind === "passed") {
@@ -65,18 +66,21 @@ export const OnboardingAgentEnd = ({
     <div className={"relative flex flex-col h-full gap-4"}>
       <div>
         <h1 className={"text-xl text-center max-w-sm mx-auto"}>
-          Send a test request
+          {tonb("sendTestRequest")}
         </h1>
         <div
           className={
             "text-sm text-nb-gray-300 font-light mt-2 block text-center sm:px-4"
           }
         >
-          Run your agent, or the cURL command from the previous step, on{" "}
-          <span className={"text-nb-gray-100 whitespace-nowrap"}>
-            {deviceName || "your device"}
-          </span>
-          . The request shows up here once NetBird logs it.
+          {tonb.rich("agentTestIntro", {
+            name: deviceName || tonb("youDeviceFallback"),
+            device: (chunks) => (
+              <span className={"text-nb-gray-100 whitespace-nowrap"}>
+                {chunks}
+              </span>
+            ),
+          })}
         </div>
       </div>
 
@@ -84,10 +88,10 @@ export const OnboardingAgentEnd = ({
 
       <div className={"flex items-center justify-center mt-4 gap-3"}>
         <Button variant={"secondary"} onClick={onBack}>
-          Go Back
+          {tonb("goBack")}
         </Button>
         <Button variant={"secondaryLighter"} onClick={onFinish}>
-          Skip
+          {tonb("skip")}
         </Button>
       </div>
     </div>
@@ -195,6 +199,7 @@ const AllSet = ({
 // PassedRequest is the step's subtitle: it names the provider the test
 // request was routed to when it is one of the account's.
 const PassedRequest = ({ entry }: { entry: APIAgentNetworkAccessLog }) => {
+  const tonb = useTranslations("onboarding");
   const { providers } = useAIProviders();
   const provider = providers.find((p) => p.id === entry.resolved_provider_id);
 
@@ -205,24 +210,28 @@ const PassedRequest = ({ entry }: { entry: APIAgentNetworkAccessLog }) => {
       }
       data-testid={"agent-network-test-passed"}
     >
-      {passedSentence(entry, provider?.name)}
+      {passedSentence(tonb, entry, provider?.name)}
     </div>
   );
 };
 
 // passedSentence reads e.g. "Your request reached Anthropic and used 1,234
-// tokens.", naming the model when the provider is unknown.
+// tokens.", naming the model when the provider is unknown. `tonb` is passed in
+// because this is module scope, where calling the hook itself would throw.
 const passedSentence = (
+  tonb: ReturnType<typeof useTranslations>,
   entry: APIAgentNetworkAccessLog,
   providerName?: string,
 ) => {
   const target = providerName || entry.model;
   const tokens =
     entry.total_tokens > 0
-      ? ` and used ${entry.total_tokens.toLocaleString()} tokens`
+      ? tonb("requestUsedTokens", {
+          count: entry.total_tokens.toLocaleString(),
+        })
       : "";
-  if (!target) return `Your request went through${tokens}.`;
-  return `Your request reached ${target}${tokens}.`;
+  if (!target) return tonb("requestWentThrough", { tokens });
+  return tonb("requestReachedProvider", { provider: target, tokens });
 };
 
 // TestRequestStatus shows what became of the latest request. onOpenLogs leaves
@@ -246,7 +255,9 @@ const TestRequestStatus = ({
   }
 
   const { entry } = outcome;
-  const forModel = entry.model ? `, for ${entry.model},` : "";
+  const forModel = entry.model
+    ? tonb("requestForModel", { model: entry.model })
+    : "";
 
   return (
     <div className={"flex flex-col"}>

@@ -18,7 +18,7 @@ export type LockedFeatureInfoCardProps = {
 
 export const LockedFeatureInfoCard = ({
   className,
-  featureText = "This",
+  featureText,
   feature,
   offerTrial = true,
 }: LockedFeatureInfoCardProps) => {

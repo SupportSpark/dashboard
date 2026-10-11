@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useIronRDPInputHandler } from "./useIronRDPInputHandler";
 import {
@@ -43,6 +44,7 @@ export enum RDPStatus {
 export const RDP_DOCS_LINK = "https://docs.netbird.io/how-to/browser-client";
 
 export const useRemoteDesktop = (client: any) => {
+  const t = useTranslations("remoteAccessWave4");
   const [status, setStatus] = useState(RDPStatus.DISCONNECTED);
   const [config, setConfig] = useState<RDPConfig | null>(null);
   const [error, setError] = useState("");
@@ -226,7 +228,7 @@ export const useRemoteDesktop = (client: any) => {
           const errorMessage =
             err instanceof Error && err.message
               ? err.message
-              : "RDP connection failed";
+              : t("rdpConnectionFailed");
           setError(errorMessage);
           resetState();
           throw Error(errorMessage);
@@ -235,13 +237,13 @@ export const useRemoteDesktop = (client: any) => {
         }
       } catch (err) {
         const errorMessage =
-          err instanceof Error ? err.message : "RDP connection failed";
+          err instanceof Error ? err.message : t("rdpConnectionFailed");
         setError(errorMessage);
         resetState();
         throw Error(errorMessage);
       }
     },
-    [client, status, setupCertificateHandler, resetState],
+    [client, status, setupCertificateHandler, resetState, t],
   );
 
   /**

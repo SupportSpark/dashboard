@@ -4,6 +4,7 @@ import { cn } from "@utils/helpers";
 import { useGuardedRouter } from "@utils/navigation-guard";
 import { isNetBirdCloud } from "@utils/netbird";
 import { MonitorSmartphoneIcon, Users2Icon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import Skeleton from "react-loading-skeleton";
 import { useMSP } from "@/cloud/msp/contexts/MSPProvider";
@@ -50,6 +51,10 @@ const NavigationUsageInfoContent = () => {
   } = useBilling();
 
   const router = useGuardedRouter();
+  const t = useTranslations("billing");
+  const tnav = useTranslations("navigation");
+  const tUsers = useTranslations("users");
+  const tDropdown = useTranslations("userDropdown");
   const { permission } = usePermissions();
   const { trackEvent } = useAnalytics();
 
@@ -95,13 +100,13 @@ const NavigationUsageInfoContent = () => {
                   {stats?.active_users}
                 </span>
                 {isFreePlan ? (
-                  <span className={"text-nb-gray-300"}> of 5 Users</span>
+                  <span className={"text-nb-gray-300"}> {t("ofUsersFive")}</span>
                 ) : (
                   <span className={"text-nb-gray-300"}>
                     {" "}
                     {stats?.active_peers && stats.active_peers > 1
-                      ? "Users"
-                      : "User"}
+                      ? tnav("users")
+                      : tUsers("user")}
                   </span>
                 )}
               </div>
@@ -113,7 +118,10 @@ const NavigationUsageInfoContent = () => {
                 <span className={"font-medium text-white"}>
                   {stats?.active_peers}
                 </span>
-                <span className={"text-nb-gray-300"}> of {maxPeers} Peers</span>
+                <span className={"text-nb-gray-300"}>
+                  {" "}
+                  {t("ofPeersCount", { count: maxPeers })}
+                </span>
               </div>
             </div>
           </div>
@@ -146,8 +154,8 @@ const NavigationUsageInfoContent = () => {
               >
                 <IconInfoCircle size={12} className={"font-medium"} />
                 {usagePercentage >= 100
-                  ? "Usage limit reached"
-                  : "Approaching usage limit"}
+                  ? t("usageLimitReached")
+                  : t("approachingUsageLimit")}
               </div>
             )}
           </div>
@@ -168,7 +176,7 @@ const NavigationUsageInfoContent = () => {
                   router.push("/settings?tab=plans-and-billing");
                 }}
               >
-                {isFreePlan ? "Upgrade Plan" : "Plans & Billing"}
+                {isFreePlan ? t("upgradePlan") : tDropdown("plansAndBilling")}
               </Button>
             </div>
           )}

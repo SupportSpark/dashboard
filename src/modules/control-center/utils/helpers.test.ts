@@ -27,7 +27,7 @@ import {
   isPolicyNodeId,
   isTrackablePolicy,
   pinByOrder,
-  PLACEHOLDER_BASE_NAMES,
+  placeholderBaseNames,
   withFreshGroupCounts,
   withResourceLiveBaseline,
 } from "./helpers";
@@ -106,9 +106,15 @@ describe("getPlaceholderPeer", () => {
   });
 
   it("falls back to the kind's base name", () => {
-    for (const [kind, base] of Object.entries(PLACEHOLDER_BASE_NAMES)) {
+    // The factory takes the component's `t`; this stub stands in for the
+    // `controlCenter` catalog's English values.
+    const t = (key: string) =>
+      ({ agent: "Agent", server: "Server", userDevice: "User Device" })[key] ??
+      key;
+    for (const [kind, base] of Object.entries(placeholderBaseNames(t))) {
       const peer = getPlaceholderPeer(
         node("peer-draft-x", { placeholderKind: kind }),
+        t,
       );
       expect(peer?.name).toBe(base);
     }

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 
 export interface CertificateInfo {
@@ -41,6 +42,7 @@ export interface CertificateValidationResult {
 const STORAGE_KEY = "netbird-rdp-trusted-certs";
 
 export const useRDPCertificateHandler = () => {
+  const t = useTranslations("remoteAccessWave4");
   const [isValidating, setIsValidating] = useState(false);
 
   const calculateFingerprint = useCallback(
@@ -275,8 +277,8 @@ export const useRDPCertificateHandler = () => {
               raw: certBytes,
               fingerprint,
               hostname,
-              subject: "Unable to parse",
-              issuer: "Unable to parse",
+              subject: t("unableToParse"),
+              issuer: t("unableToParse"),
             };
           }
         }
@@ -286,7 +288,7 @@ export const useRDPCertificateHandler = () => {
         setIsValidating(false);
       }
     },
-    [parseCertificate, validateCertificate, calculateFingerprint],
+    [parseCertificate, validateCertificate, calculateFingerprint, t],
   );
 
   const acceptCertificate = useCallback(

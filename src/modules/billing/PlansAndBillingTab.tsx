@@ -6,6 +6,7 @@ import { VerticalTabs } from "@components/VerticalTabs";
 import * as Tabs from "@radix-ui/react-tabs";
 import { isNetBirdCloud } from "@utils/netbird";
 import { CreditCardIcon, ExternalLinkIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useState } from "react";
 import Skeleton from "react-loading-skeleton";
@@ -33,6 +34,7 @@ export const PlansAndBillingTab = () => {
 };
 
 export const PlansAndBillingTabTrigger = () => {
+  const t = useTranslations("userDropdown");
   const { permission } = usePermissions();
 
   const { isAccountWithMSPParent } = useMSP();
@@ -47,12 +49,16 @@ export const PlansAndBillingTabTrigger = () => {
       data-testid="settings-tab-plans-and-billing"
     >
       <CreditCardIcon size={14} />
-      Plans & Billing
+      {t("plansAndBilling")}
     </VerticalTabs.Trigger>
   );
 };
 
 const PlansAndBillingTabContent = () => {
+  const t = useTranslations("billing");
+  const tNav = useTranslations("navigation");
+  const tSettings = useTranslations("settings");
+  const tDropdown = useTranslations("userDropdown");
   const {
     plans,
     subscription,
@@ -148,12 +154,12 @@ const PlansAndBillingTabContent = () => {
         <Breadcrumbs>
           <Breadcrumbs.Item
             href={"/settings"}
-            label={"Settings"}
+            label={tNav("settings")}
             icon={<SettingsIcon size={13} />}
           />
           <Breadcrumbs.Item
             href={"/settings?tab=plans-and-billing"}
-            label={"Plans & Billing"}
+            label={tDropdown("plansAndBilling")}
             icon={<CreditCardIcon size={14} />}
             active
           />
@@ -162,7 +168,7 @@ const PlansAndBillingTabContent = () => {
         <div
           className={"flex items-start justify-between -mt-1 max-w-4xl mb-4"}
         >
-          <h1>Plans & Billing</h1>
+          <h1>{tDropdown("plansAndBilling")}</h1>
         </div>
 
         {isTrialAvailable && (
@@ -206,25 +212,18 @@ const PlansAndBillingTabContent = () => {
       <div className={"px-8 py-6"}>
         <div className={"max-w-3xl"}>
           <h2>
-            {subscription?.active
-              ? "Update your NetBird Plan"
-              : "Upgrade your NetBird Plan"}
+            {subscription?.active ? t("updateYourPlan") : t("upgradeYourPlan")}
           </h2>
 
+          <Paragraph>{t("increaseLimitHint")}</Paragraph>
+          <Paragraph>{t("flexiblePricingHint")}</Paragraph>
           <Paragraph>
-            Increase your user and peer limit by upgrading your plan.
-          </Paragraph>
-          <Paragraph>
-            With our flexible pricing, you are only billed for active users and
-            active peers.
-          </Paragraph>
-          <Paragraph>
-            Find out which{" "}
+            {t("pricingPlanLead")}{" "}
             <InlineLink href={"https://netbird.io/pricing"} target={"_blank"}>
-              Pricing Plan
+              {t("pricingPlanLink")}
               <ExternalLinkIcon size={12} />
-            </InlineLink>
-            suits you the best by visiting our website.
+            </InlineLink>{" "}
+            {t("pricingPlanTail")}
           </Paragraph>
 
           <div

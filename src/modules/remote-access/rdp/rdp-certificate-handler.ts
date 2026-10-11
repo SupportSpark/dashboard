@@ -1,6 +1,11 @@
 /**
  * RDP Certificate Handler
  * Handles X.509 certificate validation and user acceptance for RDP connections
+ *
+ * TODO(i18n): called outside React — this is a plain class (not a component or
+ * hook), so it cannot call useTranslations(). The modal markup it injects via
+ * innerHTML is still English; translating it needs a translator passed in from
+ * the caller (useRemoteDesktop) or a getTranslations() call.
  */
 export interface CertificateInfo {
   raw?: Uint8Array;

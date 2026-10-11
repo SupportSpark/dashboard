@@ -218,13 +218,13 @@ export const AgentNetworkOnboarding = ({
                       "text-sm text-nb-gray-400 font-light pt-10 text-center px-4"
                     }
                   >
-                    Already know how Agent Network works?
+                    {tonb("alreadyKnowHowAgentNetworkWorks")}
                     <InlineLink
                       href={"#"}
                       className={"!text-nb-gray-200 ml-1"}
                       onClick={() => onSkip(position + 1)}
                     >
-                      Skip to Dashboard
+                      {tonb("skipToDashboard")}
                     </InlineLink>
                   </span>
                 )}

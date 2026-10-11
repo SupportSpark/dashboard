@@ -16,14 +16,18 @@ import {
   Trash2,
   UnlinkIcon,
 } from "lucide-react";
-import * as React from "react";
 import { useTenants } from "@/cloud/msp/contexts/TenantsProvider";
 import { Tenant, TenantStatus } from "@/cloud/msp/interfaces/Tenant";
+import { useTranslations } from "next-intl";
+import * as React from "react";
 
 type Props = {
   tenant: Tenant;
 };
 export const TenantActionCell = ({ tenant }: Props) => {
+  const t = useTranslations("msp");
+  const tCommon = useTranslations("common");
+  const tReverseProxy = useTranslations("reverseProxy");
   const {
     openEditTenantModal,
     verifyDomain,
@@ -47,7 +51,7 @@ export const TenantActionCell = ({ tenant }: Props) => {
           onClick={() => verifyDomain(tenant, true)}
         >
           <ShieldCheckIcon size={14} />
-          Verify Domain
+          {tReverseProxy("verifyDomain")}
         </Button>
       )}
 
@@ -59,21 +63,18 @@ export const TenantActionCell = ({ tenant }: Props) => {
           onClick={() => openAccountExistsModal(tenant)}
         >
           <ShieldUserIcon size={16} />
-          Request Access
+          {t("requestAccess")}
         </Button>
       )}
 
       {isInvited && (
         <FullTooltip
           content={
-            <div className={"text-xs max-w-xs"}>
-              The account owner must log in to the dashboard to accept or
-              decline your request.
-            </div>
+            <div className={"text-xs max-w-xs"}>{t("accountOwnerMustLogInShort")}</div>
           }
         >
           <Badge variant={"yellow"} className={"ml-6 cursor-help"}>
-            Pending access request
+            {t("pendingAccessRequest")}
             <HelpCircle size={12} />
           </Badge>
         </FullTooltip>

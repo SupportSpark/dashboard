@@ -294,7 +294,21 @@ export const getIpPlaceholderFromRange = (range?: string) => {
   return octets.map((o, i) => (i < fixedOctets ? o : "x")).join(".");
 };
 
-export const PLACEHOLDER_BASE_NAMES: Record<string, string> = {
+// A factory, not a module constant: these are user-visible node labels, so they
+// need `t`, which is a React hook and cannot run at module scope. Callers bind
+// the `controlCenter` namespace, which carries all three labels.
+export const placeholderBaseNames = (
+  t: (key: string) => string,
+): Record<string, string> => ({
+  agent: t("agent"),
+  server: t("server"),
+  "user-device": t("userDevice"),
+});
+
+// English fallback for the pure call sites (selectors, layout, cascade logic)
+// that have no translator in scope. The `controlCenter` catalog holds the same
+// three strings, so a localized caller passes `getPlaceholderPeer(node, t)`.
+const PLACEHOLDER_BASE_NAMES_EN: Record<string, string> = {
   agent: "Agent",
   server: "Server",
   "user-device": "User Device",
@@ -328,7 +342,12 @@ export const kindHasBoundGroup = (kind?: string) =>
   kind === "server" || kind === "agent";
 
 // Pseudo-Peer so a not-yet-installed placeholder can take part in policies and selectors.
-export const getPlaceholderPeer = (node?: CanvasNode): Peer | undefined => {
+// `t` is optional: pure callers (selectors, layout, cascade) fall back to English,
+// while the rendering components pass their `peers` translator.
+export const getPlaceholderPeer = (
+  node?: CanvasNode,
+  t?: (key: string) => string,
+): Peer | undefined => {
   const data = node?.data as
     | {
         placeholderKind?: string;
@@ -350,8 +369,10 @@ export const getPlaceholderPeer = (node?: CanvasNode): Peer | undefined => {
     id: node.id.replace("peer-", ""),
     name:
       data.placeholderName ??
-      PLACEHOLDER_BASE_NAMES[data.placeholderKind] ??
-      "Peer",
+      (t ? placeholderBaseNames(t) : PLACEHOLDER_BASE_NAMES_EN)[
+        data.placeholderKind
+      ] ??
+      (t ? t("peerSingular") : "Peer"),
     ip: "",
     // The kind rides in `os` so selectors show the placeholder icon, not a wrong OS logo.
     os: `draft-${data.placeholderKind}`,

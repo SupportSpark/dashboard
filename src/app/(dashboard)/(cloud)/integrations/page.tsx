@@ -9,6 +9,7 @@ import {
   ShieldCheckIcon,
 } from "lucide-react";
 import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import React, { useState } from "react";
 import { usePermissions } from "@/contexts/PermissionsProvider";
 import PageContainer from "@/layouts/PageContainer";
@@ -25,6 +26,8 @@ export default function Integrations() {
   const [tab, setTab] = useState(currentTab || "identity-provider");
   const account = useAccount();
   const { permission } = usePermissions();
+  const tIdpSync = useTranslations("idpSync");
+  const tIntegrations = useTranslations("integrations");
 
   return (
     <PageContainer>
@@ -32,19 +35,19 @@ export default function Integrations() {
         <VerticalTabs.List>
           <VerticalTabs.Trigger value="identity-provider">
             <FingerprintIcon size={14} />
-            Identity Provider Sync
+            {tIdpSync("idpSyncTitle")}
           </VerticalTabs.Trigger>
 
           {isNetBirdCloud() && (
             <VerticalTabs.Trigger value="sso">
               <KeyRoundIcon size={14} />
-              Single Sign-On
+              {tIdpSync("singleSignOnTitle")}
             </VerticalTabs.Trigger>
           )}
 
           <VerticalTabs.Trigger value="event-streaming">
             <FileText size={14} />
-            Event Streaming
+            {tIntegrations("eventStreamingTabTitle")}
           </VerticalTabs.Trigger>
           <VerticalTabs.Trigger value="edr">
             <ShieldCheckIcon size={15} />

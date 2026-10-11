@@ -92,6 +92,7 @@ type Props = {
 function UserOverview({ user, initialGroups }: Readonly<Props>) {
 	const t = useTranslations("users");
 	const tNav = useTranslations("navigation");
+	const tCommon = useTranslations("common");
 	const router = useRouter();
 	const userRequest = useApiCall<User>("/users");
 	const isServiceUser = !!user?.is_service_user;
@@ -195,7 +196,7 @@ function UserOverview({ user, initialGroups }: Readonly<Props>) {
 										: {
 												color: user?.name
 													? generateColorFromString(
-															user?.name || user?.id || "System User",
+															user?.name || user?.id || t("systemUser"),
 														)
 													: "#808080",
 											}
@@ -233,7 +234,7 @@ function UserOverview({ user, initialGroups }: Readonly<Props>) {
 								onClick={save}
 								data-testid={"save-changes"}
 							>
-								Save Changes
+								{t("saveChanges")}
 							</Button>
 						</div>
 					)}
@@ -330,7 +331,7 @@ function UserOverview({ user, initialGroups }: Readonly<Props>) {
 													disabled={!permission.pats.create}
 												>
 													<IconCirclePlus size={16} />
-													Create Access Token
+													{tCommon("createAccessTokenTitle")}
 												</Button>
 											</CreateAccessTokenModal>
 										</div>

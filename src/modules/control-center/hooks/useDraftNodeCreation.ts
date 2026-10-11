@@ -23,7 +23,7 @@ import {
   NETWORK_FRAME_CHILD_WIDTH,
   NETWORK_FRAME_FALLBACK_ROW,
   NETWORK_FRAME_WIDTH,
-  PLACEHOLDER_BASE_NAMES,
+  placeholderBaseNames,
 } from "@/modules/control-center/utils/helpers";
 import { NodeType } from "@/modules/control-center/utils/nodes";
 
@@ -32,7 +32,7 @@ const getNextPlaceholderName = (
   nodes: Node[],
   t: (key: string) => string,
 ): string => {
-  const base = PLACEHOLDER_BASE_NAMES[kind] ?? t("peerSingular");
+  const base = placeholderBaseNames(t)[kind] ?? t("peerSingular");
   const taken = new Set(
     nodes
       .map((n) => (n.data as { placeholderName?: string })?.placeholderName)

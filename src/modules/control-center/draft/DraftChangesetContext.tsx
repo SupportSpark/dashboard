@@ -8,6 +8,7 @@ import React, {
   useMemo,
   useState,
 } from "react";
+import { useTranslations } from "next-intl";
 import { Group } from "@/interfaces/Group";
 import { Permission } from "@/interfaces/Permission";
 import { Policy } from "@/interfaces/Policy";
@@ -1359,6 +1360,7 @@ export function DraftChangesetProvider({
 }) {
   // Changes live only in React state: a reload loses the draft.
   const [changes, setChanges] = useState<DraftChange[]>([]);
+  const t = useTranslations("controlCenter");
 
   useEffect(() => {
     if (e2eHooksEnabled()) {
@@ -1956,12 +1958,12 @@ export function DraftChangesetProvider({
           id: draftUid(),
           type: "create-policy",
           clientId,
-          name: policy.name ?? "Policy",
+          name: policy.name ?? t("unnamedPolicy"),
           policy,
         },
       ]);
     },
-    [],
+    [t],
   );
 
   const trackUpdatePolicy = useCallback(
@@ -2003,7 +2005,7 @@ export function DraftChangesetProvider({
           supersedesUserWrite,
         );
         if (isEmptied) {
-          const name = policy.name ?? "Policy";
+          const name = policy.name ?? t("unnamedPolicy");
           if (isDraftPolicy) {
             // Deletion-emptied stays tagged and blocked — nothing restores a departed
             // create-policy; an emptying the user did themselves (no tag) still drops it.
@@ -2065,7 +2067,7 @@ export function DraftChangesetProvider({
             id: draftUid(),
             type: "update-policy",
             policyId,
-            name: policy.name ?? "Policy",
+            name: policy.name ?? t("unnamedPolicy"),
             policy,
             origin: "edit",
             groupDeletion: merged,
@@ -2073,7 +2075,7 @@ export function DraftChangesetProvider({
         ];
       });
     },
-    [],
+    [t],
   );
 
   const patchPendingPolicyUpdate = useCallback(
@@ -2442,12 +2444,12 @@ export function DraftChangesetProvider({
           id: draftUid(),
           type: "create-agent-policy",
           clientId,
-          name: policy.name || "Agent policy",
+          name: policy.name || t("unnamedAgentPolicy"),
           policy,
         },
       ]);
     },
-    [],
+    [t],
   );
 
   const trackUpdateAgentPolicy = useCallback(

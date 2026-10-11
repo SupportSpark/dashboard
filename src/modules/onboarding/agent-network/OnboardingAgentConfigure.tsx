@@ -40,9 +40,7 @@ onBack, onNext }: Props) => {
             "text-sm text-nb-gray-300 font-light mt-2 block text-center sm:px-4"
           }
         >
-          {`Point your agent to the NetBird base URL. No client API key is needed,
-          NetBird authorizes each request and injects the upstream key server
-          side.`}
+          {tonb("agentConfigureIntro")}
         </div>
       </div>
 
@@ -61,17 +59,16 @@ onBack, onNext }: Props) => {
             "mt-2 text-center text-sm text-nb-gray-400 font-light sm:px-4"
           }
         >
-          Connect a provider to generate your endpoint, then your agent config
-          appears here.
+          {tonb("agentConfigureNoProvider")}
         </div>
       )}
 
       <div className={"flex items-center justify-center mt-4 gap-3"}>
         <Button variant={"secondary"} onClick={onBack}>
-          Go Back
+          {tonb("goBack")}
         </Button>
         <Button variant={"primary"} onClick={onNext}>
-          Continue
+          {tonb("continue")}
           <ArrowRightIcon size={16} />
         </Button>
       </div>

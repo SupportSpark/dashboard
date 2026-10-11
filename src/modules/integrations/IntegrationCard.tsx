@@ -6,6 +6,7 @@ import { cn } from "@utils/helpers";
 import { ExternalLinkIcon, Repeat } from "lucide-react";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useMemo } from "react";
 
@@ -41,6 +42,7 @@ export function IntegrationCard<T>({
   hideSwitch = false,
   customButton,
 }: Props<T>) {
+  const t = useTranslations("integrations");
   const IntegrationButton = useMemo(
     () =>
       customButton ? (
@@ -54,11 +56,11 @@ export function IntegrationCard<T>({
             onClick={onSetup}
           >
             <Repeat size={13} />
-            Connect {name}
+            {t("connectNamed", { name })}
           </Button>
         </div>
       ),
-    [customButton, name],
+    [customButton, name, t],
   );
 
   return (

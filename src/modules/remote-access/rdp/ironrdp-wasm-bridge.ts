@@ -94,6 +94,12 @@ const IRON_ERROR_KIND_NAMES = [
 
 // User-facing message per error kind. "General" is intentionally absent: it
 // carries no structured detail, so its reason is read from the backtrace.
+//
+// TODO(i18n): called outside React — this is a plain class (not a component or
+// hook), so it cannot call useTranslations(). These messages are surfaced to
+// the user through useRemoteDesktop's error state / notify(), so translating
+// them needs a translator injected by the React layer that constructs the
+// bridge.
 const IRON_ERROR_KIND_MESSAGES: Record<string, string> = {
   WrongPassword: "Incorrect username or password.",
   LogonFailure: "Login failed. Check your username and password.",

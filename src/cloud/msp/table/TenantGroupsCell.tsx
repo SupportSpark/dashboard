@@ -26,6 +26,8 @@ type Props = {
   tenant: Tenant;
 };
 export const TenantGroupsCell = ({ tenant }: Props) => {
+  const t = useTranslations("msp");
+  const tPeers = useTranslations("peers");
   const { groups } = useGroups();
   const { openEditTenantModal } = useTenants();
   const isPending = tenant.status === TenantStatus.Pending;
@@ -52,7 +54,7 @@ export const TenantGroupsCell = ({ tenant }: Props) => {
         className={"max-h-[38px]"}
       >
         <IconCirclePlus size={14} />
-        Add Groups
+        {tPeers("addGroups")}
       </Button>
     );
 

@@ -24,7 +24,7 @@ import { AllHandles } from "@/modules/control-center/handles/AllHandles";
 import { ConnectHandle } from "@/modules/control-center/handles/ConnectHandle";
 import { DeviceCard } from "@/modules/control-center/nodes/DeviceCard";
 import {
-  PLACEHOLDER_BASE_NAMES,
+  placeholderBaseNames,
   useAnySourceGroupEnabled,
 } from "@/modules/control-center/utils/helpers";
 
@@ -90,7 +90,7 @@ export const PeerNode = ({ data, id }: PeerNodeType) => {
         ? MonitorSmartphoneIcon
         : ServerIcon;
     // Drops always assign a unique placeholderName; this is a fallback.
-    const label = placeholderName || PLACEHOLDER_BASE_NAMES[placeholderKind];
+    const label = placeholderName || placeholderBaseNames(t)[placeholderKind];
     return (
       <div
         className={cn(

@@ -68,12 +68,12 @@ onBack, onNext, device }: Props) => {
       <div className={"flex items-center justify-center mt-4 gap-3"}>
         {onBack && (
           <Button variant={"secondary"} onClick={onBack}>
-            Go Back
+            {tonb("goBack")}
           </Button>
         )}
         {device ? (
           <Button variant={"primary"} onClick={onNext}>
-            Continue
+            {tonb("continue")}
             <ArrowRightIcon size={16} />
           </Button>
         ) : (

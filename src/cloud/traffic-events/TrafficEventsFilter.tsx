@@ -80,6 +80,7 @@ export function TrafficEventsFilter({
 }: Readonly<Props>) {
   const tte = useTranslations("trafficEvents");
   const tCommon = useTranslations("common");
+  const tTable = useTranslations("table");
   const filterItems = useMemo(() => getFixedTypeFilters(tte), [tte]);
   const searchRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = useState(false);
@@ -284,7 +285,7 @@ export function TrafficEventsFilter({
 
           {filteredItems.length == 0 && search != "" && (
             <DropdownInfoText className={"mb-4"}>
-              There are no filters matching your search.
+              {tTable("noMatchingFilters")}
             </DropdownInfoText>
           )}
 

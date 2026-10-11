@@ -70,7 +70,7 @@ export const OnboardingAddUserDevice = ({ device, policy, onNext }: Props) => {
     <div className={"relative flex flex-col h-full gap-4"}>
       <div>
         <h1 className={"text-xl text-center max-w-sm mx-auto"}>
-          {"Time to add your client device"}
+          {t("timeToAddClientDevice")}
         </h1>
         <div
           className={

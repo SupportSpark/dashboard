@@ -25,7 +25,7 @@ import {
   draftBoundGroupName,
   getPlaceholderHostname,
   kindHasBoundGroup,
-  PLACEHOLDER_BASE_NAMES,
+  placeholderBaseNames,
 } from "@/modules/control-center/utils/helpers";
 import SetupModal from "@/modules/setup-netbird-modal/SetupModal";
 import { useTranslations } from "next-intl";
@@ -68,10 +68,10 @@ export const DraftInstallPeerModal = () => {
       | undefined;
     return (
       data?.placeholderName ??
-      PLACEHOLDER_BASE_NAMES[data?.placeholderKind ?? ""] ??
+      placeholderBaseNames(t)[data?.placeholderKind ?? ""] ??
       undefined
     );
-  }, [installModal, reactFlow]);
+  }, [installModal, reactFlow, t]);
 
   // Only a matching fallback for user devices; bound-group placeholders match by group.
   const hostname = React.useMemo(() => {
@@ -265,8 +265,8 @@ export const DraftInstallPeerModal = () => {
     if (!boundId) {
       const label =
         data.placeholderName ??
-        PLACEHOLDER_BASE_NAMES[data.placeholderKind ?? "agent"] ??
-        "Agent";
+        placeholderBaseNames(t)[data.placeholderKind ?? "agent"] ??
+        t("agent");
       const taken = new Set((groups ?? []).map((g) => g.name));
       const created = await groupRequest.post({
         name: draftBoundGroupName(label, taken),

@@ -215,6 +215,7 @@ const TenantItem = ({
   onSelect,
   allowTrialExpiredInfo = false,
 }: TenantItemProps) => {
+  const t = useTranslations("msp");
   const allowFetchSubscription = isMSP === undefined || !isMSP;
   const { isTrialExpired, isSubscriptionLoading } = useTenantSubscription({
     tenantId: tenant.id,
@@ -303,11 +304,10 @@ const TenantItem = ({
           <FullTooltip
             content={
               <div className={"max-w-xs text-xs"}>
-                Trial for this tenant has expired. Please upgrade the plan to
-                continue using the tenant.{" "}
+                {t("trialExpiredTenantTooltip")}{" "}
                 {!isInTenantContext && (
                   <InlineLink href={"/tenants"}>
-                    Go to Tenants
+                    {t("goToTenants")}
                     <ArrowUpRightIcon size={14} />
                   </InlineLink>
                 )}
@@ -319,7 +319,7 @@ const TenantItem = ({
               className={"h-[25px] px-2 text-[0.7rem] !border-yellow-600"}
             >
               <CircleHelp size={12} />
-              Trial Expired
+              {t("trialExpired")}
             </Badge>
           </FullTooltip>
         </div>

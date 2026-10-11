@@ -16,6 +16,7 @@ type Props = {
 };
 
 export const TenantPlanCell = ({ tenant }: Props) => {
+  const t = useTranslations("msp");
   const { openEditTenantModal } = useTenants();
 
   const { currentPlanTier, isLoading, trialDaysRemaining, isTrialExpired } =
@@ -36,7 +37,7 @@ export const TenantPlanCell = ({ tenant }: Props) => {
       <div className={"flex gap-3 items-center"}>
         <Badge variant={"yellow"} className={"h-[32px]"}>
           <CircleAlertIcon size={12} />
-          Trial Expired
+          {t("trialExpired")}
         </Badge>
         <Button
           size={"xs"}
@@ -45,7 +46,7 @@ export const TenantPlanCell = ({ tenant }: Props) => {
           onClick={() => openEditTenantModal(tenant, "plan")}
         >
           <CreditCardIcon size={12} />
-          Upgrade Plan
+          {t("upgradePlan")}
         </Button>
       </div>
     );

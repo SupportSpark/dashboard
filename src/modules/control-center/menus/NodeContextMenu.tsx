@@ -67,7 +67,7 @@ import {
   isDraftNetworkNode,
   isFocusWorthy,
   isFrameNode,
-  PLACEHOLDER_BASE_NAMES,
+  placeholderBaseNames,
 } from "@/modules/control-center/utils/helpers";
 import { canRenamePeerNode } from "@/modules/control-center/utils/node-capabilities";
 import { EditPeerNameModal } from "@/modules/peers/EditPeerNameModal";
@@ -175,8 +175,8 @@ export const NodeContextMenu = ({
   const isPlaceholderRename = !!renameTarget?.data?.placeholderKind;
   const placeholderCurrentName =
     (renameTarget?.data?.placeholderName as string) ||
-    PLACEHOLDER_BASE_NAMES[renameTarget?.data?.placeholderKind as string] ||
-    "Peer";
+    placeholderBaseNames(t)[renameTarget?.data?.placeholderKind as string] ||
+    t("peerSingular");
   const isResourceRename = !!renameTarget?.id.startsWith("resource-new-");
   const resourceCurrentName =
     (renameTarget?.data?.resource as { name?: string } | undefined)?.name ?? "";

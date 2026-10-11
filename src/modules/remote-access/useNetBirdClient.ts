@@ -10,6 +10,10 @@ import { installWebSocketProxy } from "@/modules/remote-access/rdp/websocket-pro
 
 const config = loadConfig();
 
+// TODO(i18n): called outside React — the store's error strings are written by
+// plain functions and the module-level NetBirdStore class, which are not
+// components and cannot call useTranslations(). Left English intentionally.
+
 const WASM_CONFIG = {
   SCRIPT_PATH: "/wasm_exec.js",
   WASM_PATH: config.wasmPath,

@@ -321,6 +321,7 @@ const TrafficEventsPeerDetailTable = ({
   const tte = useTranslations("trafficEvents");
   const tPolicies = useTranslations("policies");
   const tReverseProxy = useTranslations("reverseProxy");
+  const tPeers = useTranslations("peers");
   const { mutate } = useSWRConfig();
   const router = useRouter();
   const [sorting, setSorting] = useState<SortingState>([
@@ -404,7 +405,7 @@ const TrafficEventsPeerDetailTable = ({
                 variant={"primary"}
                 onClick={() => router.push("/settings?tab=networks")}
               >
-                Go to Settings
+                {tPeers("goToSettings")}
                 <ArrowUpRightIcon size={16} />
               </Button>
             </div>
@@ -477,10 +478,11 @@ const TrafficEventsPeerDetailTable = ({
 };
 
 export const TrafficEventsPeerTabTrigger = () => {
+  const tNav = useTranslations("navigation");
   return (
     <TabsTrigger value={"traffic-events"}>
       <ArrowLeftRightIcon size={16} />
-      Traffic Events
+      {tNav("trafficEvents")}
     </TabsTrigger>
   );
 };

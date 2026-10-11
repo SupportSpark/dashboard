@@ -250,6 +250,7 @@ export default {
     followingCountriesAndRegions: "the following countries & regions",
     followingPeerNetworkRanges: "the following peer network ranges",
     followingProcesses: "peers which are running the following processes",
+    macAddress: "MAC Address",
   },
   navigation: {
     controlCenter: "Control Center",
@@ -1237,6 +1238,8 @@ export default {
     readTheDocs: "Read the Docs",
     or: "or",
     contactSupport: "Contact Support",
+    systemUser: "System User",
+    saveChanges: "Save Changes",
   },
   userDropdown: {
     profileSettings: "Profile Settings",
@@ -3406,6 +3409,10 @@ export default {
     installOnDeviceStep:
       "Install NetBird on the device. Skip if it is already installed.",
     noPendingChanges: "No pending changes.",
+    unnamedPolicy: "Policy",
+    unnamedResource: "Resource",
+    unnamedAgentPolicy: "Agent policy",
+    userDevice: "User Device",
   },
   notifications: {
     title: "Notifications",
@@ -4060,6 +4067,38 @@ export default {
     firstDeviceTitle: "Let's get your first device online",
     firstDeviceIntro:
       "To access other machines, install NetBird, sign in, and your device joins the network. Every device you add becomes a NetBird peer in your network. It's that simple.",
+    timeToAddClientDevice: "Time to add your client device",
+    agentTestIntro:
+      "Run your agent, or the cURL command from the previous step, on <device>{name}</device>. The request shows up here once NetBird logs it.",
+    requestReachedProvider: "Your request reached {provider}{tokens}.",
+    requestWentThrough: "Your request went through{tokens}.",
+    requestUsedTokens: " and used {count} tokens",
+    requestForModel: ", for {model},",
+    skipToDashboard: "Skip to Dashboard",
+    alreadyKnowHowNetBirdWorks: "Already know how NetBird works?",
+    alreadyKnowHowAgentNetworkWorks: "Already know how Agent Network works?",
+    setTheRules: "Set the rules. You're in control",
+    explainPolicyIntro:
+      "NetBird makes it easy for admins to enforce least-privilege access with access control policies. We've already created one for your resource during onboarding.",
+    explainDefaultPolicyIntro:
+      "With NetBird, you decide who gets access to what. We've already set up an access policy for your devices.",
+    flipSwitchResourceHint:
+      "Flip the switch, then try pinging your resource again to see how it affects the connection.",
+    flipSwitchDeviceHint:
+      "Flip the switch, then try pinging your other device again to see how it affects the connection.",
+    agentConfigureIntro:
+      "Point your agent to the NetBird base URL. No client API key is needed, NetBird authorizes each request and injects the upstream key server side.",
+    agentConfigureNoProvider:
+      "Connect a provider to generate your endpoint, then your agent config appears here.",
+    agentPolicyIntro:
+      "By default Agent Network denies every request. Policies connect source groups, your users or agents, to providers, with optional token and budget limits and guardrails.",
+    policyCreated: "Policy created.",
+    policiesCreatedCount: "{count} policies created.",
+    authorizedAgentsCanReachProvider: "Authorized agents can now reach the provider.",
+    agentProviderIntro:
+      "A provider is an upstream LLM service NetBird routes to, such as OpenAI, Anthropic, Vertex AI, Bedrock, an AI gateway, or a self-hosted model server like vLLM. NetBird stores the API key securely, so your agents never hold it.",
+    providerConnected: "Provider connected.",
+    providersConnectedCount: "{count} providers connected.",
   },
   setupModal: {
     generateSetupKey: "Generate a setup key",
@@ -5027,6 +5066,26 @@ export default {
     verifyDomainAction: "Verify Domain",
     verifyLaterBtn: "Verify Later",
     verifyingOwnershipOf: "Verifying ownership of {domain}",
+    requestAccess: "Request Access",
+    pendingAccessRequest: "Pending access request",
+    accountOwnerMustLogIn:
+      "The account owner must log in to the dashboard to accept or decline your request. Please inform them after you have requested access.",
+    accountOwnerMustLogInShort:
+      "The account owner must log in to the dashboard to accept or decline your request.",
+    mspPortal: "MSP Portal",
+    trialExpired: "Trial Expired",
+    upgradePlan: "Upgrade Plan",
+    trialExpiredTenantTooltip:
+      "Trial for this tenant has expired. Please upgrade the plan to continue using the tenant.",
+    permissionsLabel: "Permissions (required)",
+    addUserGroupsHelp: "Add user groups to grant them access to this tenant.",
+    accountExistsTitle: "This NetBird account already exists in our system",
+    accountExistsDescription:
+      "To manage the account <b>{domain}</b>, you must first request access from the account owner.",
+    ownTrialEndedContactAdmin:
+      "Your account has reached the end of the free trial period. To continue using NetBird, please contact your account administrator.",
+    getSupport: "Get Support",
+    switchToTenantAccount: "Switch to {name}'s Account",
   },
   distributor: {
     customer: "Customer",
@@ -6703,5 +6762,100 @@ export default {
       "Quickly find networks and associated resources. Start typing to search by name, description or address.",
     noResultsDescription:
       "We couldn't find any results. Please try a different search term.",
+  },
+  remoteAccessWave4: {
+    rdpOfflineTooltip: "This peer is offline and cannot be accessed via RDP.",
+    rdpNoPermissionTooltip:
+      "You do not have permission to launch an RDP session. Please contact your administrator.",
+    sshNoPermissionTooltip:
+      "You do not have permission to launch the SSH console. Please contact your administrator.",
+    sshOfflineTooltip:
+      "Connecting via SSH is only available when the peer is online.",
+    sshDisabledTooltip:
+      "SSH Access is currently disabled for this peer. Please enable SSH access for this peer and make sure to add an explicit access control policy allowing SSH access.",
+    rdpConnectionFailed: "RDP connection failed",
+    sshConnectionFailed: "SSH connection failed. Check the console for details.",
+    noAccessToken: "No access token available",
+    unableToParse: "Unable to parse",
+  },
+  billing: {
+    subscriptionLimitReached: "Subscription Limit Reached",
+    subscriptionLimitReachedDescription:
+      "It looks like you’ve hit the limit of your current subscription. Upgrade now to unlock additional features and increase your limits.",
+    upgradeNow: "Upgrade Now",
+    upgradePlan: "Upgrade Plan",
+    usageLimitReached: "Usage limit reached",
+    approachingUsageLimit: "Approaching usage limit",
+    ofUsersFive: "of 5 Users",
+    ofPeersCount: "of {count} Peers",
+    currentPlan: "Current Plan",
+    upgradeTo: "Upgrade to",
+    perUserPerMonth: "per user / month",
+    machinesAndPerUser: "100 machines + 10 per user",
+    planUpdatedCooldown:
+      "Your plan was recently updated. Please wait for 48 hours from the last update to change your plan again.",
+    trialEndsInDays: "Trial ends in {count} days",
+    visitAwsMarketplace: "Visit AWS Marketplace",
+    managePlan: "Manage Plan",
+    trialFullAccess:
+      "You currently have access to NetBird's full set of features & integrations.",
+    teamPlanRemainsActive: "Your Team plan remains active during this trial.",
+    afterTrialReturnToPlan:
+      "After the trial, you will return to your {plan} plan unless you choose to upgrade.",
+    perMonth: "per month",
+    estimatedPriceTooltip:
+      "The estimated price is calculated based on the number of active users and active peers.",
+    thanksForSubscribing: "Thank you for subscribing to NetBird! 🎉",
+    subscriptionActivated:
+      "Your subscription has been successfully activated. You have now full access to all NetBird features of your selected plan.",
+    updateYourPlan: "Update your NetBird Plan",
+    upgradeYourPlan: "Upgrade your NetBird Plan",
+    increaseLimitHint: "Increase your user and peer limit by upgrading your plan.",
+    flexiblePricingHint:
+      "With our flexible pricing, you are only billed for active users and active peers.",
+    pricingPlanLead: "Find out which",
+    pricingPlanLink: "Pricing Plan",
+    pricingPlanTail: "suits you the best by visiting our website.",
+    tryAllFeaturesFree: "Try all of NetBird's features for free",
+    trialGradientDescription:
+      "Activate your 14-day trial to access NetBird's full set of features & integrations. After the trial, you will return to your {plan} plan unless you choose to upgrade.",
+    trialOwnerOnly: "Only the owner or an administrator can start a free trial.",
+    upgradeOwnerOnly: "Only the owner or an administrator can upgrade the plan.",
+    startFreeTrial: "Start 14-Day Free Trial",
+    noCreditCardRequired: "No credit card required",
+    getLicense: "Get a License",
+    trialStarted: "Your 14-Day Trial has started!",
+    trialWelcomeLead:
+      "Welcome aboard! You have now access to NetBird's full set of features & integrations",
+    trialWelcomeBold: "for the next two weeks",
+    whatsNext: "What's next?",
+    trialExploreIntro:
+      "Explore the dashboard, our integrations and all the features. Some of the key features you can try:",
+    trialFeatureIdpSync: "Configure IdP sync for user & group provisioning",
+    trialFeaturePostureChecks: "Set up your first device posture checks",
+    trialFeatureDeviceApprovals: "Enable device approvals for added control",
+    exploreNetBird: "Explore NetBird",
+    availableOnTeam: "Available on Team",
+    availableOnBusiness: "Available on Business",
+    availableWithEnterpriseLicense: "Available with an Enterprise license",
+    thisFeature: "This",
+    availableOnTeamOrHigher: "Team plan or higher",
+    availableOnBusinessPlan: "Business plan",
+    availableOnEnterpriseOrCloud:
+      "{feature} is available with a NetBird Enterprise commercial license, or on NetBird Cloud with the {plan}.",
+    contactAdminToUpgrade: "Contact your account administrator to upgrade the plan.",
+    ownerOrAdminUpgradeOnly: "Only the owner or an admin can upgrade the plan.",
+    upgradeOrStartTrial: "Upgrade or start a 14-day free trial to access this feature.",
+    upgradePlanToAccess: "Upgrade your {scope} plan to access this feature.",
+    scopeCurrent: "current",
+    scopeTenants: "tenants",
+    peerSingular: "Peer",
+    free: "Free",
+    planAvailability: "{feature} is available on the {plan}.",
+    contactAdminLead: "Contact your account administrator",
+    contactAdminTail: "to upgrade the plan.",
+    planAvailabilityAre: "{feature} are available on the {plan}.",
+    availableOnEnterpriseOrCloudAre:
+      "{feature} are available with a NetBird Enterprise commercial license, or on NetBird Cloud with the {plan}.",
   },
 };

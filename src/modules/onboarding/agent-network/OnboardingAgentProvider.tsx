@@ -25,6 +25,7 @@ export const OnboardingAgentProvider = ({
   onNext,
 }: Props) => {
   const tonb = useTranslations("onboarding");
+  const tan = useTranslations("agentNetwork");
   const { settings, providers, openWizard, closeWizard, isWizardOpen } =
     useAIProviders();
   const connected = !!settings && providers.length > 0;
@@ -39,10 +40,7 @@ export const OnboardingAgentProvider = ({
             "text-sm text-nb-gray-300 font-light mt-2 block text-center sm:px-4"
           }
         >
-          {`A provider is an upstream LLM service NetBird routes to, such as
-          OpenAI, Anthropic, Vertex AI, Bedrock, an AI gateway, or a
-          self-hosted model server like vLLM. NetBird stores the API key
-          securely, so your agents never hold it.`}
+          {tonb("agentProviderIntro")}
         </div>
       </div>
 
@@ -51,25 +49,25 @@ export const OnboardingAgentProvider = ({
           <CheckCircle2Icon size={16} className={"text-green-500"} />
           <span>
             {providers.length > 1
-              ? `${providers.length} providers connected.`
-              : "Provider connected."}
+              ? tonb("providersConnectedCount", { count: providers.length })
+              : tonb("providerConnected")}
           </span>
         </div>
       ) : (
         <div className={"mt-4 flex items-center justify-center"}>
           <Button variant={"primary"} onClick={openWizard}>
             <PlusIcon size={16} />
-            Connect Provider
+            {tan("connectProvider")}
           </Button>
         </div>
       )}
 
       <div className={"flex items-center justify-center mt-4 gap-3"}>
         <Button variant={"secondary"} onClick={onBack}>
-          Go Back
+          {tonb("goBack")}
         </Button>
         <Button variant={"primary"} disabled={!connected} onClick={onNext}>
-          Continue
+          {tonb("continue")}
           <ArrowRightIcon size={16} />
         </Button>
       </div>

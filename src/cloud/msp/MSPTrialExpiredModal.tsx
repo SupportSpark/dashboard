@@ -28,6 +28,7 @@ export const MSPTrialExpiredModal = () => {
   } = useMSP();
 
   const t = useTranslations("msp");
+  const tCommon = useTranslations("common");
 
   const {
     subscription,
@@ -80,9 +81,7 @@ export const MSPTrialExpiredModal = () => {
             </div>
           ) : (
             <div className={"text-sm text-nb-gray-300 text-center"}>
-              Your account has reached the end of the free trial period. To
-              continue using NetBird, please contact your account administrator{" "}
-              <MSPName />.
+              {t("ownTrialEndedContactAdmin")} <MSPName />.
             </div>
           )}
         </div>
@@ -95,7 +94,7 @@ export const MSPTrialExpiredModal = () => {
               variant={"secondary"}
               onClick={() => loginAs(undefined)}
             >
-              Switch to {mspAccount?.name + "'s"} Account
+              {t("switchToTenantAccount", { name: mspAccount?.name ?? "" })}
             </Button>
           </ModalFooter>
         ) : (
@@ -107,7 +106,7 @@ export const MSPTrialExpiredModal = () => {
               onClick={logout}
             >
               <LogOutIcon size={15} className={"shrink-0"} />
-              Logout
+              {tCommon("logout")}
             </Button>
             <a
               href={`mailto:${mailToEmail}?subject=Request%20for%20Assistance%3A%20Trial%20Expired`}
@@ -115,7 +114,7 @@ export const MSPTrialExpiredModal = () => {
             >
               <Button className={"w-full"} variant={"primary"}>
                 <MailIcon size={15} className={"shrink-0"} />
-                Get Support
+                {t("getSupport")}
               </Button>
             </a>
           </ModalFooter>

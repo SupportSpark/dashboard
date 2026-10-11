@@ -4,10 +4,13 @@ import Paragraph from "@components/Paragraph";
 import { GradientFadedBackground } from "@components/ui/GradientFadedBackground";
 import { cn } from "@utils/helpers";
 import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useState } from "react";
 
 export const PlanSuccessModal = () => {
+  const t = useTranslations("billing");
+  const tCommon = useTranslations("common");
   const params = useSearchParams();
   const subscriptionSuccess = params.get("success");
   const [successModal, setSuccessModal] = useState(
@@ -24,16 +27,14 @@ export const PlanSuccessModal = () => {
           }
         >
           <h2 className={"text-xl my-0 leading-[1.5] mb-2"}>
-            Thank you for subscribing <br />
-            to NetBird! 🎉
+            {t("thanksForSubscribing")}
           </h2>
           <Paragraph className={cn("text-sm text-center max-w-xs")}>
-            Your subscription has been successfully activated. You have now full
-            access to all NetBird features of your selected plan.
+            {t("subscriptionActivated")}
           </Paragraph>
           <ModalClose asChild={true}>
             <Button variant={"primary"} className={"w-full mt-4"} size={"xs"}>
-              Close
+              {tCommon("close")}
             </Button>
           </ModalClose>
         </div>

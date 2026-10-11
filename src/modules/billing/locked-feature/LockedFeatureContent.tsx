@@ -2,6 +2,7 @@ import Button from "@components/Button";
 import { cn } from "@utils/helpers";
 import { isNetBirdCloud } from "@utils/netbird";
 import { LockIcon, MailIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { PlanFeatureAvailability } from "@/cloud/cloud-hooks/useIsFeatureLocked";
 import { useTrial } from "@/cloud/cloud-hooks/useTrial";
@@ -11,22 +12,22 @@ import { PlanTier } from "@/interfaces/Subscription";
 import { LockedFeatureInfoCardProps } from "@/modules/billing/locked-feature/LockedFeatureInfoCard";
 import { TrialOrUpgradeButton } from "@/modules/billing/trial/TrialOrUpgradeButton";
 
-export enum PLAN_TEXT {
-  TEAM = "Available on Team",
-  BUSINESS = "Available on Business",
-  ENTERPRISE = "Available with an Enterprise license",
-}
-
 export const LockedFeatureContent = ({
   feature,
   isTooltip = false,
-  featureText = "This",
+  featureText,
   isCard = false,
   offerTrial = true,
 }: LockedFeatureInfoCardProps) => {
+  const t = useTranslations("billing");
   const { isMSPInTenantContext, isAccountWithMSPParent } = useMSP();
   const { isOwnerOrAdmin } = useLoggedInUser();
   const plan = PlanFeatureAvailability[feature];
+  const planLabel = isNetBirdCloud()
+    ? plan == "team"
+      ? t("availableOnTeam")
+      : t("availableOnBusiness")
+    : t("availableWithEnterpriseLicense");
 
   return (
     <>
@@ -41,7 +42,7 @@ export const LockedFeatureContent = ({
             size={isTooltip ? 12 : 14}
             className={cn("relative", isTooltip && "-top-[1px]")}
           />
-            { isNetBirdCloud()? (plan == "team" ? PLAN_TEXT.TEAM : PLAN_TEXT.BUSINESS) : PLAN_TEXT.ENTERPRISE }
+            {planLabel}
         </div>
         <div
           className={cn(
@@ -49,7 +50,10 @@ export const LockedFeatureContent = ({
             isTooltip ? "text-xs" : "",
           )}
         >
-          <AvailableOnPlanText featureText={featureText} plan={plan} />
+          <AvailableOnPlanText
+            featureText={featureText ?? t("thisFeature")}
+            plan={plan}
+          />
           {isCard && <br />}
           <UpgradeOrTrialText offerTrial={offerTrial} />
         </div>
@@ -79,20 +83,46 @@ const AvailableOnPlanText = ({
   featureText: string;
   plan: PlanTier;
 }) => {
-  const isOrAre = featureText.includes("Posture Checks") ? "are" : "is";
+  const t = useTranslations("billing");
   const teamOrBusiness =
-    plan == "team" ? "Team plan or higher. " : "Business plan. ";
-  if (!isNetBirdCloud()) {
+    plan == "team"
+      ? t("availableOnTeamOrHigher")
+      : t("availableOnBusinessPlan");
+  // "Posture Checks" is plural, so it takes the "are" wording.
+  if (featureText.includes("Posture Checks")) {
+    if (!isNetBirdCloud())
       return (
+        <>
+          {t("availableOnEnterpriseOrCloudAre", {
+            feature: featureText,
+            plan: teamOrBusiness,
+          })}
+        </>
+      );
+    return (
       <>
-        {featureText} {isOrAre} available with a NetBird Enterprise commercial license, or on NetBird Cloud with the {teamOrBusiness}
+        {t("planAvailabilityAre", {
+          feature: featureText,
+          plan: teamOrBusiness,
+        })}
       </>
-      )
+    );
   }
-
+  if (!isNetBirdCloud())
+    return (
+      <>
+        {t("availableOnEnterpriseOrCloud", {
+          feature: featureText,
+          plan: teamOrBusiness,
+        })}
+      </>
+    );
   return (
     <>
-      {featureText} {isOrAre} available on the {teamOrBusiness}
+      {t("planAvailability", {
+        feature: featureText,
+        plan: teamOrBusiness,
+      })}
     </>
   );
 };
@@ -102,6 +132,7 @@ const UpgradeOrTrialText = ({
 }: {
   offerTrial?: boolean;
 }) => {
+  const t = useTranslations("billing");
   const {
     isMSPInTenantContext,
     isAccountWithMSPParent,
@@ -119,31 +150,35 @@ const UpgradeOrTrialText = ({
   }
 
   if (hasReseller) {
-    return <>Contact your account administrator to upgrade the plan.</>;
+    return <>{t("contactAdminToUpgrade")}</>;
   }
 
   if (isAccountWithMSPParent && !isMSPInTenantContext) {
     return (
       <>
-        Contact your account administrator{" "}
-        <span className={"text-nb-gray-200 font-medium"}>{mspContact}</span> to
-        upgrade the plan.
+        {t("contactAdminLead")}{" "}
+        <span className={"text-nb-gray-200 font-medium"}>{mspContact}</span>{" "}
+        {t("contactAdminTail")}
       </>
     );
   }
 
-  if (!isOwnerOrAdmin)
-    return "Only the owner or an admin can upgrade the plan.";
+  if (!isOwnerOrAdmin) return <>{t("ownerOrAdminUpgradeOnly")}</>;
 
   if (isTrialAvailable && offerTrial)
-    return "Upgrade or start a 14-day free trial to access this feature.";
+    return <>{t("upgradeOrStartTrial")}</>;
 
-  return `Upgrade your ${
-    isMSPInTenantContext ? "tenants" : "current"
-  } plan to access this feature.`;
+  return (
+    <>
+      {t("upgradePlanToAccess", {
+        scope: isMSPInTenantContext ? t("scopeTenants") : t("scopeCurrent"),
+      })}
+    </>
+  );
 };
 
 const GetMSPSupportButton = () => {
+  const tAws = useTranslations("awsMarketplace");
   const { mspInfo, hasReseller } = useMSP();
   const mailToEmail = mspInfo?.parent_owner_email || "support@netbird.io";
   if (hasReseller) return;
@@ -160,7 +195,7 @@ const GetMSPSupportButton = () => {
           className={cn("w-full h-[34px]")}
         >
           <MailIcon size={15} className={"shrink-0"} />
-          Get Support
+          {tAws("getSupport")}
         </Button>
       </a>
     </div>
