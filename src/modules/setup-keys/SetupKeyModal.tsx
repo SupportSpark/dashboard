@@ -48,8 +48,6 @@ type Props = {
 	groups?: Group[];
 };
 
-const copyMessage = "Setup-Key was copied to your clipboard!";
-
 export default function SetupKeyModal({
 	children,
 	open,
@@ -58,6 +56,9 @@ export default function SetupKeyModal({
 	showOnlyRoutingPeerOS,
 	groups,
 }: Readonly<Props>) {
+	const t = useTranslations("setupKeys");
+	const tCommon = useTranslations("common");
+	const copyMessage = t("keyCopied");
 	const [successModal, setSuccessModal] = useState(false);
 	const [setupKey, setSetupKey] = useState<SetupKey>();
 	const [installModal, setInstallModal] = useState(false);
@@ -111,11 +112,10 @@ export default function SetupKeyModal({
 						<div className={"flex flex-col items-center justify-center gap-3"}>
 							<div>
 								<h2 className={"text-2xl text-center mb-2"}>
-									Setup key created successfully!
+									{t("setupKeyCreatedSuccess")}
 								</h2>
 								<Paragraph className={"mt-0 text-sm text-center"}>
-									This key will not be shown again, so be sure to copy it and
-									store in a secure location.
+									{t("setupKeyCopyWarning")}
 								</Paragraph>
 							</div>
 						</div>
@@ -128,7 +128,7 @@ export default function SetupKeyModal({
 					>
 						<Code message={copyMessage}>
 							<Code.Line>
-								{setupKey?.key || "Setup key could not be created..."}
+								{setupKey?.key || tCommon("setupKeyCouldNotBeCreated")}
 							</Code.Line>
 						</Code>
 					</div>
@@ -141,7 +141,7 @@ export default function SetupKeyModal({
 									tabIndex={-1}
 									data-testid={"setup-key-close"}
 								>
-									Close
+									{tCommon("close")}
 								</Button>
 							</ModalClose>
 							<Button
@@ -150,7 +150,7 @@ export default function SetupKeyModal({
 								onClick={() => setInstallModal(true)}
 							>
 								<DownloadIcon size={14} />
-								Install NetBird
+								{tCommon("installNetBird")}
 							</Button>
 						</div>
 					</ModalFooter>
@@ -189,8 +189,8 @@ export function SetupKeyModalContent({
 		});
 
 	const usageLimitPlaceholder = useMemo(() => {
-		return reusable ? "Unlimited" : "1";
-	}, [reusable]);
+		return reusable ? t("unlimited") : "1";
+	}, [reusable, t]);
 
 	const isDisabled = useMemo(() => {
 		const trimmedName = trim(name);
@@ -201,7 +201,7 @@ export function SetupKeyModalContent({
 		if (!selectedGroups) return;
 
 		notify({
-			title: "Create Setup Key",
+			title: t("createSetupKey"),
 			description:
 				t("setupKeyCreatedDescriptionText"),
 			promise: saveGroups().then(async (groups) => {
@@ -258,10 +258,10 @@ export function SetupKeyModalContent({
 						label={
 							<>
 								<IconRepeat size={15} />
-								Make this key reusable
+								{t("makeReusable")}
 							</>
 						}
-						helpText={"Use this type to enroll multiple peers"}
+						helpText={t("reusableHelp")}
 					/>
 				</div>
 
@@ -302,7 +302,7 @@ export function SetupKeyModalContent({
 					</div>
 					<Input
 						maxWidthClass={"max-w-[202px]"}
-						placeholder={"Unlimited"}
+						placeholder={t("unlimited")}
 						min={1}
 						value={expiresIn}
 						errorTooltip={true}
@@ -324,12 +324,10 @@ export function SetupKeyModalContent({
 						label={
 							<>
 								<PowerOffIcon size={15} />
-								Ephemeral Peers
+								{t("ephemeralPeers")}
 							</>
 						}
-						helpText={
-							"Peers that are offline for over 10 minutes will be removed automatically"
-						}
+						helpText={t("ephemeralPeersHelp")}
 					/>
 				</div>
 
@@ -341,21 +339,18 @@ export function SetupKeyModalContent({
 						label={
 							<>
 								<GlobeIcon size={15} />
-								Allow Extra DNS Labels
+								{t("allowExtraDnsLabels")}
 							</>
 						}
-						helpText={
-							"Enable multiple subdomain labels when enrolling peers (e.g., host.dev.example.com)."
-						}
+						helpText={t("allowExtraDnsLabelsHelp")}
 					/>
 				</div>
 
 				{/* Auto-Assigned Groups */}
 				<div>
-					<Label>Auto-assigned groups</Label>
+					<Label>{tCommon("autoAssignedGroups")}</Label>
 					<HelpText>
-						These groups will be automatically assigned to peers enrolled with
-						this key
+						{t("autoAssignedGroupsDescription")}
 					</HelpText>
 					<PeerGroupSelector
 						onChange={setSelectedGroups}
@@ -369,14 +364,14 @@ export function SetupKeyModalContent({
 			<ModalFooter className={"items-center"}>
 				<div className={"w-full"}>
 					<Paragraph className={"text-sm mt-auto"}>
-						Learn more about
+						{tCommon("learnMoreAbout")}
 						<InlineLink
 							href={
 								"https://docs.netbird.io/how-to/register-machines-using-setup-keys"
 							}
 							target={"_blank"}
 						>
-							Setup Keys
+							{t("title")}
 							<ExternalLinkIcon size={12} />
 						</InlineLink>
 					</Paragraph>
@@ -393,7 +388,7 @@ export function SetupKeyModalContent({
 						data-testid={"create-setup-key"}
 					>
 						<PlusCircle size={16} />
-						Create Setup Key
+						{t("createSetupKey")}
 					</Button>
 				</div>
 			</ModalFooter>

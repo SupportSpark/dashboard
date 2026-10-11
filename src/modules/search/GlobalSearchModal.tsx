@@ -285,6 +285,7 @@ const ResourceIcon = ({ type }: { type: NetworkResource["type"] }) => {
 };
 
 const BlankState = () => {
+  const t = useTranslations("search");
   return (
     <div className={"flex items-center justify-center pb-8"}>
       <div className={"text-center"}>
@@ -313,11 +314,10 @@ const BlankState = () => {
         </div>
 
         <div className={"text-nb-gray-100 mb-1"}>
-          Search for Networks and Resources
+          {t("searchNetworksAndResources")}
         </div>
         <div className={"text-sm text-nb-gray-350 font-light"}>
-          Quickly find networks and associated resources. <br />
-          Start typing to search by name, description or address.
+          {t("blankStateDescription")}
         </div>
       </div>
     </div>
@@ -325,6 +325,8 @@ const BlankState = () => {
 };
 
 const NotFoundState = () => {
+  const tTable = useTranslations("table");
+  const t = useTranslations("search");
   return (
     <div className={"flex items-center justify-center pb-8"}>
       <div className={"text-center"}>
@@ -339,10 +341,10 @@ const NotFoundState = () => {
         </div>
 
         <div className={"text-nb-gray-100 mb-1"}>
-          Could not find any results
+          {tTable("noResultsCardTitle")}
         </div>
         <div className={"text-sm text-nb-gray-350 font-light max-w-xs"}>
-          {`We couldn't find any results. Please try a different search term.`}
+          {t("noResultsDescription")}
         </div>
       </div>
     </div>

@@ -60,7 +60,7 @@ const PeerApprovalTooltip = ({
 	return (
 		<div className={"text-xs max-w-sm"}>
 			{t("peerApprovalDisabledByIntegration", {
-				integration: integrationName ?? "Integration",
+				integration: integrationName ?? t("peerApprovalIntegrationFallback"),
 			})}
 		</div>
 	);

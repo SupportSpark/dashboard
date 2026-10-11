@@ -1,6 +1,7 @@
 import { SelectOption } from "@components/select/SelectDropdown";
 import { IconMathEqualGreater } from "@tabler/icons-react";
 import { cn } from "@utils/helpers";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 
 type Props = {
@@ -17,6 +18,7 @@ export const PostureCheckOperatingSystemInfo = ({
   versionList,
   os,
 }: Props) => {
+  const t = useTranslations("common");
   const operatingSystemName = versionList?.find(
     (item) => item.value === version,
   )?.label;
@@ -41,7 +43,7 @@ export const PostureCheckOperatingSystemInfo = ({
             "mr-1 font-semibold",
           )}
         >
-          {version ? "Allow" : "Block"}{" "}
+          {version ? t("allow") : t("block")}{" "}
         </span>
 
         {version ? (
@@ -50,7 +52,7 @@ export const PostureCheckOperatingSystemInfo = ({
           ) : (
             <div className={"flex items-center gap-1"}>
               {" "}
-              {os} {operatingSystemName ? "Version" : versionText}
+              {os} {operatingSystemName ? t("version") : versionText}
               <span
                 className={"text-netbird flex items-center gap-1 font-semibold"}
               >

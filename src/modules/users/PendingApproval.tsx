@@ -51,6 +51,7 @@ export const PendingApproval = ({
   onLogout,
 }: Props) => {
   const tusers = useTranslations("users");
+  const tcommon = useTranslations("common");
   const steps = getSteps(tusers);
   const owner = parseApproverEmail(error?.message);
 
@@ -92,45 +93,42 @@ export const PendingApproval = ({
         </Steps>
 
         <Paragraph className={"block max-w-md mx-auto text-center"}>
-          Your organization requires new users to be manually approved before
-          joining.{" "}
-          {owner ? (
-            <>
-              Ask the owner of the account at{" "}
-              <span className={"text-nb-gray-100"}>{owner}</span> to approve
-              your access.
-            </>
-          ) : (
-            "Ask the owner of the account to approve your access."
-          )}
+          {owner
+            ? tusers.rich("pendingApprovalOwner", {
+                owner: (chunks) => (
+                  <span className={"text-nb-gray-100"}>{chunks}</span>
+                ),
+                email: owner,
+              })
+            : tusers("pendingApprovalNoOwner")}
         </Paragraph>
 
         <div className={"flex flex-col sm:flex-row gap-3 justify-center"}>
           <Button variant={"secondary"} size={"sm"} onClick={onRefresh}>
             <RefreshCwIcon size={16} />
-            Refresh
+            {tcommon("refresh")}
           </Button>
           <Button variant={"default-outline"} size={"sm"} onClick={onLogout}>
             <LogOut size={16} />
-            Log Out
+            {tcommon("logout")}
           </Button>
         </div>
       </div>
 
       <Paragraph className={"text-sm"}>
-        Need help?
+        {tusers("needHelp")}
         <InlineLink
           href={"https://docs.netbird.io/manage/team/approve-users"}
           target={"_blank"}
         >
-          Read the Docs
+          {tusers("readTheDocs")}
         </InlineLink>
-        or
+        {tusers("or")}
         <InlineLink
           href={"https://docs.netbird.io/help/netbird-support"}
           target={"_blank"}
         >
-          Contact Support
+          {tusers("contactSupport")}
         </InlineLink>
       </Paragraph>
     </div>

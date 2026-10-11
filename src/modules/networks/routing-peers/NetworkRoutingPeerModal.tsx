@@ -292,7 +292,7 @@ export function RoutingPeerModalContent({
                     data-testid="routing-peer-tab-peer"
                   >
                     <MonitorSmartphoneIcon size={16} />
-                    Routing Peers
+                    {tNetworks("routingPeers")}
                   </SegmentedTabs.Trigger>
 
                   <SegmentedTabs.Trigger
@@ -466,6 +466,8 @@ type InstallNetBirdWithSetupKeyButtonProps = {
 const InstallNetBirdWithSetupKeyButton = ({
   name,
 }: InstallNetBirdWithSetupKeyButtonProps) => {
+  const t = useTranslations("networks");
+  const tCommon = useTranslations("common");
   const setupKeyRequest = useApiCall<SetupKey>("/setup-keys", true);
   const { mutate } = useSWRConfig();
   const { confirm } = useDialog();
@@ -476,11 +478,10 @@ const InstallNetBirdWithSetupKeyButton = ({
 
   const createSetupKey = async () => {
     const choice = await confirm({
-      title: `Create a Setup Key?`,
-      description:
-        "If you continue, a one-off setup key will be automatically created and you will be able to install NetBird.",
-      confirmText: "Continue",
-      cancelText: "Cancel",
+      title: t("createSetupKeyConfirmTitle"),
+      description: t("createSetupKeyConfirmDescription"),
+      confirmText: tCommon("continue"),
+      cancelText: tCommon("cancel"),
       type: "default",
     });
     if (!choice) return;

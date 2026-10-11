@@ -27,6 +27,8 @@ const UsersTable = lazy(() => import("@/modules/users/UsersTable"));
 
 export function GroupUsersTableColumns(
 	t: (key: string) => string,
+	tTable: (key: string) => string,
+	tUsers: (key: string) => string,
 ): ColumnDef<User>[] {
 	return [
 		{
@@ -56,7 +58,7 @@ export function GroupUsersTableColumns(
 		{
 			accessorKey: "name",
 			header: ({ column }) => {
-				return <DataTableHeader column={column}>Name</DataTableHeader>;
+				return <DataTableHeader column={column}>{t("name")}</DataTableHeader>;
 			},
 			accessorFn: (row) => row.name + " " + row.email,
 			sortingFn: "text",
@@ -69,7 +71,7 @@ export function GroupUsersTableColumns(
 		{
 			accessorKey: "role",
 			header: ({ column }) => {
-				return <DataTableHeader column={column}>Role</DataTableHeader>;
+				return <DataTableHeader column={column}>{tUsers("role")}</DataTableHeader>;
 			},
 			sortingFn: "text",
 			cell: ({ row }) => <UserRoleCell user={row.original} />,
@@ -77,7 +79,7 @@ export function GroupUsersTableColumns(
 		{
 			accessorKey: "status",
 			header: ({ column }) => {
-				return <DataTableHeader column={column}>Status</DataTableHeader>;
+				return <DataTableHeader column={column}>{t("status")}</DataTableHeader>;
 			},
 			sortingFn: "text",
 			cell: ({ row }) => <UserStatusCell user={row.original} />,
@@ -103,7 +105,7 @@ export function GroupUsersTableColumns(
 			cell: ({ row }) => (
 				<LastTimeRow
 					date={dayjs(row.original.last_login).toDate()}
-					text={"Last login on"}
+					text={tUsers("lastLoginOn")}
 				/>
 			),
 		},
@@ -130,6 +132,7 @@ type Props = {
 export const GroupUsersSection = ({ users, isLoading = true }: Props) => {
 	const t = useTranslations("common");
 	const tGroups = useTranslations("groups");
+	const tUsers = useTranslations("users");
 	const { group, addUsersToGroup, removeUsersFromGroup } = useGroupContext();
 	const [selectedRows, setSelectedRows] = useState<RowSelectionState>({});
 	const [open, setOpen] = useState(false);
@@ -139,7 +142,7 @@ export const GroupUsersSection = ({ users, isLoading = true }: Props) => {
 		<GroupDetailsTableContainer>
 			<UsersTable
 				isLoading={isLoading}
-				columns={GroupUsersTableColumns(t)}
+				columns={GroupUsersTableColumns(t, tGroups, tUsers)}
 				selectedRows={selectedRows}
 				setSelectedRows={setSelectedRows}
 				onRowClick={(row) => row.toggleSelected()}
@@ -182,7 +185,7 @@ export const GroupUsersSection = ({ users, isLoading = true }: Props) => {
 										<FullTooltip
 											content={
 												<span className={"text-xs"}>
-													Remove Users from Group
+													{tGroups("removeUsersFromGroupTitleShort")}
 												</span>
 											}
 										>
@@ -224,7 +227,7 @@ export const GroupUsersSection = ({ users, isLoading = true }: Props) => {
 										onClick={() => setOpen(true)}
 									>
 										<PlusCircle size={16} />
-										Assign Users
+										{t("assignUsers")}
 									</Button>
 									<InviteUserButton show={true} groups={[group]} />
 								</div>

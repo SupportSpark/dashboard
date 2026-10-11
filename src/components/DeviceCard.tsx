@@ -6,6 +6,7 @@ import { useMemo } from "react";
 import RoundedFlag from "@/assets/countries/RoundedFlag";
 import { PeerOSIcon } from "@/assets/icons/PeerOSIcon";
 import { ResourceIcon } from "@/assets/icons/ResourceIcon";
+import { useIsCjkLocale } from "@/hooks/useIsCjkLocale";
 import { NetworkResource } from "@/interfaces/Network";
 import type { Peer } from "@/interfaces/Peer";
 
@@ -25,18 +26,28 @@ export const DeviceCard = ({
   description,
 }: DeviceCardProps) => {
   const t = useTranslations("common");
-  if (!device && !resource) return null;
+  const isCjkLocale = useIsCjkLocale();
 
+  // Every hook runs before the early return below: `useMemo` used to sit after
+  // it, so the hook order changed between renders as soon as this component was
+  // mounted with no device and later with one.
   const descriptionText = useMemo(() => {
     return description !== undefined
       ? description
       : address || device?.ip || resource?.address;
   }, [description, address, device, resource]);
 
+  if (!device && !resource) return null;
+
   return (
     <div
       className={cn(
-        "flex shrink-0 items-center gap-2.5 text-nb-gray-200 text-left py-1 pl-3 pr-4 rounded-md group/machine my-0 w-[230px]",
+        // w-[230px] fits an English hostname in the ~156px left after the 36px
+        // icon tile, its gap and the padding. Chinese is the wider of the two
+        // languages at the same size and cannot break at word boundaries, so the
+        // same box truncates it. CJK locales get a wider card.
+        isCjkLocale ? "w-[268px]" : "w-[230px]",
+        "flex shrink-0 items-center gap-2.5 text-nb-gray-200 text-left py-1 pl-3 pr-4 rounded-md group/machine my-0",
         !descriptionText && "py-2",
         className,
       )}

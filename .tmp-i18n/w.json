@@ -1,0 +1,3558 @@
+{
+  "total": 878,
+  "work": 469,
+  "data": 409,
+  "workFiles": 165,
+  "byArea": [
+    [
+      "app/(dashboard)",
+      7,
+      3
+    ],
+    [
+      "assets/icons",
+      1,
+      1
+    ],
+    [
+      "cloud/aws",
+      1,
+      1
+    ],
+    [
+      "cloud/distributor",
+      7,
+      4
+    ],
+    [
+      "cloud/mfa",
+      6,
+      2
+    ],
+    [
+      "cloud/msp",
+      19,
+      9
+    ],
+    [
+      "cloud/notifications",
+      1,
+      1
+    ],
+    [
+      "cloud/survey",
+      1,
+      1
+    ],
+    [
+      "cloud/traffic-events",
+      5,
+      3
+    ],
+    [
+      "components/ButtonGroup.tsx",
+      1,
+      1
+    ],
+    [
+      "components/DatePickerWithRange.tsx",
+      7,
+      1
+    ],
+    [
+      "components/FeatureCard.tsx",
+      2,
+      1
+    ],
+    [
+      "components/Input.tsx",
+      3,
+      1
+    ],
+    [
+      "components/JSONFileUpload.tsx",
+      1,
+      1
+    ],
+    [
+      "components/NetBirdLogo.tsx",
+      2,
+      1
+    ],
+    [
+      "components/ToggleSwitch.tsx",
+      2,
+      1
+    ],
+    [
+      "components/UserSelector.tsx",
+      2,
+      1
+    ],
+    [
+      "components/modal",
+      1,
+      1
+    ],
+    [
+      "components/select",
+      1,
+      1
+    ],
+    [
+      "components/table",
+      4,
+      2
+    ],
+    [
+      "contexts/AnalyticsProvider.tsx",
+      1,
+      1
+    ],
+    [
+      "contexts/BillingProvider.tsx",
+      1,
+      1
+    ],
+    [
+      "interfaces/EDR.ts",
+      4,
+      1
+    ],
+    [
+      "interfaces/IdentityProvider.ts",
+      10,
+      1
+    ],
+    [
+      "interfaces/Nameserver.ts",
+      6,
+      1
+    ],
+    [
+      "modules/access-control",
+      1,
+      1
+    ],
+    [
+      "modules/access-tokens",
+      10,
+      2
+    ],
+    [
+      "modules/activity",
+      4,
+      3
+    ],
+    [
+      "modules/agent-network",
+      21,
+      4
+    ],
+    [
+      "modules/billing",
+      40,
+      11
+    ],
+    [
+      "modules/control-center",
+      23,
+      9
+    ],
+    [
+      "modules/dns",
+      4,
+      1
+    ],
+    [
+      "modules/exit-node",
+      4,
+      3
+    ],
+    [
+      "modules/groups",
+      15,
+      5
+    ],
+    [
+      "modules/instance-setup",
+      12,
+      1
+    ],
+    [
+      "modules/integrations",
+      35,
+      20
+    ],
+    [
+      "modules/jobs",
+      7,
+      1
+    ],
+    [
+      "modules/networks",
+      8,
+      3
+    ],
+    [
+      "modules/onboarding",
+      50,
+      14
+    ],
+    [
+      "modules/peer",
+      13,
+      2
+    ],
+    [
+      "modules/peers",
+      3,
+      1
+    ],
+    [
+      "modules/posture-checks",
+      17,
+      10
+    ],
+    [
+      "modules/remote-access",
+      25,
+      9
+    ],
+    [
+      "modules/reverse-proxy",
+      21,
+      5
+    ],
+    [
+      "modules/routes",
+      3,
+      2
+    ],
+    [
+      "modules/search",
+      3,
+      1
+    ],
+    [
+      "modules/settings",
+      19,
+      3
+    ],
+    [
+      "modules/setup-keys",
+      16,
+      3
+    ],
+    [
+      "modules/setup-netbird-modal",
+      1,
+      1
+    ],
+    [
+      "modules/users",
+      10,
+      5
+    ],
+    [
+      "storybook/integrations.ts",
+      1,
+      1
+    ],
+    [
+      "utils/helpers.ts",
+      1,
+      1
+    ],
+    [
+      "utils/responsive.ts",
+      6,
+      1
+    ]
+  ],
+  "findings": [
+    {
+      "file": "src/app/(dashboard)/(cloud)/integrations/page.tsx",
+      "line": 35,
+      "kind": "jsx-text-line",
+      "text": "Identity Provider Sync",
+      "category": "WORK"
+    },
+    {
+      "file": "src/app/(dashboard)/(cloud)/integrations/page.tsx",
+      "line": 41,
+      "kind": "jsx-text-line",
+      "text": "Single Sign-On",
+      "category": "WORK"
+    },
+    {
+      "file": "src/app/(dashboard)/(cloud)/integrations/page.tsx",
+      "line": 47,
+      "kind": "jsx-text-line",
+      "text": "Event Streaming",
+      "category": "WORK"
+    },
+    {
+      "file": "src/app/(dashboard)/peer/page.tsx",
+      "line": 682,
+      "kind": "jsx-text-line",
+      "text": "MAC Address",
+      "category": "WORK"
+    },
+    {
+      "file": "src/app/(dashboard)/team/user/page.tsx",
+      "line": 236,
+      "kind": "jsx-text-line",
+      "text": "Save Changes",
+      "category": "WORK"
+    },
+    {
+      "file": "src/app/(dashboard)/team/user/page.tsx",
+      "line": 333,
+      "kind": "jsx-text-line",
+      "text": "Create Access Token",
+      "category": "WORK"
+    },
+    {
+      "file": "src/app/(dashboard)/team/user/page.tsx",
+      "line": 198,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "System User",
+      "category": "WORK"
+    },
+    {
+      "file": "src/assets/icons/NetBirdIcon.tsx",
+      "line": 14,
+      "kind": "jsx-expr:attr(alt)",
+      "text": "Netbird Icon",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/aws/AWSChoosePlan.tsx",
+      "line": 109,
+      "kind": "jsx-expr:attr(alt)",
+      "text": "AWS Marketplace",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/distributor/DistributorAccountExistsModal.tsx",
+      "line": 55,
+      "kind": "jsx-text-line",
+      "text": "The account owner must log in to the dashboard to accept or decline",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/distributor/DistributorAccountExistsModal.tsx",
+      "line": 75,
+      "kind": "jsx-text-line",
+      "text": "Request Access",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/distributor/DistributorDocsLink.tsx",
+      "line": 8,
+      "kind": "jsx-text-line",
+      "text": "Learn more about",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/distributor/table/CustomerActionCell.tsx",
+      "line": 38,
+      "kind": "jsx-text-line",
+      "text": "The customer account owner must log in to the dashboard to accept",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/distributor/table/CustomerActionCell.tsx",
+      "line": 44,
+      "kind": "jsx-text-line",
+      "text": "Pending invitation",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/distributor/table/CustomerPlanCell.tsx",
+      "line": 36,
+      "kind": "jsx-text-line",
+      "text": "Trial Expired",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/distributor/table/CustomerPlanCell.tsx",
+      "line": 46,
+      "kind": "jsx-text-line",
+      "text": "Upgrade Plan",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/mfa/AccountMFAInfoModal.tsx",
+      "line": 25,
+      "kind": "jsx-text-line",
+      "text": "You may not need NetBird MFA",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/mfa/AccountMFAInfoModal.tsx",
+      "line": 48,
+      "kind": "jsx-text-line",
+      "text": "Enable MFA",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/mfa/AccountMFASettings.tsx",
+      "line": 154,
+      "kind": "jsx-text-line",
+      "text": "Updating MFA settings...",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/mfa/AccountMFASettings.tsx",
+      "line": 172,
+      "kind": "jsx-text-line",
+      "text": "This setting is global and applies to all users.",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/mfa/AccountMFASettings.tsx",
+      "line": 197,
+      "kind": "jsx-text-line",
+      "text": "Remember Browser for MFA",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/mfa/AccountMFASettings.tsx",
+      "line": 200,
+      "kind": "jsx-text-line",
+      "text": "When enabled, users will have the option to remember their browser",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/msp/MSPAccountExistsModal.tsx",
+      "line": 55,
+      "kind": "jsx-text-line",
+      "text": "The account owner must log in to the dashboard to accept or decline",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/msp/MSPAccountExistsModal.tsx",
+      "line": 75,
+      "kind": "jsx-text-line",
+      "text": "Request Access",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/msp/MSPTenantDocsLink.tsx",
+      "line": 8,
+      "kind": "jsx-text-line",
+      "text": "Learn more about",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/msp/MSPTenantDocsLink.tsx",
+      "line": 13,
+      "kind": "jsx-text-line",
+      "text": "MSP Portal",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/msp/MSPTenantPermissionsTab.tsx",
+      "line": 61,
+      "kind": "jsx-text-line",
+      "text": "Add user groups to grant them access to this tenant.",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/msp/MSPTenantPermissionsTab.tsx",
+      "line": 74,
+      "kind": "jsx-text-line",
+      "text": "Add Group",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/msp/MSPTenantsSwitcher.tsx",
+      "line": 306,
+      "kind": "jsx-text-line",
+      "text": "Trial for this tenant has expired. Please upgrade the plan to",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/msp/MSPTenantsSwitcher.tsx",
+      "line": 310,
+      "kind": "jsx-text-line",
+      "text": "Go to Tenants",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/msp/MSPTenantsSwitcher.tsx",
+      "line": 322,
+      "kind": "jsx-text-line",
+      "text": "Trial Expired",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/msp/MSPTransferAccountModal.tsx",
+      "line": 134,
+      "kind": "jsx-expr:attr(alt)",
+      "text": "NetBird",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/msp/MSPTrialExpiredModal.tsx",
+      "line": 83,
+      "kind": "jsx-text-line",
+      "text": "Your account has reached the end of the free trial period. To",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/msp/MSPTrialExpiredModal.tsx",
+      "line": 118,
+      "kind": "jsx-text-line",
+      "text": "Get Support",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/msp/table/TenantActionCell.tsx",
+      "line": 50,
+      "kind": "jsx-text-line",
+      "text": "Verify Domain",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/msp/table/TenantActionCell.tsx",
+      "line": 62,
+      "kind": "jsx-text-line",
+      "text": "Request Access",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/msp/table/TenantActionCell.tsx",
+      "line": 70,
+      "kind": "jsx-text-line",
+      "text": "The account owner must log in to the dashboard to accept or",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/msp/table/TenantActionCell.tsx",
+      "line": 76,
+      "kind": "jsx-text-line",
+      "text": "Pending access request",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/msp/table/TenantGroupsCell.tsx",
+      "line": 55,
+      "kind": "jsx-text-line",
+      "text": "Add Groups",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/msp/table/TenantPlanCell.tsx",
+      "line": 39,
+      "kind": "jsx-text-line",
+      "text": "Trial Expired",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/msp/table/TenantPlanCell.tsx",
+      "line": 48,
+      "kind": "jsx-text-line",
+      "text": "Upgrade Plan",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/notifications/NotificationChannelListItem.tsx",
+      "line": 118,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "group-hover/channel:!bg-nb-gray-930",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/survey/HowDidYouHearAboutUs.tsx",
+      "line": 49,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "Not specified",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/traffic-events/TrafficEventsFilter.tsx",
+      "line": 287,
+      "kind": "jsx-text-line",
+      "text": "There are no filters matching your search.",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/traffic-events/TrafficEventsPeerTabContent.tsx",
+      "line": 407,
+      "kind": "jsx-text-line",
+      "text": "Go to Settings",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/traffic-events/TrafficEventsPeerTabContent.tsx",
+      "line": 483,
+      "kind": "jsx-text-line",
+      "text": "Traffic Events",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/traffic-events/table/TrafficEventDescription.tsx",
+      "line": 350,
+      "kind": "jsx-expr:ternary",
+      "text": "h:mm A",
+      "category": "WORK"
+    },
+    {
+      "file": "src/cloud/traffic-events/table/TrafficEventDescription.tsx",
+      "line": 351,
+      "kind": "jsx-expr:ternary",
+      "text": "MMM D, h:mm A",
+      "category": "WORK"
+    },
+    {
+      "file": "src/components/ButtonGroup.tsx",
+      "line": 16,
+      "kind": "jsx-expr:ternary",
+      "text": "opacity-100 !border-nb-gray-900/20",
+      "category": "WORK"
+    },
+    {
+      "file": "src/components/DatePickerWithRange.tsx",
+      "line": 71,
+      "kind": "jsx-expr:ternary",
+      "text": "All Time",
+      "category": "WORK"
+    },
+    {
+      "file": "src/components/DatePickerWithRange.tsx",
+      "line": 72,
+      "kind": "jsx-expr:ternary",
+      "text": "Last Month",
+      "category": "WORK"
+    },
+    {
+      "file": "src/components/DatePickerWithRange.tsx",
+      "line": 73,
+      "kind": "jsx-expr:ternary",
+      "text": "Last 14 Days",
+      "category": "WORK"
+    },
+    {
+      "file": "src/components/DatePickerWithRange.tsx",
+      "line": 74,
+      "kind": "jsx-expr:ternary",
+      "text": "Last 2 Days",
+      "category": "WORK"
+    },
+    {
+      "file": "src/components/DatePickerWithRange.tsx",
+      "line": 75,
+      "kind": "jsx-expr:ternary",
+      "text": "Last 7 Days",
+      "category": "WORK"
+    },
+    {
+      "file": "src/components/DatePickerWithRange.tsx",
+      "line": 76,
+      "kind": "jsx-expr:ternary",
+      "text": "Yesterday",
+      "category": "WORK"
+    },
+    {
+      "file": "src/components/DatePickerWithRange.tsx",
+      "line": 77,
+      "kind": "jsx-expr:ternary",
+      "text": "Today",
+      "category": "WORK"
+    },
+    {
+      "file": "src/components/FeatureCard.tsx",
+      "line": 99,
+      "kind": "jsx-expr:ternary",
+      "text": "!text-nb-gray-100 leading-tight mt-1",
+      "category": "WORK"
+    },
+    {
+      "file": "src/components/FeatureCard.tsx",
+      "line": 100,
+      "kind": "jsx-expr:ternary",
+      "text": "font-light !text-nb-gray-300 mt-1.5",
+      "category": "WORK"
+    },
+    {
+      "file": "src/components/Input.tsx",
+      "line": 128,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "!border-l-0 !rounded-l-none",
+      "category": "WORK"
+    },
+    {
+      "file": "src/components/Input.tsx",
+      "line": 129,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "!pr-16",
+      "category": "WORK"
+    },
+    {
+      "file": "src/components/Input.tsx",
+      "line": 130,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "!pl-10",
+      "category": "WORK"
+    },
+    {
+      "file": "src/components/JSONFileUpload.tsx",
+      "line": 40,
+      "kind": "prop:title",
+      "text": "Google Workspace",
+      "category": "WORK"
+    },
+    {
+      "file": "src/components/NetBirdLogo.tsx",
+      "line": 29,
+      "kind": "jsx-expr:attr(alt)",
+      "text": "NetBird Logo",
+      "category": "WORK"
+    },
+    {
+      "file": "src/components/NetBirdLogo.tsx",
+      "line": 36,
+      "kind": "jsx-expr:attr(alt)",
+      "text": "NetBird Logo",
+      "category": "WORK"
+    },
+    {
+      "file": "src/components/ToggleSwitch.tsx",
+      "line": 31,
+      "kind": "jsx-expr:ternary",
+      "text": "h-5 w-5 data-[state=checked]:translate-x-5",
+      "category": "WORK"
+    },
+    {
+      "file": "src/components/ToggleSwitch.tsx",
+      "line": 32,
+      "kind": "jsx-expr:ternary",
+      "text": "h-[14px] w-[14px] data-[state=checked]:translate-x-[17px]",
+      "category": "WORK"
+    },
+    {
+      "file": "src/components/UserSelector.tsx",
+      "line": 200,
+      "kind": "jsx-expr:ternary",
+      "text": "System",
+      "category": "WORK"
+    },
+    {
+      "file": "src/components/UserSelector.tsx",
+      "line": 212,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "NetBird",
+      "category": "WORK"
+    },
+    {
+      "file": "src/components/modal/ModalHeader.tsx",
+      "line": 44,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "!block truncate",
+      "category": "WORK"
+    },
+    {
+      "file": "src/components/select/SelectDropdown.tsx",
+      "line": 272,
+      "kind": "jsx-text-line",
+      "text": "There are no results matching your search. Please try a",
+      "category": "WORK"
+    },
+    {
+      "file": "src/components/table/filters/StatusPicker.tsx",
+      "line": 77,
+      "kind": "jsx-expr:ternary",
+      "text": "Online",
+      "category": "WORK"
+    },
+    {
+      "file": "src/components/table/filters/StatusPicker.tsx",
+      "line": 78,
+      "kind": "jsx-expr:ternary",
+      "text": "Offline",
+      "category": "WORK"
+    },
+    {
+      "file": "src/components/table/filters/UsersPicker.tsx",
+      "line": 36,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "NetBird System",
+      "category": "WORK"
+    },
+    {
+      "file": "src/components/table/filters/UsersPicker.tsx",
+      "line": 147,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "NetBird",
+      "category": "WORK"
+    },
+    {
+      "file": "src/contexts/AnalyticsProvider.tsx",
+      "line": 143,
+      "kind": "jsx-expr:attr(title)",
+      "text": "Google Tag Manager",
+      "category": "WORK"
+    },
+    {
+      "file": "src/contexts/BillingProvider.tsx",
+      "line": 45,
+      "kind": "jsx-expr:ternary",
+      "text": "/settings?tab=plans-and-billing",
+      "category": "WORK"
+    },
+    {
+      "file": "src/interfaces/EDR.ts",
+      "line": 71,
+      "kind": "jsx-expr:ternary",
+      "text": "Compliant",
+      "category": "WORK"
+    },
+    {
+      "file": "src/interfaces/EDR.ts",
+      "line": 72,
+      "kind": "jsx-expr:ternary",
+      "text": "Protected",
+      "category": "WORK"
+    },
+    {
+      "file": "src/interfaces/EDR.ts",
+      "line": 73,
+      "kind": "jsx-expr:ternary",
+      "text": "Up to date",
+      "category": "WORK"
+    },
+    {
+      "file": "src/interfaces/EDR.ts",
+      "line": 74,
+      "kind": "jsx-expr:ternary",
+      "text": "Enabled",
+      "category": "WORK"
+    },
+    {
+      "file": "src/interfaces/IdentityProvider.ts",
+      "line": 98,
+      "kind": "prop:label",
+      "text": "OIDC (Generic)",
+      "category": "WORK"
+    },
+    {
+      "file": "src/interfaces/IdentityProvider.ts",
+      "line": 99,
+      "kind": "prop:label",
+      "text": "Google",
+      "category": "WORK"
+    },
+    {
+      "file": "src/interfaces/IdentityProvider.ts",
+      "line": 100,
+      "kind": "prop:label",
+      "text": "Microsoft",
+      "category": "WORK"
+    },
+    {
+      "file": "src/interfaces/IdentityProvider.ts",
+      "line": 101,
+      "kind": "prop:label",
+      "text": "Microsoft Entra",
+      "category": "WORK"
+    },
+    {
+      "file": "src/interfaces/IdentityProvider.ts",
+      "line": 102,
+      "kind": "prop:label",
+      "text": "Okta",
+      "category": "WORK"
+    },
+    {
+      "file": "src/interfaces/IdentityProvider.ts",
+      "line": 103,
+      "kind": "prop:label",
+      "text": "Zitadel",
+      "category": "WORK"
+    },
+    {
+      "file": "src/interfaces/IdentityProvider.ts",
+      "line": 104,
+      "kind": "prop:label",
+      "text": "PocketID",
+      "category": "WORK"
+    },
+    {
+      "file": "src/interfaces/IdentityProvider.ts",
+      "line": 105,
+      "kind": "prop:label",
+      "text": "Authentik",
+      "category": "WORK"
+    },
+    {
+      "file": "src/interfaces/IdentityProvider.ts",
+      "line": 106,
+      "kind": "prop:label",
+      "text": "Keycloak",
+      "category": "WORK"
+    },
+    {
+      "file": "src/interfaces/IdentityProvider.ts",
+      "line": 107,
+      "kind": "prop:label",
+      "text": "Microsoft AD FS",
+      "category": "WORK"
+    },
+    {
+      "file": "src/interfaces/Nameserver.ts",
+      "line": 40,
+      "kind": "prop:description",
+      "text": "Google DNS Servers",
+      "category": "WORK"
+    },
+    {
+      "file": "src/interfaces/Nameserver.ts",
+      "line": 63,
+      "kind": "prop:description",
+      "text": "Cloudflare DNS Servers",
+      "category": "WORK"
+    },
+    {
+      "file": "src/interfaces/Nameserver.ts",
+      "line": 86,
+      "kind": "prop:description",
+      "text": "Quad9 DNS Servers",
+      "category": "WORK"
+    },
+    {
+      "file": "src/interfaces/Nameserver.ts",
+      "line": 39,
+      "kind": "jsx-expr:ternary",
+      "text": "Google DNS",
+      "category": "WORK"
+    },
+    {
+      "file": "src/interfaces/Nameserver.ts",
+      "line": 62,
+      "kind": "jsx-expr:ternary",
+      "text": "Cloudflare DNS",
+      "category": "WORK"
+    },
+    {
+      "file": "src/interfaces/Nameserver.ts",
+      "line": 85,
+      "kind": "jsx-expr:ternary",
+      "text": "Quad9 DNS",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/access-control/ssh/SSHUsernameSelector.tsx",
+      "line": 209,
+      "kind": "jsx-expr:ternary",
+      "text": "Enter",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/access-tokens/AccessTokenActionCell.tsx",
+      "line": 46,
+      "kind": "prop:confirmText",
+      "text": "Delete",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/access-tokens/AccessTokenActionCell.tsx",
+      "line": 47,
+      "kind": "prop:cancelText",
+      "text": "Cancel",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/access-tokens/CreateAccessTokenModal.tsx",
+      "line": 85,
+      "kind": "jsx-text-line",
+      "text": "This token will not be shown again, so be sure to copy it and",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/access-tokens/CreateAccessTokenModal.tsx",
+      "line": 118,
+      "kind": "jsx-text-line",
+      "text": "Copy to clipboard",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/access-tokens/CreateAccessTokenModal.tsx",
+      "line": 216,
+      "kind": "jsx-text-line",
+      "text": "Learn more about",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/access-tokens/CreateAccessTokenModal.tsx",
+      "line": 221,
+      "kind": "jsx-text-line",
+      "text": "Access Tokens",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/access-tokens/CreateAccessTokenModal.tsx",
+      "line": 238,
+      "kind": "jsx-text-line",
+      "text": "Create Token",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/access-tokens/CreateAccessTokenModal.tsx",
+      "line": 172,
+      "kind": "jsx-expr:attr(title)",
+      "text": "Create Access Token",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/access-tokens/CreateAccessTokenModal.tsx",
+      "line": 173,
+      "kind": "jsx-expr:attr(description)",
+      "text": "Use this token to access NetBird's public API",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/access-tokens/CreateAccessTokenModal.tsx",
+      "line": 185,
+      "kind": "jsx-expr:attr(placeholder)",
+      "text": "e.g., Infra token",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/activity/ActivityDescription.tsx",
+      "line": 282,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "NetBird",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/activity/ActivityTable.tsx",
+      "line": 96,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "NetBird",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/activity/ActivityTable.tsx",
+      "line": 130,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "NetBird",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/activity/UsersDropdownSelector.tsx",
+      "line": 243,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "NetBird",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/agent-network/AIProviderModal.tsx",
+      "line": 502,
+      "kind": "jsx-expr:ternary",
+      "text": "OpenAI API",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/agent-network/AIProviderModal.tsx",
+      "line": 674,
+      "kind": "jsx-expr:ternary",
+      "text": "AI Gateways",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/agent-network/AIProviderModal.tsx",
+      "line": 675,
+      "kind": "jsx-expr:ternary",
+      "text": "AI Providers",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/agent-network/AIProviderModal.tsx",
+      "line": 676,
+      "kind": "jsx-expr:ternary",
+      "text": "Other",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/agent-network/AIProviderModal.tsx",
+      "line": 688,
+      "kind": "jsx-expr:ternary",
+      "text": "Other",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/agent-network/AgentConnectTabs.tsx",
+      "line": 407,
+      "kind": "jsx-expr:ternary",
+      "text": "echo '-'",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/agent-network/AgentConnectTabs.tsx",
+      "line": 492,
+      "kind": "jsx-expr:ternary",
+      "text": "echo '-'",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/agent-network/EndpointBadge.tsx",
+      "line": 14,
+      "kind": "jsx-text-line",
+      "text": "Use this URL as the base URL when configuring your AI agents or LLM SDK",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/agent-network/data/mockData.ts",
+      "line": 108,
+      "kind": "jsx-expr:ternary",
+      "text": "OpenAI API",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/agent-network/data/mockData.ts",
+      "line": 138,
+      "kind": "jsx-expr:ternary",
+      "text": "Anthropic API",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/agent-network/data/mockData.ts",
+      "line": 275,
+      "kind": "jsx-expr:ternary",
+      "text": "Model not available",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/agent-network/data/mockData.ts",
+      "line": 276,
+      "kind": "jsx-expr:ternary",
+      "text": "No authorized provider",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/agent-network/data/mockData.ts",
+      "line": 277,
+      "kind": "jsx-expr:ternary",
+      "text": "Model not allowed",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/agent-network/data/mockData.ts",
+      "line": 278,
+      "kind": "jsx-expr:ternary",
+      "text": "Limit exceeded",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/agent-network/data/mockData.ts",
+      "line": 279,
+      "kind": "jsx-expr:ternary",
+      "text": "Token limit exceeded",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/agent-network/data/mockData.ts",
+      "line": 280,
+      "kind": "jsx-expr:ternary",
+      "text": "Budget limit exceeded",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/agent-network/data/mockData.ts",
+      "line": 326,
+      "kind": "jsx-expr:ternary",
+      "text": "Engineering",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/agent-network/data/mockData.ts",
+      "line": 327,
+      "kind": "jsx-expr:ternary",
+      "text": "Data Science",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/agent-network/data/mockData.ts",
+      "line": 328,
+      "kind": "jsx-expr:ternary",
+      "text": "Support",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/agent-network/data/mockData.ts",
+      "line": 329,
+      "kind": "jsx-expr:ternary",
+      "text": "Marketing",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/agent-network/data/mockData.ts",
+      "line": 330,
+      "kind": "jsx-expr:ternary",
+      "text": "Finance",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/LimitsReachedModal.tsx",
+      "line": 111,
+      "kind": "jsx-text-line",
+      "text": "Subscription Limit Reached",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/LimitsReachedModal.tsx",
+      "line": 114,
+      "kind": "jsx-text-line",
+      "text": "It looks like you’ve hit the limit of your current subscription.",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/LimitsReachedModal.tsx",
+      "line": 127,
+      "kind": "jsx-text-line",
+      "text": "Get Support",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/NavigationUsageInfo.tsx",
+      "line": 103,
+      "kind": "jsx-expr:ternary",
+      "text": "Users",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/NavigationUsageInfo.tsx",
+      "line": 104,
+      "kind": "jsx-expr:ternary",
+      "text": "User",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/NavigationUsageInfo.tsx",
+      "line": 149,
+      "kind": "jsx-expr:ternary",
+      "text": "Usage limit reached",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/NavigationUsageInfo.tsx",
+      "line": 150,
+      "kind": "jsx-expr:ternary",
+      "text": "Approaching usage limit",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/NavigationUsageInfo.tsx",
+      "line": 171,
+      "kind": "jsx-expr:ternary",
+      "text": "Upgrade Plan",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/NavigationUsageInfo.tsx",
+      "line": 171,
+      "kind": "jsx-expr:ternary",
+      "text": "Plans & Billing",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/PlanCard.tsx",
+      "line": 159,
+      "kind": "jsx-text",
+      "text": "Unlimited Users",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/PlanCard.tsx",
+      "line": 189,
+      "kind": "jsx-text-line",
+      "text": "Your plan was recently updated. Please wait for 48 hours from the",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/PlanCard.tsx",
+      "line": 45,
+      "kind": "jsx-expr:ternary",
+      "text": "Upgrade to",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/PlanCard.tsx",
+      "line": 46,
+      "kind": "jsx-expr:ternary",
+      "text": "Downgrade to",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/PlanCurrentPlan.tsx",
+      "line": 99,
+      "kind": "jsx-text-line",
+      "text": "Visit AWS Marketplace",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/PlanCurrentPlan.tsx",
+      "line": 114,
+      "kind": "jsx-text-line",
+      "text": "Manage Plan",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/PlanCurrentPlan.tsx",
+      "line": 183,
+      "kind": "jsx-text-line",
+      "text": "The estimated price is calculated based on the number of",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/PlanCurrentPlan.tsx",
+      "line": 61,
+      "kind": "jsx-expr:ternary",
+      "text": "Free Trial",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/PlanCurrentPlan.tsx",
+      "line": 144,
+      "kind": "jsx-expr:ternary",
+      "text": "User",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/PlanCurrentPlan.tsx",
+      "line": 144,
+      "kind": "jsx-expr:ternary",
+      "text": "Users",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/PlanSuccessModal.tsx",
+      "line": 31,
+      "kind": "jsx-text-line",
+      "text": "Your subscription has been successfully activated. You have now full",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/PlansAndBillingTab.tsx",
+      "line": 165,
+      "kind": "jsx-text",
+      "text": "Plans & Billing",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/PlansAndBillingTab.tsx",
+      "line": 215,
+      "kind": "jsx-text-line",
+      "text": "Increase your user and peer limit by upgrading your plan.",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/PlansAndBillingTab.tsx",
+      "line": 218,
+      "kind": "jsx-text-line",
+      "text": "With our flexible pricing, you are only billed for active users and",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/PlansAndBillingTab.tsx",
+      "line": 224,
+      "kind": "jsx-text-line",
+      "text": "Pricing Plan",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/PlansAndBillingTab.tsx",
+      "line": 151,
+      "kind": "jsx-expr:attr(label)",
+      "text": "Settings",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/PlansAndBillingTab.tsx",
+      "line": 156,
+      "kind": "jsx-expr:attr(label)",
+      "text": "Plans & Billing",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/PlansAndBillingTab.tsx",
+      "line": 210,
+      "kind": "jsx-expr:ternary",
+      "text": "Update your NetBird Plan",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/PlansAndBillingTab.tsx",
+      "line": 211,
+      "kind": "jsx-expr:ternary",
+      "text": "Upgrade your NetBird Plan",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/locked-feature/LockedFeatureContent.tsx",
+      "line": 163,
+      "kind": "jsx-text-line",
+      "text": "Get Support",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/trial/TrialGradientCard.tsx",
+      "line": 51,
+      "kind": "jsx-text-line",
+      "text": "Your plan was recently updated. Please wait for 48 hours from the last",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/trial/TrialGradientCard.tsx",
+      "line": 11,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "Free",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/trial/TrialNavigationInfoCard.tsx",
+      "line": 24,
+      "kind": "jsx-text",
+      "text": "Free Trial",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/trial/TrialNavigationInfoCard.tsx",
+      "line": 41,
+      "kind": "jsx-text-line",
+      "text": "Upgrade Plan",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/trial/TrialOrUpgradeButton.tsx",
+      "line": 92,
+      "kind": "jsx-text-line",
+      "text": "Your plan was recently updated. Please wait for 48 hours from the",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/trial/TrialOrUpgradeButton.tsx",
+      "line": 128,
+      "kind": "jsx-text-line",
+      "text": "No credit card required",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/trial/TrialOrUpgradeButton.tsx",
+      "line": 168,
+      "kind": "jsx-text-line",
+      "text": "Get a License",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/trial/TrialOrUpgradeButton.tsx",
+      "line": 104,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "disabled:!opacity-30",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/trial/TrialSuccessModal.tsx",
+      "line": 32,
+      "kind": "jsx-text-line",
+      "text": "Explore the dashboard, our integrations and all the features. Some",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/trial/TrialSuccessModal.tsx",
+      "line": 46,
+      "kind": "jsx-text-line",
+      "text": "Enable device approvals for added control",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/billing/trial/TrialSuccessModal.tsx",
+      "line": 54,
+      "kind": "jsx-text-line",
+      "text": "Explore NetBird",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/control-center/draft/DraftChangesetContext.tsx",
+      "line": 1067,
+      "kind": "jsx-expr:ternary",
+      "text": "Policy",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/control-center/draft/DraftChangesetContext.tsx",
+      "line": 1077,
+      "kind": "jsx-expr:ternary",
+      "text": "Policy",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/control-center/draft/DraftChangesetContext.tsx",
+      "line": 1088,
+      "kind": "jsx-expr:ternary",
+      "text": "Resource",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/control-center/draft/DraftChangesetContext.tsx",
+      "line": 1959,
+      "kind": "jsx-expr:ternary",
+      "text": "Policy",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/control-center/draft/DraftChangesetContext.tsx",
+      "line": 2006,
+      "kind": "jsx-expr:ternary",
+      "text": "Policy",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/control-center/draft/DraftChangesetContext.tsx",
+      "line": 2068,
+      "kind": "jsx-expr:ternary",
+      "text": "Policy",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/control-center/draft/DraftChangesetContext.tsx",
+      "line": 2445,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "Agent policy",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/control-center/draft/modals/DraftNetworkDestinationModal.tsx",
+      "line": 164,
+      "kind": "jsx-text-line",
+      "text": "This network has no resources yet.",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/control-center/draft/modals/DraftUserDeviceModal.tsx",
+      "line": 102,
+      "kind": "jsx-text-line",
+      "text": "Install NetBird on the device. Skip if it is already installed.",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/control-center/draft/modals/ReviewDeployModal.tsx",
+      "line": 220,
+      "kind": "jsx-text-line",
+      "text": "No pending changes.",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/control-center/handles/ConnectHandle.tsx",
+      "line": 103,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "left-[calc(50%+16px)]",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/control-center/handles/ConnectHandle.tsx",
+      "line": 104,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "left-[calc(50%-16px)]",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/control-center/handles/ConnectHandle.tsx",
+      "line": 105,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "top-[calc(50%+16px)]",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/control-center/handles/ConnectHandle.tsx",
+      "line": 106,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "top-[calc(50%-16px)]",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/control-center/handles/ConnectHandle.tsx",
+      "line": 111,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "!opacity-0",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/control-center/handles/ConnectHandle.tsx",
+      "line": 112,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "!opacity-0",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/control-center/header/ControlCenterHeader.tsx",
+      "line": 250,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "!rounded-r-none",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/control-center/nodes/SelectUserNode.tsx",
+      "line": 66,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "NetBird",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/control-center/utils/change-cascade.ts",
+      "line": 440,
+      "kind": "jsx-expr:ternary",
+      "text": "Policy",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/control-center/utils/helpers.ts",
+      "line": 298,
+      "kind": "jsx-expr:ternary",
+      "text": "Agent",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/control-center/utils/helpers.ts",
+      "line": 299,
+      "kind": "jsx-expr:ternary",
+      "text": "Server",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/control-center/utils/helpers.ts",
+      "line": 300,
+      "kind": "jsx-expr:ternary",
+      "text": "User Device",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/control-center/utils/helpers.ts",
+      "line": 646,
+      "kind": "jsx-expr:ternary",
+      "text": "Resource",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/dns/zones/DNSRecordModal.tsx",
+      "line": 358,
+      "kind": "jsx-expr:ternary",
+      "text": "Hour",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/dns/zones/DNSRecordModal.tsx",
+      "line": 359,
+      "kind": "jsx-expr:ternary",
+      "text": "Hours",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/dns/zones/DNSRecordModal.tsx",
+      "line": 360,
+      "kind": "jsx-expr:ternary",
+      "text": "Day",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/dns/zones/DNSRecordModal.tsx",
+      "line": 361,
+      "kind": "jsx-expr:ternary",
+      "text": "Days",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/exit-node/AddExitNodeButton.tsx",
+      "line": 36,
+      "kind": "jsx-text-line",
+      "text": "Add Exit Node",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/exit-node/ExitNodeDropdownButton.tsx",
+      "line": 32,
+      "kind": "jsx-text-line",
+      "text": "Add Exit Node",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/exit-node/ExitNodeHelpTooltip.tsx",
+      "line": 24,
+      "kind": "jsx-text-line",
+      "text": "An exit node is a network route that routes all your internet",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/exit-node/ExitNodeHelpTooltip.tsx",
+      "line": 35,
+      "kind": "jsx-text-line",
+      "text": "Exit Nodes",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/groups/AssignPeerToGroupModal.tsx",
+      "line": 408,
+      "kind": "jsx-expr:ternary",
+      "text": "Unknown",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/groups/AssignPeerToGroupModal.tsx",
+      "line": 412,
+      "kind": "jsx-expr:ternary",
+      "text": "Unknown",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/groups/EditGroupNameModal.tsx",
+      "line": 53,
+      "kind": "jsx-expr:attr(title)",
+      "text": "Rename Group",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/groups/EditGroupNameModal.tsx",
+      "line": 62,
+      "kind": "jsx-expr:attr(placeholder)",
+      "text": "e.g., Developers",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/groups/details/GroupPeersSection.tsx",
+      "line": 217,
+      "kind": "jsx-text-line",
+      "text": "Assign Peers",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/groups/details/GroupPeersSection.tsx",
+      "line": 72,
+      "kind": "jsx-expr:ternary",
+      "text": "Unknown",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/groups/details/GroupPeersSection.tsx",
+      "line": 76,
+      "kind": "jsx-expr:ternary",
+      "text": "Unknown",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/groups/details/GroupPeersSection.tsx",
+      "line": 198,
+      "kind": "jsx-expr:attr(buttonText)",
+      "text": "Assign Peers",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/groups/details/GroupUsersSection.tsx",
+      "line": 59,
+      "kind": "jsx-text",
+      "text": "Name",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/groups/details/GroupUsersSection.tsx",
+      "line": 72,
+      "kind": "jsx-text",
+      "text": "Role",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/groups/details/GroupUsersSection.tsx",
+      "line": 80,
+      "kind": "jsx-text",
+      "text": "Status",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/groups/details/GroupUsersSection.tsx",
+      "line": 185,
+      "kind": "jsx-text-line",
+      "text": "Remove Users from Group",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/groups/details/GroupUsersSection.tsx",
+      "line": 227,
+      "kind": "jsx-text-line",
+      "text": "Assign Users",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/groups/details/GroupUsersSection.tsx",
+      "line": 106,
+      "kind": "jsx-expr:attr(text)",
+      "text": "Last login on",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/groups/table/GroupsTable.tsx",
+      "line": 67,
+      "kind": "attr:aria-label",
+      "text": "Select all groups on this page",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/instance-setup/InstanceSetupWizard.tsx",
+      "line": 109,
+      "kind": "attr:message",
+      "text": "An error occurred. Please try again.",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/instance-setup/InstanceSetupWizard.tsx",
+      "line": 184,
+      "kind": "jsx-text-line",
+      "text": "Go to Login",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/instance-setup/InstanceSetupWizard.tsx",
+      "line": 199,
+      "kind": "jsx-text-line",
+      "text": "Welcome to NetBird",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/instance-setup/InstanceSetupWizard.tsx",
+      "line": 206,
+      "kind": "jsx-text-line",
+      "text": "Create the first admin account to get started",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/instance-setup/InstanceSetupWizard.tsx",
+      "line": 215,
+      "kind": "jsx-text",
+      "text": "Name",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/instance-setup/InstanceSetupWizard.tsx",
+      "line": 229,
+      "kind": "jsx-text",
+      "text": "Email",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/instance-setup/InstanceSetupWizard.tsx",
+      "line": 242,
+      "kind": "jsx-text",
+      "text": "Password",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/instance-setup/InstanceSetupWizard.tsx",
+      "line": 254,
+      "kind": "jsx-text-line",
+      "text": "Must be at least 8 characters",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/instance-setup/InstanceSetupWizard.tsx",
+      "line": 259,
+      "kind": "jsx-text",
+      "text": "Confirm Password",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/instance-setup/InstanceSetupWizard.tsx",
+      "line": 281,
+      "kind": "jsx-text-line",
+      "text": "Creating Account...",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/instance-setup/InstanceSetupWizard.tsx",
+      "line": 294,
+      "kind": "jsx-text-line",
+      "text": "This is a one-time setup for your NetBird instance.",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/instance-setup/InstanceSetupWizard.tsx",
+      "line": 153,
+      "kind": "jsx-expr:ternary",
+      "text": "Passwords do not match",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/IntegrationModalHeader.tsx",
+      "line": 29,
+      "kind": "jsx-expr:attr(alt)",
+      "text": "NetBird",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/edr/crowdstrike/CrowdStrike.tsx",
+      "line": 57,
+      "kind": "jsx-expr:ternary",
+      "text": "CrowdStrike",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/edr/crowdstrike/CrowdStrike.tsx",
+      "line": 74,
+      "kind": "jsx-expr:ternary",
+      "text": "CrowdStrike",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/edr/crowdstrike/CrowdStrikeConfiguration.tsx",
+      "line": 180,
+      "kind": "jsx-expr:attr(title)",
+      "text": "CrowdStrike",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/edr/fleetdm/FleetDM.tsx",
+      "line": 74,
+      "kind": "jsx-expr:ternary",
+      "text": "FleetDM",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/edr/huntress/Huntress.tsx",
+      "line": 79,
+      "kind": "jsx-expr:ternary",
+      "text": "Huntress",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/edr/intune/Intune.tsx",
+      "line": 69,
+      "kind": "jsx-expr:ternary",
+      "text": "Intune",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/edr/intune/IntuneConfiguration.tsx",
+      "line": 249,
+      "kind": "jsx-expr:attr(placeholder)",
+      "text": "YdV7Q~JJ62Xl.LvYoBanxZR2sJA2va_3UbqvncY8",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/edr/intune/IntuneSetup.tsx",
+      "line": 268,
+      "kind": "jsx-expr:ternary",
+      "text": "NetBird",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/edr/intune/IntuneSetup.tsx",
+      "line": 365,
+      "kind": "jsx-expr:attr(placeholder)",
+      "text": "YdV7Q~JJ62Xl.LvYoBanxZR2sJA2va_3UbqvncY8",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/edr/sentinel-one/SentinelOne.tsx",
+      "line": 75,
+      "kind": "jsx-expr:ternary",
+      "text": "SentinelOne",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/firehose/Firehose.tsx",
+      "line": 64,
+      "kind": "jsx-expr:ternary",
+      "text": "Amazon Data Firehose",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/firehose/FirehoseSetup.tsx",
+      "line": 117,
+      "kind": "jsx-expr:ternary",
+      "text": "Amazon Data Firehose",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/datadog/DatadogRegions.tsx",
+      "line": 5,
+      "kind": "jsx-expr:ternary",
+      "text": "Europe (EU)",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/datadog/DatadogRegions.tsx",
+      "line": 11,
+      "kind": "jsx-expr:ternary",
+      "text": "United States (US1)",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/datadog/DatadogRegions.tsx",
+      "line": 17,
+      "kind": "jsx-expr:ternary",
+      "text": "United States (US3)",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/datadog/DatadogRegions.tsx",
+      "line": 23,
+      "kind": "jsx-expr:ternary",
+      "text": "United States (US5)",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/datadog/DatadogRegions.tsx",
+      "line": 29,
+      "kind": "jsx-expr:ternary",
+      "text": "United States (US1-FED)",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/datadog/DatadogRegions.tsx",
+      "line": 35,
+      "kind": "jsx-expr:ternary",
+      "text": "Japan (AP1)",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/azure-ad/AzureADConfiguration.tsx",
+      "line": 268,
+      "kind": "jsx-expr:attr(placeholder)",
+      "text": "YdV7Q~JJ62Xl.LvYoBanxZR2sJA2va_3UbqvncY8",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/azure-ad/AzureADSetup.tsx",
+      "line": 256,
+      "kind": "jsx-expr:ternary",
+      "text": "NetBird",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/azure-ad/AzureADSetup.tsx",
+      "line": 361,
+      "kind": "jsx-expr:attr(placeholder)",
+      "text": "YdV7Q~JJ62Xl.LvYoBanxZR2sJA2va_3UbqvncY8",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/entra-scim/EntraSCIMSetup.tsx",
+      "line": 97,
+      "kind": "jsx-expr:ternary",
+      "text": "Entra ID (SCIM)",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/entra-scim/EntraSCIMSetup.tsx",
+      "line": 376,
+      "kind": "jsx-expr:ternary",
+      "text": "Bearer authentication",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/generic-scim/GenericSCIM.tsx",
+      "line": 52,
+      "kind": "jsx-expr:ternary",
+      "text": "Generic SCIM",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/generic-scim/GenericSCIMConfiguration.tsx",
+      "line": 89,
+      "kind": "jsx-expr:ternary",
+      "text": "Generic SCIM",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/generic-scim/GenericSCIMSetup.tsx",
+      "line": 80,
+      "kind": "jsx-expr:ternary",
+      "text": "Generic SCIM",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/generic-scim/GenericSCIMSetup.tsx",
+      "line": 320,
+      "kind": "jsx-expr:ternary",
+      "text": "NetBird",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/google-workspace/GoogleWorkspaceConfiguration.tsx",
+      "line": 252,
+      "kind": "jsx-expr:attr(placeholder)",
+      "text": "YdV7Q~JJ62Xl.LvYoBanxZR2sJA2va_3UbqvncY8",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/google-workspace/GoogleWorkspaceSetup.tsx",
+      "line": 310,
+      "kind": "jsx-expr:ternary",
+      "text": "NetBird",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/google-workspace/GoogleWorkspaceSetup.tsx",
+      "line": 368,
+      "kind": "jsx-expr:attr(placeholder)",
+      "text": "netbird@loadtests-347817.iam.gserviceaccount.com",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/google-workspace/GoogleWorkspaceSetup.tsx",
+      "line": 429,
+      "kind": "jsx-expr:attr(placeholder)",
+      "text": "YdV7Q~JJ62Xl.LvYoBanxZR2sJA2va_3UbqvncY8",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/google-workspace/GoogleWorkspaceSetup.tsx",
+      "line": 480,
+      "kind": "jsx-expr:ternary",
+      "text": "User and Group Management ReadOnly",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/google-workspace/GoogleWorkspaceSetup.tsx",
+      "line": 484,
+      "kind": "jsx-expr:ternary",
+      "text": "User and Group Management ReadOnly",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/google-workspace/GoogleWorkspaceSetup.tsx",
+      "line": 614,
+      "kind": "jsx-expr:attr(placeholder)",
+      "text": "C03f4c3po",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/jobs/table/PeerRemoteJobsTable.tsx",
+      "line": 33,
+      "kind": "jsx-expr:ternary",
+      "text": "Type",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/jobs/table/PeerRemoteJobsTable.tsx",
+      "line": 40,
+      "kind": "jsx-expr:ternary",
+      "text": "CreatedAt",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/jobs/table/PeerRemoteJobsTable.tsx",
+      "line": 50,
+      "kind": "jsx-expr:ternary",
+      "text": "Status",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/jobs/table/PeerRemoteJobsTable.tsx",
+      "line": 57,
+      "kind": "jsx-expr:ternary",
+      "text": "CompletedAt",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/jobs/table/PeerRemoteJobsTable.tsx",
+      "line": 73,
+      "kind": "jsx-expr:ternary",
+      "text": "Parameters",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/jobs/table/PeerRemoteJobsTable.tsx",
+      "line": 82,
+      "kind": "jsx-expr:ternary",
+      "text": "ResultOrReason",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/jobs/table/PeerRemoteJobsTable.tsx",
+      "line": 101,
+      "kind": "jsx-expr:ternary",
+      "text": "CreatedAt",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/networks/misc/NetworkInformationSquare.tsx",
+      "line": 50,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "group-hover/network:!bg-nb-gray-910",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/networks/resources/NetworkResourceModal.tsx",
+      "line": 318,
+      "kind": "jsx-text-line",
+      "text": "IP Address",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/networks/resources/NetworkResourceModal.tsx",
+      "line": 326,
+      "kind": "jsx-text-line",
+      "text": "CIDR Block",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/networks/resources/NetworkResourceModal.tsx",
+      "line": 334,
+      "kind": "jsx-text-line",
+      "text": "Domain Name",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/networks/routing-peers/NetworkRoutingPeerModal.tsx",
+      "line": 295,
+      "kind": "jsx-text-line",
+      "text": "Routing Peers",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/networks/routing-peers/NetworkRoutingPeerModal.tsx",
+      "line": 482,
+      "kind": "prop:confirmText",
+      "text": "Continue",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/networks/routing-peers/NetworkRoutingPeerModal.tsx",
+      "line": 483,
+      "kind": "prop:cancelText",
+      "text": "Cancel",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/networks/routing-peers/NetworkRoutingPeerModal.tsx",
+      "line": 480,
+      "kind": "prop:description(multiline)",
+      "text": "If you continue, a one-off setup key will be automatically created and you will be able to install NetBird.",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/Onboarding.tsx",
+      "line": 608,
+      "kind": "jsx-text-line",
+      "text": "Skip to Dashboard",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 60,
+      "kind": "jsx-expr:ternary",
+      "text": "Search Engines (Google, Bing etc.)",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 61,
+      "kind": "jsx-expr:ternary",
+      "text": "Coworker or Friend",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 62,
+      "kind": "jsx-expr:ternary",
+      "text": "Trade Show or Event",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 63,
+      "kind": "jsx-expr:ternary",
+      "text": "Blogs",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 64,
+      "kind": "jsx-expr:ternary",
+      "text": "Comparison Sites",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 65,
+      "kind": "jsx-expr:ternary",
+      "text": "Slack",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 66,
+      "kind": "jsx-expr:ternary",
+      "text": "Other",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 67,
+      "kind": "jsx-expr:ternary",
+      "text": "NetBird YouTube Channel",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 68,
+      "kind": "jsx-expr:ternary",
+      "text": "Other YouTube Channel",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 69,
+      "kind": "jsx-expr:ternary",
+      "text": "NetBird SubReddit",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 70,
+      "kind": "jsx-expr:ternary",
+      "text": "Other Reddit Thread",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 71,
+      "kind": "jsx-expr:ternary",
+      "text": "GitHub",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 119,
+      "kind": "jsx-expr:ternary",
+      "text": "Homelab Automation",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 120,
+      "kind": "jsx-expr:ternary",
+      "text": "Home Remote Access",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 121,
+      "kind": "jsx-expr:ternary",
+      "text": "File Access",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 122,
+      "kind": "jsx-expr:ternary",
+      "text": "Gaming",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 124,
+      "kind": "jsx-expr:ternary",
+      "text": "Zero Trust Security",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 125,
+      "kind": "jsx-expr:ternary",
+      "text": "Employee Remote Access",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 126,
+      "kind": "jsx-expr:ternary",
+      "text": "Business VPN",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 127,
+      "kind": "jsx-expr:ternary",
+      "text": "Site-to-Site Connectivity",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 128,
+      "kind": "jsx-expr:ternary",
+      "text": "IoT (Internet of Things)",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 129,
+      "kind": "jsx-expr:ternary",
+      "text": "MSP (Managed Service Provider)",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 215,
+      "kind": "jsx-expr:ternary",
+      "text": "Business",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 215,
+      "kind": "jsx-expr:ternary",
+      "text": "Personal",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 223,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "Other",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 431,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "!h-0 opacity-0",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/AgentNetworkOnboarding.tsx",
+      "line": 227,
+      "kind": "jsx-text-line",
+      "text": "Skip to Dashboard",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/AgentNetworkSignupForm.tsx",
+      "line": 149,
+      "kind": "jsx-expr:ternary",
+      "text": "Business",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/AgentNetworkSignupForm.tsx",
+      "line": 149,
+      "kind": "jsx-expr:ternary",
+      "text": "Personal",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/AgentNetworkSignupForm.tsx",
+      "line": 151,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "Other",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/AgentNetworkSignupForm.tsx",
+      "line": 288,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "!h-0 opacity-0",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/OnboardingAgentConfigure.tsx",
+      "line": 64,
+      "kind": "jsx-text-line",
+      "text": "Connect a provider to generate your endpoint, then your agent config",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/OnboardingAgentConfigure.tsx",
+      "line": 71,
+      "kind": "jsx-text-line",
+      "text": "Go Back",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/OnboardingAgentDevice.tsx",
+      "line": 71,
+      "kind": "jsx-text-line",
+      "text": "Go Back",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/OnboardingAgentEnd.tsx",
+      "line": 68,
+      "kind": "jsx-text-line",
+      "text": "Send a test request",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/OnboardingAgentEnd.tsx",
+      "line": 87,
+      "kind": "jsx-text-line",
+      "text": "Go Back",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/OnboardingAgentGateway.tsx",
+      "line": 649,
+      "kind": "jsx-text",
+      "text": "NB_PROXY_PRIVATE=true",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/OnboardingAgentPolicy.tsx",
+      "line": 53,
+      "kind": "jsx-text-line",
+      "text": "Add Policy",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/OnboardingAgentPolicy.tsx",
+      "line": 60,
+      "kind": "jsx-text-line",
+      "text": "Go Back",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/OnboardingAgentProvider.tsx",
+      "line": 62,
+      "kind": "jsx-text-line",
+      "text": "Connect Provider",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/OnboardingAgentProvider.tsx",
+      "line": 69,
+      "kind": "jsx-text-line",
+      "text": "Go Back",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/networks/OnboardingAddResource.tsx",
+      "line": 52,
+      "kind": "jsx-expr:ternary",
+      "text": "My First Network",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/networks/OnboardingAddResource.tsx",
+      "line": 64,
+      "kind": "jsx-expr:ternary",
+      "text": "My Subnet",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/networks/OnboardingAddResource.tsx",
+      "line": 64,
+      "kind": "jsx-expr:ternary",
+      "text": "My Resource",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/networks/OnboardingAddResource.tsx",
+      "line": 102,
+      "kind": "jsx-expr:ternary",
+      "text": "Users",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/networks/OnboardingAddResource.tsx",
+      "line": 107,
+      "kind": "jsx-expr:ternary",
+      "text": "Routing Peers",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/networks/OnboardingAddRoutingPeer.tsx",
+      "line": 47,
+      "kind": "jsx-expr:ternary",
+      "text": "Routing Peers",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/networks/OnboardingExplainPolicy.tsx",
+      "line": 38,
+      "kind": "jsx-text-line",
+      "text": "Flip the switch, then try pinging your resource again to see how it affects the connection.",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/onboarding/p2p/OnboardingExplainDefaultPolicy.tsx",
+      "line": 38,
+      "kind": "jsx-text-line",
+      "text": "Flip the switch, then try pinging your other device again to see how it affects the connection.",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/peer/MinimalPeersTable.tsx",
+      "line": 64,
+      "kind": "jsx-expr:ternary",
+      "text": "Unknown",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/peer/MinimalPeersTable.tsx",
+      "line": 68,
+      "kind": "jsx-expr:ternary",
+      "text": "Unknown",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/peer/PeerSSHInstructions.tsx",
+      "line": 78,
+      "kind": "jsx-text-line",
+      "text": "Desktop Client",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/peer/PeerSSHInstructions.tsx",
+      "line": 87,
+      "kind": "jsx-text-line",
+      "text": "If you are using NetBird via CLI, you can enable SSH by",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/peer/PeerSSHInstructions.tsx",
+      "line": 106,
+      "kind": "jsx-text-line",
+      "text": "If you are using NetBird via the Desktop Client, click on the",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/peer/PeerSSHInstructions.tsx",
+      "line": 107,
+      "kind": "jsx-text",
+      "text": "Settings",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/peer/PeerSSHInstructions.tsx",
+      "line": 108,
+      "kind": "jsx-text",
+      "text": "Allow SSH",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/peer/PeerSSHInstructions.tsx",
+      "line": 118,
+      "kind": "jsx-text-line",
+      "text": "Starting from NetBird v0.61.0, SSH requires an explicit access",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/peer/PeerSSHInstructions.tsx",
+      "line": 127,
+      "kind": "jsx-text-line",
+      "text": "Create SSH Policy",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/peer/PeerSSHInstructions.tsx",
+      "line": 134,
+      "kind": "jsx-text",
+      "text": "Confirm & Enable",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/peer/PeerSSHInstructions.tsx",
+      "line": 143,
+      "kind": "jsx-text-line",
+      "text": "Learn more about",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/peer/PeerSSHInstructions.tsx",
+      "line": 159,
+      "kind": "jsx-text-line",
+      "text": "Finish Setup",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/peer/PeerSSHInstructions.tsx",
+      "line": 60,
+      "kind": "jsx-expr:attr(title)",
+      "text": "Enable SSH Access",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/peers/PeersTable.tsx",
+      "line": 420,
+      "kind": "prop:label",
+      "text": "Linux",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/peers/PeersTable.tsx",
+      "line": 421,
+      "kind": "prop:label",
+      "text": "Windows",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/peers/PeersTable.tsx",
+      "line": 423,
+      "kind": "prop:label",
+      "text": "Android",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/posture-checks/checks/tooltips/GeoLocationTooltip.tsx",
+      "line": 31,
+      "kind": "jsx-text-line",
+      "text": "Allow only",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/posture-checks/checks/tooltips/GeoLocationTooltip.tsx",
+      "line": 38,
+      "kind": "jsx-text",
+      "text": "Block",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/posture-checks/checks/tooltips/NetBirdVersionTooltip.tsx",
+      "line": 16,
+      "kind": "jsx-text",
+      "text": "Min. Client Version",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/posture-checks/checks/tooltips/PeerNetworkRangeTooltip.tsx",
+      "line": 26,
+      "kind": "jsx-text-line",
+      "text": "Allow only",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/posture-checks/checks/tooltips/PeerNetworkRangeTooltip.tsx",
+      "line": 32,
+      "kind": "jsx-text",
+      "text": "Block",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/posture-checks/checks/tooltips/ProcessTooltip.tsx",
+      "line": 29,
+      "kind": "jsx-text",
+      "text": "Allow only",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/posture-checks/modal/PostureCheckModal.tsx",
+      "line": 219,
+      "kind": "jsx-text-line",
+      "text": "Learn more about",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/posture-checks/modal/PostureCheckModal.tsx",
+      "line": 224,
+      "kind": "jsx-text-line",
+      "text": "Posture Checks",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/posture-checks/table/cells/PostureCheckPolicyUsageCell.tsx",
+      "line": 103,
+      "kind": "jsx-text-line",
+      "text": "To assign this posture check to your policies, visit the Policies",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/posture-checks/table/cells/PostureCheckPolicyUsageCell.tsx",
+      "line": 116,
+      "kind": "jsx-text-line",
+      "text": "Go to Policies",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/posture-checks/ui/PostureCheckOperatingSystemInfo.tsx",
+      "line": 44,
+      "kind": "jsx-expr:ternary",
+      "text": "Allow",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/posture-checks/ui/PostureCheckOperatingSystemInfo.tsx",
+      "line": 44,
+      "kind": "jsx-expr:ternary",
+      "text": "Block",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/posture-checks/ui/PostureCheckOperatingSystemInfo.tsx",
+      "line": 53,
+      "kind": "jsx-expr:ternary",
+      "text": "Version",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/posture-checks/ui/PostureCheckTab.tsx",
+      "line": 91,
+      "kind": "jsx-text-line",
+      "text": "Remove Checks",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/posture-checks/ui/PostureCheckTabTrigger.tsx",
+      "line": 13,
+      "kind": "jsx-text-line",
+      "text": "Posture Checks",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/posture-checks/usePostureCheck.ts",
+      "line": 132,
+      "kind": "jsx-expr:ternary",
+      "text": "Updating",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/posture-checks/usePostureCheck.ts",
+      "line": 132,
+      "kind": "jsx-expr:ternary",
+      "text": "Creating",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/RDPCredentialsModal.tsx",
+      "line": 49,
+      "kind": "jsx-expr:ternary",
+      "text": "Administrator",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/RDPTooltip.tsx",
+      "line": 26,
+      "kind": "jsx-text-line",
+      "text": "You do not have permission to launch an RDP session. Please",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/ironrdp-wasm-bridge.ts",
+      "line": 315,
+      "kind": "jsx-expr:ternary",
+      "text": "Winsock version not supported",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/ironrdp-wasm-bridge.ts",
+      "line": 316,
+      "kind": "jsx-expr:ternary",
+      "text": "successful WSAStartup not yet performed",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/ironrdp-wasm-bridge.ts",
+      "line": 322,
+      "kind": "jsx-expr:ternary",
+      "text": "valid name, no data record of requested type",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/ironrdp-wasm-bridge.ts",
+      "line": 400,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "Unknown",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/rdp-certificate-handler.ts",
+      "line": 273,
+      "kind": "jsx-text",
+      "text": "RDP Certificate Verification",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/rdp-certificate-handler.ts",
+      "line": 275,
+      "kind": "jsx-text",
+      "text": "The server",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/rdp-certificate-handler.ts",
+      "line": 297,
+      "kind": "jsx-text-line",
+      "text": "Remember this certificate for future connections",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/rdp-certificate-handler.ts",
+      "line": 301,
+      "kind": "jsx-text",
+      "text": "Reject",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/rdp-certificate-handler.ts",
+      "line": 302,
+      "kind": "jsx-text",
+      "text": "Accept",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/rdp-certificate-handler.ts",
+      "line": 253,
+      "kind": "jsx-expr:ternary",
+      "text": "Unable to parse",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/rdp-certificate-handler.ts",
+      "line": 254,
+      "kind": "jsx-expr:ternary",
+      "text": "Unable to parse",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/rdp-certificate-handler.ts",
+      "line": 279,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "Unknown",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/rdp-certificate-handler.ts",
+      "line": 282,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "Unknown",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/useRDPCertificateHandler.ts",
+      "line": 278,
+      "kind": "jsx-expr:ternary",
+      "text": "Unable to parse",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/useRDPCertificateHandler.ts",
+      "line": 279,
+      "kind": "jsx-expr:ternary",
+      "text": "Unable to parse",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/useRemoteDesktop.ts",
+      "line": 229,
+      "kind": "jsx-expr:ternary",
+      "text": "RDP connection failed",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/useRemoteDesktop.ts",
+      "line": 238,
+      "kind": "jsx-expr:ternary",
+      "text": "RDP connection failed",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/remote-access/ssh/SSHCredentialsModal.tsx",
+      "line": 41,
+      "kind": "jsx-expr:ternary",
+      "text": "Administrator",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/remote-access/ssh/SSHTooltip.tsx",
+      "line": 55,
+      "kind": "jsx-text-line",
+      "text": "You do not have permission to launch the SSH console. Please contact",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/remote-access/ssh/SSHTooltip.tsx",
+      "line": 80,
+      "kind": "jsx-text-line",
+      "text": "SSH Access is currently disabled for this peer. Please enable SSH access",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/remote-access/useNetBirdClient.ts",
+      "line": 146,
+      "kind": "jsx-expr:ternary",
+      "text": "Failed to initialize WASM",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/remote-access/useNetBirdClient.ts",
+      "line": 169,
+      "kind": "jsx-expr:ternary",
+      "text": "NetBirdClient is not available or not a function",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/remote-access/useNetBirdClient.ts",
+      "line": 190,
+      "kind": "jsx-expr:ternary",
+      "text": "Connection failed",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/reverse-proxy/ReverseProxyCrowdSecIPReputation.tsx",
+      "line": 69,
+      "kind": "jsx-expr:attr(alt)",
+      "text": "CrowdSec",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/reverse-proxy/auth/AuthHeaderModal.tsx",
+      "line": 77,
+      "kind": "jsx-expr:ternary",
+      "text": "Authorization",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/reverse-proxy/auth/AuthHeaderModal.tsx",
+      "line": 110,
+      "kind": "jsx-expr:ternary",
+      "text": "Authorization",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/reverse-proxy/auth/AuthHeaderModal.tsx",
+      "line": 117,
+      "kind": "jsx-expr:ternary",
+      "text": "Authorization",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/reverse-proxy/auth/AuthHeaderModal.tsx",
+      "line": 359,
+      "kind": "jsx-expr:ternary",
+      "text": "Authorization",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersFeaturesCell.tsx",
+      "line": 46,
+      "kind": "prop:label",
+      "text": "CrowdSec",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersModal.tsx",
+      "line": 240,
+      "kind": "prop:label",
+      "text": "Docker",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersModal.tsx",
+      "line": 245,
+      "kind": "prop:label",
+      "text": "Docker Compose",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersModal.tsx",
+      "line": 250,
+      "kind": "prop:label",
+      "text": "Kubernetes",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersModal.tsx",
+      "line": 255,
+      "kind": "prop:label",
+      "text": "Hetzner Cloud",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersModal.tsx",
+      "line": 260,
+      "kind": "prop:label",
+      "text": "DigitalOcean",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersModal.tsx",
+      "line": 265,
+      "kind": "prop:label",
+      "text": "AWS CloudFormation",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersModal.tsx",
+      "line": 394,
+      "kind": "prop:label",
+      "text": "Docker",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersModal.tsx",
+      "line": 397,
+      "kind": "prop:label",
+      "text": "Docker Compose",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersModal.tsx",
+      "line": 402,
+      "kind": "prop:label",
+      "text": "Kubernetes",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersModal.tsx",
+      "line": 407,
+      "kind": "prop:label",
+      "text": "Hetzner Cloud",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersModal.tsx",
+      "line": 412,
+      "kind": "prop:label",
+      "text": "DigitalOcean",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersModal.tsx",
+      "line": 417,
+      "kind": "prop:label",
+      "text": "AWS CloudFormation",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersModal.tsx",
+      "line": 433,
+      "kind": "jsx-text",
+      "text": "Docker",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersModal.tsx",
+      "line": 523,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "!border-nb-gray-930",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/reverse-proxy/table/ReverseProxyAccessControlCell.tsx",
+      "line": 166,
+      "kind": "prop:label",
+      "text": "CrowdSec",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/routes/RouteModal.tsx",
+      "line": 181,
+      "kind": "jsx-expr:ternary",
+      "text": "Exit Node",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/routes/RouteUpdateModal.tsx",
+      "line": 414,
+      "kind": "jsx-text-line",
+      "text": "Advertise this route to peers that belong to the following",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/routes/RouteUpdateModal.tsx",
+      "line": 423,
+      "kind": "jsx-text-line",
+      "text": "These groups offer a more granular control of internal services",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/search/GlobalSearchModal.tsx",
+      "line": 316,
+      "kind": "jsx-text-line",
+      "text": "Search for Networks and Resources",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/search/GlobalSearchModal.tsx",
+      "line": 320,
+      "kind": "jsx-text-line",
+      "text": "Start typing to search by name, description or address.",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/search/GlobalSearchModal.tsx",
+      "line": 342,
+      "kind": "jsx-text-line",
+      "text": "Could not find any results",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/settings/AuthenticationTab.tsx",
+      "line": 63,
+      "kind": "jsx-expr:ternary",
+      "text": "Integration",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/settings/IdentityProviderModal.tsx",
+      "line": 64,
+      "kind": "jsx-expr:ternary",
+      "text": "Google",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/settings/IdentityProviderModal.tsx",
+      "line": 65,
+      "kind": "jsx-expr:ternary",
+      "text": "Microsoft",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/settings/IdentityProviderModal.tsx",
+      "line": 66,
+      "kind": "jsx-expr:ternary",
+      "text": "Microsoft Entra",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/settings/IdentityProviderModal.tsx",
+      "line": 67,
+      "kind": "jsx-expr:ternary",
+      "text": "Okta",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/settings/IdentityProviderModal.tsx",
+      "line": 68,
+      "kind": "jsx-expr:ternary",
+      "text": "Zitadel",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/settings/IdentityProviderModal.tsx",
+      "line": 69,
+      "kind": "jsx-expr:ternary",
+      "text": "PocketID",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/settings/IdentityProviderModal.tsx",
+      "line": 70,
+      "kind": "jsx-expr:ternary",
+      "text": "Authentik",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/settings/IdentityProviderModal.tsx",
+      "line": 71,
+      "kind": "jsx-expr:ternary",
+      "text": "Keycloak",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/settings/IdentityProviderModal.tsx",
+      "line": 72,
+      "kind": "jsx-expr:ternary",
+      "text": "Microsoft AD FS",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/settings/IdentityProvidersTab.tsx",
+      "line": 45,
+      "kind": "jsx-expr:ternary",
+      "text": "Zitadel",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/settings/IdentityProvidersTab.tsx",
+      "line": 46,
+      "kind": "jsx-expr:ternary",
+      "text": "Microsoft Entra",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/settings/IdentityProvidersTab.tsx",
+      "line": 47,
+      "kind": "jsx-expr:ternary",
+      "text": "Google",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/settings/IdentityProvidersTab.tsx",
+      "line": 48,
+      "kind": "jsx-expr:ternary",
+      "text": "Okta",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/settings/IdentityProvidersTab.tsx",
+      "line": 49,
+      "kind": "jsx-expr:ternary",
+      "text": "PocketID",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/settings/IdentityProvidersTab.tsx",
+      "line": 50,
+      "kind": "jsx-expr:ternary",
+      "text": "Microsoft",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/settings/IdentityProvidersTab.tsx",
+      "line": 51,
+      "kind": "jsx-expr:ternary",
+      "text": "Authentik",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/settings/IdentityProvidersTab.tsx",
+      "line": 52,
+      "kind": "jsx-expr:ternary",
+      "text": "Keycloak",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/settings/IdentityProvidersTab.tsx",
+      "line": 53,
+      "kind": "jsx-expr:ternary",
+      "text": "Microsoft AD FS",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyModal.tsx",
+      "line": 117,
+      "kind": "jsx-text-line",
+      "text": "This key will not be shown again, so be sure to copy it and",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyModal.tsx",
+      "line": 153,
+      "kind": "jsx-text-line",
+      "text": "Install NetBird",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyModal.tsx",
+      "line": 204,
+      "kind": "prop:title",
+      "text": "Create Setup Key",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyModal.tsx",
+      "line": 261,
+      "kind": "jsx-text-line",
+      "text": "Make this key reusable",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyModal.tsx",
+      "line": 327,
+      "kind": "jsx-text-line",
+      "text": "Ephemeral Peers",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyModal.tsx",
+      "line": 344,
+      "kind": "jsx-text-line",
+      "text": "Allow Extra DNS Labels",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyModal.tsx",
+      "line": 355,
+      "kind": "jsx-text",
+      "text": "Auto-assigned groups",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyModal.tsx",
+      "line": 357,
+      "kind": "jsx-text-line",
+      "text": "These groups will be automatically assigned to peers enrolled with",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyModal.tsx",
+      "line": 372,
+      "kind": "jsx-text-line",
+      "text": "Learn more about",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyModal.tsx",
+      "line": 379,
+      "kind": "jsx-text-line",
+      "text": "Setup Keys",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyModal.tsx",
+      "line": 396,
+      "kind": "jsx-text-line",
+      "text": "Create Setup Key",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyModal.tsx",
+      "line": 192,
+      "kind": "jsx-expr:ternary",
+      "text": "Unlimited",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyModal.tsx",
+      "line": 264,
+      "kind": "jsx-expr:attr(helpText)",
+      "text": "Use this type to enroll multiple peers",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyModal.tsx",
+      "line": 305,
+      "kind": "jsx-expr:attr(placeholder)",
+      "text": "Unlimited",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyStatusCell.tsx",
+      "line": 46,
+      "kind": "jsx-text-line",
+      "text": "Peers that are offline for over 10 minutes will be removed",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyUsageCell.tsx",
+      "line": 15,
+      "kind": "jsx-text",
+      "text": "Unlimited",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/setup-netbird-modal/LinuxTab.tsx",
+      "line": 182,
+      "kind": "jsx-text-line",
+      "text": "Install manually with a package manager",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/users/HorizontalUsersStack.tsx",
+      "line": 71,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "NetBird",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/users/PendingApproval.tsx",
+      "line": 95,
+      "kind": "jsx-text-line",
+      "text": "Your organization requires new users to be manually approved before",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/users/PendingApproval.tsx",
+      "line": 115,
+      "kind": "jsx-text-line",
+      "text": "Log Out",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/users/PendingApproval.tsx",
+      "line": 126,
+      "kind": "jsx-text-line",
+      "text": "Read the Docs",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/users/PendingApproval.tsx",
+      "line": 133,
+      "kind": "jsx-text-line",
+      "text": "Contact Support",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/users/SmallUserAvatar.tsx",
+      "line": 31,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "System User",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/users/UserInvitesTable.tsx",
+      "line": 156,
+      "kind": "jsx-text-line",
+      "text": "Agent Network Admin",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/users/UserInvitesTable.tsx",
+      "line": 162,
+      "kind": "jsx-text-line",
+      "text": "Usage Viewer",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/users/table-cells/UserRoleCell.tsx",
+      "line": 67,
+      "kind": "jsx-text-line",
+      "text": "Agent Network Admin",
+      "category": "WORK"
+    },
+    {
+      "file": "src/modules/users/table-cells/UserRoleCell.tsx",
+      "line": 73,
+      "kind": "jsx-text-line",
+      "text": "Usage Viewer",
+      "category": "WORK"
+    },
+    {
+      "file": "src/storybook/integrations.ts",
+      "line": 36,
+      "kind": "jsx-expr:ternary",
+      "text": "netbird-sync@acme-netbird.iam.gserviceaccount.com",
+      "category": "WORK"
+    },
+    {
+      "file": "src/utils/helpers.ts",
+      "line": 51,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "System User",
+      "category": "WORK"
+    },
+    {
+      "file": "src/utils/responsive.ts",
+      "line": 4,
+      "kind": "jsx-expr:ternary",
+      "text": "(min-width: 490px)",
+      "category": "WORK"
+    },
+    {
+      "file": "src/utils/responsive.ts",
+      "line": 8,
+      "kind": "jsx-expr:ternary",
+      "text": "(min-width: 640px)",
+      "category": "WORK"
+    },
+    {
+      "file": "src/utils/responsive.ts",
+      "line": 12,
+      "kind": "jsx-expr:ternary",
+      "text": "(min-width: 768px)",
+      "category": "WORK"
+    },
+    {
+      "file": "src/utils/responsive.ts",
+      "line": 16,
+      "kind": "jsx-expr:ternary",
+      "text": "(min-width: 1024px)",
+      "category": "WORK"
+    },
+    {
+      "file": "src/utils/responsive.ts",
+      "line": 20,
+      "kind": "jsx-expr:ternary",
+      "text": "(min-width: 1280px)",
+      "category": "WORK"
+    },
+    {
+      "file": "src/utils/responsive.ts",
+      "line": 24,
+      "kind": "jsx-expr:ternary",
+      "text": "(min-width: 1536px)",
+      "category": "WORK"
+    }
+  ]
+}

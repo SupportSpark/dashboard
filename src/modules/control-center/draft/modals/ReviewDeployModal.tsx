@@ -217,7 +217,7 @@ export const ReviewDeployModal = ({
         <div className={"px-8 pb-6 border-t border-nb-gray-910 pt-6 min-w-0"}>
           {changes.length === 0 ? (
             <div className={"text-sm text-nb-gray-400 text-center py-10"}>
-              No pending changes.
+              {t("noPendingChanges")}
             </div>
           ) : (
             <Accordion

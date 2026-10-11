@@ -161,7 +161,7 @@ const PickerContent = ({
       <div className={"p-default flex flex-col"}>
         {resources.length === 0 && groupIds.length === 0 ? (
           <div className={"text-sm text-nb-gray-400 text-center py-4"}>
-            This network has no resources yet.
+            {t("networkNoResourcesYet")}
           </div>
         ) : (
           <div className={"w-full"}>

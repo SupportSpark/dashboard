@@ -48,6 +48,7 @@ import useGroupsUsage, {
 export function GroupsTableColumns(
   t: ReturnType<typeof useTranslations>,
   tTable: ReturnType<typeof useTranslations>,
+  tCommon: ReturnType<typeof useTranslations>,
 ): ColumnDef<GroupUsage>[] {
   return [
     {
@@ -64,7 +65,7 @@ export function GroupsTableColumns(
             }
             onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
             disabled={!table.getRowModel().rows.some((row) => row.getCanSelect())}
-            aria-label="Select all groups on this page"
+            aria-label={tCommon("selectAllGroups")}
           />
         </div>
       ),
@@ -420,7 +421,7 @@ export default function GroupsTable({ headingTarget }: Readonly<Props>) {
         sorting={sorting}
         isLoading={isLoading}
         setSorting={setSorting}
-        columns={GroupsTableColumns(t, tTable)}
+        columns={GroupsTableColumns(t, tTable, tCommon)}
         data={groups}
         initialPageSize={25}
         showResetFilterButton={false}

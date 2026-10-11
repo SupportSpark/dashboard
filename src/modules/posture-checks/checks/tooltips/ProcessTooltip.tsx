@@ -3,6 +3,7 @@ import FullTooltip from "@components/FullTooltip";
 import { ScrollArea } from "@components/ScrollArea";
 import { tryGetProcessNameFromPath } from "@utils/helpers";
 import { TerminalIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import AppleIcon from "@/assets/icons/AppleIcon";
 import WindowsIcon from "@/assets/icons/WindowsIcon";
@@ -13,6 +14,8 @@ type Props = {
   children?: React.ReactNode;
 };
 export const ProcessTooltip = ({ check, children }: Props) => {
+  const t = useTranslations("common");
+  const unknownPath = t("unknownPath");
   return check ? (
     <FullTooltip
       className={"w-full min-w-0"}
@@ -26,8 +29,10 @@ export const ProcessTooltip = ({ check, children }: Props) => {
         >
           <div className={"px-4 pt-3"}>
             <span>
-              <span className={"text-green-500 font-semibold"}>Allow only</span>{" "}
-              peers which are running the following processes
+              <span className={"text-green-500 font-semibold"}>
+                {t("allowOnly")}
+              </span>{" "}
+              {t("followingProcesses")}
             </span>
           </div>
 
@@ -53,8 +58,7 @@ export const ProcessTooltip = ({ check, children }: Props) => {
                           className={"truncate inline-block "}
                           title={p?.linux_path}
                         >
-                          {tryGetProcessNameFromPath(p?.linux_path) ||
-                            "Unknown path"}
+                          {tryGetProcessNameFromPath(p?.linux_path) || unknownPath}
                         </span>
                       </Badge>
                     )}
@@ -72,8 +76,7 @@ export const ProcessTooltip = ({ check, children }: Props) => {
                           className={"truncate inline-block "}
                           title={p?.mac_path}
                         >
-                          {tryGetProcessNameFromPath(p?.mac_path) ||
-                            "Unknown path"}
+                          {tryGetProcessNameFromPath(p?.mac_path) || unknownPath}
                         </span>
                       </Badge>
                     )}
@@ -91,8 +94,7 @@ export const ProcessTooltip = ({ check, children }: Props) => {
                           className={"truncate inline-block"}
                           title={p?.windows_path}
                         >
-                          {tryGetProcessNameFromPath(p?.windows_path) ||
-                            "Unknown path"}
+                          {tryGetProcessNameFromPath(p?.windows_path) || unknownPath}
                         </span>
                       </Badge>
                     )}

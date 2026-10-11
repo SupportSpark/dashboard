@@ -37,12 +37,12 @@ type Props = {
 	children: React.ReactNode;
 	user: User;
 };
-const copyMessage = "Access token was copied to your clipboard!";
 export default function CreateAccessTokenModal({
 	children,
 	user,
 }: Readonly<Props>) {
 	const t = useTranslations("common");
+	const copyMessage = t("accessTokenCopied");
 	const [modal, setModal] = useState(false);
 	const [successModal, setSuccessModal] = useState(false);
 	const [token, setToken] = useState<string>("");
@@ -79,11 +79,10 @@ export default function CreateAccessTokenModal({
 						<div className={"flex flex-col items-center justify-center gap-3"}>
 							<div>
 								<h2 className={"text-2xl text-center mb-2"}>
-									Access token created successfully!
+									{t("accessTokenCreatedSuccess")}
 								</h2>
 								<Paragraph className={"mt-0 text-sm text-center"}>
-									This token will not be shown again, so be sure to copy it and
-									store in a secure location.
+									{t("accessTokenCopyWarning")}
 								</Paragraph>
 							</div>
 						</div>
@@ -92,7 +91,7 @@ export default function CreateAccessTokenModal({
 					<div className={"px-8 pb-6"}>
 						<Code message={copyMessage}>
 							<Code.Line>
-								{token || "Setup key could not be created..."}
+								{token || t("setupKeyCouldNotBeCreated")}
 							</Code.Line>
 						</Code>
 					</div>
@@ -105,7 +104,7 @@ export default function CreateAccessTokenModal({
 									tabIndex={-1}
 									data-testid={"access-token-copy-close"}
 								>
-									Close
+									{t("close")}
 								</Button>
 							</ModalClose>
 
@@ -115,7 +114,7 @@ export default function CreateAccessTokenModal({
 								onClick={() => copy(copyMessage)}
 							>
 								<CopyIcon size={14} />
-								Copy to clipboard
+								{t("copyToClipboard")}
 							</Button>
 						</div>
 					</ModalFooter>
@@ -169,8 +168,8 @@ export function AccessTokenModalContent({
 		<ModalContent maxWidthClass={"max-w-lg"}>
 			<ModalHeader
 				icon={<IconApi />}
-				title={"Create Access Token"}
-				description={"Use this token to access NetBird's public API"}
+				title={tCommon("createAccessTokenTitle")}
+				description={tCommon("createAccessTokenDescription")}
 				color={"netbird"}
 			/>
 
@@ -182,7 +181,7 @@ export function AccessTokenModalContent({
 					<HelpText>{t("tokenNameHelp")}</HelpText>
 					<Input
 						data-testid={"access-token-name"}
-						placeholder={"e.g., Infra token"}
+						placeholder={tCommon("accessTokenNamePlaceholder")}
 						value={name}
 						onChange={(e) => setName(e.target.value)}
 					/>
@@ -191,7 +190,7 @@ export function AccessTokenModalContent({
 				<div className={"flex justify-between"}>
 					<div>
 						<Label>{t("tokenExpiresIn")}</Label>
-						<HelpText>Should be between 1 and 365 days.</HelpText>
+						<HelpText>{tCommon("accessTokenExpiryHelp")}</HelpText>
 					</div>
 					<Input
 						maxWidthClass={"max-w-[200px]"}
@@ -205,7 +204,7 @@ export function AccessTokenModalContent({
 						customPrefix={
 							<AlarmClock size={16} className={"text-nb-gray-300"} />
 						}
-						customSuffix={"Day(s)"}
+						customSuffix={tCommon("daysSuffix")}
 					/>
 				</div>
 			</div>
@@ -213,12 +212,12 @@ export function AccessTokenModalContent({
 			<ModalFooter className={"items-center"}>
 				<div className={"w-full"}>
 					<Paragraph className={"text-sm mt-auto"}>
-						Learn more about
+						{tCommon("learnMoreAbout")}
 						<InlineLink
 							href={"https://docs.netbird.io/how-to/access-netbird-public-api"}
 							target={"_blank"}
 						>
-							Access Tokens
+							{tCommon("accessTokens")}
 							<ExternalLinkIcon size={12} />
 						</InlineLink>
 					</Paragraph>
@@ -235,7 +234,7 @@ export function AccessTokenModalContent({
 						data-testid={"create-access-token"}
 					>
 						<PlusCircle size={16} />
-						Create Token
+						{tCommon("createToken")}
 					</Button>
 				</div>
 			</ModalFooter>

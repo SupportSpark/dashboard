@@ -26,9 +26,7 @@ export const SmallUserAvatar = ({
       )}
       style={{
         color:
-          email === "NetBird"
-            ? "#808080"
-            : generateColorFromString(name || id || "System User"),
+          email === "NetBird" ? "#808080" : generateColorFromString(name || id),
       }}
     >
       {email === "NetBird" ? (

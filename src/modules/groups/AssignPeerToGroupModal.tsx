@@ -97,6 +97,7 @@ export const AssignGroupToPeerModalContent = ({
   const tassign = useTranslations("common");
   const tTable = useTranslations("table");
   const tGroups = useTranslations("groups");
+  const tPeersTable = useTranslations("peers");
   const resolvedButtonText = buttonText ?? tassign("confirmChanges");
   const { data: peers, isLoading } = useFetchApi<Peer[]>("/peers");
   const { users } = useUsers();
@@ -278,7 +279,7 @@ export const AssignGroupToPeerModalContent = ({
           sorting={sorting}
           keepStateInLocalStorage={false}
           setSorting={setSorting}
-          columns={PeersTableColumns(t, tTable)}
+          columns={PeersTableColumns(t, tTable, t, tPeersTable)}
           data={data}
           isLoading={isLoading && !initialPeersSet}
           tableCellClassName={"!py-1 scale-[95%]"}
@@ -350,6 +351,8 @@ export const AssignGroupToPeerModalContent = ({
 export function PeersTableColumns(
   t: (key: string) => string,
   tTable: (key: string) => string = t,
+  tCommon: (key: string) => string = t,
+  tPeers: (key: string) => string = t,
 ): ColumnDef<Peer>[] {
   return [
     {
@@ -405,16 +408,16 @@ export function PeersTableColumns(
     },
     {
       id: "user_name",
-      accessorFn: (peer) => (peer.user ? peer.user?.name : "Unknown"),
+      accessorFn: (peer) => (peer.user ? peer.user?.name : tCommon("unknown")),
     },
     {
       id: "user_email",
-      accessorFn: (peer) => (peer.user ? peer.user?.email : "Unknown"),
+      accessorFn: (peer) => (peer.user ? peer.user?.email : tCommon("unknown")),
     },
     {
       accessorKey: "dns_label",
       header: ({ column }) => {
-        return <DataTableHeader column={column}>{t("address")}</DataTableHeader>;
+        return <DataTableHeader column={column}>{tPeers("address")}</DataTableHeader>;
       },
       cell: ({ row }) => <PeerAddressCell peer={row.original} />,
     },

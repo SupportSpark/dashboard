@@ -39,6 +39,7 @@ type Props = {
 
 function useMinimalPeersTableColumns(
   t: ReturnType<typeof useTranslations>,
+  tCommon: ReturnType<typeof useTranslations>,
 ): ColumnDef<Peer>[] {
   return useMemo<ColumnDef<Peer>[]>(
     () => [
@@ -61,11 +62,11 @@ function useMinimalPeersTableColumns(
       },
       {
         id: "user_name",
-        accessorFn: (peer) => (peer.user ? peer.user?.name : "Unknown"),
+        accessorFn: (peer) => (peer.user ? peer.user?.name : tCommon("unknown")),
       },
       {
         id: "user_email",
-        accessorFn: (peer) => (peer.user ? peer.user?.email : "Unknown"),
+        accessorFn: (peer) => (peer.user ? peer.user?.email : tCommon("unknown")),
       },
       {
         accessorKey: "dns_label",
@@ -90,7 +91,7 @@ function useMinimalPeersTableColumns(
         cell: ({ row }) => <PeerOSCell os={row.original.os} />,
       },
     ],
-    [t],
+    [t, tCommon],
   );
 }
 
@@ -110,7 +111,7 @@ export default function MinimalPeersTable({
   const tCommon = useTranslations("common");
   const { mutate } = useSWRConfig();
   const { permission } = usePermissions();
-  const localizedColumns = useMinimalPeersTableColumns(t);
+  const localizedColumns = useMinimalPeersTableColumns(t, tCommon);
   const columns = columnsProp ?? localizedColumns;
 
   // Default sorting state of the table

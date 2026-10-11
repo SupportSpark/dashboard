@@ -1,29 +1,30 @@
 "use client";
 
 import Button from "@components/Button";
-import HelpText from "@components/HelpText";
-import { Label } from "@components/Label";
-import { Modal } from "@components/modal/Modal";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@components/DropdownMenu";
+import HelpText from "@components/HelpText";
+import { Label } from "@components/Label";
+import { Modal } from "@components/modal/Modal";
+import TruncatedText from "@components/ui/TruncatedText";
+import { cn } from "@utils/helpers";
 import { Edit2, MoreVertical, PlusIcon, Trash2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React, { useMemo, useState } from "react";
+import CircleIcon from "@/assets/icons/CircleIcon";
+import { usePolicies } from "@/contexts/PoliciesProvider";
+import { useLabelClass } from "@/hooks/useIsCjkLocale";
 import { NetworkResource } from "@/interfaces/Network";
 import { Policy, PolicyRuleResource } from "@/interfaces/Policy";
-import { cn } from "@utils/helpers";
-import { usePolicies } from "@/contexts/PoliciesProvider";
+import { AccessControlModalContent } from "@/modules/access-control/AccessControlModal";
+import AccessControlPortsCell from "@/modules/access-control/table/AccessControlPortsCell";
+import AccessControlProtocolCell from "@/modules/access-control/table/AccessControlProtocolCell";
 import AccessControlSourcesCell from "@/modules/access-control/table/AccessControlSourcesCell";
 import { useNetworksContext } from "@/modules/networks/NetworkProvider";
-import { AccessControlModalContent } from "@/modules/access-control/AccessControlModal";
-import { useTranslations } from "next-intl";
-import CircleIcon from "@/assets/icons/CircleIcon";
-import AccessControlProtocolCell from "@/modules/access-control/table/AccessControlProtocolCell";
-import AccessControlPortsCell from "@/modules/access-control/table/AccessControlPortsCell";
-import TruncatedText from "@components/ui/TruncatedText";
 
 type Props = {
 	existingPolicies: Policy[];
@@ -52,6 +53,7 @@ export default function NetworkResourceAccessControl({
 }: Readonly<Props>) {
 	const t = useTranslations("networks");
 	const tCommon = useTranslations("common");
+	const labelClass = useLabelClass();
 	const { network, confirmMultiResourceAction } = useNetworksContext();
 	const { openEditPolicyModal, deletePolicy } = usePolicies();
 	const [policyModalOpen, setPolicyModalOpen] = useState(false);
@@ -142,13 +144,13 @@ export default function NetworkResourceAccessControl({
 						<table className="w-full">
 							<thead>
 								<tr>
-									<th className="py-2 px-4 text-left text-[11px] uppercase tracking-wider text-nb-gray-400 font-medium">
+									<th className={cn("py-2 px-4 text-left text-nb-gray-400 font-medium", labelClass)}>
 										{t("resourceNameLabel")}
 									</th>
-									<th className="py-2 pl-5 pr-2 text-left text-[11px] uppercase tracking-wider text-nb-gray-400 font-medium">
+									<th className={cn("py-2 pl-5 pr-2 text-left text-nb-gray-400 font-medium", labelClass)}>
 										{t("resourceGroupsLabel")}
 									</th>
-									<th className="py-2 px-4 text-left text-[11px] uppercase tracking-wider text-nb-gray-400 font-medium">
+									<th className={cn("py-2 px-4 text-left text-nb-gray-400 font-medium", labelClass)}>
 										{tCommon("configurePolicies")}
 									</th>
 									<th className="py-2 pr-4 pl-2" />

@@ -1,5 +1,6 @@
 import { notify } from "@components/Notification";
 import { useApiCall } from "@utils/api";
+import { useTranslations } from "next-intl";
 import { useReducer } from "react";
 import { useSWRConfig } from "swr";
 import { PostureCheck } from "@/interfaces/PostureCheck";
@@ -89,6 +90,7 @@ type Props = {
   onSuccess?: (check: PostureCheck) => void;
 };
 export const usePostureCheck = ({ postureCheck, onSuccess }: Props = {}) => {
+  const t = useTranslations("postureChecks");
   const postureCheckRequest = useApiCall<PostureCheck>("/posture-checks", true);
   const { mutate } = useSWRConfig();
   const [state, dispatch] = useReducer(
@@ -124,13 +126,13 @@ export const usePostureCheck = ({ postureCheck, onSuccess }: Props = {}) => {
       return check;
     });
     notify({
-      title: `Posture Check ${state.name}`,
-      description: `Posture Check was ${
-        postureCheck ? "updated" : "created"
-      } successfully.`,
-      loadingMessage: `${
-        postureCheck ? "Updating" : "Creating"
-      } your posture check...`,
+      title: t("postureCheckNotifyTitle", { name: state.name }),
+      description: postureCheck
+        ? t("postureCheckUpdated")
+        : t("postureCheckCreated"),
+      loadingMessage: postureCheck
+        ? t("updatingPostureCheck")
+        : t("creatingPostureCheck"),
       promise,
     });
     return promise;

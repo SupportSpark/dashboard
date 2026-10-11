@@ -179,7 +179,7 @@ export default function LinuxTab({
           <AccordionItem value="item-1">
             <AccordionTrigger>
               <PackageIcon size={16} />
-              Install manually with a package manager
+              {t("installWithPackageManager")}
             </AccordionTrigger>
             <AccordionContent>
               <div className={"mt-1"}>

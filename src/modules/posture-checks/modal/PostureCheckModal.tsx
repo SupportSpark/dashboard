@@ -216,12 +216,12 @@ export default function PostureCheckModal({
           <ModalFooter className={"items-center"}>
             <div className={"w-full"}>
               <Paragraph className={"text-sm mt-auto"}>
-                Learn more about
+                {tCommon("learnMoreAbout")}
                 <InlineLink
                   href={"https://docs.netbird.io/how-to/manage-posture-checks"}
                   target={"_blank"}
                 >
-                  Posture Checks
+                  {t("title")}
                   <ExternalLinkIcon size={12} />
                 </InlineLink>
               </Paragraph>

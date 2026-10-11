@@ -32,6 +32,11 @@ const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$/i;
 
 export default function InstanceSetupWizard() {
   const tisetup = useTranslations("instanceSetup");
+  const tUsers = useTranslations("users");
+  const t = useTranslations("common");
+  const tInvite = useTranslations("invite");
+  const tAuth = useTranslations("auth");
+  const tSettings = useTranslations("settings");
   const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
@@ -47,30 +52,30 @@ export default function InstanceSetupWizard() {
     const newErrors: FormErrors = {};
 
     if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
+      newErrors.email = tisetup("emailRequired");
     } else if (!emailRegex.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address";
+      newErrors.email = tisetup("invalidEmail");
     }
 
     if (!formData.password) {
-      newErrors.password = "Password is required";
+      newErrors.password = tisetup("passwordRequired");
     } else if (formData.password.length < 8) {
-      newErrors.password = "Password must be at least 8 characters";
+      newErrors.password = tisetup("passwordMinLength");
     }
 
     if (!formData.confirmPassword) {
-      newErrors.confirmPassword = "Please confirm your password";
+      newErrors.confirmPassword = tisetup("confirmPasswordRequired");
     } else if (formData.confirmPassword !== formData.password) {
-      newErrors.confirmPassword = "Passwords do not match";
+      newErrors.confirmPassword = tUsers("passwordsDoNotMatch");
     }
 
     if (!formData.name.trim()) {
-      newErrors.name = "Name is required";
+      newErrors.name = tisetup("nameRequired");
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-  }, [formData]);
+  }, [formData, tisetup, tUsers]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -102,11 +107,10 @@ export default function InstanceSetupWizard() {
           setTimeout(() => (window.location.href = "/"), 2000);
           break;
         case 422:
-          message =
-            error.message || "Validation error. Please check your input.";
+          message = error.message || tisetup("validationError");
           break;
         case 500:
-          message = "An error occurred. Please try again.";
+          message = tisetup("genericError");
           break;
         default:
           message = error.message || message;
@@ -150,7 +154,7 @@ export default function InstanceSetupWizard() {
   const confirmPasswordError =
     errors.confirmPassword ??
     (formData.confirmPassword && !passwordsMatch
-      ? "Passwords do not match"
+      ? tUsers("passwordsDoNotMatch")
       : undefined);
 
   if (isSuccess) {
@@ -181,7 +185,7 @@ export default function InstanceSetupWizard() {
               variant={"primary"}
               className={"mx-auto w-full"}
             >
-              Go to Login
+              {tInvite("goToLogin")}
             </Button>
           </div>
         </Card>
@@ -196,14 +200,14 @@ export default function InstanceSetupWizard() {
       </div>
       <Card className={"max-w-[420px] mt-8 mx-auto"}>
         <h1 className={"text-xl text-center z-10 relative"}>
-          Welcome to NetBird
+          {tInvite("welcomeTitle")}
         </h1>
         <div
           className={
             "text-sm text-nb-gray-300 font-light mt-2 block text-center z-10 relative"
           }
         >
-          Create the first admin account to get started
+          {tisetup("createFirstAdmin")}
         </div>
 
         <form
@@ -212,7 +216,7 @@ export default function InstanceSetupWizard() {
         >
           {errors.general && <ErrorMessage error={errors.general} />}
           <div>
-            <Label htmlFor={"name"}>Name</Label>
+            <Label htmlFor={"name"}>{t("name")}</Label>
             <Input
               type="text"
               id="name"
@@ -226,7 +230,7 @@ export default function InstanceSetupWizard() {
           </div>
 
           <div>
-            <Label htmlFor={"email"}>Email</Label>
+            <Label htmlFor={"email"}>{tAuth("email")}</Label>
             <Input
               type="email"
               id="email"
@@ -239,7 +243,7 @@ export default function InstanceSetupWizard() {
           </div>
 
           <div>
-            <Label htmlFor={"password"}>Password</Label>
+            <Label htmlFor={"password"}>{tAuth("password")}</Label>
             <Input
               type={"password"}
               id="password"
@@ -251,12 +255,12 @@ export default function InstanceSetupWizard() {
               showPasswordToggle={true}
             />
             <HelpText className={"mt-2"}>
-              Must be at least 8 characters
+              {tisetup("passwordMinLengthHelp")}
             </HelpText>
           </div>
 
           <div>
-            <Label htmlFor={"confirmPassword"}>Confirm Password</Label>
+            <Label htmlFor={"confirmPassword"}>{tSettings("confirmPassword")}</Label>
             <Input
               type={"password"}
               id="confirmPassword"
@@ -278,10 +282,10 @@ export default function InstanceSetupWizard() {
             {isSubmitting ? (
               <>
                 <Loader2 className="animate-spin" size={16} />
-                Creating Account...
+                {tInvite("creatingAccount")}
               </>
             ) : (
-              "Create Admin Account"
+              tisetup("createAdminAccount")
             )}
           </Button>
         </form>
@@ -291,7 +295,7 @@ export default function InstanceSetupWizard() {
         <span
           className={"text-sm text-nb-gray-400 font-light pb-10 text-center"}
         >
-          This is a one-time setup for your NetBird instance.
+          {tisetup("oneTimeSetupNotice")}
         </span>
       </div>
     </div>

@@ -3,6 +3,7 @@ import Button from "@components/Button";
 import FullTooltip from "@components/FullTooltip";
 import { cn } from "@utils/helpers";
 import { ArrowUpRightIcon, ShieldIcon, SquarePenIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { useState } from "react";
@@ -16,6 +17,8 @@ type Props = {
 };
 
 export const PostureCheckPolicyUsageCell = ({ check }: Props) => {
+  const t = useTranslations("postureChecks");
+  const tNetworks = useTranslations("networks");
   const router = useRouter();
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const policyCount = check?.policies?.length || 0;
@@ -100,8 +103,7 @@ export const PostureCheckPolicyUsageCell = ({ check }: Props) => {
       <FullTooltip
         content={
           <div className={"text-xs max-w-[260px]"}>
-            To assign this posture check to your policies, visit the Policies
-            page.
+            {t("assignToPoliciesHint")}
           </div>
         }
         interactive={false}
@@ -113,7 +115,7 @@ export const PostureCheckPolicyUsageCell = ({ check }: Props) => {
           onClick={() => router.push("/access-control")}
         >
           <>
-            Go to Policies
+            {tNetworks("goToPolicies")}
             <ArrowUpRightIcon size={12} />
           </>
         </Button>

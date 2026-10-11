@@ -64,13 +64,13 @@ export default function UserRoleCell({ user }: Readonly<Props>) {
         {role === Role.AgentNetworkAdmin && (
           <>
             <AgentNetworkIcon size={14} />
-            Agent Network Admin
+            {t("agentNetworkAdmin")}
           </>
         )}
         {role === Role.UsageViewer && (
           <>
             <GaugeIcon size={14} />
-            Usage Viewer
+            {t("usageViewer")}
           </>
         )}
       </Badge>

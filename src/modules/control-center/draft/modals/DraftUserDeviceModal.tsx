@@ -90,8 +90,8 @@ const StepperContent = ({
     <ModalContent maxWidthClass={"max-w-xl"}>
       <ModalHeader
         icon={<MonitorSmartphoneIcon size={18} className={"text-netbird"} />}
-        title={`Set up “${name}”`}
-        description={"Install NetBird and assign the registered peer."}
+        title={t("setupDeviceTitle", { name })}
+        description={t("setupDeviceDescription")}
         color={"netbird"}
       />
       <Separator />
@@ -99,7 +99,7 @@ const StepperContent = ({
         <Steps>
           <Steps.Step step={1}>
             <p className={"text-sm font-normal"}>
-              Install NetBird on the device. Skip if it is already installed.
+              {t("installOnDeviceStep")}
             </p>
             <div className={"flex gap-4"}>
               <Button

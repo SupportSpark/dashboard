@@ -6,10 +6,12 @@ import { Label } from "@components/Label";
 import { Modal, ModalContent, ModalFooter } from "@components/modal/Modal";
 import ModalHeader from "@components/modal/ModalHeader";
 import Separator from "@components/Separator";
+import { cn } from "@utils/helpers";
 import { LockIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useState } from "react";
+import { useIsCjkLocale } from "@/hooks/useIsCjkLocale";
 import {
   CertificateInfo,
   CertificatePromptInfo,
@@ -161,9 +163,21 @@ const CertificateDetailsListItem = ({
   label: string;
   value: string;
 }) => {
+  const isCjkLocale = useIsCjkLocale();
   return (
     <div key={label} className={"flex justify-between text-xs gap-10"}>
-      <span className={"font-mono text-nb-gray-200 w-[200px]"}>{label}:</span>
+      <span
+        className={cn(
+          // font-mono is for the certificate VALUES (hashes, DNs, dates). This is
+          // the translated LABEL, and a monospace stack has no CJK coverage — it
+          // falls back to a system CJK face and loses the alignment it was for.
+          // w-[200px] was sized to the English label; Chinese is wider.
+          isCjkLocale ? "font-sans w-[240px]" : "font-mono w-[200px]",
+          "text-nb-gray-200",
+        )}
+      >
+        {label}:
+      </span>
       <span className={"font-mono text-nb-gray-300 break-all text-left w-full"}>
         {value}
       </span>

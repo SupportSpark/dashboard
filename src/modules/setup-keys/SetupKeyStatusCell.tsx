@@ -1,5 +1,6 @@
 import FullTooltip from "@components/FullTooltip";
 import { PowerOffIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { SetupKey } from "@/interfaces/SetupKey";
 
@@ -16,14 +17,12 @@ export default function SetupKeyStatusCell({ setupKey }: Readonly<Props>) {
 }
 
 export const AllowExtraDNSLabels = () => {
+  const t = useTranslations("setupKeys");
   return (
     <FullTooltip
       interactive={false}
       content={
-        <div className="max-w-xs text-xs">
-          Allow multiple DNS labels in the peer name (e.g. <br />
-          host.europe.netbird.io.)
-        </div>
+        <div className="max-w-xs text-xs">{t("allowExtraDnsLabelsTooltip")}</div>
       }
     >
       <span
@@ -38,14 +37,12 @@ export const AllowExtraDNSLabels = () => {
 };
 
 export const Ephemeral = () => {
+  const t = useTranslations("setupKeys");
   return (
     <FullTooltip
       interactive={false}
       content={
-        <div className={"max-w-xs text-xs"}>
-          Peers that are offline for over 10 minutes will be removed
-          automatically.
-        </div>
+        <div className={"max-w-xs text-xs"}>{t("ephemeralPeersHelp")}</div>
       }
     >
       <PowerOffIcon

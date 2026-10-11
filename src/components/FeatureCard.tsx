@@ -2,6 +2,7 @@ import { IconCircleFilled } from "@tabler/icons-react";
 import { cn } from "@utils/helpers";
 import { useTranslations } from "next-intl";
 import * as React from "react";
+import { useIsCjkLocale } from "@/hooks/useIsCjkLocale";
 
 type Props = {
   // "default" leads with the icon tile and a title in the reading size, for a
@@ -58,6 +59,7 @@ export default function FeatureCard({
   "aria-label": ariaLabel,
 }: Readonly<Props>) {
   const plain = variant === "plain";
+  const isCjkLocale = useIsCjkLocale();
 
   const shell = cn(
     "block text-left border bg-nb-gray-900/30",
@@ -84,7 +86,17 @@ export default function FeatureCard({
             className={cn(
               "flex gap-2 items-center",
               plain
-                ? "text-[10px] uppercase tracking-wider text-nb-gray-400 font-medium"
+                ? cn(
+                    // The `plain` look is a small-caps label: 10px, uppercased and
+                    // letter-spaced. All three are Latin-script devices. In Chinese
+                    // `uppercase` does nothing, `tracking-wider` pushes CJK glyphs
+                    // apart without adding legibility, and 10px CJK is too small to
+                    // read. Fall back to a normal label size when the locale is not
+                    // Latin, keeping the muted colour.
+                    isCjkLocale
+                      ? "text-xs tracking-normal text-nb-gray-400 font-medium"
+                      : "text-[10px] uppercase tracking-wider text-nb-gray-400 font-medium",
+                  )
                 : "font-medium text-sm",
             )}
           >

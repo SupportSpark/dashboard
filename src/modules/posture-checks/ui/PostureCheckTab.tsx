@@ -1,6 +1,7 @@
 import { TabsContent } from "@components/Tabs";
 import { cn } from "@utils/helpers";
 import { Trash2Icon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useState } from "react";
 import Skeleton from "react-loading-skeleton";
@@ -23,6 +24,7 @@ export const PostureCheckTab = ({
   setPostureChecks,
   isLoading,
 }: Props) => {
+  const t = useTranslations("postureChecks");
   const addPostureChecks = (checks: PostureCheck[]) => {
     setPostureChecks((prev) => {
       const previous = prev.map((check) => {
@@ -77,7 +79,7 @@ export const PostureCheckTab = ({
             <LockedFeatureBadge
               position={"relative"}
               side={"bottom"}
-              featureText={"Posture Checks"}
+              featureText={t("title")}
               feature={"POSTURE_CHECKS"}
             />
             {postureChecks.length > 0 && (
@@ -88,7 +90,7 @@ export const PostureCheckTab = ({
                 }
               >
                 <Trash2Icon size={13} className={"mr-1"} />
-                Remove Checks
+                {t("removeChecks")}
               </button>
             )}
           </div>

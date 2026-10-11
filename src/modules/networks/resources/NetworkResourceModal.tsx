@@ -110,6 +110,8 @@ export function ResourceModalContent({
 }: ModalProps) {
   const t = useTranslations("networks");
   const tCommon = useTranslations("common");
+  const tPeers = useTranslations("peers");
+  const tReverseProxy = useTranslations("reverseProxy");
   const create = useApiCall<NetworkResource>(
     `/networks/${network.id}/resources`,
   ).post;
@@ -265,7 +267,7 @@ export function ResourceModalContent({
             : network?.name
             ? t("resourceAddNewDesc", { networkName: network.name })
             : // No network yet on the draft canvas, so avoid an empty string.
-              "Add a new resource"
+              t("resourceAddNewFallback")
         }
         color={"yellow"}
       />
@@ -309,29 +311,17 @@ export function ResourceModalContent({
               onError={setAddressError}
               description={
                 <>
-                  Enter a single{" "}
-                  <HelpTooltip
-                    content={
-                      "A single host address, e.g., 10.0.0.1 or 192.168.1.5. Use this to give access to a specific machine or service."
-                    }
-                  >
-                    IP Address
+                  {t("enterSingle")}{" "}
+                  <HelpTooltip content={t("ipAddressTooltip")}>
+                    {tPeers("ip")}
                   </HelpTooltip>
                   ,{" "}
-                  <HelpTooltip
-                    content={
-                      "To give access to an entire subnet, use a CIDR block. For example, 10.0.0.0/24 or 192.168.1.0/24."
-                    }
-                  >
-                    CIDR Block
+                  <HelpTooltip content={t("cidrBlockTooltip")}>
+                    {tReverseProxy("typeCidrBlock")}
                   </HelpTooltip>{" "}
-                  or{" "}
-                  <HelpTooltip
-                    content={
-                      "A DNS domain name, e.g., service.internal, example.com or *.example.com to match all subdomains."
-                    }
-                  >
-                    Domain Name
+                  {tCommon("or")}{" "}
+                  <HelpTooltip content={t("domainNameTooltip")}>
+                    {tPeers("domainName")}
                   </HelpTooltip>
                 </>
               }

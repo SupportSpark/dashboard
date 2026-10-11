@@ -671,9 +671,9 @@ export default function AIProviderModal({
       custom: 2,
     };
     const groupLabel: Record<string, string> = {
-      gateway: "AI Gateways",
-      provider: "AI Providers",
-      custom: "Other",
+      gateway: t("aiGateways"),
+      provider: t("aiProviders"),
+      custom: t("otherProviderGroup"),
     };
     const sorted = [...catalogList].sort((a, b) => {
       const ra = groupRank[a.kind] ?? 99;
@@ -685,7 +685,7 @@ export default function AIProviderModal({
       value: p.id,
       label: p.name,
       searchValue: `${p.name} ${p.id}`,
-      group: groupLabel[p.kind] ?? "Other",
+      group: groupLabel[p.kind] ?? t("otherProviderGroup"),
       renderItem: () => (
         <span data-testid={`agent-network-provider-option-${p.id}`}>
           {p.name}
@@ -695,7 +695,7 @@ export default function AIProviderModal({
         <AIProviderLogo providerId={p.id as AIProviderId} size={size ?? 16} />
       ),
     }));
-  }, [catalogList]);
+  }, [catalogList, t]);
 
   const updateModel = (idx: number, patch: Partial<ProviderModel>) =>
     setModels((prev) =>

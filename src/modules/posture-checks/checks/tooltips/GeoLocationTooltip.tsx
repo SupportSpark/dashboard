@@ -1,6 +1,7 @@
 import FullTooltip from "@components/FullTooltip";
 import { ScrollArea } from "@components/ScrollArea";
 import useFetchApi from "@utils/api";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import RoundedFlag from "@/assets/countries/RoundedFlag";
 import { Country } from "@/interfaces/Country";
@@ -11,6 +12,7 @@ type Props = {
   check?: GeoLocationCheck;
 };
 export const GeoLocationTooltip = ({ children, check }: Props) => {
+  const t = useTranslations("common");
   const { data: countries } = useFetchApi<Country[]>(`/locations/countries`);
 
   return check ? (
@@ -28,16 +30,16 @@ export const GeoLocationTooltip = ({ children, check }: Props) => {
             {check.action == "allow" ? (
               <span>
                 <span className={"text-green-500 font-semibold"}>
-                  Allow only
+                  {t("allowOnly")}
                 </span>{" "}
-                the following <br />
-                countries & regions
+                {t("followingCountriesAndRegions")}
               </span>
             ) : (
               <span>
-                <span className={"text-red-500 font-semibold"}>Block</span> the
-                following <br />
-                countries & regions
+                <span className={"text-red-500 font-semibold"}>
+                  {t("block")}
+                </span>{" "}
+                {t("followingCountriesAndRegions")}
               </span>
             )}
           </div>

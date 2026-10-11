@@ -40,11 +40,11 @@ export default function AccessTokenActionCell({
 
   const handleConfirm = async () => {
     const choice = await confirm({
-      title: `Delete '${access_token.name}'?`,
+      title: tcommon("deleteTokenTitle", { name: access_token.name }),
       description:
         tcommon("confirmDeleteToken"),
-      confirmText: "Delete",
-      cancelText: "Cancel",
+      confirmText: tcommon("delete"),
+      cancelText: tcommon("cancel"),
       type: "danger",
     });
     if (!choice) return;
@@ -61,7 +61,7 @@ export default function AccessTokenActionCell({
         data-testid={"access-token-delete"}
       >
         <Trash2 size={16} />
-        Delete
+        {tcommon("delete")}
       </Button>
     </div>
   );

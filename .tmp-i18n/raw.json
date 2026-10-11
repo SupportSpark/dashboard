@@ -1,0 +1,5654 @@
+{
+  "total": 878,
+  "files": 173,
+  "byArea": [
+    [
+      "app/(dashboard)",
+      {
+        "files": 3,
+        "strings": 7
+      }
+    ],
+    [
+      "assets/icons",
+      {
+        "files": 1,
+        "strings": 1
+      }
+    ],
+    [
+      "cloud/aws",
+      {
+        "files": 1,
+        "strings": 1
+      }
+    ],
+    [
+      "cloud/distributor",
+      {
+        "files": 4,
+        "strings": 7
+      }
+    ],
+    [
+      "cloud/mfa",
+      {
+        "files": 2,
+        "strings": 6
+      }
+    ],
+    [
+      "cloud/msp",
+      {
+        "files": 9,
+        "strings": 19
+      }
+    ],
+    [
+      "cloud/notifications",
+      {
+        "files": 1,
+        "strings": 1
+      }
+    ],
+    [
+      "cloud/survey",
+      {
+        "files": 1,
+        "strings": 1
+      }
+    ],
+    [
+      "cloud/traffic-events",
+      {
+        "files": 7,
+        "strings": 160
+      }
+    ],
+    [
+      "components/ButtonGroup.tsx",
+      {
+        "files": 1,
+        "strings": 1
+      }
+    ],
+    [
+      "components/DatePickerWithRange.tsx",
+      {
+        "files": 1,
+        "strings": 7
+      }
+    ],
+    [
+      "components/FeatureCard.tsx",
+      {
+        "files": 1,
+        "strings": 2
+      }
+    ],
+    [
+      "components/Input.tsx",
+      {
+        "files": 1,
+        "strings": 3
+      }
+    ],
+    [
+      "components/JSONFileUpload.tsx",
+      {
+        "files": 1,
+        "strings": 1
+      }
+    ],
+    [
+      "components/NetBirdLogo.tsx",
+      {
+        "files": 1,
+        "strings": 2
+      }
+    ],
+    [
+      "components/ToggleSwitch.tsx",
+      {
+        "files": 1,
+        "strings": 2
+      }
+    ],
+    [
+      "components/UserSelector.tsx",
+      {
+        "files": 1,
+        "strings": 2
+      }
+    ],
+    [
+      "components/modal",
+      {
+        "files": 1,
+        "strings": 1
+      }
+    ],
+    [
+      "components/select",
+      {
+        "files": 1,
+        "strings": 1
+      }
+    ],
+    [
+      "components/table",
+      {
+        "files": 2,
+        "strings": 4
+      }
+    ],
+    [
+      "contexts/AnalyticsProvider.tsx",
+      {
+        "files": 1,
+        "strings": 1
+      }
+    ],
+    [
+      "contexts/BillingProvider.tsx",
+      {
+        "files": 1,
+        "strings": 1
+      }
+    ],
+    [
+      "interfaces/EDR.ts",
+      {
+        "files": 1,
+        "strings": 4
+      }
+    ],
+    [
+      "interfaces/IdentityProvider.ts",
+      {
+        "files": 1,
+        "strings": 10
+      }
+    ],
+    [
+      "interfaces/Nameserver.ts",
+      {
+        "files": 1,
+        "strings": 6
+      }
+    ],
+    [
+      "interfaces/PostureCheck.ts",
+      {
+        "files": 1,
+        "strings": 22
+      }
+    ],
+    [
+      "modules/access-control",
+      {
+        "files": 1,
+        "strings": 1
+      }
+    ],
+    [
+      "modules/access-tokens",
+      {
+        "files": 2,
+        "strings": 10
+      }
+    ],
+    [
+      "modules/activity",
+      {
+        "files": 3,
+        "strings": 4
+      }
+    ],
+    [
+      "modules/agent-network",
+      {
+        "files": 4,
+        "strings": 21
+      }
+    ],
+    [
+      "modules/billing",
+      {
+        "files": 11,
+        "strings": 40
+      }
+    ],
+    [
+      "modules/control-center",
+      {
+        "files": 9,
+        "strings": 23
+      }
+    ],
+    [
+      "modules/dns",
+      {
+        "files": 1,
+        "strings": 4
+      }
+    ],
+    [
+      "modules/exit-node",
+      {
+        "files": 3,
+        "strings": 4
+      }
+    ],
+    [
+      "modules/groups",
+      {
+        "files": 5,
+        "strings": 15
+      }
+    ],
+    [
+      "modules/instance-setup",
+      {
+        "files": 1,
+        "strings": 12
+      }
+    ],
+    [
+      "modules/integrations",
+      {
+        "files": 22,
+        "strings": 69
+      }
+    ],
+    [
+      "modules/jobs",
+      {
+        "files": 1,
+        "strings": 7
+      }
+    ],
+    [
+      "modules/networks",
+      {
+        "files": 3,
+        "strings": 8
+      }
+    ],
+    [
+      "modules/onboarding",
+      {
+        "files": 15,
+        "strings": 248
+      }
+    ],
+    [
+      "modules/peer",
+      {
+        "files": 2,
+        "strings": 13
+      }
+    ],
+    [
+      "modules/peers",
+      {
+        "files": 1,
+        "strings": 3
+      }
+    ],
+    [
+      "modules/posture-checks",
+      {
+        "files": 10,
+        "strings": 17
+      }
+    ],
+    [
+      "modules/remote-access",
+      {
+        "files": 9,
+        "strings": 25
+      }
+    ],
+    [
+      "modules/reverse-proxy",
+      {
+        "files": 5,
+        "strings": 21
+      }
+    ],
+    [
+      "modules/routes",
+      {
+        "files": 2,
+        "strings": 3
+      }
+    ],
+    [
+      "modules/search",
+      {
+        "files": 1,
+        "strings": 3
+      }
+    ],
+    [
+      "modules/settings",
+      {
+        "files": 3,
+        "strings": 19
+      }
+    ],
+    [
+      "modules/setup-keys",
+      {
+        "files": 3,
+        "strings": 16
+      }
+    ],
+    [
+      "modules/setup-netbird-modal",
+      {
+        "files": 1,
+        "strings": 1
+      }
+    ],
+    [
+      "modules/users",
+      {
+        "files": 5,
+        "strings": 10
+      }
+    ],
+    [
+      "storybook/integrations.ts",
+      {
+        "files": 1,
+        "strings": 1
+      }
+    ],
+    [
+      "utils/helpers.ts",
+      {
+        "files": 1,
+        "strings": 1
+      }
+    ],
+    [
+      "utils/responsive.ts",
+      {
+        "files": 1,
+        "strings": 6
+      }
+    ]
+  ],
+  "findings": [
+    {
+      "file": "src/app/(dashboard)/(cloud)/integrations/page.tsx",
+      "line": 35,
+      "kind": "jsx-text-line",
+      "text": "Identity Provider Sync"
+    },
+    {
+      "file": "src/app/(dashboard)/(cloud)/integrations/page.tsx",
+      "line": 41,
+      "kind": "jsx-text-line",
+      "text": "Single Sign-On"
+    },
+    {
+      "file": "src/app/(dashboard)/(cloud)/integrations/page.tsx",
+      "line": 47,
+      "kind": "jsx-text-line",
+      "text": "Event Streaming"
+    },
+    {
+      "file": "src/app/(dashboard)/peer/page.tsx",
+      "line": 682,
+      "kind": "jsx-text-line",
+      "text": "MAC Address"
+    },
+    {
+      "file": "src/app/(dashboard)/team/user/page.tsx",
+      "line": 236,
+      "kind": "jsx-text-line",
+      "text": "Save Changes"
+    },
+    {
+      "file": "src/app/(dashboard)/team/user/page.tsx",
+      "line": 333,
+      "kind": "jsx-text-line",
+      "text": "Create Access Token"
+    },
+    {
+      "file": "src/app/(dashboard)/team/user/page.tsx",
+      "line": 198,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "System User"
+    },
+    {
+      "file": "src/assets/icons/NetBirdIcon.tsx",
+      "line": 14,
+      "kind": "jsx-expr:attr(alt)",
+      "text": "Netbird Icon"
+    },
+    {
+      "file": "src/cloud/aws/AWSChoosePlan.tsx",
+      "line": 109,
+      "kind": "jsx-expr:attr(alt)",
+      "text": "AWS Marketplace"
+    },
+    {
+      "file": "src/cloud/distributor/DistributorAccountExistsModal.tsx",
+      "line": 55,
+      "kind": "jsx-text-line",
+      "text": "The account owner must log in to the dashboard to accept or decline"
+    },
+    {
+      "file": "src/cloud/distributor/DistributorAccountExistsModal.tsx",
+      "line": 75,
+      "kind": "jsx-text-line",
+      "text": "Request Access"
+    },
+    {
+      "file": "src/cloud/distributor/DistributorDocsLink.tsx",
+      "line": 8,
+      "kind": "jsx-text-line",
+      "text": "Learn more about"
+    },
+    {
+      "file": "src/cloud/distributor/table/CustomerActionCell.tsx",
+      "line": 38,
+      "kind": "jsx-text-line",
+      "text": "The customer account owner must log in to the dashboard to accept"
+    },
+    {
+      "file": "src/cloud/distributor/table/CustomerActionCell.tsx",
+      "line": 44,
+      "kind": "jsx-text-line",
+      "text": "Pending invitation"
+    },
+    {
+      "file": "src/cloud/distributor/table/CustomerPlanCell.tsx",
+      "line": 36,
+      "kind": "jsx-text-line",
+      "text": "Trial Expired"
+    },
+    {
+      "file": "src/cloud/distributor/table/CustomerPlanCell.tsx",
+      "line": 46,
+      "kind": "jsx-text-line",
+      "text": "Upgrade Plan"
+    },
+    {
+      "file": "src/cloud/mfa/AccountMFAInfoModal.tsx",
+      "line": 25,
+      "kind": "jsx-text-line",
+      "text": "You may not need NetBird MFA"
+    },
+    {
+      "file": "src/cloud/mfa/AccountMFAInfoModal.tsx",
+      "line": 48,
+      "kind": "jsx-text-line",
+      "text": "Enable MFA"
+    },
+    {
+      "file": "src/cloud/mfa/AccountMFASettings.tsx",
+      "line": 154,
+      "kind": "jsx-text-line",
+      "text": "Updating MFA settings..."
+    },
+    {
+      "file": "src/cloud/mfa/AccountMFASettings.tsx",
+      "line": 172,
+      "kind": "jsx-text-line",
+      "text": "This setting is global and applies to all users."
+    },
+    {
+      "file": "src/cloud/mfa/AccountMFASettings.tsx",
+      "line": 197,
+      "kind": "jsx-text-line",
+      "text": "Remember Browser for MFA"
+    },
+    {
+      "file": "src/cloud/mfa/AccountMFASettings.tsx",
+      "line": 200,
+      "kind": "jsx-text-line",
+      "text": "When enabled, users will have the option to remember their browser"
+    },
+    {
+      "file": "src/cloud/msp/MSPAccountExistsModal.tsx",
+      "line": 55,
+      "kind": "jsx-text-line",
+      "text": "The account owner must log in to the dashboard to accept or decline"
+    },
+    {
+      "file": "src/cloud/msp/MSPAccountExistsModal.tsx",
+      "line": 75,
+      "kind": "jsx-text-line",
+      "text": "Request Access"
+    },
+    {
+      "file": "src/cloud/msp/MSPTenantDocsLink.tsx",
+      "line": 8,
+      "kind": "jsx-text-line",
+      "text": "Learn more about"
+    },
+    {
+      "file": "src/cloud/msp/MSPTenantDocsLink.tsx",
+      "line": 13,
+      "kind": "jsx-text-line",
+      "text": "MSP Portal"
+    },
+    {
+      "file": "src/cloud/msp/MSPTenantPermissionsTab.tsx",
+      "line": 61,
+      "kind": "jsx-text-line",
+      "text": "Add user groups to grant them access to this tenant."
+    },
+    {
+      "file": "src/cloud/msp/MSPTenantPermissionsTab.tsx",
+      "line": 74,
+      "kind": "jsx-text-line",
+      "text": "Add Group"
+    },
+    {
+      "file": "src/cloud/msp/MSPTenantsSwitcher.tsx",
+      "line": 306,
+      "kind": "jsx-text-line",
+      "text": "Trial for this tenant has expired. Please upgrade the plan to"
+    },
+    {
+      "file": "src/cloud/msp/MSPTenantsSwitcher.tsx",
+      "line": 310,
+      "kind": "jsx-text-line",
+      "text": "Go to Tenants"
+    },
+    {
+      "file": "src/cloud/msp/MSPTenantsSwitcher.tsx",
+      "line": 322,
+      "kind": "jsx-text-line",
+      "text": "Trial Expired"
+    },
+    {
+      "file": "src/cloud/msp/MSPTransferAccountModal.tsx",
+      "line": 134,
+      "kind": "jsx-expr:attr(alt)",
+      "text": "NetBird"
+    },
+    {
+      "file": "src/cloud/msp/MSPTrialExpiredModal.tsx",
+      "line": 83,
+      "kind": "jsx-text-line",
+      "text": "Your account has reached the end of the free trial period. To"
+    },
+    {
+      "file": "src/cloud/msp/MSPTrialExpiredModal.tsx",
+      "line": 118,
+      "kind": "jsx-text-line",
+      "text": "Get Support"
+    },
+    {
+      "file": "src/cloud/msp/table/TenantActionCell.tsx",
+      "line": 50,
+      "kind": "jsx-text-line",
+      "text": "Verify Domain"
+    },
+    {
+      "file": "src/cloud/msp/table/TenantActionCell.tsx",
+      "line": 62,
+      "kind": "jsx-text-line",
+      "text": "Request Access"
+    },
+    {
+      "file": "src/cloud/msp/table/TenantActionCell.tsx",
+      "line": 70,
+      "kind": "jsx-text-line",
+      "text": "The account owner must log in to the dashboard to accept or"
+    },
+    {
+      "file": "src/cloud/msp/table/TenantActionCell.tsx",
+      "line": 76,
+      "kind": "jsx-text-line",
+      "text": "Pending access request"
+    },
+    {
+      "file": "src/cloud/msp/table/TenantGroupsCell.tsx",
+      "line": 55,
+      "kind": "jsx-text-line",
+      "text": "Add Groups"
+    },
+    {
+      "file": "src/cloud/msp/table/TenantPlanCell.tsx",
+      "line": 39,
+      "kind": "jsx-text-line",
+      "text": "Trial Expired"
+    },
+    {
+      "file": "src/cloud/msp/table/TenantPlanCell.tsx",
+      "line": 48,
+      "kind": "jsx-text-line",
+      "text": "Upgrade Plan"
+    },
+    {
+      "file": "src/cloud/notifications/NotificationChannelListItem.tsx",
+      "line": 118,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "group-hover/channel:!bg-nb-gray-930"
+    },
+    {
+      "file": "src/cloud/survey/HowDidYouHearAboutUs.tsx",
+      "line": 49,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "Not specified"
+    },
+    {
+      "file": "src/cloud/traffic-events/TrafficEventsFilter.tsx",
+      "line": 287,
+      "kind": "jsx-text-line",
+      "text": "There are no filters matching your search."
+    },
+    {
+      "file": "src/cloud/traffic-events/TrafficEventsPeerTabContent.tsx",
+      "line": 407,
+      "kind": "jsx-text-line",
+      "text": "Go to Settings"
+    },
+    {
+      "file": "src/cloud/traffic-events/TrafficEventsPeerTabContent.tsx",
+      "line": 483,
+      "kind": "jsx-text-line",
+      "text": "Traffic Events"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEvent.ts",
+      "line": 80,
+      "kind": "jsx-expr:ternary",
+      "text": "Unassigned"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 9,
+      "kind": "jsx-expr:ternary",
+      "text": "Echo Reply"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 11,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 17,
+      "kind": "jsx-expr:ternary",
+      "text": "Unassigned"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 23,
+      "kind": "jsx-expr:ternary",
+      "text": "Unassigned"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 29,
+      "kind": "jsx-expr:ternary",
+      "text": "Unreachable"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 31,
+      "kind": "jsx-expr:ternary",
+      "text": "Net Unreachable"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 32,
+      "kind": "jsx-expr:ternary",
+      "text": "Host Unreachable"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 33,
+      "kind": "jsx-expr:ternary",
+      "text": "Protocol Unreachable"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 34,
+      "kind": "jsx-expr:ternary",
+      "text": "Port Unreachable"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 35,
+      "kind": "jsx-expr:ternary",
+      "text": "Fragmentation Needed and Don't Fragment was Set"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 36,
+      "kind": "jsx-expr:ternary",
+      "text": "Source Route Failed"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 37,
+      "kind": "jsx-expr:ternary",
+      "text": "Destination Network Unknown"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 38,
+      "kind": "jsx-expr:ternary",
+      "text": "Destination Host Unknown"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 39,
+      "kind": "jsx-expr:ternary",
+      "text": "Source Host Isolated"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 40,
+      "kind": "jsx-expr:ternary",
+      "text": "Communication with Destination Network is Administratively Prohibited"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 41,
+      "kind": "jsx-expr:ternary",
+      "text": "Communication with Destination Host is Administratively Prohibited"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 42,
+      "kind": "jsx-expr:ternary",
+      "text": "Destination Network Unreachable for Type of Service"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 43,
+      "kind": "jsx-expr:ternary",
+      "text": "Destination Host Unreachable for Type of Service"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 44,
+      "kind": "jsx-expr:ternary",
+      "text": "Communication Administratively Prohibited"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 45,
+      "kind": "jsx-expr:ternary",
+      "text": "Host Precedence Violation"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 46,
+      "kind": "jsx-expr:ternary",
+      "text": "Precedence cutoff in effect"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 52,
+      "kind": "jsx-expr:ternary",
+      "text": "Source Quench"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 54,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 60,
+      "kind": "jsx-expr:ternary",
+      "text": "Redirect"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 62,
+      "kind": "jsx-expr:ternary",
+      "text": "Redirect Datagram for the Network (or subnet)"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 63,
+      "kind": "jsx-expr:ternary",
+      "text": "Redirect Datagram for the Host"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 64,
+      "kind": "jsx-expr:ternary",
+      "text": "Redirect Datagram for the Type of Service and Network"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 65,
+      "kind": "jsx-expr:ternary",
+      "text": "Redirect Datagram for the Type of Service and Host"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 71,
+      "kind": "jsx-expr:ternary",
+      "text": "Alternate Host Address"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 73,
+      "kind": "jsx-expr:ternary",
+      "text": "Alternate Address for Host"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 79,
+      "kind": "jsx-expr:ternary",
+      "text": "Unassigned"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 85,
+      "kind": "jsx-expr:ternary",
+      "text": "Echo"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 87,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 93,
+      "kind": "jsx-expr:ternary",
+      "text": "Router Advertisement"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 95,
+      "kind": "jsx-expr:ternary",
+      "text": "Normal router advertisement"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 96,
+      "kind": "jsx-expr:ternary",
+      "text": "Does not route common traffic"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 102,
+      "kind": "jsx-expr:ternary",
+      "text": "Router Solicitation"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 104,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 110,
+      "kind": "jsx-expr:ternary",
+      "text": "Time Exceeded"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 112,
+      "kind": "jsx-expr:ternary",
+      "text": "Time to Live exceeded in Transit"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 113,
+      "kind": "jsx-expr:ternary",
+      "text": "Fragment Reassembly Time Exceeded"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 119,
+      "kind": "jsx-expr:ternary",
+      "text": "Parameter Problem"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 121,
+      "kind": "jsx-expr:ternary",
+      "text": "Pointer indicates the error"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 122,
+      "kind": "jsx-expr:ternary",
+      "text": "Missing a Required Option"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 123,
+      "kind": "jsx-expr:ternary",
+      "text": "Bad Length"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 129,
+      "kind": "jsx-expr:ternary",
+      "text": "Timestamp"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 131,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 137,
+      "kind": "jsx-expr:ternary",
+      "text": "Timestamp Reply"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 139,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 145,
+      "kind": "jsx-expr:ternary",
+      "text": "Information Request"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 147,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 153,
+      "kind": "jsx-expr:ternary",
+      "text": "Information Reply"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 155,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 161,
+      "kind": "jsx-expr:ternary",
+      "text": "Address Mask Request"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 163,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 169,
+      "kind": "jsx-expr:ternary",
+      "text": "Address Mask Reply"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 171,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 177,
+      "kind": "jsx-expr:ternary",
+      "text": "Reserved (for Security)"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 186,
+      "kind": "jsx-expr:ternary",
+      "text": "Reserved"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 194,
+      "kind": "jsx-expr:ternary",
+      "text": "Traceroute"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 196,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 202,
+      "kind": "jsx-expr:ternary",
+      "text": "Datagram Conversion Error"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 204,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 210,
+      "kind": "jsx-expr:ternary",
+      "text": "Mobile Host Redirect"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 212,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 218,
+      "kind": "jsx-expr:ternary",
+      "text": "IPv6 Where-Are-You"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 220,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 226,
+      "kind": "jsx-expr:ternary",
+      "text": "IPv6 I-Am-Here"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 228,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 234,
+      "kind": "jsx-expr:ternary",
+      "text": "Mobile Registration Request"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 236,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 242,
+      "kind": "jsx-expr:ternary",
+      "text": "Mobile Registration Reply"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 244,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 250,
+      "kind": "jsx-expr:ternary",
+      "text": "Domain Name Request"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 252,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 258,
+      "kind": "jsx-expr:ternary",
+      "text": "Domain Name Reply"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 260,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 268,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 274,
+      "kind": "jsx-expr:ternary",
+      "text": "Photuris"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 276,
+      "kind": "jsx-expr:ternary",
+      "text": "Reserved"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 277,
+      "kind": "jsx-expr:ternary",
+      "text": "Unknown security index"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 278,
+      "kind": "jsx-expr:ternary",
+      "text": "Valid security index, but invalid SPI"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 279,
+      "kind": "jsx-expr:ternary",
+      "text": "Valid security index and SPI, but authentication failed"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 280,
+      "kind": "jsx-expr:ternary",
+      "text": "Valid security index and SPI, but decryption failed"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 286,
+      "kind": "jsx-expr:ternary",
+      "text": "ICMP messages utilized by experimental mobility protocols"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 288,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 297,
+      "kind": "jsx-expr:ternary",
+      "text": "Unassigned"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 305,
+      "kind": "jsx-expr:ternary",
+      "text": "RFC3692-style Experiment 1"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 307,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 313,
+      "kind": "jsx-expr:ternary",
+      "text": "RFC3692-style Experiment 2"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 315,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 321,
+      "kind": "jsx-expr:ternary",
+      "text": "Reserved"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMP.ts",
+      "line": 339,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "Unknown Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 5,
+      "kind": "jsx-expr:ternary",
+      "text": "Destination Unreachable"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 7,
+      "kind": "jsx-expr:ternary",
+      "text": "No route to destination"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 8,
+      "kind": "jsx-expr:ternary",
+      "text": "Administratively prohibited"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 9,
+      "kind": "jsx-expr:ternary",
+      "text": "Beyond scope of source address"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 10,
+      "kind": "jsx-expr:ternary",
+      "text": "Address unreachable"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 11,
+      "kind": "jsx-expr:ternary",
+      "text": "Port unreachable"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 12,
+      "kind": "jsx-expr:ternary",
+      "text": "Source address failed ingress/egress policy"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 13,
+      "kind": "jsx-expr:ternary",
+      "text": "Reject route to destination"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 17,
+      "kind": "jsx-expr:ternary",
+      "text": "Packet Too Big"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 19,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 23,
+      "kind": "jsx-expr:ternary",
+      "text": "Time Exceeded"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 25,
+      "kind": "jsx-expr:ternary",
+      "text": "Hop limit exceeded in transit"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 26,
+      "kind": "jsx-expr:ternary",
+      "text": "Fragment reassembly time exceeded"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 30,
+      "kind": "jsx-expr:ternary",
+      "text": "Parameter Problem"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 32,
+      "kind": "jsx-expr:ternary",
+      "text": "Erroneous header field encountered"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 33,
+      "kind": "jsx-expr:ternary",
+      "text": "Unrecognized Next Header type encountered"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 34,
+      "kind": "jsx-expr:ternary",
+      "text": "Unrecognized IPv6 option encountered"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 38,
+      "kind": "jsx-expr:ternary",
+      "text": "Echo Request"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 40,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 44,
+      "kind": "jsx-expr:ternary",
+      "text": "Echo Reply"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 46,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 50,
+      "kind": "jsx-expr:ternary",
+      "text": "Multicast Listener Query"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 51,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 54,
+      "kind": "jsx-expr:ternary",
+      "text": "Multicast Listener Report"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 55,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 58,
+      "kind": "jsx-expr:ternary",
+      "text": "Multicast Listener Done"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 59,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 62,
+      "kind": "jsx-expr:ternary",
+      "text": "Router Solicitation"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 63,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 66,
+      "kind": "jsx-expr:ternary",
+      "text": "Router Advertisement"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 67,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 70,
+      "kind": "jsx-expr:ternary",
+      "text": "Neighbor Solicitation"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 71,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 74,
+      "kind": "jsx-expr:ternary",
+      "text": "Neighbor Advertisement"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 75,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 78,
+      "kind": "jsx-expr:ternary",
+      "text": "Redirect Message"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventICMPv6.ts",
+      "line": 79,
+      "kind": "jsx-expr:ternary",
+      "text": "No Code"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventProtocol.ts",
+      "line": 45,
+      "kind": "jsx-expr:ternary",
+      "text": "IPv6-Route"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventProtocol.ts",
+      "line": 46,
+      "kind": "jsx-expr:ternary",
+      "text": "IPv6-Frag"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventProtocol.ts",
+      "line": 57,
+      "kind": "jsx-expr:ternary",
+      "text": "Min-IPv4"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventProtocol.ts",
+      "line": 61,
+      "kind": "jsx-expr:ternary",
+      "text": "IPv6-NoNxt"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventProtocol.ts",
+      "line": 62,
+      "kind": "jsx-expr:ternary",
+      "text": "IPv6-Opts"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventProtocol.ts",
+      "line": 63,
+      "kind": "jsx-expr:ternary",
+      "text": "Any host internal"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventProtocol.ts",
+      "line": 65,
+      "kind": "jsx-expr:ternary",
+      "text": "Any local network"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventProtocol.ts",
+      "line": 70,
+      "kind": "jsx-expr:ternary",
+      "text": "Any distributed fs"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventProtocol.ts",
+      "line": 92,
+      "kind": "jsx-expr:ternary",
+      "text": "Sprite-RPC"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventProtocol.ts",
+      "line": 101,
+      "kind": "jsx-expr:ternary",
+      "text": "Any private encryption"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventProtocol.ts",
+      "line": 110,
+      "kind": "jsx-expr:ternary",
+      "text": "IPComp"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventProtocol.ts",
+      "line": 112,
+      "kind": "jsx-expr:ternary",
+      "text": "Compaq-Peer"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventProtocol.ts",
+      "line": 113,
+      "kind": "jsx-expr:ternary",
+      "text": "IPX-in-IP"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventProtocol.ts",
+      "line": 116,
+      "kind": "jsx-expr:ternary",
+      "text": "Any 0 hop"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventProtocol.ts",
+      "line": 126,
+      "kind": "jsx-expr:ternary",
+      "text": "ISIS-over-IPv4"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventProtocol.ts",
+      "line": 137,
+      "kind": "jsx-expr:ternary",
+      "text": "Mobility-Header"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventProtocol.ts",
+      "line": 138,
+      "kind": "jsx-expr:ternary",
+      "text": "UDPLite"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventProtocol.ts",
+      "line": 139,
+      "kind": "jsx-expr:ternary",
+      "text": "MPLS-in-IP"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventProtocol.ts",
+      "line": 142,
+      "kind": "jsx-expr:ternary",
+      "text": "Shim6"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventProtocol.ts",
+      "line": 145,
+      "kind": "jsx-expr:ternary",
+      "text": "Ethernet"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventProtocol.ts",
+      "line": 148,
+      "kind": "jsx-expr:ternary",
+      "text": "Homa"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventProtocol.ts",
+      "line": 151,
+      "kind": "jsx-expr:ternary",
+      "text": "Experimental"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventProtocol.ts",
+      "line": 152,
+      "kind": "jsx-expr:ternary",
+      "text": "Experimental"
+    },
+    {
+      "file": "src/cloud/traffic-events/interfaces/TrafficEventProtocol.ts",
+      "line": 153,
+      "kind": "jsx-expr:ternary",
+      "text": "Reserved"
+    },
+    {
+      "file": "src/cloud/traffic-events/table/TrafficEventDescription.tsx",
+      "line": 350,
+      "kind": "jsx-expr:ternary",
+      "text": "h:mm A"
+    },
+    {
+      "file": "src/cloud/traffic-events/table/TrafficEventDescription.tsx",
+      "line": 351,
+      "kind": "jsx-expr:ternary",
+      "text": "MMM D, h:mm A"
+    },
+    {
+      "file": "src/components/ButtonGroup.tsx",
+      "line": 16,
+      "kind": "jsx-expr:ternary",
+      "text": "opacity-100 !border-nb-gray-900/20"
+    },
+    {
+      "file": "src/components/DatePickerWithRange.tsx",
+      "line": 71,
+      "kind": "jsx-expr:ternary",
+      "text": "All Time"
+    },
+    {
+      "file": "src/components/DatePickerWithRange.tsx",
+      "line": 72,
+      "kind": "jsx-expr:ternary",
+      "text": "Last Month"
+    },
+    {
+      "file": "src/components/DatePickerWithRange.tsx",
+      "line": 73,
+      "kind": "jsx-expr:ternary",
+      "text": "Last 14 Days"
+    },
+    {
+      "file": "src/components/DatePickerWithRange.tsx",
+      "line": 74,
+      "kind": "jsx-expr:ternary",
+      "text": "Last 2 Days"
+    },
+    {
+      "file": "src/components/DatePickerWithRange.tsx",
+      "line": 75,
+      "kind": "jsx-expr:ternary",
+      "text": "Last 7 Days"
+    },
+    {
+      "file": "src/components/DatePickerWithRange.tsx",
+      "line": 76,
+      "kind": "jsx-expr:ternary",
+      "text": "Yesterday"
+    },
+    {
+      "file": "src/components/DatePickerWithRange.tsx",
+      "line": 77,
+      "kind": "jsx-expr:ternary",
+      "text": "Today"
+    },
+    {
+      "file": "src/components/FeatureCard.tsx",
+      "line": 99,
+      "kind": "jsx-expr:ternary",
+      "text": "!text-nb-gray-100 leading-tight mt-1"
+    },
+    {
+      "file": "src/components/FeatureCard.tsx",
+      "line": 100,
+      "kind": "jsx-expr:ternary",
+      "text": "font-light !text-nb-gray-300 mt-1.5"
+    },
+    {
+      "file": "src/components/Input.tsx",
+      "line": 128,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "!border-l-0 !rounded-l-none"
+    },
+    {
+      "file": "src/components/Input.tsx",
+      "line": 129,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "!pr-16"
+    },
+    {
+      "file": "src/components/Input.tsx",
+      "line": 130,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "!pl-10"
+    },
+    {
+      "file": "src/components/JSONFileUpload.tsx",
+      "line": 40,
+      "kind": "prop:title",
+      "text": "Google Workspace"
+    },
+    {
+      "file": "src/components/NetBirdLogo.tsx",
+      "line": 29,
+      "kind": "jsx-expr:attr(alt)",
+      "text": "NetBird Logo"
+    },
+    {
+      "file": "src/components/NetBirdLogo.tsx",
+      "line": 36,
+      "kind": "jsx-expr:attr(alt)",
+      "text": "NetBird Logo"
+    },
+    {
+      "file": "src/components/ToggleSwitch.tsx",
+      "line": 31,
+      "kind": "jsx-expr:ternary",
+      "text": "h-5 w-5 data-[state=checked]:translate-x-5"
+    },
+    {
+      "file": "src/components/ToggleSwitch.tsx",
+      "line": 32,
+      "kind": "jsx-expr:ternary",
+      "text": "h-[14px] w-[14px] data-[state=checked]:translate-x-[17px]"
+    },
+    {
+      "file": "src/components/UserSelector.tsx",
+      "line": 200,
+      "kind": "jsx-expr:ternary",
+      "text": "System"
+    },
+    {
+      "file": "src/components/UserSelector.tsx",
+      "line": 212,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "NetBird"
+    },
+    {
+      "file": "src/components/modal/ModalHeader.tsx",
+      "line": 44,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "!block truncate"
+    },
+    {
+      "file": "src/components/select/SelectDropdown.tsx",
+      "line": 272,
+      "kind": "jsx-text-line",
+      "text": "There are no results matching your search. Please try a"
+    },
+    {
+      "file": "src/components/table/filters/StatusPicker.tsx",
+      "line": 77,
+      "kind": "jsx-expr:ternary",
+      "text": "Online"
+    },
+    {
+      "file": "src/components/table/filters/StatusPicker.tsx",
+      "line": 78,
+      "kind": "jsx-expr:ternary",
+      "text": "Offline"
+    },
+    {
+      "file": "src/components/table/filters/UsersPicker.tsx",
+      "line": 36,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "NetBird System"
+    },
+    {
+      "file": "src/components/table/filters/UsersPicker.tsx",
+      "line": 147,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "NetBird"
+    },
+    {
+      "file": "src/contexts/AnalyticsProvider.tsx",
+      "line": 143,
+      "kind": "jsx-expr:attr(title)",
+      "text": "Google Tag Manager"
+    },
+    {
+      "file": "src/contexts/BillingProvider.tsx",
+      "line": 45,
+      "kind": "jsx-expr:ternary",
+      "text": "/settings?tab=plans-and-billing"
+    },
+    {
+      "file": "src/interfaces/EDR.ts",
+      "line": 71,
+      "kind": "jsx-expr:ternary",
+      "text": "Compliant"
+    },
+    {
+      "file": "src/interfaces/EDR.ts",
+      "line": 72,
+      "kind": "jsx-expr:ternary",
+      "text": "Protected"
+    },
+    {
+      "file": "src/interfaces/EDR.ts",
+      "line": 73,
+      "kind": "jsx-expr:ternary",
+      "text": "Up to date"
+    },
+    {
+      "file": "src/interfaces/EDR.ts",
+      "line": 74,
+      "kind": "jsx-expr:ternary",
+      "text": "Enabled"
+    },
+    {
+      "file": "src/interfaces/IdentityProvider.ts",
+      "line": 98,
+      "kind": "prop:label",
+      "text": "OIDC (Generic)"
+    },
+    {
+      "file": "src/interfaces/IdentityProvider.ts",
+      "line": 99,
+      "kind": "prop:label",
+      "text": "Google"
+    },
+    {
+      "file": "src/interfaces/IdentityProvider.ts",
+      "line": 100,
+      "kind": "prop:label",
+      "text": "Microsoft"
+    },
+    {
+      "file": "src/interfaces/IdentityProvider.ts",
+      "line": 101,
+      "kind": "prop:label",
+      "text": "Microsoft Entra"
+    },
+    {
+      "file": "src/interfaces/IdentityProvider.ts",
+      "line": 102,
+      "kind": "prop:label",
+      "text": "Okta"
+    },
+    {
+      "file": "src/interfaces/IdentityProvider.ts",
+      "line": 103,
+      "kind": "prop:label",
+      "text": "Zitadel"
+    },
+    {
+      "file": "src/interfaces/IdentityProvider.ts",
+      "line": 104,
+      "kind": "prop:label",
+      "text": "PocketID"
+    },
+    {
+      "file": "src/interfaces/IdentityProvider.ts",
+      "line": 105,
+      "kind": "prop:label",
+      "text": "Authentik"
+    },
+    {
+      "file": "src/interfaces/IdentityProvider.ts",
+      "line": 106,
+      "kind": "prop:label",
+      "text": "Keycloak"
+    },
+    {
+      "file": "src/interfaces/IdentityProvider.ts",
+      "line": 107,
+      "kind": "prop:label",
+      "text": "Microsoft AD FS"
+    },
+    {
+      "file": "src/interfaces/Nameserver.ts",
+      "line": 40,
+      "kind": "prop:description",
+      "text": "Google DNS Servers"
+    },
+    {
+      "file": "src/interfaces/Nameserver.ts",
+      "line": 63,
+      "kind": "prop:description",
+      "text": "Cloudflare DNS Servers"
+    },
+    {
+      "file": "src/interfaces/Nameserver.ts",
+      "line": 86,
+      "kind": "prop:description",
+      "text": "Quad9 DNS Servers"
+    },
+    {
+      "file": "src/interfaces/Nameserver.ts",
+      "line": 39,
+      "kind": "jsx-expr:ternary",
+      "text": "Google DNS"
+    },
+    {
+      "file": "src/interfaces/Nameserver.ts",
+      "line": 62,
+      "kind": "jsx-expr:ternary",
+      "text": "Cloudflare DNS"
+    },
+    {
+      "file": "src/interfaces/Nameserver.ts",
+      "line": 85,
+      "kind": "jsx-expr:ternary",
+      "text": "Quad9 DNS"
+    },
+    {
+      "file": "src/interfaces/PostureCheck.ts",
+      "line": 69,
+      "kind": "prop:label",
+      "text": "Windows 10"
+    },
+    {
+      "file": "src/interfaces/PostureCheck.ts",
+      "line": 70,
+      "kind": "prop:label",
+      "text": "Windows 11"
+    },
+    {
+      "file": "src/interfaces/PostureCheck.ts",
+      "line": 82,
+      "kind": "prop:label",
+      "text": "OS X Yosemite"
+    },
+    {
+      "file": "src/interfaces/PostureCheck.ts",
+      "line": 83,
+      "kind": "prop:label",
+      "text": "OS X El Capitan"
+    },
+    {
+      "file": "src/interfaces/PostureCheck.ts",
+      "line": 84,
+      "kind": "prop:label",
+      "text": "macOS Sierra"
+    },
+    {
+      "file": "src/interfaces/PostureCheck.ts",
+      "line": 85,
+      "kind": "prop:label",
+      "text": "macOS High Sierra"
+    },
+    {
+      "file": "src/interfaces/PostureCheck.ts",
+      "line": 86,
+      "kind": "prop:label",
+      "text": "macOS Mojave"
+    },
+    {
+      "file": "src/interfaces/PostureCheck.ts",
+      "line": 87,
+      "kind": "prop:label",
+      "text": "macOS Catalina"
+    },
+    {
+      "file": "src/interfaces/PostureCheck.ts",
+      "line": 88,
+      "kind": "prop:label",
+      "text": "macOS Big Sur"
+    },
+    {
+      "file": "src/interfaces/PostureCheck.ts",
+      "line": 89,
+      "kind": "prop:label",
+      "text": "macOS Monterey"
+    },
+    {
+      "file": "src/interfaces/PostureCheck.ts",
+      "line": 90,
+      "kind": "prop:label",
+      "text": "macOS Ventura"
+    },
+    {
+      "file": "src/interfaces/PostureCheck.ts",
+      "line": 91,
+      "kind": "prop:label",
+      "text": "macOS Sonoma"
+    },
+    {
+      "file": "src/interfaces/PostureCheck.ts",
+      "line": 92,
+      "kind": "prop:label",
+      "text": "macOS Sequoia"
+    },
+    {
+      "file": "src/interfaces/PostureCheck.ts",
+      "line": 96,
+      "kind": "prop:label",
+      "text": "Android Oreo"
+    },
+    {
+      "file": "src/interfaces/PostureCheck.ts",
+      "line": 97,
+      "kind": "prop:label",
+      "text": "Android Pie"
+    },
+    {
+      "file": "src/interfaces/PostureCheck.ts",
+      "line": 98,
+      "kind": "prop:label",
+      "text": "Android 10"
+    },
+    {
+      "file": "src/interfaces/PostureCheck.ts",
+      "line": 99,
+      "kind": "prop:label",
+      "text": "Android 11"
+    },
+    {
+      "file": "src/interfaces/PostureCheck.ts",
+      "line": 100,
+      "kind": "prop:label",
+      "text": "Android 12"
+    },
+    {
+      "file": "src/interfaces/PostureCheck.ts",
+      "line": 101,
+      "kind": "prop:label",
+      "text": "Android 13"
+    },
+    {
+      "file": "src/interfaces/PostureCheck.ts",
+      "line": 102,
+      "kind": "prop:label",
+      "text": "Android 14"
+    },
+    {
+      "file": "src/interfaces/PostureCheck.ts",
+      "line": 103,
+      "kind": "prop:label",
+      "text": "Android 15"
+    },
+    {
+      "file": "src/interfaces/PostureCheck.ts",
+      "line": 104,
+      "kind": "prop:label",
+      "text": "Android 16"
+    },
+    {
+      "file": "src/modules/access-control/ssh/SSHUsernameSelector.tsx",
+      "line": 209,
+      "kind": "jsx-expr:ternary",
+      "text": "Enter"
+    },
+    {
+      "file": "src/modules/access-tokens/AccessTokenActionCell.tsx",
+      "line": 46,
+      "kind": "prop:confirmText",
+      "text": "Delete"
+    },
+    {
+      "file": "src/modules/access-tokens/AccessTokenActionCell.tsx",
+      "line": 47,
+      "kind": "prop:cancelText",
+      "text": "Cancel"
+    },
+    {
+      "file": "src/modules/access-tokens/CreateAccessTokenModal.tsx",
+      "line": 85,
+      "kind": "jsx-text-line",
+      "text": "This token will not be shown again, so be sure to copy it and"
+    },
+    {
+      "file": "src/modules/access-tokens/CreateAccessTokenModal.tsx",
+      "line": 118,
+      "kind": "jsx-text-line",
+      "text": "Copy to clipboard"
+    },
+    {
+      "file": "src/modules/access-tokens/CreateAccessTokenModal.tsx",
+      "line": 216,
+      "kind": "jsx-text-line",
+      "text": "Learn more about"
+    },
+    {
+      "file": "src/modules/access-tokens/CreateAccessTokenModal.tsx",
+      "line": 221,
+      "kind": "jsx-text-line",
+      "text": "Access Tokens"
+    },
+    {
+      "file": "src/modules/access-tokens/CreateAccessTokenModal.tsx",
+      "line": 238,
+      "kind": "jsx-text-line",
+      "text": "Create Token"
+    },
+    {
+      "file": "src/modules/access-tokens/CreateAccessTokenModal.tsx",
+      "line": 172,
+      "kind": "jsx-expr:attr(title)",
+      "text": "Create Access Token"
+    },
+    {
+      "file": "src/modules/access-tokens/CreateAccessTokenModal.tsx",
+      "line": 173,
+      "kind": "jsx-expr:attr(description)",
+      "text": "Use this token to access NetBird's public API"
+    },
+    {
+      "file": "src/modules/access-tokens/CreateAccessTokenModal.tsx",
+      "line": 185,
+      "kind": "jsx-expr:attr(placeholder)",
+      "text": "e.g., Infra token"
+    },
+    {
+      "file": "src/modules/activity/ActivityDescription.tsx",
+      "line": 282,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "NetBird"
+    },
+    {
+      "file": "src/modules/activity/ActivityTable.tsx",
+      "line": 96,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "NetBird"
+    },
+    {
+      "file": "src/modules/activity/ActivityTable.tsx",
+      "line": 130,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "NetBird"
+    },
+    {
+      "file": "src/modules/activity/UsersDropdownSelector.tsx",
+      "line": 243,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "NetBird"
+    },
+    {
+      "file": "src/modules/agent-network/AIProviderModal.tsx",
+      "line": 502,
+      "kind": "jsx-expr:ternary",
+      "text": "OpenAI API"
+    },
+    {
+      "file": "src/modules/agent-network/AIProviderModal.tsx",
+      "line": 674,
+      "kind": "jsx-expr:ternary",
+      "text": "AI Gateways"
+    },
+    {
+      "file": "src/modules/agent-network/AIProviderModal.tsx",
+      "line": 675,
+      "kind": "jsx-expr:ternary",
+      "text": "AI Providers"
+    },
+    {
+      "file": "src/modules/agent-network/AIProviderModal.tsx",
+      "line": 676,
+      "kind": "jsx-expr:ternary",
+      "text": "Other"
+    },
+    {
+      "file": "src/modules/agent-network/AIProviderModal.tsx",
+      "line": 688,
+      "kind": "jsx-expr:ternary",
+      "text": "Other"
+    },
+    {
+      "file": "src/modules/agent-network/AgentConnectTabs.tsx",
+      "line": 407,
+      "kind": "jsx-expr:ternary",
+      "text": "echo '-'"
+    },
+    {
+      "file": "src/modules/agent-network/AgentConnectTabs.tsx",
+      "line": 492,
+      "kind": "jsx-expr:ternary",
+      "text": "echo '-'"
+    },
+    {
+      "file": "src/modules/agent-network/EndpointBadge.tsx",
+      "line": 14,
+      "kind": "jsx-text-line",
+      "text": "Use this URL as the base URL when configuring your AI agents or LLM SDK"
+    },
+    {
+      "file": "src/modules/agent-network/data/mockData.ts",
+      "line": 108,
+      "kind": "jsx-expr:ternary",
+      "text": "OpenAI API"
+    },
+    {
+      "file": "src/modules/agent-network/data/mockData.ts",
+      "line": 138,
+      "kind": "jsx-expr:ternary",
+      "text": "Anthropic API"
+    },
+    {
+      "file": "src/modules/agent-network/data/mockData.ts",
+      "line": 275,
+      "kind": "jsx-expr:ternary",
+      "text": "Model not available"
+    },
+    {
+      "file": "src/modules/agent-network/data/mockData.ts",
+      "line": 276,
+      "kind": "jsx-expr:ternary",
+      "text": "No authorized provider"
+    },
+    {
+      "file": "src/modules/agent-network/data/mockData.ts",
+      "line": 277,
+      "kind": "jsx-expr:ternary",
+      "text": "Model not allowed"
+    },
+    {
+      "file": "src/modules/agent-network/data/mockData.ts",
+      "line": 278,
+      "kind": "jsx-expr:ternary",
+      "text": "Limit exceeded"
+    },
+    {
+      "file": "src/modules/agent-network/data/mockData.ts",
+      "line": 279,
+      "kind": "jsx-expr:ternary",
+      "text": "Token limit exceeded"
+    },
+    {
+      "file": "src/modules/agent-network/data/mockData.ts",
+      "line": 280,
+      "kind": "jsx-expr:ternary",
+      "text": "Budget limit exceeded"
+    },
+    {
+      "file": "src/modules/agent-network/data/mockData.ts",
+      "line": 326,
+      "kind": "jsx-expr:ternary",
+      "text": "Engineering"
+    },
+    {
+      "file": "src/modules/agent-network/data/mockData.ts",
+      "line": 327,
+      "kind": "jsx-expr:ternary",
+      "text": "Data Science"
+    },
+    {
+      "file": "src/modules/agent-network/data/mockData.ts",
+      "line": 328,
+      "kind": "jsx-expr:ternary",
+      "text": "Support"
+    },
+    {
+      "file": "src/modules/agent-network/data/mockData.ts",
+      "line": 329,
+      "kind": "jsx-expr:ternary",
+      "text": "Marketing"
+    },
+    {
+      "file": "src/modules/agent-network/data/mockData.ts",
+      "line": 330,
+      "kind": "jsx-expr:ternary",
+      "text": "Finance"
+    },
+    {
+      "file": "src/modules/billing/LimitsReachedModal.tsx",
+      "line": 111,
+      "kind": "jsx-text-line",
+      "text": "Subscription Limit Reached"
+    },
+    {
+      "file": "src/modules/billing/LimitsReachedModal.tsx",
+      "line": 114,
+      "kind": "jsx-text-line",
+      "text": "It looks like you’ve hit the limit of your current subscription."
+    },
+    {
+      "file": "src/modules/billing/LimitsReachedModal.tsx",
+      "line": 127,
+      "kind": "jsx-text-line",
+      "text": "Get Support"
+    },
+    {
+      "file": "src/modules/billing/NavigationUsageInfo.tsx",
+      "line": 103,
+      "kind": "jsx-expr:ternary",
+      "text": "Users"
+    },
+    {
+      "file": "src/modules/billing/NavigationUsageInfo.tsx",
+      "line": 104,
+      "kind": "jsx-expr:ternary",
+      "text": "User"
+    },
+    {
+      "file": "src/modules/billing/NavigationUsageInfo.tsx",
+      "line": 149,
+      "kind": "jsx-expr:ternary",
+      "text": "Usage limit reached"
+    },
+    {
+      "file": "src/modules/billing/NavigationUsageInfo.tsx",
+      "line": 150,
+      "kind": "jsx-expr:ternary",
+      "text": "Approaching usage limit"
+    },
+    {
+      "file": "src/modules/billing/NavigationUsageInfo.tsx",
+      "line": 171,
+      "kind": "jsx-expr:ternary",
+      "text": "Upgrade Plan"
+    },
+    {
+      "file": "src/modules/billing/NavigationUsageInfo.tsx",
+      "line": 171,
+      "kind": "jsx-expr:ternary",
+      "text": "Plans & Billing"
+    },
+    {
+      "file": "src/modules/billing/PlanCard.tsx",
+      "line": 159,
+      "kind": "jsx-text",
+      "text": "Unlimited Users"
+    },
+    {
+      "file": "src/modules/billing/PlanCard.tsx",
+      "line": 189,
+      "kind": "jsx-text-line",
+      "text": "Your plan was recently updated. Please wait for 48 hours from the"
+    },
+    {
+      "file": "src/modules/billing/PlanCard.tsx",
+      "line": 45,
+      "kind": "jsx-expr:ternary",
+      "text": "Upgrade to"
+    },
+    {
+      "file": "src/modules/billing/PlanCard.tsx",
+      "line": 46,
+      "kind": "jsx-expr:ternary",
+      "text": "Downgrade to"
+    },
+    {
+      "file": "src/modules/billing/PlanCurrentPlan.tsx",
+      "line": 99,
+      "kind": "jsx-text-line",
+      "text": "Visit AWS Marketplace"
+    },
+    {
+      "file": "src/modules/billing/PlanCurrentPlan.tsx",
+      "line": 114,
+      "kind": "jsx-text-line",
+      "text": "Manage Plan"
+    },
+    {
+      "file": "src/modules/billing/PlanCurrentPlan.tsx",
+      "line": 183,
+      "kind": "jsx-text-line",
+      "text": "The estimated price is calculated based on the number of"
+    },
+    {
+      "file": "src/modules/billing/PlanCurrentPlan.tsx",
+      "line": 61,
+      "kind": "jsx-expr:ternary",
+      "text": "Free Trial"
+    },
+    {
+      "file": "src/modules/billing/PlanCurrentPlan.tsx",
+      "line": 144,
+      "kind": "jsx-expr:ternary",
+      "text": "User"
+    },
+    {
+      "file": "src/modules/billing/PlanCurrentPlan.tsx",
+      "line": 144,
+      "kind": "jsx-expr:ternary",
+      "text": "Users"
+    },
+    {
+      "file": "src/modules/billing/PlanSuccessModal.tsx",
+      "line": 31,
+      "kind": "jsx-text-line",
+      "text": "Your subscription has been successfully activated. You have now full"
+    },
+    {
+      "file": "src/modules/billing/PlansAndBillingTab.tsx",
+      "line": 165,
+      "kind": "jsx-text",
+      "text": "Plans & Billing"
+    },
+    {
+      "file": "src/modules/billing/PlansAndBillingTab.tsx",
+      "line": 215,
+      "kind": "jsx-text-line",
+      "text": "Increase your user and peer limit by upgrading your plan."
+    },
+    {
+      "file": "src/modules/billing/PlansAndBillingTab.tsx",
+      "line": 218,
+      "kind": "jsx-text-line",
+      "text": "With our flexible pricing, you are only billed for active users and"
+    },
+    {
+      "file": "src/modules/billing/PlansAndBillingTab.tsx",
+      "line": 224,
+      "kind": "jsx-text-line",
+      "text": "Pricing Plan"
+    },
+    {
+      "file": "src/modules/billing/PlansAndBillingTab.tsx",
+      "line": 151,
+      "kind": "jsx-expr:attr(label)",
+      "text": "Settings"
+    },
+    {
+      "file": "src/modules/billing/PlansAndBillingTab.tsx",
+      "line": 156,
+      "kind": "jsx-expr:attr(label)",
+      "text": "Plans & Billing"
+    },
+    {
+      "file": "src/modules/billing/PlansAndBillingTab.tsx",
+      "line": 210,
+      "kind": "jsx-expr:ternary",
+      "text": "Update your NetBird Plan"
+    },
+    {
+      "file": "src/modules/billing/PlansAndBillingTab.tsx",
+      "line": 211,
+      "kind": "jsx-expr:ternary",
+      "text": "Upgrade your NetBird Plan"
+    },
+    {
+      "file": "src/modules/billing/locked-feature/LockedFeatureContent.tsx",
+      "line": 163,
+      "kind": "jsx-text-line",
+      "text": "Get Support"
+    },
+    {
+      "file": "src/modules/billing/trial/TrialGradientCard.tsx",
+      "line": 51,
+      "kind": "jsx-text-line",
+      "text": "Your plan was recently updated. Please wait for 48 hours from the last"
+    },
+    {
+      "file": "src/modules/billing/trial/TrialGradientCard.tsx",
+      "line": 11,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "Free"
+    },
+    {
+      "file": "src/modules/billing/trial/TrialNavigationInfoCard.tsx",
+      "line": 24,
+      "kind": "jsx-text",
+      "text": "Free Trial"
+    },
+    {
+      "file": "src/modules/billing/trial/TrialNavigationInfoCard.tsx",
+      "line": 41,
+      "kind": "jsx-text-line",
+      "text": "Upgrade Plan"
+    },
+    {
+      "file": "src/modules/billing/trial/TrialOrUpgradeButton.tsx",
+      "line": 92,
+      "kind": "jsx-text-line",
+      "text": "Your plan was recently updated. Please wait for 48 hours from the"
+    },
+    {
+      "file": "src/modules/billing/trial/TrialOrUpgradeButton.tsx",
+      "line": 128,
+      "kind": "jsx-text-line",
+      "text": "No credit card required"
+    },
+    {
+      "file": "src/modules/billing/trial/TrialOrUpgradeButton.tsx",
+      "line": 168,
+      "kind": "jsx-text-line",
+      "text": "Get a License"
+    },
+    {
+      "file": "src/modules/billing/trial/TrialOrUpgradeButton.tsx",
+      "line": 104,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "disabled:!opacity-30"
+    },
+    {
+      "file": "src/modules/billing/trial/TrialSuccessModal.tsx",
+      "line": 32,
+      "kind": "jsx-text-line",
+      "text": "Explore the dashboard, our integrations and all the features. Some"
+    },
+    {
+      "file": "src/modules/billing/trial/TrialSuccessModal.tsx",
+      "line": 46,
+      "kind": "jsx-text-line",
+      "text": "Enable device approvals for added control"
+    },
+    {
+      "file": "src/modules/billing/trial/TrialSuccessModal.tsx",
+      "line": 54,
+      "kind": "jsx-text-line",
+      "text": "Explore NetBird"
+    },
+    {
+      "file": "src/modules/control-center/draft/DraftChangesetContext.tsx",
+      "line": 1067,
+      "kind": "jsx-expr:ternary",
+      "text": "Policy"
+    },
+    {
+      "file": "src/modules/control-center/draft/DraftChangesetContext.tsx",
+      "line": 1077,
+      "kind": "jsx-expr:ternary",
+      "text": "Policy"
+    },
+    {
+      "file": "src/modules/control-center/draft/DraftChangesetContext.tsx",
+      "line": 1088,
+      "kind": "jsx-expr:ternary",
+      "text": "Resource"
+    },
+    {
+      "file": "src/modules/control-center/draft/DraftChangesetContext.tsx",
+      "line": 1959,
+      "kind": "jsx-expr:ternary",
+      "text": "Policy"
+    },
+    {
+      "file": "src/modules/control-center/draft/DraftChangesetContext.tsx",
+      "line": 2006,
+      "kind": "jsx-expr:ternary",
+      "text": "Policy"
+    },
+    {
+      "file": "src/modules/control-center/draft/DraftChangesetContext.tsx",
+      "line": 2068,
+      "kind": "jsx-expr:ternary",
+      "text": "Policy"
+    },
+    {
+      "file": "src/modules/control-center/draft/DraftChangesetContext.tsx",
+      "line": 2445,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "Agent policy"
+    },
+    {
+      "file": "src/modules/control-center/draft/modals/DraftNetworkDestinationModal.tsx",
+      "line": 164,
+      "kind": "jsx-text-line",
+      "text": "This network has no resources yet."
+    },
+    {
+      "file": "src/modules/control-center/draft/modals/DraftUserDeviceModal.tsx",
+      "line": 102,
+      "kind": "jsx-text-line",
+      "text": "Install NetBird on the device. Skip if it is already installed."
+    },
+    {
+      "file": "src/modules/control-center/draft/modals/ReviewDeployModal.tsx",
+      "line": 220,
+      "kind": "jsx-text-line",
+      "text": "No pending changes."
+    },
+    {
+      "file": "src/modules/control-center/handles/ConnectHandle.tsx",
+      "line": 103,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "left-[calc(50%+16px)]"
+    },
+    {
+      "file": "src/modules/control-center/handles/ConnectHandle.tsx",
+      "line": 104,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "left-[calc(50%-16px)]"
+    },
+    {
+      "file": "src/modules/control-center/handles/ConnectHandle.tsx",
+      "line": 105,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "top-[calc(50%+16px)]"
+    },
+    {
+      "file": "src/modules/control-center/handles/ConnectHandle.tsx",
+      "line": 106,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "top-[calc(50%-16px)]"
+    },
+    {
+      "file": "src/modules/control-center/handles/ConnectHandle.tsx",
+      "line": 111,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "!opacity-0"
+    },
+    {
+      "file": "src/modules/control-center/handles/ConnectHandle.tsx",
+      "line": 112,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "!opacity-0"
+    },
+    {
+      "file": "src/modules/control-center/header/ControlCenterHeader.tsx",
+      "line": 250,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "!rounded-r-none"
+    },
+    {
+      "file": "src/modules/control-center/nodes/SelectUserNode.tsx",
+      "line": 66,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "NetBird"
+    },
+    {
+      "file": "src/modules/control-center/utils/change-cascade.ts",
+      "line": 440,
+      "kind": "jsx-expr:ternary",
+      "text": "Policy"
+    },
+    {
+      "file": "src/modules/control-center/utils/helpers.ts",
+      "line": 298,
+      "kind": "jsx-expr:ternary",
+      "text": "Agent"
+    },
+    {
+      "file": "src/modules/control-center/utils/helpers.ts",
+      "line": 299,
+      "kind": "jsx-expr:ternary",
+      "text": "Server"
+    },
+    {
+      "file": "src/modules/control-center/utils/helpers.ts",
+      "line": 300,
+      "kind": "jsx-expr:ternary",
+      "text": "User Device"
+    },
+    {
+      "file": "src/modules/control-center/utils/helpers.ts",
+      "line": 646,
+      "kind": "jsx-expr:ternary",
+      "text": "Resource"
+    },
+    {
+      "file": "src/modules/dns/zones/DNSRecordModal.tsx",
+      "line": 358,
+      "kind": "jsx-expr:ternary",
+      "text": "Hour"
+    },
+    {
+      "file": "src/modules/dns/zones/DNSRecordModal.tsx",
+      "line": 359,
+      "kind": "jsx-expr:ternary",
+      "text": "Hours"
+    },
+    {
+      "file": "src/modules/dns/zones/DNSRecordModal.tsx",
+      "line": 360,
+      "kind": "jsx-expr:ternary",
+      "text": "Day"
+    },
+    {
+      "file": "src/modules/dns/zones/DNSRecordModal.tsx",
+      "line": 361,
+      "kind": "jsx-expr:ternary",
+      "text": "Days"
+    },
+    {
+      "file": "src/modules/exit-node/AddExitNodeButton.tsx",
+      "line": 36,
+      "kind": "jsx-text-line",
+      "text": "Add Exit Node"
+    },
+    {
+      "file": "src/modules/exit-node/ExitNodeDropdownButton.tsx",
+      "line": 32,
+      "kind": "jsx-text-line",
+      "text": "Add Exit Node"
+    },
+    {
+      "file": "src/modules/exit-node/ExitNodeHelpTooltip.tsx",
+      "line": 24,
+      "kind": "jsx-text-line",
+      "text": "An exit node is a network route that routes all your internet"
+    },
+    {
+      "file": "src/modules/exit-node/ExitNodeHelpTooltip.tsx",
+      "line": 35,
+      "kind": "jsx-text-line",
+      "text": "Exit Nodes"
+    },
+    {
+      "file": "src/modules/groups/AssignPeerToGroupModal.tsx",
+      "line": 408,
+      "kind": "jsx-expr:ternary",
+      "text": "Unknown"
+    },
+    {
+      "file": "src/modules/groups/AssignPeerToGroupModal.tsx",
+      "line": 412,
+      "kind": "jsx-expr:ternary",
+      "text": "Unknown"
+    },
+    {
+      "file": "src/modules/groups/EditGroupNameModal.tsx",
+      "line": 53,
+      "kind": "jsx-expr:attr(title)",
+      "text": "Rename Group"
+    },
+    {
+      "file": "src/modules/groups/EditGroupNameModal.tsx",
+      "line": 62,
+      "kind": "jsx-expr:attr(placeholder)",
+      "text": "e.g., Developers"
+    },
+    {
+      "file": "src/modules/groups/details/GroupPeersSection.tsx",
+      "line": 217,
+      "kind": "jsx-text-line",
+      "text": "Assign Peers"
+    },
+    {
+      "file": "src/modules/groups/details/GroupPeersSection.tsx",
+      "line": 72,
+      "kind": "jsx-expr:ternary",
+      "text": "Unknown"
+    },
+    {
+      "file": "src/modules/groups/details/GroupPeersSection.tsx",
+      "line": 76,
+      "kind": "jsx-expr:ternary",
+      "text": "Unknown"
+    },
+    {
+      "file": "src/modules/groups/details/GroupPeersSection.tsx",
+      "line": 198,
+      "kind": "jsx-expr:attr(buttonText)",
+      "text": "Assign Peers"
+    },
+    {
+      "file": "src/modules/groups/details/GroupUsersSection.tsx",
+      "line": 59,
+      "kind": "jsx-text",
+      "text": "Name"
+    },
+    {
+      "file": "src/modules/groups/details/GroupUsersSection.tsx",
+      "line": 72,
+      "kind": "jsx-text",
+      "text": "Role"
+    },
+    {
+      "file": "src/modules/groups/details/GroupUsersSection.tsx",
+      "line": 80,
+      "kind": "jsx-text",
+      "text": "Status"
+    },
+    {
+      "file": "src/modules/groups/details/GroupUsersSection.tsx",
+      "line": 185,
+      "kind": "jsx-text-line",
+      "text": "Remove Users from Group"
+    },
+    {
+      "file": "src/modules/groups/details/GroupUsersSection.tsx",
+      "line": 227,
+      "kind": "jsx-text-line",
+      "text": "Assign Users"
+    },
+    {
+      "file": "src/modules/groups/details/GroupUsersSection.tsx",
+      "line": 106,
+      "kind": "jsx-expr:attr(text)",
+      "text": "Last login on"
+    },
+    {
+      "file": "src/modules/groups/table/GroupsTable.tsx",
+      "line": 67,
+      "kind": "attr:aria-label",
+      "text": "Select all groups on this page"
+    },
+    {
+      "file": "src/modules/instance-setup/InstanceSetupWizard.tsx",
+      "line": 109,
+      "kind": "attr:message",
+      "text": "An error occurred. Please try again."
+    },
+    {
+      "file": "src/modules/instance-setup/InstanceSetupWizard.tsx",
+      "line": 184,
+      "kind": "jsx-text-line",
+      "text": "Go to Login"
+    },
+    {
+      "file": "src/modules/instance-setup/InstanceSetupWizard.tsx",
+      "line": 199,
+      "kind": "jsx-text-line",
+      "text": "Welcome to NetBird"
+    },
+    {
+      "file": "src/modules/instance-setup/InstanceSetupWizard.tsx",
+      "line": 206,
+      "kind": "jsx-text-line",
+      "text": "Create the first admin account to get started"
+    },
+    {
+      "file": "src/modules/instance-setup/InstanceSetupWizard.tsx",
+      "line": 215,
+      "kind": "jsx-text",
+      "text": "Name"
+    },
+    {
+      "file": "src/modules/instance-setup/InstanceSetupWizard.tsx",
+      "line": 229,
+      "kind": "jsx-text",
+      "text": "Email"
+    },
+    {
+      "file": "src/modules/instance-setup/InstanceSetupWizard.tsx",
+      "line": 242,
+      "kind": "jsx-text",
+      "text": "Password"
+    },
+    {
+      "file": "src/modules/instance-setup/InstanceSetupWizard.tsx",
+      "line": 254,
+      "kind": "jsx-text-line",
+      "text": "Must be at least 8 characters"
+    },
+    {
+      "file": "src/modules/instance-setup/InstanceSetupWizard.tsx",
+      "line": 259,
+      "kind": "jsx-text",
+      "text": "Confirm Password"
+    },
+    {
+      "file": "src/modules/instance-setup/InstanceSetupWizard.tsx",
+      "line": 281,
+      "kind": "jsx-text-line",
+      "text": "Creating Account..."
+    },
+    {
+      "file": "src/modules/instance-setup/InstanceSetupWizard.tsx",
+      "line": 294,
+      "kind": "jsx-text-line",
+      "text": "This is a one-time setup for your NetBird instance."
+    },
+    {
+      "file": "src/modules/instance-setup/InstanceSetupWizard.tsx",
+      "line": 153,
+      "kind": "jsx-expr:ternary",
+      "text": "Passwords do not match"
+    },
+    {
+      "file": "src/modules/integrations/IntegrationModalHeader.tsx",
+      "line": 29,
+      "kind": "jsx-expr:attr(alt)",
+      "text": "NetBird"
+    },
+    {
+      "file": "src/modules/integrations/edr/crowdstrike/CrowdStrike.tsx",
+      "line": 57,
+      "kind": "jsx-expr:ternary",
+      "text": "CrowdStrike"
+    },
+    {
+      "file": "src/modules/integrations/edr/crowdstrike/CrowdStrike.tsx",
+      "line": 74,
+      "kind": "jsx-expr:ternary",
+      "text": "CrowdStrike"
+    },
+    {
+      "file": "src/modules/integrations/edr/crowdstrike/CrowdStrikeConfiguration.tsx",
+      "line": 180,
+      "kind": "jsx-expr:attr(title)",
+      "text": "CrowdStrike"
+    },
+    {
+      "file": "src/modules/integrations/edr/crowdstrike/CrowdStrikeRegions.tsx",
+      "line": 6,
+      "kind": "jsx-expr:ternary",
+      "text": "Europe (EU-1)"
+    },
+    {
+      "file": "src/modules/integrations/edr/crowdstrike/CrowdStrikeRegions.tsx",
+      "line": 12,
+      "kind": "jsx-expr:ternary",
+      "text": "United States (US-1)"
+    },
+    {
+      "file": "src/modules/integrations/edr/crowdstrike/CrowdStrikeRegions.tsx",
+      "line": 18,
+      "kind": "jsx-expr:ternary",
+      "text": "United States (US-2)"
+    },
+    {
+      "file": "src/modules/integrations/edr/crowdstrike/CrowdStrikeRegions.tsx",
+      "line": 24,
+      "kind": "jsx-expr:ternary",
+      "text": "United States (US-GOV-1)"
+    },
+    {
+      "file": "src/modules/integrations/edr/crowdstrike/CrowdStrikeRegions.tsx",
+      "line": 30,
+      "kind": "jsx-expr:ternary",
+      "text": "United States (US-GOV-2)"
+    },
+    {
+      "file": "src/modules/integrations/edr/fleetdm/FleetDM.tsx",
+      "line": 74,
+      "kind": "jsx-expr:ternary",
+      "text": "FleetDM"
+    },
+    {
+      "file": "src/modules/integrations/edr/huntress/Huntress.tsx",
+      "line": 79,
+      "kind": "jsx-expr:ternary",
+      "text": "Huntress"
+    },
+    {
+      "file": "src/modules/integrations/edr/intune/Intune.tsx",
+      "line": 69,
+      "kind": "jsx-expr:ternary",
+      "text": "Intune"
+    },
+    {
+      "file": "src/modules/integrations/edr/intune/IntuneConfiguration.tsx",
+      "line": 249,
+      "kind": "jsx-expr:attr(placeholder)",
+      "text": "YdV7Q~JJ62Xl.LvYoBanxZR2sJA2va_3UbqvncY8"
+    },
+    {
+      "file": "src/modules/integrations/edr/intune/IntuneSetup.tsx",
+      "line": 268,
+      "kind": "jsx-expr:ternary",
+      "text": "NetBird"
+    },
+    {
+      "file": "src/modules/integrations/edr/intune/IntuneSetup.tsx",
+      "line": 365,
+      "kind": "jsx-expr:attr(placeholder)",
+      "text": "YdV7Q~JJ62Xl.LvYoBanxZR2sJA2va_3UbqvncY8"
+    },
+    {
+      "file": "src/modules/integrations/edr/sentinel-one/SentinelOne.tsx",
+      "line": 75,
+      "kind": "jsx-expr:ternary",
+      "text": "SentinelOne"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/AmazonRegions.tsx",
+      "line": 6,
+      "kind": "jsx-expr:ternary",
+      "text": "US East (N. Virginia)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/AmazonRegions.tsx",
+      "line": 11,
+      "kind": "jsx-expr:ternary",
+      "text": "US East (Ohio)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/AmazonRegions.tsx",
+      "line": 16,
+      "kind": "jsx-expr:ternary",
+      "text": "US West (N. California)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/AmazonRegions.tsx",
+      "line": 21,
+      "kind": "jsx-expr:ternary",
+      "text": "US West (Oregon)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/AmazonRegions.tsx",
+      "line": 27,
+      "kind": "jsx-expr:ternary",
+      "text": "Europe (Frankfurt)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/AmazonRegions.tsx",
+      "line": 32,
+      "kind": "jsx-expr:ternary",
+      "text": "Europe (Zurich)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/AmazonRegions.tsx",
+      "line": 37,
+      "kind": "jsx-expr:ternary",
+      "text": "Europe (Ireland)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/AmazonRegions.tsx",
+      "line": 42,
+      "kind": "jsx-expr:ternary",
+      "text": "Europe (London)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/AmazonRegions.tsx",
+      "line": 47,
+      "kind": "jsx-expr:ternary",
+      "text": "Europe (Paris)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/AmazonRegions.tsx",
+      "line": 52,
+      "kind": "jsx-expr:ternary",
+      "text": "Europe (Milan)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/AmazonRegions.tsx",
+      "line": 57,
+      "kind": "jsx-expr:ternary",
+      "text": "Europe (Spain)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/AmazonRegions.tsx",
+      "line": 62,
+      "kind": "jsx-expr:ternary",
+      "text": "Europe (Stockholm)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/AmazonRegions.tsx",
+      "line": 68,
+      "kind": "jsx-expr:ternary",
+      "text": "Asia Pacific (Hong Kong)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/AmazonRegions.tsx",
+      "line": 73,
+      "kind": "jsx-expr:ternary",
+      "text": "Asia Pacific (Mumbai)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/AmazonRegions.tsx",
+      "line": 78,
+      "kind": "jsx-expr:ternary",
+      "text": "Asia Pacific (Hyderabad)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/AmazonRegions.tsx",
+      "line": 83,
+      "kind": "jsx-expr:ternary",
+      "text": "Asia Pacific (Tokyo)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/AmazonRegions.tsx",
+      "line": 88,
+      "kind": "jsx-expr:ternary",
+      "text": "Asia Pacific (Seoul)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/AmazonRegions.tsx",
+      "line": 93,
+      "kind": "jsx-expr:ternary",
+      "text": "Asia Pacific (Osaka)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/AmazonRegions.tsx",
+      "line": 98,
+      "kind": "jsx-expr:ternary",
+      "text": "Asia Pacific (Singapore)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/AmazonRegions.tsx",
+      "line": 103,
+      "kind": "jsx-expr:ternary",
+      "text": "Asia Pacific (Sydney)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/AmazonRegions.tsx",
+      "line": 108,
+      "kind": "jsx-expr:ternary",
+      "text": "Asia Pacific (Jakarta)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/AmazonRegions.tsx",
+      "line": 113,
+      "kind": "jsx-expr:ternary",
+      "text": "Asia Pacific (Melbourne)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/AmazonRegions.tsx",
+      "line": 119,
+      "kind": "jsx-expr:ternary",
+      "text": "Canada (Central)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/AmazonRegions.tsx",
+      "line": 124,
+      "kind": "jsx-expr:ternary",
+      "text": "Canada (Calgary)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/AmazonRegions.tsx",
+      "line": 130,
+      "kind": "jsx-expr:ternary",
+      "text": "Middle East (Bahrain)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/AmazonRegions.tsx",
+      "line": 135,
+      "kind": "jsx-expr:ternary",
+      "text": "Middle East (UAE)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/AmazonRegions.tsx",
+      "line": 141,
+      "kind": "jsx-expr:ternary",
+      "text": "Africa (Cape Town)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/AmazonRegions.tsx",
+      "line": 147,
+      "kind": "jsx-expr:ternary",
+      "text": "South America (São Paulo)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/AmazonRegions.tsx",
+      "line": 153,
+      "kind": "jsx-expr:ternary",
+      "text": "Israel (Tel Aviv)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/firehose/Firehose.tsx",
+      "line": 64,
+      "kind": "jsx-expr:ternary",
+      "text": "Amazon Data Firehose"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/amazon/firehose/FirehoseSetup.tsx",
+      "line": 117,
+      "kind": "jsx-expr:ternary",
+      "text": "Amazon Data Firehose"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/datadog/DatadogRegions.tsx",
+      "line": 5,
+      "kind": "jsx-expr:ternary",
+      "text": "Europe (EU)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/datadog/DatadogRegions.tsx",
+      "line": 11,
+      "kind": "jsx-expr:ternary",
+      "text": "United States (US1)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/datadog/DatadogRegions.tsx",
+      "line": 17,
+      "kind": "jsx-expr:ternary",
+      "text": "United States (US3)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/datadog/DatadogRegions.tsx",
+      "line": 23,
+      "kind": "jsx-expr:ternary",
+      "text": "United States (US5)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/datadog/DatadogRegions.tsx",
+      "line": 29,
+      "kind": "jsx-expr:ternary",
+      "text": "United States (US1-FED)"
+    },
+    {
+      "file": "src/modules/integrations/event-streaming/datadog/DatadogRegions.tsx",
+      "line": 35,
+      "kind": "jsx-expr:ternary",
+      "text": "Japan (AP1)"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/azure-ad/AzureADConfiguration.tsx",
+      "line": 268,
+      "kind": "jsx-expr:attr(placeholder)",
+      "text": "YdV7Q~JJ62Xl.LvYoBanxZR2sJA2va_3UbqvncY8"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/azure-ad/AzureADSetup.tsx",
+      "line": 256,
+      "kind": "jsx-expr:ternary",
+      "text": "NetBird"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/azure-ad/AzureADSetup.tsx",
+      "line": 361,
+      "kind": "jsx-expr:attr(placeholder)",
+      "text": "YdV7Q~JJ62Xl.LvYoBanxZR2sJA2va_3UbqvncY8"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/entra-scim/EntraSCIMSetup.tsx",
+      "line": 97,
+      "kind": "jsx-expr:ternary",
+      "text": "Entra ID (SCIM)"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/entra-scim/EntraSCIMSetup.tsx",
+      "line": 376,
+      "kind": "jsx-expr:ternary",
+      "text": "Bearer authentication"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/generic-scim/GenericSCIM.tsx",
+      "line": 52,
+      "kind": "jsx-expr:ternary",
+      "text": "Generic SCIM"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/generic-scim/GenericSCIMConfiguration.tsx",
+      "line": 89,
+      "kind": "jsx-expr:ternary",
+      "text": "Generic SCIM"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/generic-scim/GenericSCIMSetup.tsx",
+      "line": 80,
+      "kind": "jsx-expr:ternary",
+      "text": "Generic SCIM"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/generic-scim/GenericSCIMSetup.tsx",
+      "line": 320,
+      "kind": "jsx-expr:ternary",
+      "text": "NetBird"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/google-workspace/GoogleWorkspaceConfiguration.tsx",
+      "line": 252,
+      "kind": "jsx-expr:attr(placeholder)",
+      "text": "YdV7Q~JJ62Xl.LvYoBanxZR2sJA2va_3UbqvncY8"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/google-workspace/GoogleWorkspaceSetup.tsx",
+      "line": 310,
+      "kind": "jsx-expr:ternary",
+      "text": "NetBird"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/google-workspace/GoogleWorkspaceSetup.tsx",
+      "line": 368,
+      "kind": "jsx-expr:attr(placeholder)",
+      "text": "netbird@loadtests-347817.iam.gserviceaccount.com"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/google-workspace/GoogleWorkspaceSetup.tsx",
+      "line": 429,
+      "kind": "jsx-expr:attr(placeholder)",
+      "text": "YdV7Q~JJ62Xl.LvYoBanxZR2sJA2va_3UbqvncY8"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/google-workspace/GoogleWorkspaceSetup.tsx",
+      "line": 480,
+      "kind": "jsx-expr:ternary",
+      "text": "User and Group Management ReadOnly"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/google-workspace/GoogleWorkspaceSetup.tsx",
+      "line": 484,
+      "kind": "jsx-expr:ternary",
+      "text": "User and Group Management ReadOnly"
+    },
+    {
+      "file": "src/modules/integrations/idp-sync/google-workspace/GoogleWorkspaceSetup.tsx",
+      "line": 614,
+      "kind": "jsx-expr:attr(placeholder)",
+      "text": "C03f4c3po"
+    },
+    {
+      "file": "src/modules/jobs/table/PeerRemoteJobsTable.tsx",
+      "line": 33,
+      "kind": "jsx-expr:ternary",
+      "text": "Type"
+    },
+    {
+      "file": "src/modules/jobs/table/PeerRemoteJobsTable.tsx",
+      "line": 40,
+      "kind": "jsx-expr:ternary",
+      "text": "CreatedAt"
+    },
+    {
+      "file": "src/modules/jobs/table/PeerRemoteJobsTable.tsx",
+      "line": 50,
+      "kind": "jsx-expr:ternary",
+      "text": "Status"
+    },
+    {
+      "file": "src/modules/jobs/table/PeerRemoteJobsTable.tsx",
+      "line": 57,
+      "kind": "jsx-expr:ternary",
+      "text": "CompletedAt"
+    },
+    {
+      "file": "src/modules/jobs/table/PeerRemoteJobsTable.tsx",
+      "line": 73,
+      "kind": "jsx-expr:ternary",
+      "text": "Parameters"
+    },
+    {
+      "file": "src/modules/jobs/table/PeerRemoteJobsTable.tsx",
+      "line": 82,
+      "kind": "jsx-expr:ternary",
+      "text": "ResultOrReason"
+    },
+    {
+      "file": "src/modules/jobs/table/PeerRemoteJobsTable.tsx",
+      "line": 101,
+      "kind": "jsx-expr:ternary",
+      "text": "CreatedAt"
+    },
+    {
+      "file": "src/modules/networks/misc/NetworkInformationSquare.tsx",
+      "line": 50,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "group-hover/network:!bg-nb-gray-910"
+    },
+    {
+      "file": "src/modules/networks/resources/NetworkResourceModal.tsx",
+      "line": 318,
+      "kind": "jsx-text-line",
+      "text": "IP Address"
+    },
+    {
+      "file": "src/modules/networks/resources/NetworkResourceModal.tsx",
+      "line": 326,
+      "kind": "jsx-text-line",
+      "text": "CIDR Block"
+    },
+    {
+      "file": "src/modules/networks/resources/NetworkResourceModal.tsx",
+      "line": 334,
+      "kind": "jsx-text-line",
+      "text": "Domain Name"
+    },
+    {
+      "file": "src/modules/networks/routing-peers/NetworkRoutingPeerModal.tsx",
+      "line": 295,
+      "kind": "jsx-text-line",
+      "text": "Routing Peers"
+    },
+    {
+      "file": "src/modules/networks/routing-peers/NetworkRoutingPeerModal.tsx",
+      "line": 482,
+      "kind": "prop:confirmText",
+      "text": "Continue"
+    },
+    {
+      "file": "src/modules/networks/routing-peers/NetworkRoutingPeerModal.tsx",
+      "line": 483,
+      "kind": "prop:cancelText",
+      "text": "Cancel"
+    },
+    {
+      "file": "src/modules/networks/routing-peers/NetworkRoutingPeerModal.tsx",
+      "line": 480,
+      "kind": "prop:description(multiline)",
+      "text": "If you continue, a one-off setup key will be automatically created and you will be able to install NetBird."
+    },
+    {
+      "file": "src/modules/onboarding/Onboarding.tsx",
+      "line": 608,
+      "kind": "jsx-text-line",
+      "text": "Skip to Dashboard"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 60,
+      "kind": "jsx-expr:ternary",
+      "text": "Search Engines (Google, Bing etc.)"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 61,
+      "kind": "jsx-expr:ternary",
+      "text": "Coworker or Friend"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 62,
+      "kind": "jsx-expr:ternary",
+      "text": "Trade Show or Event"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 63,
+      "kind": "jsx-expr:ternary",
+      "text": "Blogs"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 64,
+      "kind": "jsx-expr:ternary",
+      "text": "Comparison Sites"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 65,
+      "kind": "jsx-expr:ternary",
+      "text": "Slack"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 66,
+      "kind": "jsx-expr:ternary",
+      "text": "Other"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 67,
+      "kind": "jsx-expr:ternary",
+      "text": "NetBird YouTube Channel"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 68,
+      "kind": "jsx-expr:ternary",
+      "text": "Other YouTube Channel"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 69,
+      "kind": "jsx-expr:ternary",
+      "text": "NetBird SubReddit"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 70,
+      "kind": "jsx-expr:ternary",
+      "text": "Other Reddit Thread"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 71,
+      "kind": "jsx-expr:ternary",
+      "text": "GitHub"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 119,
+      "kind": "jsx-expr:ternary",
+      "text": "Homelab Automation"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 120,
+      "kind": "jsx-expr:ternary",
+      "text": "Home Remote Access"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 121,
+      "kind": "jsx-expr:ternary",
+      "text": "File Access"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 122,
+      "kind": "jsx-expr:ternary",
+      "text": "Gaming"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 124,
+      "kind": "jsx-expr:ternary",
+      "text": "Zero Trust Security"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 125,
+      "kind": "jsx-expr:ternary",
+      "text": "Employee Remote Access"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 126,
+      "kind": "jsx-expr:ternary",
+      "text": "Business VPN"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 127,
+      "kind": "jsx-expr:ternary",
+      "text": "Site-to-Site Connectivity"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 128,
+      "kind": "jsx-expr:ternary",
+      "text": "IoT (Internet of Things)"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 129,
+      "kind": "jsx-expr:ternary",
+      "text": "MSP (Managed Service Provider)"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 215,
+      "kind": "jsx-expr:ternary",
+      "text": "Business"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 215,
+      "kind": "jsx-expr:ternary",
+      "text": "Personal"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 223,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "Other"
+    },
+    {
+      "file": "src/modules/onboarding/OnboardingSurvey.tsx",
+      "line": 431,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "!h-0 opacity-0"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/AgentNetworkOnboarding.tsx",
+      "line": 227,
+      "kind": "jsx-text-line",
+      "text": "Skip to Dashboard"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/AgentNetworkSignupForm.tsx",
+      "line": 149,
+      "kind": "jsx-expr:ternary",
+      "text": "Business"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/AgentNetworkSignupForm.tsx",
+      "line": 149,
+      "kind": "jsx-expr:ternary",
+      "text": "Personal"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/AgentNetworkSignupForm.tsx",
+      "line": 151,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "Other"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/AgentNetworkSignupForm.tsx",
+      "line": 288,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "!h-0 opacity-0"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/OnboardingAgentConfigure.tsx",
+      "line": 64,
+      "kind": "jsx-text-line",
+      "text": "Connect a provider to generate your endpoint, then your agent config"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/OnboardingAgentConfigure.tsx",
+      "line": 71,
+      "kind": "jsx-text-line",
+      "text": "Go Back"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/OnboardingAgentDevice.tsx",
+      "line": 71,
+      "kind": "jsx-text-line",
+      "text": "Go Back"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/OnboardingAgentEnd.tsx",
+      "line": 68,
+      "kind": "jsx-text-line",
+      "text": "Send a test request"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/OnboardingAgentEnd.tsx",
+      "line": 87,
+      "kind": "jsx-text-line",
+      "text": "Go Back"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/OnboardingAgentGateway.tsx",
+      "line": 649,
+      "kind": "jsx-text",
+      "text": "NB_PROXY_PRIVATE=true"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/OnboardingAgentPolicy.tsx",
+      "line": 53,
+      "kind": "jsx-text-line",
+      "text": "Add Policy"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/OnboardingAgentPolicy.tsx",
+      "line": 60,
+      "kind": "jsx-text-line",
+      "text": "Go Back"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/OnboardingAgentProvider.tsx",
+      "line": 62,
+      "kind": "jsx-text-line",
+      "text": "Connect Provider"
+    },
+    {
+      "file": "src/modules/onboarding/agent-network/OnboardingAgentProvider.tsx",
+      "line": 69,
+      "kind": "jsx-text-line",
+      "text": "Go Back"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 9,
+      "kind": "jsx-expr:ternary",
+      "text": "Afghanistan"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 10,
+      "kind": "jsx-expr:ternary",
+      "text": "Albania"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 11,
+      "kind": "jsx-expr:ternary",
+      "text": "Algeria"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 12,
+      "kind": "jsx-expr:ternary",
+      "text": "Andorra"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 13,
+      "kind": "jsx-expr:ternary",
+      "text": "Angola"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 14,
+      "kind": "jsx-expr:ternary",
+      "text": "Antigua and Barbuda"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 15,
+      "kind": "jsx-expr:ternary",
+      "text": "Argentina"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 16,
+      "kind": "jsx-expr:ternary",
+      "text": "Armenia"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 17,
+      "kind": "jsx-expr:ternary",
+      "text": "Australia"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 18,
+      "kind": "jsx-expr:ternary",
+      "text": "Austria"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 19,
+      "kind": "jsx-expr:ternary",
+      "text": "Azerbaijan"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 20,
+      "kind": "jsx-expr:ternary",
+      "text": "Bahamas"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 21,
+      "kind": "jsx-expr:ternary",
+      "text": "Bahrain"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 22,
+      "kind": "jsx-expr:ternary",
+      "text": "Bangladesh"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 23,
+      "kind": "jsx-expr:ternary",
+      "text": "Barbados"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 24,
+      "kind": "jsx-expr:ternary",
+      "text": "Belarus"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 25,
+      "kind": "jsx-expr:ternary",
+      "text": "Belgium"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 26,
+      "kind": "jsx-expr:ternary",
+      "text": "Belize"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 27,
+      "kind": "jsx-expr:ternary",
+      "text": "Benin"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 28,
+      "kind": "jsx-expr:ternary",
+      "text": "Bhutan"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 29,
+      "kind": "jsx-expr:ternary",
+      "text": "Bolivia"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 30,
+      "kind": "jsx-expr:ternary",
+      "text": "Bosnia and Herzegovina"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 31,
+      "kind": "jsx-expr:ternary",
+      "text": "Botswana"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 32,
+      "kind": "jsx-expr:ternary",
+      "text": "Brazil"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 33,
+      "kind": "jsx-expr:ternary",
+      "text": "Brunei"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 34,
+      "kind": "jsx-expr:ternary",
+      "text": "Bulgaria"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 35,
+      "kind": "jsx-expr:ternary",
+      "text": "Burkina Faso"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 36,
+      "kind": "jsx-expr:ternary",
+      "text": "Burundi"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 37,
+      "kind": "jsx-expr:ternary",
+      "text": "Cabo Verde"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 38,
+      "kind": "jsx-expr:ternary",
+      "text": "Cambodia"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 39,
+      "kind": "jsx-expr:ternary",
+      "text": "Cameroon"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 40,
+      "kind": "jsx-expr:ternary",
+      "text": "Canada"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 41,
+      "kind": "jsx-expr:ternary",
+      "text": "Central African Republic"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 42,
+      "kind": "jsx-expr:ternary",
+      "text": "Chad"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 43,
+      "kind": "jsx-expr:ternary",
+      "text": "Chile"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 44,
+      "kind": "jsx-expr:ternary",
+      "text": "China"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 45,
+      "kind": "jsx-expr:ternary",
+      "text": "Colombia"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 46,
+      "kind": "jsx-expr:ternary",
+      "text": "Comoros"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 47,
+      "kind": "jsx-expr:ternary",
+      "text": "Congo (Democratic Republic)"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 48,
+      "kind": "jsx-expr:ternary",
+      "text": "Congo (Republic)"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 49,
+      "kind": "jsx-expr:ternary",
+      "text": "Costa Rica"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 50,
+      "kind": "jsx-expr:ternary",
+      "text": "Croatia"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 51,
+      "kind": "jsx-expr:ternary",
+      "text": "Cuba"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 52,
+      "kind": "jsx-expr:ternary",
+      "text": "Cyprus"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 53,
+      "kind": "jsx-expr:ternary",
+      "text": "Czechia"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 54,
+      "kind": "jsx-expr:ternary",
+      "text": "Denmark"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 55,
+      "kind": "jsx-expr:ternary",
+      "text": "Djibouti"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 56,
+      "kind": "jsx-expr:ternary",
+      "text": "Dominica"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 57,
+      "kind": "jsx-expr:ternary",
+      "text": "Dominican Republic"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 58,
+      "kind": "jsx-expr:ternary",
+      "text": "Ecuador"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 59,
+      "kind": "jsx-expr:ternary",
+      "text": "Egypt"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 60,
+      "kind": "jsx-expr:ternary",
+      "text": "El Salvador"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 61,
+      "kind": "jsx-expr:ternary",
+      "text": "Equatorial Guinea"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 62,
+      "kind": "jsx-expr:ternary",
+      "text": "Eritrea"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 63,
+      "kind": "jsx-expr:ternary",
+      "text": "Estonia"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 64,
+      "kind": "jsx-expr:ternary",
+      "text": "Eswatini"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 65,
+      "kind": "jsx-expr:ternary",
+      "text": "Ethiopia"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 66,
+      "kind": "jsx-expr:ternary",
+      "text": "Fiji"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 67,
+      "kind": "jsx-expr:ternary",
+      "text": "Finland"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 68,
+      "kind": "jsx-expr:ternary",
+      "text": "France"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 69,
+      "kind": "jsx-expr:ternary",
+      "text": "Gabon"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 70,
+      "kind": "jsx-expr:ternary",
+      "text": "Gambia"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 71,
+      "kind": "jsx-expr:ternary",
+      "text": "Georgia"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 72,
+      "kind": "jsx-expr:ternary",
+      "text": "Germany"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 73,
+      "kind": "jsx-expr:ternary",
+      "text": "Ghana"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 74,
+      "kind": "jsx-expr:ternary",
+      "text": "Greece"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 75,
+      "kind": "jsx-expr:ternary",
+      "text": "Grenada"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 76,
+      "kind": "jsx-expr:ternary",
+      "text": "Guatemala"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 77,
+      "kind": "jsx-expr:ternary",
+      "text": "Guinea"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 78,
+      "kind": "jsx-expr:ternary",
+      "text": "Guinea-Bissau"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 79,
+      "kind": "jsx-expr:ternary",
+      "text": "Guyana"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 80,
+      "kind": "jsx-expr:ternary",
+      "text": "Haiti"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 81,
+      "kind": "jsx-expr:ternary",
+      "text": "Honduras"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 82,
+      "kind": "jsx-expr:ternary",
+      "text": "Hong Kong"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 83,
+      "kind": "jsx-expr:ternary",
+      "text": "Hungary"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 84,
+      "kind": "jsx-expr:ternary",
+      "text": "Iceland"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 85,
+      "kind": "jsx-expr:ternary",
+      "text": "India"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 86,
+      "kind": "jsx-expr:ternary",
+      "text": "Indonesia"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 87,
+      "kind": "jsx-expr:ternary",
+      "text": "Iran"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 88,
+      "kind": "jsx-expr:ternary",
+      "text": "Iraq"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 89,
+      "kind": "jsx-expr:ternary",
+      "text": "Ireland"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 90,
+      "kind": "jsx-expr:ternary",
+      "text": "Israel"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 91,
+      "kind": "jsx-expr:ternary",
+      "text": "Italy"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 92,
+      "kind": "jsx-expr:ternary",
+      "text": "Ivory Coast"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 93,
+      "kind": "jsx-expr:ternary",
+      "text": "Jamaica"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 94,
+      "kind": "jsx-expr:ternary",
+      "text": "Japan"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 95,
+      "kind": "jsx-expr:ternary",
+      "text": "Jordan"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 96,
+      "kind": "jsx-expr:ternary",
+      "text": "Kazakhstan"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 97,
+      "kind": "jsx-expr:ternary",
+      "text": "Kenya"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 98,
+      "kind": "jsx-expr:ternary",
+      "text": "Kiribati"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 99,
+      "kind": "jsx-expr:ternary",
+      "text": "Kosovo"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 100,
+      "kind": "jsx-expr:ternary",
+      "text": "Kuwait"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 101,
+      "kind": "jsx-expr:ternary",
+      "text": "Kyrgyzstan"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 102,
+      "kind": "jsx-expr:ternary",
+      "text": "Laos"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 103,
+      "kind": "jsx-expr:ternary",
+      "text": "Latvia"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 104,
+      "kind": "jsx-expr:ternary",
+      "text": "Lebanon"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 105,
+      "kind": "jsx-expr:ternary",
+      "text": "Lesotho"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 106,
+      "kind": "jsx-expr:ternary",
+      "text": "Liberia"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 107,
+      "kind": "jsx-expr:ternary",
+      "text": "Libya"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 108,
+      "kind": "jsx-expr:ternary",
+      "text": "Liechtenstein"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 109,
+      "kind": "jsx-expr:ternary",
+      "text": "Lithuania"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 110,
+      "kind": "jsx-expr:ternary",
+      "text": "Luxembourg"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 111,
+      "kind": "jsx-expr:ternary",
+      "text": "Madagascar"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 112,
+      "kind": "jsx-expr:ternary",
+      "text": "Malawi"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 113,
+      "kind": "jsx-expr:ternary",
+      "text": "Malaysia"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 114,
+      "kind": "jsx-expr:ternary",
+      "text": "Maldives"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 115,
+      "kind": "jsx-expr:ternary",
+      "text": "Mali"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 116,
+      "kind": "jsx-expr:ternary",
+      "text": "Malta"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 117,
+      "kind": "jsx-expr:ternary",
+      "text": "Marshall Islands"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 118,
+      "kind": "jsx-expr:ternary",
+      "text": "Mauritania"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 119,
+      "kind": "jsx-expr:ternary",
+      "text": "Mauritius"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 120,
+      "kind": "jsx-expr:ternary",
+      "text": "Mexico"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 121,
+      "kind": "jsx-expr:ternary",
+      "text": "Micronesia"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 122,
+      "kind": "jsx-expr:ternary",
+      "text": "Moldova"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 123,
+      "kind": "jsx-expr:ternary",
+      "text": "Monaco"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 124,
+      "kind": "jsx-expr:ternary",
+      "text": "Mongolia"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 125,
+      "kind": "jsx-expr:ternary",
+      "text": "Montenegro"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 126,
+      "kind": "jsx-expr:ternary",
+      "text": "Morocco"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 127,
+      "kind": "jsx-expr:ternary",
+      "text": "Mozambique"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 128,
+      "kind": "jsx-expr:ternary",
+      "text": "Myanmar"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 129,
+      "kind": "jsx-expr:ternary",
+      "text": "Namibia"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 130,
+      "kind": "jsx-expr:ternary",
+      "text": "Nauru"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 131,
+      "kind": "jsx-expr:ternary",
+      "text": "Nepal"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 132,
+      "kind": "jsx-expr:ternary",
+      "text": "Netherlands"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 133,
+      "kind": "jsx-expr:ternary",
+      "text": "New Zealand"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 134,
+      "kind": "jsx-expr:ternary",
+      "text": "Nicaragua"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 135,
+      "kind": "jsx-expr:ternary",
+      "text": "Niger"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 136,
+      "kind": "jsx-expr:ternary",
+      "text": "Nigeria"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 137,
+      "kind": "jsx-expr:ternary",
+      "text": "North Korea"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 138,
+      "kind": "jsx-expr:ternary",
+      "text": "North Macedonia"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 139,
+      "kind": "jsx-expr:ternary",
+      "text": "Norway"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 140,
+      "kind": "jsx-expr:ternary",
+      "text": "Oman"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 141,
+      "kind": "jsx-expr:ternary",
+      "text": "Pakistan"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 142,
+      "kind": "jsx-expr:ternary",
+      "text": "Palau"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 143,
+      "kind": "jsx-expr:ternary",
+      "text": "Palestine"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 144,
+      "kind": "jsx-expr:ternary",
+      "text": "Panama"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 145,
+      "kind": "jsx-expr:ternary",
+      "text": "Papua New Guinea"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 146,
+      "kind": "jsx-expr:ternary",
+      "text": "Paraguay"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 147,
+      "kind": "jsx-expr:ternary",
+      "text": "Peru"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 148,
+      "kind": "jsx-expr:ternary",
+      "text": "Philippines"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 149,
+      "kind": "jsx-expr:ternary",
+      "text": "Poland"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 150,
+      "kind": "jsx-expr:ternary",
+      "text": "Portugal"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 151,
+      "kind": "jsx-expr:ternary",
+      "text": "Qatar"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 152,
+      "kind": "jsx-expr:ternary",
+      "text": "Romania"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 153,
+      "kind": "jsx-expr:ternary",
+      "text": "Russia"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 154,
+      "kind": "jsx-expr:ternary",
+      "text": "Rwanda"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 155,
+      "kind": "jsx-expr:ternary",
+      "text": "Saint Kitts and Nevis"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 156,
+      "kind": "jsx-expr:ternary",
+      "text": "Saint Lucia"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 157,
+      "kind": "jsx-expr:ternary",
+      "text": "Saint Vincent and the Grenadines"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 158,
+      "kind": "jsx-expr:ternary",
+      "text": "Samoa"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 159,
+      "kind": "jsx-expr:ternary",
+      "text": "San Marino"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 160,
+      "kind": "jsx-expr:ternary",
+      "text": "Sao Tome and Principe"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 161,
+      "kind": "jsx-expr:ternary",
+      "text": "Saudi Arabia"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 162,
+      "kind": "jsx-expr:ternary",
+      "text": "Senegal"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 163,
+      "kind": "jsx-expr:ternary",
+      "text": "Serbia"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 164,
+      "kind": "jsx-expr:ternary",
+      "text": "Seychelles"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 165,
+      "kind": "jsx-expr:ternary",
+      "text": "Sierra Leone"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 166,
+      "kind": "jsx-expr:ternary",
+      "text": "Singapore"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 167,
+      "kind": "jsx-expr:ternary",
+      "text": "Slovakia"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 168,
+      "kind": "jsx-expr:ternary",
+      "text": "Slovenia"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 169,
+      "kind": "jsx-expr:ternary",
+      "text": "Solomon Islands"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 170,
+      "kind": "jsx-expr:ternary",
+      "text": "Somalia"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 171,
+      "kind": "jsx-expr:ternary",
+      "text": "South Africa"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 172,
+      "kind": "jsx-expr:ternary",
+      "text": "South Korea"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 173,
+      "kind": "jsx-expr:ternary",
+      "text": "South Sudan"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 174,
+      "kind": "jsx-expr:ternary",
+      "text": "Spain"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 175,
+      "kind": "jsx-expr:ternary",
+      "text": "Sri Lanka"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 176,
+      "kind": "jsx-expr:ternary",
+      "text": "Sudan"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 177,
+      "kind": "jsx-expr:ternary",
+      "text": "Suriname"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 178,
+      "kind": "jsx-expr:ternary",
+      "text": "Sweden"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 179,
+      "kind": "jsx-expr:ternary",
+      "text": "Switzerland"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 180,
+      "kind": "jsx-expr:ternary",
+      "text": "Syria"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 181,
+      "kind": "jsx-expr:ternary",
+      "text": "Taiwan"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 182,
+      "kind": "jsx-expr:ternary",
+      "text": "Tajikistan"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 183,
+      "kind": "jsx-expr:ternary",
+      "text": "Tanzania"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 184,
+      "kind": "jsx-expr:ternary",
+      "text": "Thailand"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 185,
+      "kind": "jsx-expr:ternary",
+      "text": "Timor-Leste"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 186,
+      "kind": "jsx-expr:ternary",
+      "text": "Togo"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 187,
+      "kind": "jsx-expr:ternary",
+      "text": "Tonga"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 188,
+      "kind": "jsx-expr:ternary",
+      "text": "Trinidad and Tobago"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 189,
+      "kind": "jsx-expr:ternary",
+      "text": "Tunisia"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 190,
+      "kind": "jsx-expr:ternary",
+      "text": "Turkey"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 191,
+      "kind": "jsx-expr:ternary",
+      "text": "Turkmenistan"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 192,
+      "kind": "jsx-expr:ternary",
+      "text": "Tuvalu"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 193,
+      "kind": "jsx-expr:ternary",
+      "text": "Uganda"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 194,
+      "kind": "jsx-expr:ternary",
+      "text": "Ukraine"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 195,
+      "kind": "jsx-expr:ternary",
+      "text": "United Arab Emirates"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 196,
+      "kind": "jsx-expr:ternary",
+      "text": "United Kingdom"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 197,
+      "kind": "jsx-expr:ternary",
+      "text": "United States"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 198,
+      "kind": "jsx-expr:ternary",
+      "text": "Uruguay"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 199,
+      "kind": "jsx-expr:ternary",
+      "text": "Uzbekistan"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 200,
+      "kind": "jsx-expr:ternary",
+      "text": "Vanuatu"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 201,
+      "kind": "jsx-expr:ternary",
+      "text": "Vatican City"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 202,
+      "kind": "jsx-expr:ternary",
+      "text": "Venezuela"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 203,
+      "kind": "jsx-expr:ternary",
+      "text": "Vietnam"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 204,
+      "kind": "jsx-expr:ternary",
+      "text": "Yemen"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 205,
+      "kind": "jsx-expr:ternary",
+      "text": "Zambia"
+    },
+    {
+      "file": "src/modules/onboarding/countryOptions.ts",
+      "line": 206,
+      "kind": "jsx-expr:ternary",
+      "text": "Zimbabwe"
+    },
+    {
+      "file": "src/modules/onboarding/networks/OnboardingAddResource.tsx",
+      "line": 52,
+      "kind": "jsx-expr:ternary",
+      "text": "My First Network"
+    },
+    {
+      "file": "src/modules/onboarding/networks/OnboardingAddResource.tsx",
+      "line": 64,
+      "kind": "jsx-expr:ternary",
+      "text": "My Subnet"
+    },
+    {
+      "file": "src/modules/onboarding/networks/OnboardingAddResource.tsx",
+      "line": 64,
+      "kind": "jsx-expr:ternary",
+      "text": "My Resource"
+    },
+    {
+      "file": "src/modules/onboarding/networks/OnboardingAddResource.tsx",
+      "line": 102,
+      "kind": "jsx-expr:ternary",
+      "text": "Users"
+    },
+    {
+      "file": "src/modules/onboarding/networks/OnboardingAddResource.tsx",
+      "line": 107,
+      "kind": "jsx-expr:ternary",
+      "text": "Routing Peers"
+    },
+    {
+      "file": "src/modules/onboarding/networks/OnboardingAddRoutingPeer.tsx",
+      "line": 47,
+      "kind": "jsx-expr:ternary",
+      "text": "Routing Peers"
+    },
+    {
+      "file": "src/modules/onboarding/networks/OnboardingExplainPolicy.tsx",
+      "line": 38,
+      "kind": "jsx-text-line",
+      "text": "Flip the switch, then try pinging your resource again to see how it affects the connection."
+    },
+    {
+      "file": "src/modules/onboarding/p2p/OnboardingExplainDefaultPolicy.tsx",
+      "line": 38,
+      "kind": "jsx-text-line",
+      "text": "Flip the switch, then try pinging your other device again to see how it affects the connection."
+    },
+    {
+      "file": "src/modules/peer/MinimalPeersTable.tsx",
+      "line": 64,
+      "kind": "jsx-expr:ternary",
+      "text": "Unknown"
+    },
+    {
+      "file": "src/modules/peer/MinimalPeersTable.tsx",
+      "line": 68,
+      "kind": "jsx-expr:ternary",
+      "text": "Unknown"
+    },
+    {
+      "file": "src/modules/peer/PeerSSHInstructions.tsx",
+      "line": 78,
+      "kind": "jsx-text-line",
+      "text": "Desktop Client"
+    },
+    {
+      "file": "src/modules/peer/PeerSSHInstructions.tsx",
+      "line": 87,
+      "kind": "jsx-text-line",
+      "text": "If you are using NetBird via CLI, you can enable SSH by"
+    },
+    {
+      "file": "src/modules/peer/PeerSSHInstructions.tsx",
+      "line": 106,
+      "kind": "jsx-text-line",
+      "text": "If you are using NetBird via the Desktop Client, click on the"
+    },
+    {
+      "file": "src/modules/peer/PeerSSHInstructions.tsx",
+      "line": 107,
+      "kind": "jsx-text",
+      "text": "Settings"
+    },
+    {
+      "file": "src/modules/peer/PeerSSHInstructions.tsx",
+      "line": 108,
+      "kind": "jsx-text",
+      "text": "Allow SSH"
+    },
+    {
+      "file": "src/modules/peer/PeerSSHInstructions.tsx",
+      "line": 118,
+      "kind": "jsx-text-line",
+      "text": "Starting from NetBird v0.61.0, SSH requires an explicit access"
+    },
+    {
+      "file": "src/modules/peer/PeerSSHInstructions.tsx",
+      "line": 127,
+      "kind": "jsx-text-line",
+      "text": "Create SSH Policy"
+    },
+    {
+      "file": "src/modules/peer/PeerSSHInstructions.tsx",
+      "line": 134,
+      "kind": "jsx-text",
+      "text": "Confirm & Enable"
+    },
+    {
+      "file": "src/modules/peer/PeerSSHInstructions.tsx",
+      "line": 143,
+      "kind": "jsx-text-line",
+      "text": "Learn more about"
+    },
+    {
+      "file": "src/modules/peer/PeerSSHInstructions.tsx",
+      "line": 159,
+      "kind": "jsx-text-line",
+      "text": "Finish Setup"
+    },
+    {
+      "file": "src/modules/peer/PeerSSHInstructions.tsx",
+      "line": 60,
+      "kind": "jsx-expr:attr(title)",
+      "text": "Enable SSH Access"
+    },
+    {
+      "file": "src/modules/peers/PeersTable.tsx",
+      "line": 420,
+      "kind": "prop:label",
+      "text": "Linux"
+    },
+    {
+      "file": "src/modules/peers/PeersTable.tsx",
+      "line": 421,
+      "kind": "prop:label",
+      "text": "Windows"
+    },
+    {
+      "file": "src/modules/peers/PeersTable.tsx",
+      "line": 423,
+      "kind": "prop:label",
+      "text": "Android"
+    },
+    {
+      "file": "src/modules/posture-checks/checks/tooltips/GeoLocationTooltip.tsx",
+      "line": 31,
+      "kind": "jsx-text-line",
+      "text": "Allow only"
+    },
+    {
+      "file": "src/modules/posture-checks/checks/tooltips/GeoLocationTooltip.tsx",
+      "line": 38,
+      "kind": "jsx-text",
+      "text": "Block"
+    },
+    {
+      "file": "src/modules/posture-checks/checks/tooltips/NetBirdVersionTooltip.tsx",
+      "line": 16,
+      "kind": "jsx-text",
+      "text": "Min. Client Version"
+    },
+    {
+      "file": "src/modules/posture-checks/checks/tooltips/PeerNetworkRangeTooltip.tsx",
+      "line": 26,
+      "kind": "jsx-text-line",
+      "text": "Allow only"
+    },
+    {
+      "file": "src/modules/posture-checks/checks/tooltips/PeerNetworkRangeTooltip.tsx",
+      "line": 32,
+      "kind": "jsx-text",
+      "text": "Block"
+    },
+    {
+      "file": "src/modules/posture-checks/checks/tooltips/ProcessTooltip.tsx",
+      "line": 29,
+      "kind": "jsx-text",
+      "text": "Allow only"
+    },
+    {
+      "file": "src/modules/posture-checks/modal/PostureCheckModal.tsx",
+      "line": 219,
+      "kind": "jsx-text-line",
+      "text": "Learn more about"
+    },
+    {
+      "file": "src/modules/posture-checks/modal/PostureCheckModal.tsx",
+      "line": 224,
+      "kind": "jsx-text-line",
+      "text": "Posture Checks"
+    },
+    {
+      "file": "src/modules/posture-checks/table/cells/PostureCheckPolicyUsageCell.tsx",
+      "line": 103,
+      "kind": "jsx-text-line",
+      "text": "To assign this posture check to your policies, visit the Policies"
+    },
+    {
+      "file": "src/modules/posture-checks/table/cells/PostureCheckPolicyUsageCell.tsx",
+      "line": 116,
+      "kind": "jsx-text-line",
+      "text": "Go to Policies"
+    },
+    {
+      "file": "src/modules/posture-checks/ui/PostureCheckOperatingSystemInfo.tsx",
+      "line": 44,
+      "kind": "jsx-expr:ternary",
+      "text": "Allow"
+    },
+    {
+      "file": "src/modules/posture-checks/ui/PostureCheckOperatingSystemInfo.tsx",
+      "line": 44,
+      "kind": "jsx-expr:ternary",
+      "text": "Block"
+    },
+    {
+      "file": "src/modules/posture-checks/ui/PostureCheckOperatingSystemInfo.tsx",
+      "line": 53,
+      "kind": "jsx-expr:ternary",
+      "text": "Version"
+    },
+    {
+      "file": "src/modules/posture-checks/ui/PostureCheckTab.tsx",
+      "line": 91,
+      "kind": "jsx-text-line",
+      "text": "Remove Checks"
+    },
+    {
+      "file": "src/modules/posture-checks/ui/PostureCheckTabTrigger.tsx",
+      "line": 13,
+      "kind": "jsx-text-line",
+      "text": "Posture Checks"
+    },
+    {
+      "file": "src/modules/posture-checks/usePostureCheck.ts",
+      "line": 132,
+      "kind": "jsx-expr:ternary",
+      "text": "Updating"
+    },
+    {
+      "file": "src/modules/posture-checks/usePostureCheck.ts",
+      "line": 132,
+      "kind": "jsx-expr:ternary",
+      "text": "Creating"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/RDPCredentialsModal.tsx",
+      "line": 49,
+      "kind": "jsx-expr:ternary",
+      "text": "Administrator"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/RDPTooltip.tsx",
+      "line": 26,
+      "kind": "jsx-text-line",
+      "text": "You do not have permission to launch an RDP session. Please"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/ironrdp-wasm-bridge.ts",
+      "line": 315,
+      "kind": "jsx-expr:ternary",
+      "text": "Winsock version not supported"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/ironrdp-wasm-bridge.ts",
+      "line": 316,
+      "kind": "jsx-expr:ternary",
+      "text": "successful WSAStartup not yet performed"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/ironrdp-wasm-bridge.ts",
+      "line": 322,
+      "kind": "jsx-expr:ternary",
+      "text": "valid name, no data record of requested type"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/ironrdp-wasm-bridge.ts",
+      "line": 400,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "Unknown"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/rdp-certificate-handler.ts",
+      "line": 273,
+      "kind": "jsx-text",
+      "text": "RDP Certificate Verification"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/rdp-certificate-handler.ts",
+      "line": 275,
+      "kind": "jsx-text",
+      "text": "The server"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/rdp-certificate-handler.ts",
+      "line": 297,
+      "kind": "jsx-text-line",
+      "text": "Remember this certificate for future connections"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/rdp-certificate-handler.ts",
+      "line": 301,
+      "kind": "jsx-text",
+      "text": "Reject"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/rdp-certificate-handler.ts",
+      "line": 302,
+      "kind": "jsx-text",
+      "text": "Accept"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/rdp-certificate-handler.ts",
+      "line": 253,
+      "kind": "jsx-expr:ternary",
+      "text": "Unable to parse"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/rdp-certificate-handler.ts",
+      "line": 254,
+      "kind": "jsx-expr:ternary",
+      "text": "Unable to parse"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/rdp-certificate-handler.ts",
+      "line": 279,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "Unknown"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/rdp-certificate-handler.ts",
+      "line": 282,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "Unknown"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/useRDPCertificateHandler.ts",
+      "line": 278,
+      "kind": "jsx-expr:ternary",
+      "text": "Unable to parse"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/useRDPCertificateHandler.ts",
+      "line": 279,
+      "kind": "jsx-expr:ternary",
+      "text": "Unable to parse"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/useRemoteDesktop.ts",
+      "line": 229,
+      "kind": "jsx-expr:ternary",
+      "text": "RDP connection failed"
+    },
+    {
+      "file": "src/modules/remote-access/rdp/useRemoteDesktop.ts",
+      "line": 238,
+      "kind": "jsx-expr:ternary",
+      "text": "RDP connection failed"
+    },
+    {
+      "file": "src/modules/remote-access/ssh/SSHCredentialsModal.tsx",
+      "line": 41,
+      "kind": "jsx-expr:ternary",
+      "text": "Administrator"
+    },
+    {
+      "file": "src/modules/remote-access/ssh/SSHTooltip.tsx",
+      "line": 55,
+      "kind": "jsx-text-line",
+      "text": "You do not have permission to launch the SSH console. Please contact"
+    },
+    {
+      "file": "src/modules/remote-access/ssh/SSHTooltip.tsx",
+      "line": 80,
+      "kind": "jsx-text-line",
+      "text": "SSH Access is currently disabled for this peer. Please enable SSH access"
+    },
+    {
+      "file": "src/modules/remote-access/useNetBirdClient.ts",
+      "line": 146,
+      "kind": "jsx-expr:ternary",
+      "text": "Failed to initialize WASM"
+    },
+    {
+      "file": "src/modules/remote-access/useNetBirdClient.ts",
+      "line": 169,
+      "kind": "jsx-expr:ternary",
+      "text": "NetBirdClient is not available or not a function"
+    },
+    {
+      "file": "src/modules/remote-access/useNetBirdClient.ts",
+      "line": 190,
+      "kind": "jsx-expr:ternary",
+      "text": "Connection failed"
+    },
+    {
+      "file": "src/modules/reverse-proxy/ReverseProxyCrowdSecIPReputation.tsx",
+      "line": 69,
+      "kind": "jsx-expr:attr(alt)",
+      "text": "CrowdSec"
+    },
+    {
+      "file": "src/modules/reverse-proxy/auth/AuthHeaderModal.tsx",
+      "line": 77,
+      "kind": "jsx-expr:ternary",
+      "text": "Authorization"
+    },
+    {
+      "file": "src/modules/reverse-proxy/auth/AuthHeaderModal.tsx",
+      "line": 110,
+      "kind": "jsx-expr:ternary",
+      "text": "Authorization"
+    },
+    {
+      "file": "src/modules/reverse-proxy/auth/AuthHeaderModal.tsx",
+      "line": 117,
+      "kind": "jsx-expr:ternary",
+      "text": "Authorization"
+    },
+    {
+      "file": "src/modules/reverse-proxy/auth/AuthHeaderModal.tsx",
+      "line": 359,
+      "kind": "jsx-expr:ternary",
+      "text": "Authorization"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersFeaturesCell.tsx",
+      "line": 46,
+      "kind": "prop:label",
+      "text": "CrowdSec"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersModal.tsx",
+      "line": 240,
+      "kind": "prop:label",
+      "text": "Docker"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersModal.tsx",
+      "line": 245,
+      "kind": "prop:label",
+      "text": "Docker Compose"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersModal.tsx",
+      "line": 250,
+      "kind": "prop:label",
+      "text": "Kubernetes"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersModal.tsx",
+      "line": 255,
+      "kind": "prop:label",
+      "text": "Hetzner Cloud"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersModal.tsx",
+      "line": 260,
+      "kind": "prop:label",
+      "text": "DigitalOcean"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersModal.tsx",
+      "line": 265,
+      "kind": "prop:label",
+      "text": "AWS CloudFormation"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersModal.tsx",
+      "line": 394,
+      "kind": "prop:label",
+      "text": "Docker"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersModal.tsx",
+      "line": 397,
+      "kind": "prop:label",
+      "text": "Docker Compose"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersModal.tsx",
+      "line": 402,
+      "kind": "prop:label",
+      "text": "Kubernetes"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersModal.tsx",
+      "line": 407,
+      "kind": "prop:label",
+      "text": "Hetzner Cloud"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersModal.tsx",
+      "line": 412,
+      "kind": "prop:label",
+      "text": "DigitalOcean"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersModal.tsx",
+      "line": 417,
+      "kind": "prop:label",
+      "text": "AWS CloudFormation"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersModal.tsx",
+      "line": 433,
+      "kind": "jsx-text",
+      "text": "Docker"
+    },
+    {
+      "file": "src/modules/reverse-proxy/clusters/ClustersModal.tsx",
+      "line": 523,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "!border-nb-gray-930"
+    },
+    {
+      "file": "src/modules/reverse-proxy/table/ReverseProxyAccessControlCell.tsx",
+      "line": 166,
+      "kind": "prop:label",
+      "text": "CrowdSec"
+    },
+    {
+      "file": "src/modules/routes/RouteModal.tsx",
+      "line": 181,
+      "kind": "jsx-expr:ternary",
+      "text": "Exit Node"
+    },
+    {
+      "file": "src/modules/routes/RouteUpdateModal.tsx",
+      "line": 414,
+      "kind": "jsx-text-line",
+      "text": "Advertise this route to peers that belong to the following"
+    },
+    {
+      "file": "src/modules/routes/RouteUpdateModal.tsx",
+      "line": 423,
+      "kind": "jsx-text-line",
+      "text": "These groups offer a more granular control of internal services"
+    },
+    {
+      "file": "src/modules/search/GlobalSearchModal.tsx",
+      "line": 316,
+      "kind": "jsx-text-line",
+      "text": "Search for Networks and Resources"
+    },
+    {
+      "file": "src/modules/search/GlobalSearchModal.tsx",
+      "line": 320,
+      "kind": "jsx-text-line",
+      "text": "Start typing to search by name, description or address."
+    },
+    {
+      "file": "src/modules/search/GlobalSearchModal.tsx",
+      "line": 342,
+      "kind": "jsx-text-line",
+      "text": "Could not find any results"
+    },
+    {
+      "file": "src/modules/settings/AuthenticationTab.tsx",
+      "line": 63,
+      "kind": "jsx-expr:ternary",
+      "text": "Integration"
+    },
+    {
+      "file": "src/modules/settings/IdentityProviderModal.tsx",
+      "line": 64,
+      "kind": "jsx-expr:ternary",
+      "text": "Google"
+    },
+    {
+      "file": "src/modules/settings/IdentityProviderModal.tsx",
+      "line": 65,
+      "kind": "jsx-expr:ternary",
+      "text": "Microsoft"
+    },
+    {
+      "file": "src/modules/settings/IdentityProviderModal.tsx",
+      "line": 66,
+      "kind": "jsx-expr:ternary",
+      "text": "Microsoft Entra"
+    },
+    {
+      "file": "src/modules/settings/IdentityProviderModal.tsx",
+      "line": 67,
+      "kind": "jsx-expr:ternary",
+      "text": "Okta"
+    },
+    {
+      "file": "src/modules/settings/IdentityProviderModal.tsx",
+      "line": 68,
+      "kind": "jsx-expr:ternary",
+      "text": "Zitadel"
+    },
+    {
+      "file": "src/modules/settings/IdentityProviderModal.tsx",
+      "line": 69,
+      "kind": "jsx-expr:ternary",
+      "text": "PocketID"
+    },
+    {
+      "file": "src/modules/settings/IdentityProviderModal.tsx",
+      "line": 70,
+      "kind": "jsx-expr:ternary",
+      "text": "Authentik"
+    },
+    {
+      "file": "src/modules/settings/IdentityProviderModal.tsx",
+      "line": 71,
+      "kind": "jsx-expr:ternary",
+      "text": "Keycloak"
+    },
+    {
+      "file": "src/modules/settings/IdentityProviderModal.tsx",
+      "line": 72,
+      "kind": "jsx-expr:ternary",
+      "text": "Microsoft AD FS"
+    },
+    {
+      "file": "src/modules/settings/IdentityProvidersTab.tsx",
+      "line": 45,
+      "kind": "jsx-expr:ternary",
+      "text": "Zitadel"
+    },
+    {
+      "file": "src/modules/settings/IdentityProvidersTab.tsx",
+      "line": 46,
+      "kind": "jsx-expr:ternary",
+      "text": "Microsoft Entra"
+    },
+    {
+      "file": "src/modules/settings/IdentityProvidersTab.tsx",
+      "line": 47,
+      "kind": "jsx-expr:ternary",
+      "text": "Google"
+    },
+    {
+      "file": "src/modules/settings/IdentityProvidersTab.tsx",
+      "line": 48,
+      "kind": "jsx-expr:ternary",
+      "text": "Okta"
+    },
+    {
+      "file": "src/modules/settings/IdentityProvidersTab.tsx",
+      "line": 49,
+      "kind": "jsx-expr:ternary",
+      "text": "PocketID"
+    },
+    {
+      "file": "src/modules/settings/IdentityProvidersTab.tsx",
+      "line": 50,
+      "kind": "jsx-expr:ternary",
+      "text": "Microsoft"
+    },
+    {
+      "file": "src/modules/settings/IdentityProvidersTab.tsx",
+      "line": 51,
+      "kind": "jsx-expr:ternary",
+      "text": "Authentik"
+    },
+    {
+      "file": "src/modules/settings/IdentityProvidersTab.tsx",
+      "line": 52,
+      "kind": "jsx-expr:ternary",
+      "text": "Keycloak"
+    },
+    {
+      "file": "src/modules/settings/IdentityProvidersTab.tsx",
+      "line": 53,
+      "kind": "jsx-expr:ternary",
+      "text": "Microsoft AD FS"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyModal.tsx",
+      "line": 117,
+      "kind": "jsx-text-line",
+      "text": "This key will not be shown again, so be sure to copy it and"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyModal.tsx",
+      "line": 153,
+      "kind": "jsx-text-line",
+      "text": "Install NetBird"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyModal.tsx",
+      "line": 204,
+      "kind": "prop:title",
+      "text": "Create Setup Key"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyModal.tsx",
+      "line": 261,
+      "kind": "jsx-text-line",
+      "text": "Make this key reusable"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyModal.tsx",
+      "line": 327,
+      "kind": "jsx-text-line",
+      "text": "Ephemeral Peers"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyModal.tsx",
+      "line": 344,
+      "kind": "jsx-text-line",
+      "text": "Allow Extra DNS Labels"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyModal.tsx",
+      "line": 355,
+      "kind": "jsx-text",
+      "text": "Auto-assigned groups"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyModal.tsx",
+      "line": 357,
+      "kind": "jsx-text-line",
+      "text": "These groups will be automatically assigned to peers enrolled with"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyModal.tsx",
+      "line": 372,
+      "kind": "jsx-text-line",
+      "text": "Learn more about"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyModal.tsx",
+      "line": 379,
+      "kind": "jsx-text-line",
+      "text": "Setup Keys"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyModal.tsx",
+      "line": 396,
+      "kind": "jsx-text-line",
+      "text": "Create Setup Key"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyModal.tsx",
+      "line": 192,
+      "kind": "jsx-expr:ternary",
+      "text": "Unlimited"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyModal.tsx",
+      "line": 264,
+      "kind": "jsx-expr:attr(helpText)",
+      "text": "Use this type to enroll multiple peers"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyModal.tsx",
+      "line": 305,
+      "kind": "jsx-expr:attr(placeholder)",
+      "text": "Unlimited"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyStatusCell.tsx",
+      "line": 46,
+      "kind": "jsx-text-line",
+      "text": "Peers that are offline for over 10 minutes will be removed"
+    },
+    {
+      "file": "src/modules/setup-keys/SetupKeyUsageCell.tsx",
+      "line": 15,
+      "kind": "jsx-text",
+      "text": "Unlimited"
+    },
+    {
+      "file": "src/modules/setup-netbird-modal/LinuxTab.tsx",
+      "line": 182,
+      "kind": "jsx-text-line",
+      "text": "Install manually with a package manager"
+    },
+    {
+      "file": "src/modules/users/HorizontalUsersStack.tsx",
+      "line": 71,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "NetBird"
+    },
+    {
+      "file": "src/modules/users/PendingApproval.tsx",
+      "line": 95,
+      "kind": "jsx-text-line",
+      "text": "Your organization requires new users to be manually approved before"
+    },
+    {
+      "file": "src/modules/users/PendingApproval.tsx",
+      "line": 115,
+      "kind": "jsx-text-line",
+      "text": "Log Out"
+    },
+    {
+      "file": "src/modules/users/PendingApproval.tsx",
+      "line": 126,
+      "kind": "jsx-text-line",
+      "text": "Read the Docs"
+    },
+    {
+      "file": "src/modules/users/PendingApproval.tsx",
+      "line": 133,
+      "kind": "jsx-text-line",
+      "text": "Contact Support"
+    },
+    {
+      "file": "src/modules/users/SmallUserAvatar.tsx",
+      "line": 31,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "System User"
+    },
+    {
+      "file": "src/modules/users/UserInvitesTable.tsx",
+      "line": 156,
+      "kind": "jsx-text-line",
+      "text": "Agent Network Admin"
+    },
+    {
+      "file": "src/modules/users/UserInvitesTable.tsx",
+      "line": 162,
+      "kind": "jsx-text-line",
+      "text": "Usage Viewer"
+    },
+    {
+      "file": "src/modules/users/table-cells/UserRoleCell.tsx",
+      "line": 67,
+      "kind": "jsx-text-line",
+      "text": "Agent Network Admin"
+    },
+    {
+      "file": "src/modules/users/table-cells/UserRoleCell.tsx",
+      "line": 73,
+      "kind": "jsx-text-line",
+      "text": "Usage Viewer"
+    },
+    {
+      "file": "src/storybook/integrations.ts",
+      "line": 36,
+      "kind": "jsx-expr:ternary",
+      "text": "netbird-sync@acme-netbird.iam.gserviceaccount.com"
+    },
+    {
+      "file": "src/utils/helpers.ts",
+      "line": 51,
+      "kind": "jsx-expr:shortcircuit",
+      "text": "System User"
+    },
+    {
+      "file": "src/utils/responsive.ts",
+      "line": 4,
+      "kind": "jsx-expr:ternary",
+      "text": "(min-width: 490px)"
+    },
+    {
+      "file": "src/utils/responsive.ts",
+      "line": 8,
+      "kind": "jsx-expr:ternary",
+      "text": "(min-width: 640px)"
+    },
+    {
+      "file": "src/utils/responsive.ts",
+      "line": 12,
+      "kind": "jsx-expr:ternary",
+      "text": "(min-width: 768px)"
+    },
+    {
+      "file": "src/utils/responsive.ts",
+      "line": 16,
+      "kind": "jsx-expr:ternary",
+      "text": "(min-width: 1024px)"
+    },
+    {
+      "file": "src/utils/responsive.ts",
+      "line": 20,
+      "kind": "jsx-expr:ternary",
+      "text": "(min-width: 1280px)"
+    },
+    {
+      "file": "src/utils/responsive.ts",
+      "line": 24,
+      "kind": "jsx-expr:ternary",
+      "text": "(min-width: 1536px)"
+    }
+  ]
+}

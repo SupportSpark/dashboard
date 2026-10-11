@@ -232,6 +232,24 @@ export default {
       "NetBird combines a configuration-free peer-to-peer private network and a centralized access control system in a single open-source platform",
     users: "Users",
     goToNetworks: "Go to Networks",
+    deleteTokenTitle: "Delete '{name}'?",
+    accessTokenCopied: "Access token was copied to your clipboard!",
+    accessTokenCreatedSuccess: "Access token created successfully!",
+    accessTokenCopyWarning:
+      "This token will not be shown again, so be sure to copy it and store in a secure location.",
+    accessTokenNamePlaceholder: "e.g., Infra token",
+    createAccessTokenDescription: "Use this token to access NetBird's public API",
+    or: "or",
+    accessTokenExpiryHelp: "Should be between 1 and 365 days.",
+    createAccessTokenTitle: "Create Access Token",
+    createToken: "Create Token",
+    copyToClipboard: "Copy to clipboard",
+    setupKeyCouldNotBeCreated: "Setup key could not be created...",
+    daysSuffix: "Day(s)",
+    unknownPath: "Unknown path",
+    followingCountriesAndRegions: "the following countries & regions",
+    followingPeerNetworkRanges: "the following peer network ranges",
+    followingProcesses: "peers which are running the following processes",
   },
   navigation: {
     controlCenter: "Control Center",
@@ -959,6 +977,8 @@ export default {
     noUsersToAssignDescription: "Every user is already a member of this group.",
     searchPeersByNameIpOrOwner: "Search peers by name, IP or owner...",
     searchUsersByNameEmailOrRole: "Search users by name, email or role...",
+    peersSelected: "<count2>{count} peer(s)</count2> selected",
+    removeUsersFromGroupTitleShort: "Remove Users from Group",
   },
   users: {
     title: "Users",
@@ -1209,6 +1229,14 @@ export default {
     eMail: "E-Mail",
     neverLoggedIn: "Never",
     userId: "User ID",
+    pendingApprovalOwner:
+      "Your organization requires new users to be manually approved before joining. Ask the owner of the account at <owner>{email}</owner> to approve your access.",
+    pendingApprovalNoOwner:
+      "Your organization requires new users to be manually approved before joining. Ask the owner of the account to approve your access.",
+    needHelp: "Need help?",
+    readTheDocs: "Read the Docs",
+    or: "or",
+    contactSupport: "Contact Support",
   },
   userDropdown: {
     profileSettings: "Profile Settings",
@@ -1509,6 +1537,7 @@ export default {
       "Configure an identity provider to enable SSO authentication for your users.",
     deleteIdentityProviderTitle: "Delete '{name}'?",
     idpNameDefaultOidc: "Generic OIDC",
+    peerApprovalIntegrationFallback: "Integration",
   },
   reverseProxy: {
     title: "Reverse Proxy",
@@ -2544,6 +2573,11 @@ export default {
     resourceReviewInAccessControlTab: "Please review them in the Access Control tab.",
     resourceReviewOnCanvasBeforeDeploy: "Review them on the canvas before you deploy.",
     searchResourcesPlaceholder: "Search resources by name or address...",
+    resourceAddNewFallback: "Add a new resource",
+    enterSingle: "Enter a single",
+    createSetupKeyConfirmTitle: "Create a Setup Key?",
+    createSetupKeyConfirmDescription:
+      "If you continue, a one-off setup key will be automatically created and you will be able to install NetBird.",
   },
   postureChecks: {
     title: "Posture Checks",
@@ -2666,6 +2700,14 @@ export default {
       "Are you sure you want to disable this check? All settings of this check will be lost.",
     on: "On",
     off: "Off",
+    removeChecks: "Remove Checks",
+    assignToPoliciesHint:
+      "To assign this posture check to your policies, visit the Policies page.",
+    postureCheckNotifyTitle: "Posture Check {name}",
+    postureCheckCreated: "Posture Check was created successfully.",
+    postureCheckUpdated: "Posture Check was updated successfully.",
+    creatingPostureCheck: "Creating your posture check...",
+    updatingPostureCheck: "Updating your posture check...",
   },
   setupKeys: {
     title: "Setup Keys",
@@ -2743,6 +2785,20 @@ export default {
     creatingYourSetupKey: "Creating your setup key...",
     setupKeyCreatedDescriptionText:
       "Setup key created successfully. You can now enroll peers with your new key.",
+    setupKeyCreatedSuccess: "Setup key created successfully!",
+    setupKeyCopyWarning:
+      "This key will not be shown again, so be sure to copy it and store in a secure location.",
+    makeReusable: "Make this key reusable",
+    reusableHelp: "Use this type to enroll multiple peers",
+    ephemeralPeers: "Ephemeral Peers",
+    ephemeralPeersHelp:
+      "Peers that are offline for over 10 minutes will be removed automatically.",
+    allowExtraDnsLabels: "Allow Extra DNS Labels",
+    allowExtraDnsLabelsHelp:
+      "Enable multiple subdomain labels when enrolling peers (e.g., host.dev.example.com).",
+    allowExtraDnsLabelsTooltip:
+      "Allow multiple DNS labels in the peer name (e.g. host.europe.netbird.io.)",
+    usageOfLimit: "{current} of {limit} Peers",
   },
   activity: {
     title: "Activity",
@@ -3344,6 +3400,12 @@ export default {
       "{count, plural, one {The agent policy {policies} authorizes nothing without it and is deleted too.} other {# agent policies {policies} authorize nothing without them and are deleted too.}}",
     deleteGroupBlockedByChanges:
       "{count, plural, one {Your change to {changes} still references it, and the deletion can't deploy until you take the group off it.} other {Your changes to {changes} still reference them, and the deletion can't deploy until you take the group off them.}}",
+    networkNoResourcesYet: "This network has no resources yet.",
+    setupDeviceTitle: "Set up “{name}”",
+    setupDeviceDescription: "Install NetBird and assign the registered peer.",
+    installOnDeviceStep:
+      "Install NetBird on the device. Skip if it is already installed.",
+    noPendingChanges: "No pending changes.",
   },
   notifications: {
     title: "Notifications",
@@ -4087,6 +4149,7 @@ export default {
     andSet: "and set",
     to: "to",
     under: "under",
+    installWithPackageManager: "Install manually with a package manager",
   },
   untranslated: {
     // app
@@ -5182,6 +5245,17 @@ export default {
     yourNamePlaceholder: "Your name",
     strongPasswordPlaceholder: "Enter a strong password",
     reEnterPasswordPlaceholder: "Re-enter your password",
+    emailRequired: "Email is required",
+    invalidEmail: "Please enter a valid email address",
+    passwordRequired: "Password is required",
+    passwordMinLength: "Password must be at least 8 characters",
+    confirmPasswordRequired: "Please confirm your password",
+    nameRequired: "Name is required",
+    validationError: "Validation error. Please check your input.",
+    createFirstAdmin: "Create the first admin account to get started",
+    passwordMinLengthHelp: "Must be at least 8 characters",
+    createAdminAccount: "Create Admin Account",
+    oneTimeSetupNotice: "This is a one-time setup for your NetBird instance.",
   },
   invite: {
     passwordPlaceholder: "Password",
@@ -5681,6 +5755,9 @@ export default {
     denyReasonTokenLimitExceeded: "Token limit exceeded",
     denyReasonBudgetLimitExceeded: "Budget limit exceeded",
     denyReasonAccountScoped: "Account {reason}",
+    aiGateways: "AI Gateways",
+    aiProviders: "AI Providers",
+    otherProviderGroup: "Other",
   },
   integrations: {
     edrTabTitle: "MDM & EDR",
@@ -6596,5 +6673,35 @@ export default {
     updatingService: "Updating service...",
     updatingTarget: "Updating target...",
     validatingDomain: "Validating domain...",
+  },
+  peerSsh: {
+    sshInstructionsTitle: "Connect via SSH",
+    sshInstructionsDescription: "Use the command below to connect to this peer over SSH.",
+    sshPolicyRequired: "An SSH policy is required before you can connect.",
+    createSshPolicy: "Create SSH Policy",
+    sshNotEnabled: "SSH is not enabled on this peer.",
+    enableSsh: "Enable SSH",
+    sshClient: "SSH Client",
+    enableSSHDescription:
+      "Allow remote SSH access from other connected network participants.",
+    desktopClient: "Desktop Client",
+    sshCliStep:
+      "If you are using NetBird via CLI, you can enable SSH by running {scope}. Run the first one only if NetBird is already running. On a machine where you do not have those rights, an administrator has to run them.",
+    elevatedPrompt: "these commands in an elevated prompt",
+    asRoot: "these commands as root",
+    sshDesktopStep:
+      "If you are using NetBird via the Desktop Client, click on the NetBird tray icon, go to <settings>Settings</settings> and click <allowSsh>Allow SSH</allowSsh>. If you want to enable Root Login go to <advanced>Settings > Advanced Settings</advanced> and enable SSH Root Login under the SSH tab.",
+    sshConfirmStep:
+      "Once the NetBird SSH server is allowed on the client, click <confirm>Confirm & Enable</confirm> below to finish the setup.",
+  },
+  search: {
+    searchPlaceholder: "Search...",
+    noResults: "No results found",
+    searchHint: "Search peers, groups, policies and more",
+    searchNetworksAndResources: "Search for Networks and Resources",
+    blankStateDescription:
+      "Quickly find networks and associated resources. Start typing to search by name, description or address.",
+    noResultsDescription:
+      "We couldn't find any results. Please try a different search term.",
   },
 };

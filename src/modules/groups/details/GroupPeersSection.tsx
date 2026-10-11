@@ -24,7 +24,11 @@ import { useTranslations } from "next-intl";
 
 const GroupPeersTable = lazy(() => import("@/modules/peer/MinimalPeersTable"));
 
-function GroupPeersTableColumns(t: (key: string) => string): ColumnDef<Peer>[] {
+function GroupPeersTableColumns(
+	t: (key: string) => string,
+	tCommon: (key: string) => string,
+	tPeers: (key: string) => string,
+): ColumnDef<Peer>[] {
 	return [
 		{
 			id: "select",
@@ -69,17 +73,17 @@ function GroupPeersTableColumns(t: (key: string) => string): ColumnDef<Peer>[] {
 		},
 		{
 			id: "user_name",
-			accessorFn: (peer) => (peer.user ? peer.user?.name : "Unknown"),
+			accessorFn: (peer) => (peer.user ? peer.user?.name : tCommon("unknown")),
 		},
 		{
 			id: "user_email",
-			accessorFn: (peer) => (peer.user ? peer.user?.email : "Unknown"),
+			accessorFn: (peer) => (peer.user ? peer.user?.email : tCommon("unknown")),
 		},
 		{
 			accessorKey: "dns_label",
 			header: ({ column }) => {
 				return (
-					<DataTableHeader column={column}>{t("address")}</DataTableHeader>
+					<DataTableHeader column={column}>{tPeers("address")}</DataTableHeader>
 				);
 			},
 			cell: ({ row }) => <PeerAddressCell peer={row.original} />,
@@ -118,6 +122,7 @@ type Props = {
 export const GroupPeersSection = ({ peers, isLoading = true }: Props) => {
 	const t = useTranslations("common");
 	const tGroups = useTranslations("groups");
+	const tPeers = useTranslations("peers");
 	const { group, addPeersToGroup, removePeersFromGroup } = useGroupContext();
 	const [selectedRows, setSelectedRows] = useState<RowSelectionState>({});
 	const [open, setOpen] = useState(false);
@@ -128,7 +133,7 @@ export const GroupPeersSection = ({ peers, isLoading = true }: Props) => {
 			<GroupPeersTable
 				isLoading={isLoading}
 				peers={peers}
-				columns={GroupPeersTableColumns(t)}
+				columns={GroupPeersTableColumns(t, t, tPeers)}
 				selectedRows={selectedRows}
 				setSelectedRows={setSelectedRows}
 				getStartedCard={
@@ -195,7 +200,7 @@ export const GroupPeersSection = ({ peers, isLoading = true }: Props) => {
 							useSave={false}
 							showHeader={false}
 							showClose={false}
-							buttonText={"Assign Peers"}
+							buttonText={tGroups("assignPeers")}
 							selectInitialPeers={false}
 							excludedPeers={peers}
 							onUpdate={(g) => {
@@ -214,7 +219,7 @@ export const GroupPeersSection = ({ peers, isLoading = true }: Props) => {
 											onClick={() => setOpen(true)}
 										>
 											<PlusCircle size={16} />
-											Assign Peers
+											{tGroups("assignPeers")}
 										</Button>
 									)}
 								</div>
