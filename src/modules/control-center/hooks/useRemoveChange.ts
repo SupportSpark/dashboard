@@ -268,7 +268,7 @@ export function useRemoveChange() {
           if (!live) return;
           // Restoring the policy revives groups a `delete-group` still names, whose
           // DELETE the API refuses — so the strip is re-recorded under the same id.
-          const owed = pendingGroupDeletionWrite(next, live, change.id);
+          const owed = pendingGroupDeletionWrite(next, live, change.id, t);
           if (owed) {
             replaceChanges([...next, owed]);
             drawPolicyOnCanvas(pendingPolicyView(owed) ?? live);
@@ -415,6 +415,7 @@ export function useRemoveChange() {
       livePoliciesReferencing,
       redrawPolicies,
       removeNodeWithEdges,
+      t,
     ],
   );
 

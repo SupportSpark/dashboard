@@ -422,11 +422,15 @@ export const policyGroupIds = (policy: Policy): string[] => {
  * The policy write a policy still owes to group deletions in flight. Discarding a
  * pending write restores the LIVE policy — doomed groups included — so the strip is
  * re-recorded under the same change id.
+ *
+ * `t` is optional: the React caller passes its `controlCenter` translator so the
+ * unnamed-policy fallback is localized; without it the English fallback is used.
  */
 export function pendingGroupDeletionWrite(
   changes: DraftChange[],
   live: Policy,
   changeId: string,
+  t?: (key: string) => string,
 ): UpdatePolicyChange | DeletePolicyChange | undefined {
   if (!live.id) return undefined;
   const referenced = new Set(policyGroupIds(live));
@@ -437,7 +441,7 @@ export function pendingGroupDeletionWrite(
 
   const policy = dropGroupIdsFromPolicy(live, groupIds);
   const groupDeletion = { groupIds, basePolicy: live };
-  const name = live.name ?? "Policy";
+  const name = live.name ?? (t ? t("unnamedPolicy") : "Policy");
   // Same update-versus-delete decision deleteGroups makes.
   return isEmptiedPolicy(policy)
     ? {

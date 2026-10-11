@@ -33,6 +33,7 @@ export const MSPTenantPermissionsTab = ({
 }: Props) => {
   const t = useTranslations("msp");
   const tCommon = useTranslations("common");
+  const tPeers = useTranslations("peers");
   const { users } = useUsers();
 
   const handleGroupRemove = (group: Group) => {
@@ -71,7 +72,7 @@ export const MSPTenantPermissionsTab = ({
                 className={"pl-3"}
               >
                 <PlusIcon size={14} />
-                Add Group
+                {tPeers("addGroups")}
               </Button>
             }
             onChange={onGroupsChange}
