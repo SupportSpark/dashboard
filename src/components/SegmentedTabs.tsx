@@ -49,6 +49,22 @@ function List({
   );
 }
 
+/**
+ * Trigger.
+ *
+ * `w-full` is deliberately NOT applied here. The trigger's parent is a flex
+ * `TabsList` that sizes itself to its content, so `w-full` resolved to the
+ * LIST's width and every trigger claimed all of it. With three or four of them
+ * the only way to satisfy four full-width requests was to stretch the list
+ * across the page — visible as a tab bar spanning the whole header.
+ *
+ * Nothing rendered wrong while the labels were short English words, because the
+ * list still collapsed to its content: the browser had no reason to grow it. The
+ * longer Chinese labels (节点/用户/组/网络) pushed it past the available space, and
+ * `nowrap` stopped the labels from wrapping to absorb the overflow, so the
+ * stretch showed up. Callers that genuinely want equal-width triggers — a
+ * dropdown-style segmented control — can still pass `w-full` themselves.
+ */
 function Trigger({
   children,
   value,
@@ -68,7 +84,7 @@ function Trigger({
       disabled={disabled}
       data-testid={dataTestId}
       className={cn(
-        "px-4 py-2 text-sm rounded-md w-full transition-all data-[disabled]:opacity-50",
+        "px-4 py-2 text-sm rounded-md transition-all data-[disabled]:opacity-50",
         value == currentValue
           ? "bg-nb-gray-900"
           : disabled
@@ -78,7 +94,7 @@ function Trigger({
       )}
       value={value}
     >
-      <div className={"flex items-center w-full justify-center gap-2"}>
+      <div className={"flex items-center justify-center gap-2"}>
         {children}
       </div>
     </TabsTrigger>
