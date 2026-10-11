@@ -1,0 +1,80 @@
+# NetBird dashboard — 中文本地化覆盖
+#
+# 已在 1.13.193.126 上验证部署成功（2026-10-11）。
+#
+# 用法（在服务器 /opt/netbird 下）：
+#
+#   # 部署 / 升级
+#   docker compose -f docker-compose.yml -f docker-compose.i18n.yml up -d dashboard
+#
+#   # 回滚到官方镜像
+#   docker compose up -d dashboard          # 只用主 compose 文件即可
+#
+# 本文件只覆盖 dashboard 服务，traefik / acme / netbird-server 保持原样。
+# label 与网络沿用主 compose 文件，因此路由行为不变。
+#
+# 注意事项（实测踩过的坑）：
+#   * GHCR 在香港/新加坡以外的国际链路较慢，首次拉取约 1.1GB 耗时较长；
+#     可分次重试，docker 会断点续传。
+#   * 容器重建后 Traefik 需要几秒重新发现 router；此时访问可能短暂 404。
+#   * 镜像内的 nginx 在启动脚本里重载一次以应用 CSP，日志里会看到
+#     "Reloaded nginx to apply updated CSP configuration"。
+
+services:
+  dashboard:
+    # 本地化镜像（由 build-localized.yml 推送到 GHCR）。
+    # 若 GHCR 拉取过慢，可先在能访问的网络里构建后 docker save/load：
+    #   git clone https://github.com/SupportSpark/dashboard.git && cd dashboard
+    #   git checkout i18n-zh
+    #   docker build -f docker/Dockerfile -t netbird-dashboard-zh:local .
+    #   docker save netbird-dashboard-zh:local | gzip > zh.tar.gz
+    # 然后在服务器上： gunzip -c zh.tar.gz | docker load
+    # 并把下面的 image 改成 netbird-dashboard-zh:local
+    image: ghcr.io/supportspark/dashboard:zh-latest
+
+    # 下面全部继承 docker-compose.yml 中的定义，这里显式重复以便单独启动时也正确。
+    container_name: netbird-dashboard
+    restart: unless-stopped
+    networks: [netbird]
+    env_file:
+      - ./dashboard.env
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.netbird-dashboard.rule=PathPrefix(`/`)
+      - traefik.http.routers.netbird-dashboard.entrypoints=websecure
+      - traefik.http.routers.netbird-dashboard.tls=true
+      - traefik.http.routers.netbird-dashboard.service=dashboard
+      - traefik.http.routers.netbird-dashboard.priority=1
+      - traefik.http.services.dashboard.loadbalancer.server.port=80
+
+      # --- 无中断重建所需的两个补充 ---
+      #
+      # 1) 重试中间件。重建容器时 Traefik 会重建一次 service，在那一瞬间
+      #    后端列表为空，实测会产生 2~3 个 502（约 1 秒）。重试中间件会在
+      #    后端没有应答时换一个后端重发，从而把这段窗口抹平。只对幂等请求
+      #    （GET）生效，POST 不会被重试——这正是我们想要的安全行为。
+      #
+      #    注意选项名：是 retry.attempts，不是 retries。写成 retries 时
+      #    Traefik 认为这个 middleware 无法构造，于是**整个 router 被丢弃**，
+      #    全站变成 404——而不是只忽略这一行。变更后务必用
+      #    `sh tools/verify-routing.sh` 确认 200 而不是 404。
+      - traefik.http.middlewares.dashboard-retry.retry.attempts=4
+      - traefik.http.routers.netbird-dashboard.middlewares=dashboard-retry
+
+      # 2) 让 Traefik 自己探测后端健康，而不是等问题请求打到未就绪的容器上。
+      #    注意 probe 用的是 dashboard 容器内的 nginx，与 docker healthcheck 独立。
+      - traefik.http.services.dashboard.loadbalancer.healthcheck.path=/
+      - traefik.http.services.dashboard.loadbalancer.healthcheck.interval=5s
+      - traefik.http.services.dashboard.loadbalancer.healthcheck.timeout=3s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "2"
+    healthcheck:
+      # 镜像内是 nginx + supervisord，80 端口就绪即视为健康
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1/ || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s

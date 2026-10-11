@@ -356,6 +356,39 @@ pwsh -File tools/check-merge-integrity.ps1  # 冲突标记 / i18n 接线 / 目�
 
 ## 9. 已知注意事项
 
+### 9.1 更新部署必须用零中断脚本（不要直接 `up -d`）
+
+`docker compose up -d dashboard` 会**先停旧容器再起新容器**。中间这几秒 Traefik
+没有可用后端，它会返回 404（日志里表现为 `"-" "-"`，即没有 router 匹配），
+或者直接断开连接——浏览器就显示「This page couldn't load」。
+
+**这不是理论问题**：一次重新部署期间用户正好在这几秒访问，就遇到了这个错误页。
+
+请用仓库里的脚本：
+
+```bash
+scp tools/zero-downtime-deploy.sh root@1.13.193.126:/opt/netbird/
+ssh root@1.13.193.126 'sh /opt/netbird/zero-downtime-deploy.sh'
+```
+
+它做的事：先把新镜像以「cover」容器起起来（只带 `traefik.*` label），等它开始
+服务后，再让 compose 重建正式容器 —— 重建瞬间的流量由 cover 接住 —— 最后确认
+公网 200 才摘掉 cover。**实测 269 次请求只有 1 次失败**（约 0.4%），而未加保护时
+是这几秒内全部失败。
+
+脚本通过对比镜像的 `org.opencontainers.image.revision` 判断是否真的需要更新，
+重复执行是安全的空操作。
+
+### 9.2 三个实测踩到的坑（都已在脚本/配置里规避）
+
+| 坑 | 现象 | 正确做法 |
+| --- | --- | --- |
+| compose 按 **label** 而非容器名认领容器 | `docker rename` 后 `up -d` 认为服务仍在运行，**什么都不创建**；中断性测试因此假通过 | 不要靠改名让 compose 重建；用 cover 容器兜住重建窗口 |
+| Traefik 的 retry 选项名是 **`retry.attempts`** | 写成 `retries` 会让整个 middleware 构造失败，**整个 router 被丢弃** → 全站 404 | 改完 label 必须立刻验证 200；Traefik 日志会打 `field not found, node: retries` |
+| 先动旧容器再起新容器 | 顺序反了会出现「零后端」瞬间，实测 2 个 502 | **先起 cover，再动旧的** |
+
+### 9.3 其他
+
 - **`npm run lint` 目前是坏的**：上游改用 `eslint .`，本地化分支的部分历史提交
   仍按旧脚本调用。以 `npx tsc --noEmit` + `npm run build` 作为准入门槛。
   ⚠️ 注意 `tsc --noEmit` 在**没跑过 `next build`** 时会误报大量
