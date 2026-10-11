@@ -245,6 +245,7 @@ export default {
     followingPeerNetworkRanges: "以下节点网络范围",
     followingProcesses: "运行以下进程的节点",
     macAddress: "MAC 地址",
+    userCount: "{count, plural, =0 {0 个用户} other {# 个用户}}",
   },
   navigation: {
     controlCenter: "控制中心",

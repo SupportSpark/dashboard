@@ -76,8 +76,10 @@ function isTypePosition(line) {
 }
 
 /** Check whether a candidate is actually human-readable English prose. */
-function looksLikeProse(s) {
-  if (!s) return false;
+/** Nouns written with the "(s)" plural device: Peer(s), Resource(s), Key(s). */
+const NOUN_PLURAL_S = /\b[A-Za-z][a-z]+\(s\)/;
+
+function looksLikeProse(s) {  if (!s) return false;
   const t = s.trim();
   if (t.length < 3) return false;
   if (!/[A-Za-z]/.test(t)) return false;
@@ -99,6 +101,14 @@ function looksLikeProse(s) {
   // candidate because of its internal commas.
   if (/^(?:rgba?|hsla?|oklch|oklab|lab|lch|color-mix)\s*\(/i.test(t)) return false;
   if (/^\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}/.test(t)) return false;
+
+  // The "(s)" plural device: "{peerCount} Peer(s)", "{n} Resource(s)",
+  // "Revoke 3 Key(s)". These were invisible to every rule here because the
+  // interpolated counter puts a `{` in the text, and the code/markup guard above
+  // rejects anything containing a brace. They are unambiguously user-facing copy —
+  // and "1 Resource(s)" is exactly the kind of half-English that reads as a bug —
+  // so this shape is accepted regardless of the brace.
+  if (NOUN_PLURAL_S.test(t)) return true;
   // Tailwind / CSS utility strings. Two shapes appear in practice:
   //   (a) a run of hyphenated lowercase tokens: "flex items-center gap-2"
   //   (b) a token containing a Tailwind variant prefix or a slash/percent

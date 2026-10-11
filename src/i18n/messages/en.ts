@@ -251,6 +251,7 @@ export default {
     followingPeerNetworkRanges: "the following peer network ranges",
     followingProcesses: "peers which are running the following processes",
     macAddress: "MAC Address",
+    userCount: "{count, plural, =0 {0 Users} one {# User} other {# Users}}",
   },
   navigation: {
     controlCenter: "Control Center",

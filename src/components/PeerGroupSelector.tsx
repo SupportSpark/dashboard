@@ -973,6 +973,7 @@ const UsersCounter = ({
   users: User[];
   selected: boolean;
 }) => {
+  const tCommon = useTranslations("common");
   const usersOfGroup =
     users?.filter((user) => user.auto_groups.includes(group.id as string)) ||
     [];
@@ -982,7 +983,7 @@ const UsersCounter = ({
       <span
         className={"group-hover/user-stack:text-nb-gray-200 text-nb-gray-300"}
       >
-        0 User(s)
+        {tCommon("userCount", { count: 0 })}
       </span>
     );
 
@@ -1006,6 +1007,7 @@ const PeerCounter = ({
   group: Group;
   showResourceCounter?: boolean;
 }) => {
+  const tCommon = useTranslations("common");
   const peerCount = group.peers?.length ?? group?.peers_count ?? 0;
   const resourcesCount = group?.resources_count ?? 0;
   const hidePeerCounter =
@@ -1019,12 +1021,13 @@ const PeerCounter = ({
       )}
     >
       <MonitorSmartphoneIcon size={14} className={"shrink-0"} />
-      {peerCount} Peer(s)
+      {tCommon("peerCount", { count: peerCount })}
     </div>
   );
 };
 
 const ResourcesCounter = ({ group }: { group: Group }) => {
+  const tCommon = useTranslations("common");
   return group?.resources_count && group.resources_count > 0 ? (
     <div
       className={
@@ -1032,7 +1035,7 @@ const ResourcesCounter = ({ group }: { group: Group }) => {
       }
     >
       <Layers3 size={14} className={"shrink-0"} />
-      {group.resources_count} Resource(s)
+      {tCommon("resourceCount", { count: group.resources_count })}
     </div>
   ) : null;
 };

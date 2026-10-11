@@ -50,6 +50,7 @@ export function GroupFilterSelector({
 
   const [open, setOpen] = useState(false);
   const t = useTranslations("groups");
+  const tCommon = useTranslations("common");
 
   return (
     <Popover
@@ -175,7 +176,9 @@ export function GroupFilterSelector({
                                 }
                               >
                                 <MonitorSmartphoneIcon size={13} />
-                                {item.peers_count} Peer(s)
+                                {tCommon("peerCount", {
+                                  count: item.peers_count ?? 0,
+                                })}
                               </div>
                             </div>
                           </div>

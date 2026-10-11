@@ -75,6 +75,7 @@ export const GlobalSearchModal = ({ open, setOpen }: Props) => {
 
 const GlobalSearchModalContent = ({ open, setOpen }: Props) => {
   const router = useRouter();
+  const tCommon = useTranslations("common");
 
   const { data: networks, isLoading: isNetworksLoading } = useFetchApi<
     Network[]
@@ -234,7 +235,9 @@ const GlobalSearchModalContent = ({ open, setOpen }: Props) => {
                               size={12}
                               className={"relative -top-[1px]"}
                             />
-                            {item.data?.resources?.length} Resource(s)
+                            {tCommon("resourceCount", {
+                              count: item.data?.resources?.length ?? 0,
+                            })}
                           </div>
                         </div>
                       )}
