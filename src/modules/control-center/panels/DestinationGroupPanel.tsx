@@ -318,6 +318,7 @@ const DraftStatusChip = ({
 );
 
 const DraftPeerRowActions = ({ draftPeer }: { draftPeer: Peer }) => {
+  const t = useTranslations("controlCenter");
   const { setInstallModal, setUserDeviceModal } = useDraftMode();
   const isUserDevice = draftPeer.os === "draft-user-device";
   const kind = (draftPeer.os?.replace("draft-", "") ??
@@ -328,7 +329,11 @@ const DraftPeerRowActions = ({ draftPeer }: { draftPeer: Peer }) => {
   return (
     <DraftStatusChip
       label={
-        isUserDevice ? "Install or assign" : setupKey ? "Waiting" : "Install"
+        isUserDevice
+          ? t("installOrAssign")
+          : setupKey
+          ? t("waiting")
+          : t("install")
       }
       icon={
         isUserDevice ? undefined : setupKey ? (
@@ -339,7 +344,10 @@ const DraftPeerRowActions = ({ draftPeer }: { draftPeer: Peer }) => {
       }
       onClick={() =>
         isUserDevice
-          ? setUserDeviceModal({ nodeId, name: draftPeer.name ?? "Device" })
+          ? setUserDeviceModal({
+              nodeId,
+              name: draftPeer.name ?? t("deviceLabel"),
+            })
           : setInstallModal({
               isUserDevice: false,
               setupKey,
@@ -1355,7 +1363,10 @@ export const DestinationGroupPanel = ({
                       <DeviceCard
                         resource={
                           resource.id?.startsWith("new-") && !resource.address
-                            ? { ...resource, address: "IP, CIDR or Domain" }
+                            ? {
+                                ...resource,
+                                address: t("resourceAddressPlaceholder"),
+                              }
                             : resource
                         }
                         size="small"

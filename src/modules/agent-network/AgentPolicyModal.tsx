@@ -294,10 +294,8 @@ function AgentPolicyModalContent({
     <ModalContent maxWidthClass={"max-w-3xl"}>
       <ModalHeader
         icon={<AccessControlIcon className={"fill-netbird"} />}
-        title={policy ? "Update Agent Policy" : "Create Agent Policy"}
-        description={
-          "Govern which groups can call which AI providers and under what guardrails."
-        }
+        title={policy ? t("updatePolicyTitle") : t("createPolicyTitle")}
+        description={t("policyModalDescription")}
         color={"netbird"}
       />
 
@@ -324,15 +322,7 @@ function AgentPolicyModalContent({
                 <Label className={"mb-2"}>
                   <FolderDown size={15} />
                   {t("source")}
-                  <HelpTooltip
-                    content={
-                      <>
-                        Group of users this policy authorises to call the
-                        destination providers. One group per policy in this
-                        release.
-                      </>
-                    }
-                  />
+                  <HelpTooltip content={t("sourceGroupsHelp")} />
                 </Label>
                 <SourceGroupsSelector
                   value={sourceGroups}
@@ -340,10 +330,9 @@ function AgentPolicyModalContent({
                 />
                 {hasLegacyExtraGroups && (
                   <div className={"mt-2 text-xs text-yellow-400 leading-snug"}>
-                    This policy was created with multiple source groups. Only
-                    the first group is kept on save —{" "}
-                    {sourceGroupsRaw[0]?.name ?? "—"} will be retained, the
-                    others removed.
+                    {t("legacyExtraGroupsWarning", {
+                      name: sourceGroupsRaw[0]?.name ?? "—",
+                    })}
                   </div>
                 )}
               </div>
@@ -352,9 +341,7 @@ function AgentPolicyModalContent({
                 <Label className={"mb-2"}>
                   <Sparkles size={15} />
                   {t("provider")}
-                  <HelpTooltip
-                    content={<>AI providers the source is allowed to reach.</>}
-                  />
+                  <HelpTooltip content={t("destinationProvidersHelp")} />
                 </Label>
                 <ProviderMultiSelect
                   providers={providers}
@@ -375,7 +362,7 @@ function AgentPolicyModalContent({
                   userEditedName.current = true;
                   setName(e.target.value);
                 }}
-                placeholder={"e.g. Engineering → OpenAI"}
+                placeholder={t("policyNamePlaceholder")}
               />
             </div>
             <div>
@@ -386,9 +373,7 @@ function AgentPolicyModalContent({
               <Textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder={
-                  "e.g., Engineers can call OpenAI under production guardrails."
-                }
+                placeholder={t("policyDescriptionPlaceholder")}
                 rows={3}
               />
             </div>
@@ -499,6 +484,7 @@ function SourceGroupsSelector({
   onChange: React.Dispatch<React.SetStateAction<Group[]>>;
 }) {
   const tCommon = useTranslations("common");
+  const t = useTranslations("agentNetwork");
   const { users } = useUsers();
   return (
     <PeerGroupSelector
@@ -509,7 +495,7 @@ function SourceGroupsSelector({
             <CircleUser size={12} />
             {tCommon("all")}
           </Badge>
-          Select source group(s)...
+          {t("selectSourceGroupsPlaceholder")}
         </div>
       }
       values={value}
@@ -532,6 +518,7 @@ function ProviderMultiSelect({
   onChange: (next: string[]) => void;
 }) {
   const [open, setOpen] = useState(false);
+  const t = useTranslations("agentNetwork");
   // The popover is sized to the trigger, the way every other multi-select in
   // the dashboard sizes its list.
   const [inputRef, { width }] = useElementSize<HTMLButtonElement>();
@@ -586,7 +573,9 @@ function ProviderMultiSelect({
             }
           >
             {selected.length === 0 ? (
-              <span className={"pl-1"}>Select provider(s)...</span>
+              <span className={"pl-1"}>
+                {t("selectProvidersPlaceholder")}
+              </span>
             ) : (
               selected.map((p) => (
                 <Badge
@@ -639,7 +628,7 @@ function ProviderMultiSelect({
                 )}
                 value={search}
                 onValueChange={setSearch}
-                placeholder={"Search providers..."}
+                placeholder={t("searchProvidersPlaceholder")}
               />
               <div
                 className={
@@ -658,8 +647,8 @@ function ProviderMultiSelect({
                 {filtered.length === 0 && (
                   <div className={"text-xs text-nb-gray-400 px-3 py-3"}>
                     {providers.length === 0
-                      ? "No providers connected yet."
-                      : "No providers found."}
+                      ? t("noProvidersConnectedYet")
+                      : t("noProvidersFound")}
                   </div>
                 )}
                 {filtered.map((p) => {

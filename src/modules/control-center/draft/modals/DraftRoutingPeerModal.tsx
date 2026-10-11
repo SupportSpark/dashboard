@@ -88,12 +88,8 @@ export const DraftRoutingPeerModal = () => {
             <ModalHeader
               icon={<Share2Icon size={20} />}
               color={"netbird"}
-              title={"Routing peer not installed yet"}
-              description={
-                "This routing peer uses a peer that hasn't been installed. " +
-                "Install it to edit these settings, or remove this change " +
-                "and add the routing peer again."
-              }
+              title={t("routingPeerNotInstalled")}
+              description={t("routingPeerNotInstalledDescription")}
             />
             <ModalFooter>
               <ModalClose asChild={true}>

@@ -235,8 +235,14 @@ const TestRequestStatus = ({
   outcome: Exclude<TestRequestOutcome, { kind: "passed" }>;
   onOpenLogs: () => void;
 }) => {
+  const tonb = useTranslations("onboarding");
+  // The deny-reason labels that formatDenyReason resolves live in the
+  // `agentNetwork` catalog, not `onboarding`. Passing the wrong translator made
+  // next-intl echo the key back ("onboarding.denyReasonModelNotAvailable"),
+  // which rendered as-is in the callout.
+  const tan = useTranslations("agentNetwork");
   if (outcome.kind === "waiting") {
-    return <WaitingForDevice text={"Waiting for your first request"} />;
+    return <WaitingForDevice text={tonb("waitingForFirstRequest")} />;
   }
 
   const { entry } = outcome;
@@ -251,29 +257,34 @@ const TestRequestStatus = ({
       >
         <p>
           {outcome.kind === "denied"
-            ? `Your last request${forModel} was denied: ${
-                formatDenyReason(entry.deny_reason) || "no reason given"
-              }.`
-            : `Your last request${forModel} reached the provider and came back with status ${entry.status_code}.`}
+            ? tonb("lastRequestDenied", {
+                forModel,
+                reason:
+                  formatDenyReason(entry.deny_reason, tan) || tonb("noReasonGiven"),
+              })
+            : tonb("lastRequestStatus", {
+                forModel,
+                status: entry.status_code,
+              })}
         </p>
         <p className={"mt-1"}>
-          Learn more in the{" "}
+          {tonb("learnMoreInThe")}{" "}
           <InlineButtonLink variant={"dashed"} onClick={onOpenLogs}>
-            Access Logs
+            {tonb("accessLogs")}
           </InlineButtonLink>{" "}
-          or the{" "}
+          {tonb("orThe")}{" "}
           <InlineLink
             variant={"dashed"}
             href={QUICKSTART_DOCS}
             target={"_blank"}
           >
-            docs
+            {tonb("docs")}
             <ExternalLinkIcon size={12} />
           </InlineLink>
           .
         </p>
       </Callout>
-      <WaitingForDevice text={"Waiting for your next request"} />
+      <WaitingForDevice text={tonb("waitingForNextRequest")} />
     </div>
   );
 };

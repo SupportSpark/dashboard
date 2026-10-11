@@ -97,12 +97,10 @@ export default function AgentPolicyGuardrailsTab({
           <div className={"flex justify-between gap-10 mb-5 items-end"}>
             <div>
               <Label>
-                {attached.length}{" "}
-                {attached.length === 1 ? "Guardrail" : t("guardrails")}
+                {t("attachedGuardrailCount", { count: attached.length })}
               </Label>
               <HelpText className={"mb-0"}>
-                Guardrails enforce model allowlists and prompt capture per
-                request.
+                {t("guardrailsTabDescription")}
               </HelpText>
             </div>
             <div className={"flex items-center justify-center gap-4"}>
@@ -236,11 +234,10 @@ function NoGuardrailsInfo({
         }
       >
         <h2 className={"text-lg my-0 leading-[1.5 text-center]"}>
-          {"You haven't added any guardrails yet"}
+          {t("noGuardrailsYetTitle")}
         </h2>
         <Paragraph className={cn("text-sm text-center max-w-md mt-1")}>
-          Add guardrails to enforce model allowlists and prompt capture per
-          request.
+          {t("noGuardrailsYetDescription")}
         </Paragraph>
       </div>
       <div className={"flex items-center justify-center gap-4 mt-5"}>

@@ -2,6 +2,7 @@
 
 import Code from "@components/Code";
 import { HelpTooltip } from "@components/HelpTooltip";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import {
   AIAccessLogEntry,
@@ -19,12 +20,13 @@ type Props = {
  * reason for blocked requests, and the per-request metadata.
  */
 export default function AgentAccessLogExpandedRow({ entry }: Readonly<Props>) {
+  const t = useTranslations("agentNetwork");
   const isDeny = entry.decision === "deny";
   const hasSession = Boolean(entry.sessionId);
   const hasPrompt = Boolean(entry.prompt);
   const hasCompletion = Boolean(entry.completion);
   const hasBody = hasPrompt || hasCompletion;
-  const denyReason = formatDenyReason(entry.denyReason);
+  const denyReason = formatDenyReason(entry.denyReason, t);
 
   const cacheRead = entry.cachedInputTokens ?? 0;
   const cacheWrite = entry.cacheCreationTokens ?? 0;
@@ -72,7 +74,7 @@ export default function AgentAccessLogExpandedRow({ entry }: Readonly<Props>) {
   return (
     <div className={"px-4 py-4 space-y-3 bg-nb-gray-940/30"}>
       {requestLine && (
-        <Section heading={"Request"}>
+        <Section heading={t("requestHeading")}>
           <Code dark small codeToCopy={requestLine}>
             <Code.Line>{requestLine}</Code.Line>
           </Code>
@@ -81,12 +83,8 @@ export default function AgentAccessLogExpandedRow({ entry }: Readonly<Props>) {
 
       {hasSession && (
         <Section
-          heading={"Session ID"}
-          tooltip={
-            "The provider-side session this request belongs to. A single user " +
-            "can make several separate calls that the provider groups under the " +
-            "same session id."
-          }
+          heading={t("sessionIdHeading")}
+          tooltip={t("sessionIdTooltip")}
         >
           <Code dark small codeToCopy={entry.sessionId}>
             <Code.Line>{entry.sessionId}</Code.Line>
@@ -95,21 +93,21 @@ export default function AgentAccessLogExpandedRow({ entry }: Readonly<Props>) {
       )}
 
       {isDeny && (
-        <Section heading={"Reason"}>
+        <Section heading={t("reason")}>
           <div
             className={
               "rounded-md border border-red-500/20 bg-red-500/5 p-3 text-xs text-red-300"
             }
           >
             {denyReason
-              ? `Request denied: ${denyReason}`
-              : "Request denied by policy."}
+              ? t("requestDeniedWithReason", { reason: denyReason })
+              : t("requestDeniedByPolicy")}
           </div>
         </Section>
       )}
 
       {hasPrompt && (
-        <Section heading={"Prompt"}>
+        <Section heading={t("promptHeading")}>
           <Code dark small codeToCopy={entry.prompt}>
             <pre className={"whitespace-pre-wrap text-xs"}>{entry.prompt}</pre>
           </Code>
@@ -117,7 +115,7 @@ export default function AgentAccessLogExpandedRow({ entry }: Readonly<Props>) {
       )}
 
       {!isDeny && hasBody && (
-        <Section heading={"Completion"}>
+        <Section heading={t("completionHeading")}>
           {hasCompletion ? (
             <Code dark small codeToCopy={entry.completion}>
               <pre className={"whitespace-pre-wrap text-xs"}>
@@ -125,22 +123,18 @@ export default function AgentAccessLogExpandedRow({ entry }: Readonly<Props>) {
               </pre>
             </Code>
           ) : (
-            <Muted>No response captured.</Muted>
+            <Muted>{t("noResponseCaptured")}</Muted>
           )}
         </Section>
       )}
 
       {!isDeny && !hasBody && (
-        <Section heading={"Prompt & Response"}>
-          <Muted>
-            No prompt or response captured for this request — only metadata is
-            recorded for non-completion calls (e.g. listing models) or when
-            prompt collection is off.
-          </Muted>
+        <Section heading={t("promptAndResponseHeading")}>
+          <Muted>{t("noPromptOrResponseCaptured")}</Muted>
         </Section>
       )}
 
-      <Section heading={"Metadata"}>
+      <Section heading={t("metadataHeading")}>
         <Code dark small codeToCopy={metadataJSON}>
           <Code.Line>{metadataJSON}</Code.Line>
         </Code>

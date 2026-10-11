@@ -7,6 +7,7 @@ import {
   useStore,
 } from "@xyflow/react";
 import { GlobeIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { NetworkResource } from "@/interfaces/Network";
 import { Peer } from "@/interfaces/Peer";
@@ -43,6 +44,7 @@ type ResourceNode = Node<
 >;
 
 export const ResourceNode = ({ data, id, parentId }: ResourceNode) => {
+  const t = useTranslations("controlCenter");
   const { enabled, resource, peer, showHandles = false, className } = data;
   const sourceGroupEnabled = useAnySourceGroupEnabled(
     id,
@@ -131,7 +133,7 @@ export const ResourceNode = ({ data, id, parentId }: ResourceNode) => {
                 "font-normal text-sm text-nb-gray-500 relative -top-[0.1rem]"
               }
             >
-              {cardResource.address || "IP, CIDR or Domain"}
+              {cardResource.address || t("resourceAddressPlaceholder")}
             </span>
           </div>
         </div>

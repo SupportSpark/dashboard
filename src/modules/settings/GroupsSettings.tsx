@@ -39,6 +39,7 @@ type Props = {
 
 export default function GroupsSettings({ account }: Props) {
 	const t = useTranslations("settings");
+	const tCommon = useTranslations("common");
 	const { permission } = usePermissions();
 	const router = useRouter();
 	const { mutate } = useSWRConfig();
@@ -87,8 +88,10 @@ export default function GroupsSettings({ account }: Props) {
 		const choice = showConfirm
 			? await confirm({
 					title: `JWT allow group - ${jwtAllowGroups[0]}`,
-					description: `Only users part of the ${jwtAllowGroups[0]} group will be able to access NetBird. Are you sure you want to save the changes?`,
-					confirmText: "Save",
+					description: t("onlyUsersInGroupCanAccess", {
+						group: jwtAllowGroups[0],
+					}),
+					confirmText: tCommon("save"),
 					children: (
 						<div
 							className={
@@ -96,10 +99,10 @@ export default function GroupsSettings({ account }: Props) {
 							}
 						>
 							<AlertCircle size={14} />
-							To prevent losing access, ensure you are part of this group.
+							{t("preventLosingAccessNotice")}
 						</div>
 					),
-					cancelText: "Cancel",
+					cancelText: t("cancel"),
 					type: "default",
 				})
 			: true;
@@ -306,14 +309,16 @@ export default function GroupsSettings({ account }: Props) {
 				)}
 
 				<Callout variant={"info"} className={"mt-6"}>
-					Looking to view and manage your groups? You can find group management
-					under{"  "}
-					<InlineButtonLink
-						onClick={() => router.push("/groups")}
-						variant={"dashed"}
-					>
-						{`Access Control › Groups`}
-					</InlineButtonLink>
+					{t.rich("manageGroupsHint", {
+						link: () => (
+							<InlineButtonLink
+								onClick={() => router.push("/groups")}
+								variant={"dashed"}
+							>
+								{t("accessControlGroups")}
+							</InlineButtonLink>
+						),
+					})}
 				</Callout>
 			</div>
 		</Tabs.Content>

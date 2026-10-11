@@ -76,10 +76,8 @@ export function ControlCenterEmptyStates() {
                   size={"large"}
                 />
               }
-              title={"Create Resources"}
-              description={
-                "It looks like you don't have any resources. Add internal services like hosts, subnets or domains so your peers can reach them."
-              }
+              title={t("createResourcesTitle")}
+              description={t("createResourcesDescription")}
               button={
                 <div
                   className={"gap-x-4 flex items-center justify-center"}
@@ -132,9 +130,7 @@ export function ControlCenterEmptyStates() {
                 />
               }
               title={t("createNewNetwork")}
-              description={
-                "It looks like you don't have any networks. Access internal resources in your LANs and VPC by adding a network."
-              }
+              description={t("createNetworkDescription")}
               button={
                 <div
                   className={"gap-x-4 flex items-center justify-center"}

@@ -162,10 +162,8 @@ function AgentBudgetRuleModalContent({
     <ModalContent maxWidthClass={"max-w-3xl"}>
       <ModalHeader
         icon={<SlidersHorizontal size={19} />}
-        title={rule ? "Update Global Limit" : "Create Global Limit"}
-        description={
-          "Token and budget caps, applied account-wide or scoped to groups and users."
-        }
+        title={rule ? t("updateGlobalLimitTitle") : t("createGlobalLimitTitle")}
+        description={t("globalLimitModalDescription")}
         color={"netbird"}
       />
 
@@ -185,13 +183,11 @@ function AgentBudgetRuleModalContent({
           <div className={"px-8 flex-col flex gap-6 pt-2"}>
             <div>
               <Label>{t("nameOfGlobalLimit")}</Label>
-              <HelpText>
-                Set an easily identifiable name for this limit.
-              </HelpText>
+              <HelpText>{t("globalLimitNameHelp")}</HelpText>
               <Input
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder={"e.g. Account-wide monthly cap"}
+                placeholder={t("globalLimitNamePlaceholder")}
                 data-testid={"budget-rule-name"}
               />
             </div>
@@ -202,12 +198,7 @@ function AgentBudgetRuleModalContent({
                   <Users2 size={15} />
                   {t("targetGroups")}
                   <HelpTooltip
-                    content={
-                      <>
-                        Restrict this rule to members of the selected groups.
-                        Leave empty (and no users) to apply account-wide.
-                      </>
-                    }
+                    content={t("restrictToSelectedGroupsHelp")}
                   />
                 </Label>
                 <PeerGroupSelector
@@ -218,7 +209,7 @@ function AgentBudgetRuleModalContent({
                         <CircleUser size={12} />
                         {tCommon("all")}
                       </Badge>
-                      Select target group(s)...
+                      {t("selectTargetGroups")}
                     </div>
                   }
                   values={targetGroupsRaw}
@@ -231,14 +222,7 @@ function AgentBudgetRuleModalContent({
                 <Label className={"mb-2"}>
                   <CircleUser size={15} />
                   {t("targetUsers")}
-                  <HelpTooltip
-                    content={
-                      <>
-                        Restrict this rule to specific users. Leave empty (and
-                        no groups) to apply account-wide.
-                      </>
-                    }
-                  />
+                  <HelpTooltip content={t("restrictToSelectedUsersHelp")} />
                 </Label>
                 <UserMultiSelect
                   users={allUsers ?? []}
@@ -250,9 +234,11 @@ function AgentBudgetRuleModalContent({
 
             {accountWide && (
               <Callout variant={"warning"}>
-                With no targets selected, this rule applies{" "}
-                <span className={"font-medium"}>account-wide</span> — every
-                agent-network request is counted against its caps.
+                {t.rich("noTargetsAccountWideCallout", {
+                  accent: (chunks) => (
+                    <span className={"font-medium"}>{chunks}</span>
+                  ),
+                })}
               </Callout>
             )}
           </div>
@@ -302,7 +288,7 @@ function AgentBudgetRuleModalContent({
                     disabled={submitDisabled}
                   >
                     <PlusCircle size={16} />
-                    {rule ? "Save Global Limit" : t("addGlobalLimit")}
+                    {rule ? t("saveGlobalLimit") : t("addGlobalLimit")}
                   </Button>
                 </>
               )}
@@ -337,6 +323,7 @@ function UserMultiSelect({
   onChange: (next: string[]) => void;
 }) {
   const [open, setOpen] = useState(false);
+  const t = useTranslations("agentNetwork");
   // The popover is sized to the trigger, the way every other multi-select in
   // the dashboard sizes its list.
   const [inputRef, { width }] = useElementSize<HTMLButtonElement>();
@@ -396,7 +383,7 @@ function UserMultiSelect({
             }
           >
             {selectedUsers.length === 0 ? (
-              <span className={"pl-1"}>Select user(s)...</span>
+              <span className={"pl-1"}>{t("selectUsersPlaceholder")}</span>
             ) : (
               selectedUsers.map((u) => (
                 <Badge
@@ -453,7 +440,7 @@ function UserMultiSelect({
                 )}
                 value={search}
                 onValueChange={setSearch}
-                placeholder={"Search users by name or email..."}
+                placeholder={t("searchUsersPlaceholder")}
               />
               <div
                 className={
@@ -472,8 +459,8 @@ function UserMultiSelect({
                 {filtered.length === 0 && (
                   <div className={"text-xs text-nb-gray-400 px-3 py-3"}>
                     {selectable.length === 0
-                      ? "No users to select yet."
-                      : "No users match."}
+                      ? t("noUsersToSelect")
+                      : t("noUsersMatch")}
                   </div>
                 )}
                 {filtered.map((u) => (

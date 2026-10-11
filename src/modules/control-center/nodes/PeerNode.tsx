@@ -11,6 +11,7 @@ import {
   MonitorSmartphoneIcon,
   ServerIcon,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import type { Peer } from "@/interfaces/Peer";
 import {
@@ -53,6 +54,7 @@ export type PeerNodeType = Node<
 >;
 
 export const PeerNode = ({ data, id }: PeerNodeType) => {
+  const t = useTranslations("controlCenter");
   const {
     peer,
     enabled,
@@ -126,10 +128,10 @@ export const PeerNode = ({ data, id }: PeerNodeType) => {
               <DownloadIcon size={12} className={"text-yellow-400"} />
             )}
             {placeholderKind === "user-device"
-              ? "Install or assign"
+              ? t("installOrAssign")
               : setupKey
-              ? "Waiting"
-              : "Install"}
+              ? t("waiting")
+              : t("install")}
           </Button>
         </div>
         <div className={"flex items-center gap-2.5 text-nb-gray-300"}>

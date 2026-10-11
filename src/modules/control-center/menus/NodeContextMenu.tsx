@@ -436,7 +436,7 @@ export const NodeContextMenu = ({
   const handleDeletePolicy = useCallback(async () => {
     if (!nodePolicy) return;
     const choice = await confirm({
-      title: `Delete policy “${nodePolicy.name ?? "Policy"}”?`,
+      title: t("deletePolicyTitle", { name: nodePolicy.name ?? t("policy") }),
       description:
         t("markedForDeletion"),
       confirmText: tCommon("delete"),
@@ -447,7 +447,7 @@ export const NodeContextMenu = ({
     if (!choice) return;
     trackDeletePolicy({
       policyId: policyClientId,
-      name: nodePolicy.name ?? "Policy",
+      name: nodePolicy.name ?? t("policy"),
     });
     removeNodeWithEdges(nodeId);
   }, [
@@ -457,6 +457,8 @@ export const NodeContextMenu = ({
     confirm,
     trackDeletePolicy,
     removeNodeWithEdges,
+    t,
+    tCommon,
   ]);
 
   // The canvas node's policy may predate the last save; the SWR list is fresher.
@@ -492,13 +494,14 @@ export const NodeContextMenu = ({
     if (!livePolicy?.id) return;
     const enabled = !(livePolicy.enabled ?? true);
     const choice = await confirm({
-      title: `${enabled ? "Enable" : tCommon("disable")} policy “${
-        livePolicy.name ?? "Policy"
-      }”?`,
-      description: `You are in live mode. The policy will be ${
-        enabled ? "enabled" : "disabled"
-      } on your account immediately.`,
-      confirmText: enabled ? "Enable" : "Disable",
+      title: t("togglePolicyTitle", {
+        action: enabled ? t("enableAction") : t("disableAction"),
+        name: livePolicy.name ?? t("policy"),
+      }),
+      description: enabled
+        ? t("liveModePolicyEnabled")
+        : t("liveModePolicyDisabled"),
+      confirmText: enabled ? t("enableAction") : t("disableAction"),
       cancelText: tCommon("cancel"),
       type: "warning",
       dismissOnOutsideClick: true,
@@ -512,10 +515,18 @@ export const NodeContextMenu = ({
         refreshLiveViewRef.current(p);
       },
       enabled
-        ? "The policy was successfully enabled"
-        : "The policy was successfully disabled",
+        ? t("policyEnabledSuccess")
+        : t("policyDisabledSuccess"),
     );
-  }, [livePolicy, confirm, updatePolicy, serializeRules, refreshLiveViewRef]);
+  }, [
+    livePolicy,
+    confirm,
+    updatePolicy,
+    serializeRules,
+    refreshLiveViewRef,
+    t,
+    tCommon,
+  ]);
 
   const liveResourceOf = useCallback((n: Node) => {
     const resource = (n.data as { resource?: NetworkResource })?.resource;
@@ -530,7 +541,9 @@ export const NodeContextMenu = ({
       const ref = liveResourceOf(n);
       if (!ref) return;
       const choice = await confirm({
-        title: `Edit resource “${ref.resource.name ?? "Resource"}”?`,
+        title: t("editResourceTitle", {
+          name: ref.resource.name ?? t("resourceSingular"),
+        }),
         description: t("liveModeSaveNotice"),
         confirmText: tCommon("edit"),
         cancelText: tCommon("cancel"),
@@ -543,7 +556,7 @@ export const NodeContextMenu = ({
         networkId: ref.networkId,
       });
     },
-    [liveResourceOf, confirm, setLiveResourceEditor],
+    [liveResourceOf, confirm, setLiveResourceEditor, t, tCommon],
   );
 
   const handleLiveToggleResource = useCallback(
@@ -552,13 +565,14 @@ export const NodeContextMenu = ({
       if (!ref) return;
       const enabled = !(ref.resource.enabled ?? true);
       const choice = await confirm({
-        title: `${enabled ? "Enable" : "Disable"} resource “${
-          ref.resource.name ?? "Resource"
-        }”?`,
-        description: `You are in live mode. The resource will be ${
-          enabled ? "enabled" : "disabled"
-        } immediately.`,
-        confirmText: enabled ? "Enable" : "Disable",
+        title: t("toggleResourceTitle", {
+          action: enabled ? t("enableAction") : t("disableAction"),
+          name: ref.resource.name ?? t("resourceSingular"),
+        }),
+        description: enabled
+          ? t("liveModeResourceEnabled")
+          : t("liveModeResourceDisabled"),
+        confirmText: enabled ? t("enableAction") : t("disableAction"),
         cancelText: tCommon("cancel"),
         type: "warning",
         dismissOnOutsideClick: true,
@@ -592,7 +606,7 @@ export const NodeContextMenu = ({
       );
       await mutate("/networks/resources");
     },
-    [liveResourceOf, confirm, resourceRequest, setNodes],
+    [liveResourceOf, confirm, resourceRequest, setNodes, t, tCommon],
   );
 
   const focusItems = useCallback(
@@ -630,7 +644,7 @@ export const NodeContextMenu = ({
         : !!permission?.[permKey]?.update;
       const mayDelete = !!permission?.[permKey]?.delete;
       const enabled = data?.enabled !== false;
-      const label = data?.name ?? (isProvider ? t("provider") : "Agent policy");
+      const label = data?.name ?? (isProvider ? t("provider") : t("agentPolicyLabel"));
 
       const items: MenuItem[] = [];
       if (mayWrite) {
@@ -641,7 +655,7 @@ export const NodeContextMenu = ({
             isProvider ? openProvider(recordId) : openAgentPolicy(recordId),
         });
         items.push({
-          label: enabled ? "Disable" : "Enable",
+          label: enabled ? t("disableAction") : t("enableAction"),
           icon: enabled ? <PowerOffIcon size={14} /> : <PowerIcon size={14} />,
           onClick: () => {
             const syncEdges = () =>
@@ -695,17 +709,17 @@ export const NodeContextMenu = ({
       }
       if (mayDelete || (isNew && mayWrite)) {
         items.push({
-          label: isNew ? t("remove") : "Delete",
+          label: isNew ? t("remove") : tCommon("delete"),
           icon: isNew ? <CircleMinusIcon size={14} /> : <TrashIcon size={14} />,
           danger: !isNew,
           onClick: () => {
             void (async () => {
               if (!isNew) {
                 const choice = await confirm({
-                  title: `Delete “${label}”?`,
+                  title: t("deleteNamedTitle", { name: label }),
                   description: isDraft
-                    ? `“${label}” is marked for deletion and removed when you deploy.`
-                    : `You are in live mode. “${label}” is deleted from your account immediately.`,
+                    ? t("markedForDeletionNamed", { name: label })
+                    : t("liveModeDeletedNamed", { name: label }),
                   confirmText: tCommon("delete"),
                   cancelText: tCommon("cancel"),
                   type: "danger",
@@ -753,6 +767,8 @@ export const NodeContextMenu = ({
       setNodes,
       setEdges,
       removeNodeWithEdges,
+      t,
+      tCommon,
     ],
   );
 
@@ -761,7 +777,7 @@ export const NodeContextMenu = ({
   const handleLiveDeletePolicy = useCallback(async () => {
     if (!livePolicy?.id) return;
     const choice = await confirm({
-      title: `Delete '${livePolicy.name ?? "Policy"}'?`,
+      title: t("deleteNamedTitle", { name: livePolicy.name ?? t("policy") }),
       description: t("deletePolicyConfirm"),
       confirmText: tCommon("delete"),
       cancelText: tCommon("cancel"),
@@ -769,12 +785,12 @@ export const NodeContextMenu = ({
     });
     if (!choice) return;
     await deletePolicy(livePolicy, () => removeNodeWithEdges(nodeId));
-  }, [livePolicy, confirm, deletePolicy, removeNodeWithEdges, nodeId]);
+  }, [livePolicy, confirm, deletePolicy, removeNodeWithEdges, nodeId, t, tCommon]);
 
   const handleLiveDeletePeer = useCallback(
     async (peer: Peer) => {
       const choice = await confirm({
-        title: `Delete '${peer.name}'?`,
+        title: t("deleteNamedTitle", { name: peer.name }),
         description: t("deletePeerConfirm"),
         confirmText: tCommon("delete"),
         cancelText: tCommon("cancel"),
@@ -792,7 +808,7 @@ export const NodeContextMenu = ({
         }),
       });
     },
-    [confirm, peerRequest, removeNodeWithEdges, nodeId],
+    [confirm, peerRequest, removeNodeWithEdges, nodeId, t, tCommon],
   );
 
   // A placeholder's group assignments become the setup key's auto-groups.
@@ -933,7 +949,7 @@ export const NodeContextMenu = ({
               onClick: () => void handleLiveEditPolicy(),
             },
             {
-              label: enabled ? "Disable" : "Enable",
+              label: enabled ? t("disableAction") : t("enableAction"),
               icon: enabled ? (
                 <PowerOffIcon size={14} />
               ) : (
@@ -994,7 +1010,7 @@ export const NodeContextMenu = ({
               onClick: () => void handleLiveEditResource(node),
             },
             {
-              label: resEnabled ? "Disable" : "Enable",
+              label: resEnabled ? t("disableAction") : t("enableAction"),
               icon: resEnabled ? (
                 <PowerOffIcon size={14} />
               ) : (
@@ -1118,7 +1134,7 @@ export const NodeContextMenu = ({
           ? []
           : [
               {
-                label: policyEnabled ? "Disable" : "Enable",
+                label: policyEnabled ? t("disableAction") : t("enableAction"),
                 icon: policyEnabled ? (
                   <PowerOffIcon size={14} />
                 ) : (
@@ -1294,7 +1310,7 @@ export const NodeContextMenu = ({
       }
       if (mayWrite) {
         items.push({
-          label: resEnabled ? "Disable" : "Enable",
+          label: resEnabled ? t("disableAction") : t("enableAction"),
           icon: resEnabled ? (
             <PowerOffIcon size={14} />
           ) : (
@@ -1435,23 +1451,23 @@ export const NodeContextMenu = ({
         onOpenChange={setRenameOpen}
         title={
           isPlaceholderRename
-            ? "Rename Peer"
+            ? t("renamePeerTitle")
             : isResourceRename
-            ? "Rename Resource"
+            ? t("renameResourceTitle")
             : undefined
         }
         description={
           isPlaceholderRename
-            ? "Set an easily identifiable name for this peer."
+            ? t("renamePeerDescription")
             : isResourceRename
-            ? "Set an easily identifiable name for this resource."
+            ? t("renameResourceDescription")
             : undefined
         }
         inputPlaceholder={
           isPlaceholderRename
-            ? "e.g., Backup Server"
+            ? t("renamePeerPlaceholder")
             : isResourceRename
-            ? "e.g., Internal API"
+            ? t("renameResourcePlaceholder")
             : undefined
         }
         currentName={

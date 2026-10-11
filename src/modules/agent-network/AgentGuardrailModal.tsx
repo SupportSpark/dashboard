@@ -97,10 +97,8 @@ export default function AgentGuardrailModal({
       >
         <ModalHeader
           icon={<ShieldHalf size={19} />}
-          title={guardrail ? "Update Guardrail" : "Create Guardrail"}
-          description={
-            "Define a reusable set of LLM guardrails to attach to one or more policies."
-          }
+          title={guardrail ? t("updateGuardrailTitle") : t("createGuardrailTitle")}
+          description={t("guardrailModalDescription")}
           color={"netbird"}
         />
 
@@ -155,28 +153,21 @@ export default function AgentGuardrailModal({
             <div className={"flex flex-col gap-6"}>
               <div>
                 <Label>{t("nameOfGuardrail")}</Label>
-                <HelpText>
-                  Set an easily identifiable name for this guardrail set.
-                </HelpText>
+                <HelpText>{t("guardrailNameHelp")}</HelpText>
                 <Input
                   autoFocus={true}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder={"e.g., Strict — Production"}
+                  placeholder={t("guardrailNamePlaceholder")}
                 />
               </div>
               <div>
                 <Label>{tPolicies("policyDescriptionLabel")}</Label>
-                <HelpText>
-                  Write a short description to add more context to this
-                  guardrail.
-                </HelpText>
+                <HelpText>{t("guardrailDescriptionHelp")}</HelpText>
                 <Textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder={
-                    "e.g., Tight model allowlist, PII redaction, hard monthly budget."
-                  }
+                  placeholder={t("guardrailDescriptionPlaceholder")}
                   rows={3}
                 />
               </div>
@@ -223,7 +214,7 @@ export default function AgentGuardrailModal({
                 onClick={handleSubmit}
                 disabled={!canSubmit}
               >
-                {guardrail ? t("submitLimit") : "Create Guardrail"}
+                {guardrail ? t("submitLimit") : t("createGuardrailTitle")}
               </Button>
             )}
           </div>
@@ -251,7 +242,7 @@ function ModelAllowlistCheck({
       key={open ? 1 : 0}
       active={Boolean(value && value.length > 0)}
       title={t("modelAllowlistTitle")}
-      description={"Block requests for models not on the allowlist."}
+      description={t("modelAllowlistCheckDescription")}
       // The tile is a cream gradient, so the mark on it has to be dark.
       icon={<Boxes size={16} className={"text-netbird-950"} />}
       iconClass={"bg-gradient-to-tr from-netbird-200 to-netbird-100"}
@@ -341,8 +332,8 @@ function ModelAllowlistContent({
         {providerModels.length === 0 ? (
           <Paragraph className={"!text-xs"}>
             {providerIds && providerIds.length > 0
-              ? "The selected providers don't expose any models yet. Add models to a destination provider first — the allowlist is restricted to what those providers expose."
-              : "No models configured on any provider yet. Add models to a provider first — the allowlist is restricted to what the providers actually expose."}
+              ? t("allowlistNoModelsFromSelected")
+              : t("allowlistNoModelsAtAll")}
           </Paragraph>
         ) : (
           // Same table the network resource modal gives its policies.
@@ -363,7 +354,7 @@ function ModelAllowlistContent({
                           ? "indeterminate"
                           : false
                       }
-                      aria-label={"Select all models"}
+                      aria-label={t("selectAllModelsAria")}
                       onCheckedChange={() =>
                         setDraft((prev) =>
                           allChecked
@@ -471,7 +462,7 @@ function PromptCaptureCheck({
       key={open ? 1 : 0}
       active={value}
       title={t("promptCapture")}
-      description={"Redact PII before storing the prompt body."}
+      description={t("promptCaptureCheckDescription")}
       icon={<ShieldCheckIcon size={16} />}
       iconClass={"bg-gradient-to-tr from-blue-500 to-blue-400"}
       modalWidthClass={"max-w-lg"}
@@ -494,9 +485,7 @@ function PromptCaptureContent({ onConfirm }: { onConfirm: () => void }) {
     <>
       <div className={"flex flex-col px-8 gap-3 pb-6"}>
         <div className={"text-sm text-nb-gray-300"}>
-          NetBird redacts emails, SSN-shaped, phone-shaped, and credit-card
-          patterns before storing the prompt body. Enabling this guardrail adds
-          strict redaction on top of the proxy&apos;s built-in token redaction.
+          {t("promptCaptureRedactionHelp")}
         </div>
       </div>
       <ModalFooter className={"items-center"}>

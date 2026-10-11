@@ -34,7 +34,9 @@ export default function AgentGuardrailChecksCell({
             <FullTooltip
               content={
                 <div className={"text-xs"}>
-                  Model allowlist · {c.model_allowlist.models.length} model(s)
+                  {t("modelAllowlistTooltip", {
+                    count: c.model_allowlist.models.length,
+                  })}
                 </div>
               }
             >

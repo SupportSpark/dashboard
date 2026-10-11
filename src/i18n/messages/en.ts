@@ -212,6 +212,7 @@ export default {
     usernameAndPassword: "Username & Password",
     requestFailedStatus: "Request failed with status code {code}",
     remove: "Remove",
+    networkActions: "Network actions",
   },
   navigation: {
     controlCenter: "Control Center",
@@ -1386,6 +1387,53 @@ export default {
     updatingPermissions: "Updating permissions...",
     deleteIdentityProviderConfirm:
       "Are you sure you want to delete this identity provider? This action cannot be undone.",
+    settingsAuthenticationDescription: "Control how peers and users authenticate.",
+    peerApprovalDisabledByIntegration:
+      "Peer approval is disabled because the {integration} integration is enabled. If you want to enable peer approval, please disable first the {integration} integration.",
+    peerApprovalLabel: "Peer Approval",
+    peerApprovalHelp: "Require peers to be approved by an administrator.",
+    userApprovalRequiredLabel: "User Approval Required",
+    userApprovalRequiredHelp:
+      "Require manual approval for new users joining via <br></br>domain matching. Users will be blocked until approved.",
+    enableLocalMfa: "Enable Local MFA",
+    enableLocalMfaHelp:
+      "Require multi-factor authentication for users<br></br>authenticating with local credentials.",
+    selectIntervalPlaceholder: "Select interval...",
+    metricsDescription: "Share client performance metrics to help us improve NetBird.",
+    metricsPushUpdated: "Metrics push successfully {state}.",
+    sharePerformanceMetrics: "Share performance metrics",
+    sharePerformanceMetricsHelp:
+      "When enabled, clients will periodically send performance data to help us identify and fix issues.",
+    invalidVersionError:
+      "Please enter a valid version, e.g., 0.2, 0.2.0, 0.2.0-alpha.1",
+    clientSettingsSaved: "Client settings successfully updated.",
+    lazyConnectionsUpdated: "Lazy Connections successfully {state}.",
+    enabledState: "enabled",
+    disabledState: "disabled",
+    agentNetworkFocusedViewUpdated: "Agent Network focused view successfully {state}.",
+    onlyUsersInGroupCanAccess:
+      "Only users part of the {group} group will be able to access NetBird. Are you sure you want to save the changes?",
+    preventLosingAccessNotice: "To prevent losing access, ensure you are part of this group.",
+    manageGroupsHint:
+      "Looking to view and manage your groups? You can find group management under <link></link>",
+    accessControlGroups: "Access Control › Groups",
+    editIdentityProvider: "Edit Identity Provider",
+    addIdentityProvider: "Add Identity Provider",
+    updateIdentityProviderDescription: "Update the identity provider configuration",
+    addIdentityProviderDescription: "Configure a new identity provider for authentication",
+    idpNamePlaceholder: "e.g., Corporate SSO",
+    idpClientIdPlaceholder: "Enter client ID",
+    idpClientSecretRequiredOnChange: "Required when client ID is changed",
+    idpClientSecretKeepExisting: "Leave empty to keep the existing secret, or enter a new one",
+    idpClientSecretHelp: "The OAuth2 client secret",
+    idpClientSecretPlaceholder: "Enter client secret",
+    saveChangesButton: "Save Changes",
+    addProviderButton: "Add Provider",
+    searchIdpPlaceholder: "Search by name or type...",
+    addIdentityProviderCardDescription:
+      "Configure an identity provider to enable SSO authentication for your users.",
+    deleteIdentityProviderTitle: "Delete '{name}'?",
+    idpNameDefaultOidc: "Generic OIDC",
   },
   reverseProxy: {
     title: "Reverse Proxy",
@@ -3017,6 +3065,181 @@ export default {
     provider: "Provider",
     groupAlreadyExists: "This group already exists. Please choose another name.",
     groupNamePlaceholder: "e.g., Developers",
+    noResources: "No Resources",
+    resourceAddressPlaceholder: "IP, CIDR or Domain",
+    installOrAssign: "Install or assign",
+    deviceLabel: "Device",
+    agentPolicyLabel: "Agent policy",
+    policyDeployConflict:
+      "Policy “{name}” is marked both for update and for deletion. Remove one of the two changes and try again.",
+    editResourceTitle: "Edit resource “{name}”?",
+    createResourcesTitle: "Create Resources",
+    createResourcesDescription:
+      "It looks like you don't have any resources. Add internal services like hosts, subnets or domains so your peers can reach them.",
+    createNetworkDescription:
+      "It looks like you don't have any networks. Access internal resources in your LANs and VPC by adding a network.",
+    selectNodeToFocus: "Select a node to focus",
+    focusingOnNode: "Focusing on “{name}”",
+    nodeLabel: "node",
+    exitFocus: "Exit Focus",
+    beta: "Beta",
+    newEmptyDraft: "New Empty Draft",
+    newEmptyDraftDescription: "Start from a blank canvas",
+    fromCurrentView: "From Current View",
+    fromCurrentViewDescription: "Start from the current canvas",
+    peerInstalled: "Peer installed",
+    peerInstalledDescription:
+      "“{name}” registered and took the placeholder's place in your draft.",
+    selectDestination: "Select Destination",
+    selectDestinationDescription: "Access {network}",
+    thisNetwork: "this network",
+    viaPolicy: "via \"{policy}\"",
+    assignNetworkTitle: "Assign a network",
+    assignNetworkDescription: "Pick a network for this resource or create a new one.",
+    routingPeerNotInstalled: "Routing peer not installed yet",
+    routingPeerNotInstalledDescription:
+      "This routing peer uses a peer that hasn't been installed. Install it to edit these settings, or remove this change and add the routing peer again.",
+    resolveIssuesBeforeDeploying: "Resolve issues before deploying",
+    policyTemplateDescription: "Control access between sources and destinations",
+    providerTemplateDescription: "Connect an AI provider or gateway",
+    agentPolicyTitle: "Agent Policy",
+    agentPolicyTemplateDescription: "Authorize groups to reach providers",
+    add: "Add",
+    delete: "Delete",
+    deploying: "Deploying",
+    deployed: "Deployed",
+    copyUrl: "Copy URL",
+    moreActions: "More actions",
+    enableAction: "Enable",
+    disableAction: "Disable",
+    deletePolicyTitle: "Delete policy “{name}”?",
+    deleteNamedTitle: "Delete “{name}”?",
+    markedForDeletionNamed: "“{name}” is marked for deletion and removed when you deploy.",
+    liveModeDeletedNamed:
+      "You are in live mode. “{name}” is deleted from your account immediately.",
+    togglePolicyTitle: "{action} policy “{name}”?",
+    liveModePolicyEnabled:
+      "You are in live mode. The policy will be enabled on your account immediately.",
+    liveModePolicyDisabled:
+      "You are in live mode. The policy will be disabled on your account immediately.",
+    policyEnabledSuccess: "The policy was successfully enabled",
+    policyDisabledSuccess: "The policy was successfully disabled",
+    toggleResourceTitle: "{action} resource “{name}”?",
+    liveModeResourceEnabled:
+      "You are in live mode. The resource will be enabled immediately.",
+    liveModeResourceDisabled:
+      "You are in live mode. The resource will be disabled immediately.",
+    renamePeerTitle: "Rename Peer",
+    renameResourceTitle: "Rename Resource",
+    renamePeerDescription: "Set an easily identifiable name for this peer.",
+    renameResourceDescription: "Set an easily identifiable name for this resource.",
+    renamePeerPlaceholder: "e.g., Backup Server",
+    renameResourcePlaceholder: "e.g., Internal API",
+    changeCreateGroup: "Create group “{name}”",
+    changeWithMembers: "with {members}",
+    changeRenamedFrom: "renamed from “{name}”",
+    changeMembersAdded: "{count, plural, one {+1 member} other {+# members}}",
+    changeMembersRemoved: "{count, plural, one {−1 member} other {−# members}}",
+    changeUpdateGroup: "Update group “{name}”",
+    changeDeleteGroup: "Delete group “{name}”",
+    changeEnablePolicy: "Enable policy “{name}”",
+    changeDisablePolicy: "Disable policy “{name}”",
+    changeCreatePolicy: "Create policy “{name}”",
+    changeDeletePolicy: "Delete policy “{name}”",
+    changeCreateNetwork: "Create network “{name}”",
+    changeUpdateNetwork: "Update network “{name}”",
+    changeDescriptionChanged: "description changed",
+    changeCreateResource: "Create resource “{name}”",
+    changeCreateResourceInNetwork: "Create resource “{name}” in “{network}”",
+    changeAddRoutingPeer: "Add routing peer “{peer}” to “{network}”",
+    changeAddRoutingPeerGroup: "Add routing peer group “{group}” to “{network}”",
+    changeUpdateRoutingPeer: "Update routing peer “{peer}” in “{network}”",
+    changeUpdateRoutingPeerGroup: "Update routing peer group “{group}” in “{network}”",
+    changeEnableResource: "Enable resource “{name}” in “{network}”",
+    changeDisableResource: "Disable resource “{name}” in “{network}”",
+    changeDeleteResource: "Delete resource “{name}” from “{network}”",
+    changeDeleteNetwork: "Delete network “{name}”",
+    changeDeleteNetworkDetail: "its resources and routing peers are removed too",
+    changeConnectProvider: "Connect provider “{name}”",
+    changeEnableProvider: "Enable provider “{name}”",
+    changeDisableProvider: "Disable provider “{name}”",
+    changeUpdateProvider: "Update provider “{name}”",
+    changeDeleteProvider: "Delete provider “{name}”",
+    changeCreateAgentPolicy: "Create agent policy “{name}”",
+    changeEnableAgentPolicy: "Enable agent policy “{name}”",
+    changeDisableAgentPolicy: "Disable agent policy “{name}”",
+    changeUpdateAgentPolicy: "Update agent policy “{name}”",
+    changeDeleteAgentPolicy: "Delete agent policy “{name}”",
+    changeAddedToGroups: "added to {groups}",
+    changeRemovedFromGroups: "removed from {groups}",
+    changeUpdateUserGroups: "Update groups for “{name}”",
+    changePeerInstalled: "Peer “{name}” installed",
+    changePeerInstalledDetail: "it joined your network — nothing left to deploy for it",
+    changeInstallPeer: "Install peer “{name}”",
+    changeInstallPeerUserDeviceDetail: "select an existing peer or install a new one",
+    changeInstallPeerDetail: "install to complete the draft changes that reference it",
+    cascadeRemovesFromPolicies:
+      "{count, plural, one {Removes it from # policy} other {Removes it from # policies}}",
+    cascadeRemovesFromResources:
+      "{count, plural, one {Removes it from # resource} other {Removes it from # resources}}",
+    cascadeDropsRoutingPeerChanges:
+      "{count, plural, one {Drops # routing-peer change} other {Drops # routing-peer changes}}",
+    cascadeDetachesResources:
+      "{count, plural, one {Detaches # resource to “{network}”} other {Detaches # resources to “{network}”}}",
+    cascadeRemoveNewGroup: "Remove the new group “{name}”?",
+    cascadeRemoveNewNetwork: "Remove the new network “{name}”?",
+    cascadeRemoveNewResource: "Remove the new resource “{name}”?",
+    cascadeRemoveNewPolicy: "Remove the new policy “{name}”?",
+    cascadeRemoveInstalledPeer: "Remove the installed peer “{name}” from this list?",
+    cascadeInstalledPeerStays: "The peer itself stays on the canvas and in your network",
+    cascadeRemovePeer: "Remove the peer “{name}”?",
+    cascadeDeletesSetupKey: "Deletes its generated setup key",
+    cascadeRestoreNetwork: "Restore the network “{name}”?",
+    cascadeRestoreNetworkEffect: "Re-adds it and its resources to the canvas",
+    cascadeRestoreGroup: "Restore the group “{name}”?",
+    cascadeRestoreGroupEffect: "Re-adds it to the canvas and its policies",
+    cascadeRestorePolicy: "Restore the policy “{name}”?",
+    cascadeRestoreResource: "Restore the resource “{name}”?",
+    cascadeReaddToCanvas: "Re-adds it to the canvas",
+    cascadeRevertChangesTo: "Revert your changes to “{name}”?",
+    routingPeerFallback: "routing peer",
+    cascadeRestoresLiveValues: "Restores the live values on the canvas",
+    cascadeRemoveRoutingPeer: "Remove the routing peer “{name}”?",
+    cascadeRemoveChange: "Remove this change?",
+    subjectResource: "Resource “{name}”",
+    subjectRoutingPeer: "Routing peer in “{network}”",
+    subjectAgentPolicy: "Agent policy “{name}”",
+    subjectThisChange: "This change",
+    issuePolicyLostSide:
+      "Policy “{name}” lost a side to a group deletion. Give it a source and a destination, or remove it.",
+    issuePolicyOneSided:
+      "Policy “{name}” is missing a source or a destination. Give it both, or remove this change to revert to the live policy.",
+    issueResourceNoNetwork:
+      "Resource “{name}” has no network assigned. Assign it to a network before deploying.",
+    issueReferencesDeletedGroups:
+      "{subject} references {count, plural, one {group} other {groups}} {groups}, marked for deletion in this draft. The deletion is refused while anything references it — take the group off this change, or discard the deletion.",
+    issueAgentPolicyNeedsSides:
+      "Agent policy “{name}” needs at least one source group and one provider.",
+    issueReferencesDeletedProviders:
+      "Agent policy “{name}” references {count, plural, one {provider} other {providers}} {providers}, marked for deletion in this draft. Take it off the policy, or discard the deletion.",
+    issueProviderMissing:
+      "Agent policy “{name}” references a provider that is no longer in this draft. Pick another provider for it.",
+    issuePeerWaitingToRegister: "Waiting for “{name}” to register after install.",
+    issuePeerInstallOrSelect:
+      "Peer “{name}” must be installed or selected before deploying.",
+    issuePeerInstall: "Peer “{name}” must be installed before deploying.",
+    deleteGroupTitle: "Delete {group} {names}?",
+    deleteGroupTitleGroups: "{count, plural, one {group} other {# groups}}",
+    deleteGroupDescription:
+      "It will be marked for deletion and deleted when you review and deploy.",
+    deleteGroupEmptiedPolicies:
+      "{count, plural, one {This also deletes the policy {policies}, which would be left authorizing nothing.} other {This also deletes # policies {policies}, which would be left authorizing nothing.}}",
+    deleteGroupEmptiedDraftPolicies:
+      "{count, plural, one {The new policy {policies} would be left without a source or destination, and won't deploy until you complete it.} other {# new policies {policies} would be left without a source or destination, and won't deploy until you complete them.}}",
+    deleteGroupEmptiedAgentPolicies:
+      "{count, plural, one {The agent policy {policies} authorizes nothing without it and is deleted too.} other {# agent policies {policies} authorize nothing without them and are deleted too.}}",
+    deleteGroupBlockedByChanges:
+      "{count, plural, one {Your change to {changes} still references it, and the deletion can't deploy until you take the group off it.} other {Your changes to {changes} still reference them, and the deletion can't deploy until you take the group off them.}}",
   },
   notifications: {
     title: "Notifications",
@@ -3518,6 +3741,152 @@ export default {
     sendTestRequest: "Send a test request",
     skip: "Skip",
     youDeviceFallback: "your device",
+    waitingForRoutingPeerToConnect: "Waiting for your routing peer to connect",
+    waitingForOwnDeviceToConnect: "Waiting for your own device to connect",
+    allowsConnectionsBetweenAllDevices: "Allows connections between all your devices",
+    waitingForYourDeviceToConnect: "Waiting for your device to connect",
+    waitingForFirstRequest: "Waiting for your first request",
+    waitingForNextRequest: "Waiting for your next request",
+    mySubnet: "My Subnet",
+    myResource: "My Resource",
+    singleIpAddress: "Single IP Address",
+    singleIpAddressHint: "IPv4 or IPv6 address like 192.168.31.45",
+    entireSubnet: "Entire Subnet",
+    entireSubnetHint: "CIDR range like 192.168.0.0/24 or 2001:db8::/64",
+    routingPeerMyFirstNetwork: "Routing Peer (My First Network)",
+    notYetGenerated: "Not yet generated",
+    onboardingSecondDevice: "Onboarding (Second Device)",
+    installationLinkCopied: "Installation link successfully copied",
+    commandCopied: "Command has been copied successfully",
+    proxyAlreadySetUpTitle: "Your proxy is already set up",
+    proxyAlreadySetUpDescription: "This account already has an Agent Network endpoint.",
+    setUpYourProxy: "Set up your proxy",
+    gatewayChoiceDescription:
+      "Your agents talk to providers through a private proxy that only your network can access. Use a managed proxy or your own.",
+    managedProxy: "Managed proxy",
+    managedProxyDescription: "NetBird runs a dedicated, private proxy for your account.",
+    managedProxyUnavailable:
+      "Managed proxies aren't available for this account, so Agent Network runs on a proxy of your own.",
+    deployNewProxy: "Deploy a new proxy",
+    onYourOwnInfrastructure: "On your own infrastructure",
+    orUseOwnProxyInstead: "Or use your own proxy instead",
+    proxyCountConnected: "{count, plural, one {# proxy} other {# proxies}} connected",
+    privateProxyCount:
+      "{count, plural, one {# private proxy} other {# private proxies}}",
+    reservingYourEndpoint: "Reserving your endpoint",
+    deployingYourProxy: "Deploying your proxy",
+    connectingToYourNetwork: "Connecting to your network",
+    managedSlowHint:
+      "This is taking longer than usual. We'll keep checking. You can stay on this page or skip to the dashboard and come back.",
+    proxyRolloutFailure: "The proxy rollout reported a failure.",
+    deployOwnProxyInstead: "Deploy my own proxy instead",
+    settingUpManagedProxyTitle: "Setting up your managed proxy…",
+    settingUpManagedProxyHint: "This usually takes under a minute.",
+    settingUpManagedProxyAnnouncement: "Setting up your managed proxy",
+    proxySetupProblemTitle: "Proxy setup ran into a problem",
+    managedProxyReadyTitle: "Your managed proxy is ready",
+    thanksForWaiting: "Thanks for waiting.",
+    proxyReady: "Proxy ready",
+    finishingUpTitle: "Finishing up...",
+    finishingUp: "Finishing up",
+    checkingProxyStatusTitle: "Checking proxy status...",
+    checkingProxyStatusDescription:
+      "The proxy reported a status this page doesn't know yet. We'll keep checking.",
+    checkingProxyStatus: "Checking proxy status",
+    managedProxiesUnavailable:
+      "Managed proxies are temporarily unavailable. Try again shortly.",
+    managedProxyForbidden:
+      "Setting up a managed proxy needs the Agent Network create permission. Ask an account owner to grant it.",
+    yourProxyIsConnected: "Your proxy is connected",
+    connectingYourProxy: "Connecting your proxy",
+    waitingForProxyToConnect: "Waiting for your proxy to connect to NetBird...",
+    proxyFoundWaitingOnline: "Proxy found, waiting for it to come online...",
+    proxyNotPrivate:
+      "This proxy isn't private-capable. Agent Network needs a private proxy",
+    redeployWithFlagHint: "Redeploy it with the flag and this page picks it up.",
+    proxyConnected: "Proxy connected",
+    stillWaitingHint:
+      "Still waiting. Check that the proxy container is running and can reach the address in",
+    proxyClusterDocs: "Proxy cluster docs",
+    proxyReadyReservingEndpoint: "Proxy connected, reserving your endpoint",
+    reservingEndpointFailed: "Reserving the endpoint failed",
+    thisProxyNotPrivateCapable: "This proxy isn't private-capable",
+    proxyFoundWaitingOnlineShort: "Proxy found, waiting for it to come online",
+    waitingForProxyToConnectShort: "Waiting for your proxy to connect",
+    yourProxyIsReady: "Your proxy is ready",
+    settingUpYourProxy: "Setting up your proxy",
+    endpointAlreadyReservedAs: "This account's endpoint is already reserved as",
+    endpointNotServedByProxy: ", and this proxy won't serve it.",
+    reservingEndpointFailedPeriod: "Reserving your endpoint failed.",
+    endpointReserved: "Endpoint reserved",
+    newProxyDescription:
+      "Agent Network is served from your proxy at {domain} once it connects to NetBird.",
+    privateClusterDescription:
+      "Agent Network is served from your private proxy at {address}.",
+    retry: "Retry",
+    policyNameSuffix: "{name} Policy",
+    networkLabel: "Network",
+    createSetupKeyQuestion: "Create a Setup Key?",
+    timeToBringInSecondDevice: "Time to bring in your second device",
+    eachDeviceGetsOwnIp:
+      "Each device (a.k.a. peer) in your NetBird network gets its own private IP and name to communicate securely in the network.",
+    shareLinkToCompleteSetup:
+      "To complete the setup, just share this link or email it to yourself to set up your next device with ease.",
+    useHeadlessSetupHint:
+      "Use the headless setup to register a peer without a browser or user interaction.",
+    installWithSetupKey: "Install with a setup key",
+    testConnectionTitle: "Let's put that connection to the test",
+    testConnectionIntro:
+      "Nice work connecting your devices! Now, let's have a little fun and test if they can talk to each other.",
+    pingHint:
+      "Run this command from <span>{first}</span> to ping <span>{second}</span>. You should receive a response if the connection is working.",
+    everythingWorkingHint:
+      "Everything working? Great! You can now continue with the onboarding. If something isn't right, please check our",
+    troubleshootingGuide: "troubleshooting guide",
+    itWorksContinue: "It works! - Continue",
+    resourcesIntro:
+      "Resources are your subnets, services, or machines inside your network. Pick the type you want to connect to.",
+    domainTypeHint:
+      "A domain like service.internal or a wildcard like *.services.internal",
+    resourceIpDescription: "Enter a single IPv4 or IPv6 address of your resource",
+    resourceSubnetDescription: "Enter a CIDR range of your network",
+    resourceDomainDescription: "Enter a domain name of your resource",
+    resourceIpPlaceholder: "e.g., 192.168.31.45 or 2001:db8::1",
+    resourceSubnetPlaceholder: "e.g., 192.168.1.0/24 or 2001:db8::/64",
+    resourceDomainPlaceholder: "e.g., service.internal or *.services.internal",
+    resourceAddressLabel: "What is the address of your resource?",
+    createResource: "Create Resource",
+    domain: "Domain",
+    addRoutingPeerTitle: "Add a routing peer and get the traffic flowing",
+    routingPeerIntro:
+      "Think of a routing peer as a connector to your internal network. It runs NetBird and lets your remote devices access internal resources, while enforcing access control policies.",
+    generateSetupKeyHint: "Generate a setup key and install NetBird on that machine.",
+    setupKeyLabel: "Setup-Key",
+    generateSetupKey: "Generate Setup Key",
+    installRoutingPeer: "Install Routing Peer",
+    agentDeviceIntro:
+      "Agent Network endpoints are private and reachable only over the NetBird overlay. Install the client and sign in to join the network with keyless, encrypted access.",
+    deviceConnectedToNetwork: "Your device is connected to the network.",
+    lastRequestDenied: "Your last request{forModel} was denied: {reason}.",
+    lastRequestStatus:
+      "Your last request{forModel} reached the provider and came back with status {status}.",
+    noReasonGiven: "no reason given",
+    learnMoreInThe: "Learn more in the",
+    accessLogs: "Access Logs",
+    orThe: "or the",
+    docs: "docs",
+    addUserDeviceIntro:
+      "Your first resource and routing peer are all set. Now, take your device, install NetBird, and let's get you connected.",
+    testResourceIntro:
+      "Nice work connecting your client device! Now, let's have a little fun and test if it can reach your resource.",
+    pingResourceHint:
+      "Open your command line and run this command from {device} to ping your resource.",
+    yourDevice: "your device",
+    anySubdomainOf: "(any subdomain of {address})",
+    resourceIpInSubnet: "(resource ip in your subnet)",
+    firstDeviceTitle: "Let's get your first device online",
+    firstDeviceIntro:
+      "To access other machines, install NetBird, sign in, and your device joins the network. Every device you add becomes a NetBird peer in your network. It's that simple.",
   },
   setupModal: {
     generateSetupKey: "Generate a setup key",
@@ -4381,6 +4750,32 @@ export default {
     tenantsPageDescription:
       "A list of all tenants and their subscription details. Use this view to manage accounts, plans and permissions.",
     tenantsDocsSuffix: "in our documentation.",
+    trialExpiredTenant: "The 14-Day Trial has expired!",
+    trialExpiredOwn: "Your 14-Day Trial has expired!",
+    tenantTrialEndedPrefix:
+      "has reached the end of the free trial period. To continue using NetBird, please upgrade the plan for this tenant.",
+    ownTrialEndedBeforeContact: "Your account has reached the end of the free trial period.",
+    ownTrialEndedContactDistributor: "To continue using NetBird, please contact your distributor.",
+    unlinkTenant: "Unlink Tenant",
+    newOwnerHelp:
+      "In order to unlink this tenant, you need to assign a new owner.",
+    selectNewOwnerPlaceholder: "Select a new owner...",
+    unlinkWarning:
+      "After unlinking, the existing subscription for this tenant will be canceled, and the new owner will need to set up their own billing information.",
+    learnMoreAbout: "Learn more about",
+    unlinkingTenants: "Unlinking Tenants",
+    addTenant: "Add Tenant",
+    updateTenant: "Update Tenant",
+    continueWith: "Continue with",
+    signInToDomainProvider:
+      "Sign in to your domain name provider (e.g. cloudflare.com or godaddy.com)",
+    domainOwnershipTxtHint:
+      "Copy the <mark>TXT record</mark> below and add it to your DNS configuration for",
+    domainVerificationCancel: "Cancel",
+    addNewTenant: "Add New Tenant",
+    noTenantsYet:
+      "It looks like you don't have any tenants yet. Add a new tenant to get started.",
+    managingTenants: "Managing Tenants",
   },
   distributor: {
     customer: "Customer",
@@ -4415,6 +4810,29 @@ export default {
       "Users with an email address on this domain will no longer be matched to your account.",
     settingsDescription: "Users from these domains can join your account.",
     learnMore: "Learn more",
+    addSignInDomain: "Add Sign-in Domain",
+    addSignInDomainDescription: "Users on this domain are matched to your account.",
+    removeDomainQuestion: "Remove {name}?",
+    removeDomain: "Remove domain",
+    domainRemoved: "{name} has been removed",
+    noSignInDomainsYet: "No sign-in domains yet",
+    domainsTableTitle: "Domains",
+    primaryDomainCannotBeRemoved:
+      "This is the primary domain of your account and cannot be removed.",
+    domainUsedBySso:
+      "This domain is used by an SSO integration. Remove it there before deleting it.",
+    domainOwnershipTxtHint:
+      "Copy the <mark>TXT record</mark> below and add it to your DNS configuration for",
+    signInToDomainProvider:
+      "Sign in to your domain name provider (e.g. cloudflare.com or godaddy.com)",
+    dnsChangesNote:
+      "Note: DNS changes may take some time to apply. If NetBird doesn't find the record immediately, please wait a day and try again.",
+    noDnsAccessHint:
+      "If you do not have access to your DNS configuration, you can also verify your domain by sending us an email to",
+    txtHostCopyText: "TXT Host",
+    txtValueCopyText: "TXT Value",
+    hostLabel: "Host",
+    valueLabel: "Value",
   },
   trafficEvents: {
     updatingTrafficEventsSetting: "Updating traffic events setting...",
@@ -4435,6 +4853,34 @@ export default {
       "Traffic events is an experimental feature. Functionality and behavior may evolve, including changes to how data is collected or reported.",
     learnMoreAboutPrefix: "Learn more about",
     inOurDocumentation: "in our documentation.",
+    routed: "Routed",
+    inboundParen: "(inbound)",
+    outboundParen: "(outbound)",
+    inbound: "Inbound",
+    outbound: "Outbound",
+    connectionStarted: "{name} connection started {direction}",
+    connectionBlocked: "{name} connection blocked {direction}",
+    connectionStopped: "{name} connection stopped {direction}",
+    noTrafficEvents: "No Traffic Events",
+    trafficEventsDisabled: "Traffic Events Disabled",
+    noTrafficEventsYet: "No traffic events yet",
+    domainCopied: "Domain has been copied to your clipboard",
+    userEmail: "User E-Mail",
+    emailCopied: "E-Mail has been copied to your clipboard",
+    exitNodeLabel: "Exit Node",
+    gettingStartedDescription:
+      "Traffic Events help you understand the network activity in your organization. You can see which machines are connecting to each other, and what kind of traffic is flowing between them.",
+    enableTrafficEvents: "Enable Traffic Events",
+    emptyDescription:
+      "We haven't detected any traffic events yet. This could be because you just enabled the feature, or because there hasn't been any network activity.",
+    machinePrefixPeer: "Peer ",
+    machinePrefixRoute: "Route ",
+    machinePrefixResource: "Resource ",
+    peerTabEmptyDescription:
+      "It looks like you don't have any traffic events. Traffic events will appear here once clients start connecting to your network.",
+    peerTabDisabledDescription:
+      "It looks like you don't have any traffic events. To start receiving traffic events, you need to enable it in your account settings.",
+    searchPlaceholder: "Search by ip, port, peer or resource...",
   },
   cloudMfa: {
     title: "Multi-Factor Authentication (MFA)",
@@ -4652,6 +5098,286 @@ export default {
     selectRetention: "Select retention...",
     capturePromptHelp:
       "Capture prompt and completion bodies. A policy guardrail must also be enabled.",
+    discoveryEnterEndpointFirst: "Enter the endpoint URL first.",
+    discoveryEnterEndpointAndKeyFirst: "Enter the endpoint URL and API key first.",
+    discoveryNotSupported:
+      "This provider has no model listing endpoint — the catalog list is used instead.",
+    discoveryModelsLoaded:
+      "{count} models loaded. Use the <strong>{addMore}</strong> button to search and pick models.",
+    editProviderTitle: "Edit Provider",
+    updateProviderDescription: "Update this provider's configuration.",
+    connectProviderDescription:
+      "Connect an AI model provider or gateway to your Agent Network.",
+    configurationClustersLink: "Configuration → Clusters",
+    beforeAddingProvider: "before adding a provider.",
+    agentNetworkNotSetUp:
+      "Agent Network isn't set up for this account yet. Ask an account admin to connect a proxy before adding a provider.",
+    throughNetBird: "through NetBird.",
+    searchProvidersPlaceholder: "Search providers...",
+    selectProviderPlaceholder: "Select provider...",
+    skipTlsVerificationHelp:
+      "Skips certificate validation on requests to this provider. Useful for quick testing against endpoints with self-signed certificates. For production we recommend mounting trusted certificates on your proxy instances instead.",
+    disableUpstreamTlsHelp: "Disable upstream TLS certificate validation.",
+    vertexServiceAccountKeyHelp:
+      "Upload the Vertex AI service account JSON key. NetBird base64-encodes it and prefixes it with <code>keyfile::</code> before injecting it on every upstream request, so agents never see the key.",
+    uploadServiceAccountKeyHelp: "Upload the service account JSON key file.",
+    replaceJsonKey: "Replace JSON key",
+    uploadJsonKey: "Upload JSON key",
+    keyAlreadyStored: "A key is already stored",
+    noFileSelected: "No file selected",
+    virtualApiKey: "Virtual API key",
+    providerApiKey: "Provider API key",
+    virtualApiKeyHelp:
+      "The raw virtual key configured for strict API-key authentication on agentgateway.",
+    providerApiKeyHelp: "The API key issued by the provider.",
+    apiKeyInjectionHelp:
+      "NetBird injects it as <code>{header}</code> on every upstream request, so agents never see the key.",
+    pasteVirtualApiKey: "Paste the virtual API key",
+    pasteYourApiKey: "Paste your API key",
+    displayNameLabel: "Display name",
+    displayNameHelp: "Shown in the Agent Network table.",
+    displayNamePlaceholder: "e.g. OpenAI",
+    stampIdentityLiteLlmHelp: "Stamp the identity mappings below onto LiteLLM requests.",
+    liteLlmTagsHelp:
+      "Groups are written into <tags>metadata.tags</tags> in the JSON body so LiteLLM can enforce tag budgets and rate limits. The user identity is sent in the <header>x-litellm-end-user-id</header> header. The proxy strips any client-supplied value first, so an app can't spoof identity. The configured API key must be a LiteLLM virtual key with <allowTags>metadata.allow_client_tags: true</allowTags>, or LiteLLM silently drops these tags.",
+    userIdentityHeaderLabel: "User identity header",
+    userIdentityHeaderHelp:
+      "Wire header name receiving the caller's user email (or peer name when unlinked). Leave empty to skip.",
+    groupsHeaderLabel: "Groups header",
+    groupsHeaderHelp:
+      "Wire header name receiving the caller's NetBird groups as a comma-separated list. Leave empty to skip.",
+    identityHeadersHelp:
+      "Pick which wire headers carry the caller's identity on every upstream request. The proxy strips any client-supplied value first, so an app can't spoof identity. Leave a field empty to disable stamping for that dimension. The defaults shown as placeholders use the <code>x-bf-dim-*</code> family (Prometheus / OTEL — requires a matching declaration in your gateway's <code>client.prometheus_labels</code> config). Switch to <code>x-bf-lh-*</code> to use Bifrost's always-on log-metadata path instead — no gateway-side config needed there.",
+    userIdentityKeyLabel: "User identity key",
+    userIdentityKeyHelp:
+      "JSON key receiving the caller's user email (or peer name when unlinked). Leave empty to skip.",
+    groupsKeyLabel: "Groups key",
+    groupsKeyHelp:
+      "JSON key receiving the caller's NetBird groups as a comma-separated string. Leave empty to skip.",
+    identityMetadataHelp:
+      "NetBird stamps a JSON object onto the <code>{header}</code> header with the caller's identity so the gateway's logs and analytics key off the real user, not whichever app process happens to hold the API token. Pick the JSON key names that match your existing log filters; leave a field empty to omit that key from the JSON. The proxy strips any client-supplied value first, so an app can't spoof identity.",
+    stampTrustedIdentityHeadersHelp:
+      "Stamp the trusted NetBird identity headers below onto upstream requests.",
+    trustedIdentityHeadersHelp:
+      "NetBird removes caller-supplied values before adding the authenticated identity shown below. The upstream listener must remain reachable only through the NetBird proxy.",
+    agentgatewayVirtualKeyCaveat:
+      "The virtual key authenticates NetBird but does not make headers from another network path trustworthy.",
+    agentgatewayGroupsGuidance:
+      "<code>x-netbird-groups</code> contains sorted group display names for attribution. It is not a delimiter-safe set of stable group IDs and must not be used as an agentgateway authorization claim.",
+    userIdentitySourceLabel: "User identity",
+    authorizingGroupsCsvLabel: "Authorizing groups (CSV)",
+    userEmailSourceLabel: "User Email",
+    groupsCsvSourceLabel: "Groups (CSV)",
+    portkeyMetadataHelp:
+      "NetBird stamps the <code>x-portkey-metadata</code> header with a JSON object so Portkey's analytics and budgets key off the real caller. The proxy strips any client-supplied value first, so an app can't spoof identity. Per Portkey's 128-character cap each value is truncated when needed. The mapping is fixed in this release.",
+    stampIdentityBedrockHelp: "Stamp the identity metadata below onto Bedrock requests.",
+    bedrockMetadataHelp:
+      "NetBird stamps the caller's identity into the <link>{header}</link> header, so you can break Bedrock spend down by user and group. Client-supplied values are stripped and sanitized.",
+    caveatsLabel: "Caveats:",
+    vercelIdentityHeadersHelp:
+      "NetBird stamps the user identity and group list onto <code>ai-reporting-user</code> and <code>ai-reporting-tags</code> on every upstream request. Vercel groups its Custom Reporting API by these dimensions (<code>group_by=user</code> / <code>group_by=tag</code>). Header names are fixed by Vercel's API contract — renaming would silently disable attribution. The proxy strips any client-supplied value first.",
+    vercelCaveatsHelp:
+      "Vercel caps tags at 10 per request (each 1–64 chars) and the user value at 256 chars. Members of more than 10 groups will see Vercel reject the request with HTTP 400 — re-scope group memberships if you hit it. Vercel charges $0.075 per 1,000 unique user/tag values written; budget accordingly for high-cardinality use cases.",
+    openRouterIdentityHelp:
+      "NetBird stamps the caller's user identity onto the request body's <code>user</code> field — that's the OpenAI-standard field OpenRouter consults for per-user analytics. The proxy overwrites any client-supplied value first, so an app can't spoof identity.",
+    noGroupsDimensionLabel: "No groups dimension.",
+    openRouterNoGroupsHelp:
+      "OpenRouter does not document a per-request tag, label, or team field — only per-user identity. NetBird's group memberships are not propagated to OpenRouter; if you need per-group attribution, query NetBird's own access log instead of OpenRouter's analytics.",
+    modelsTabHelp:
+      "Models exposed through this endpoint, with the per-1k input/output prices used for cost tracking. Empty = all catalog models allowed at catalog prices. Cache rates left empty fall back to NetBird's defaults for the model; 0 bills cached tokens at the input rate.",
+    loadModelsFromProvider: "Load models from provider",
+    unpricedModelsWarning:
+      "{count, plural, one {The model below has no cost set. Usage is tracked at $0 and won't count toward budget limits.} other {The # models below have no cost set. Usage is tracked at $0 and won't count toward budget limits.}}",
+    selectModelPlaceholder: "Select a model...",
+    searchModelsPlaceholder: "Search models...",
+    pickFromCatalogInstead: "Pick from catalog instead",
+    cachePricingLabel: "Cache pricing",
+    cacheCustom: "· custom",
+    cacheDefault: "· default",
+    cachedInputRateLabel: "Cached input $/1k",
+    cacheReadRateLabel: "Cache read $/1k",
+    cacheWriteRateLabel: "Cache write $/1k",
+    requestHeading: "Request",
+    sessionIdHeading: "Session ID",
+    sessionIdTooltip:
+      "The provider-side session this request belongs to. A single user can make several separate calls that the provider groups under the same session id.",
+    requestDeniedWithReason: "Request denied: {reason}",
+    requestDeniedByPolicy: "Request denied by policy.",
+    promptHeading: "Prompt",
+    completionHeading: "Completion",
+    noResponseCaptured: "No response captured.",
+    promptAndResponseHeading: "Prompt & Response",
+    noPromptOrResponseCaptured:
+      "No prompt or response captured for this request — only metadata is recorded for non-completion calls (e.g. listing models) or when prompt collection is off.",
+    metadataHeading: "Metadata",
+    searchAccessLogPlaceholder: "Search by user, agent, model, prompt…",
+    noAccessLogEntriesTitle: "No Access Log Entries Yet",
+    noAccessLogEntriesDescription:
+      "No agent network requests yet. Check that providers are connected, policies allow traffic, and log collection is on.",
+    policyAllowedRequest: "This policy allowed the request",
+    userGroupsLabel: "User Groups",
+    userGroupsDescription: "Groups the user belonged to at the time of the request.",
+    providerNotAttributedHint:
+      "Not attributed to a provider. The request was rejected before NetBird recognised it as an LLM call.",
+    providerNotAttributedShapeHint:
+      "Not attributed to a configured provider. This is the API shape the client called. Requests denied before routing never reach a provider.",
+    tokenInputLower: "input",
+    tokenOutputLower: "output",
+    cacheReadLabel: "cache read",
+    cacheWriteLabel: "cache write",
+    totalLabel: "total",
+    inputSrOnly: "Input:",
+    outputSrOnly: "Output:",
+    inputPlusOutputLabel: "input + output",
+    costCacheLabel: "cache",
+    requestsInSession:
+      "{count, plural, one {# request} other {# requests}} in this session",
+    updateGlobalLimitTitle: "Update Global Limit",
+    createGlobalLimitTitle: "Create Global Limit",
+    globalLimitModalDescription:
+      "Token and budget caps, applied account-wide or scoped to groups and users.",
+    globalLimitNameHelp: "Set an easily identifiable name for this limit.",
+    globalLimitNamePlaceholder: "e.g. Account-wide monthly cap",
+    restrictToSelectedGroupsHelp:
+      "Restrict this rule to members of the selected groups. Leave empty (and no users) to apply account-wide.",
+    selectTargetGroups: "Select target group(s)...",
+    restrictToSelectedUsersHelp:
+      "Restrict this rule to specific users. Leave empty (and no groups) to apply account-wide.",
+    noTargetsAccountWideCallout:
+      "With no targets selected, this rule applies <accent>account-wide</accent> — every agent-network request is counted against its caps.",
+    saveGlobalLimit: "Save Global Limit",
+    selectUsersPlaceholder: "Select user(s)...",
+    searchUsersPlaceholder: "Search users by name or email...",
+    noUsersToSelect: "No users to select yet.",
+    noUsersMatch: "No users match.",
+    targetGroupsLimitCellDescription: "This limit applies to members of these groups.",
+    groupCapTooltip: "· Group: {value}",
+    individualCapTooltip: "· Individual: {value}",
+    resetsEveryTooltip: "· Resets every {window}",
+    deleteGlobalLimitTitle: "Delete ''{name}''?",
+    globalLimitsTitle: "Global Limits",
+    searchGlobalLimitsPlaceholder: "Search global limits by name...",
+    setGlobalLimitTitle: "Set a Global Limit",
+    setGlobalLimitDescription:
+      "Global limits cap token usage and spend across every policy. Apply a limit account-wide, or scope it to specific groups or users.",
+    copySnippetAria: "Copy snippet",
+    kimiClaudeCodePairing:
+      "Pairs with a Kimi provider keeping the default upstream URL <code>https://api.moonshot.ai</code>. The <code>/anthropic</code> suffix in the base URL rides through the endpoint to Moonshot, which serves the Anthropic Messages API under that path.",
+    kimiCliOpenAiShape:
+      "Pairs with a Kimi provider keeping the default upstream URL <code>https://api.moonshot.ai</code>. For the OpenAI shape instead, use <code>type = \"openai_legacy\"</code> with <code>base_url = \"{openaiBase}\"</code>.",
+    browseGuardrailsDescription: "Pick one or more existing guardrails to attach.",
+    noMoreGuardrailsAvailable:
+      "No more guardrails available — all defined guardrails are already attached.",
+    modelAllowlistTooltip: "Model allowlist · {count} model(s)",
+    updateGuardrailTitle: "Update Guardrail",
+    createGuardrailTitle: "Create Guardrail",
+    guardrailModalDescription:
+      "Define a reusable set of LLM guardrails to attach to one or more policies.",
+    guardrailNameHelp: "Set an easily identifiable name for this guardrail set.",
+    guardrailNamePlaceholder: "e.g., Strict — Production",
+    guardrailDescriptionHelp:
+      "Write a short description to add more context to this guardrail.",
+    guardrailDescriptionPlaceholder:
+      "e.g., Tight model allowlist, PII redaction, hard monthly budget.",
+    modelAllowlistCheckDescription: "Block requests for models not on the allowlist.",
+    allowlistNoModelsFromSelected:
+      "The selected providers don't expose any models yet. Add models to a destination provider first — the allowlist is restricted to what those providers expose.",
+    allowlistNoModelsAtAll:
+      "No models configured on any provider yet. Add models to a provider first — the allowlist is restricted to what the providers actually expose.",
+    selectAllModelsAria: "Select all models",
+    promptCaptureCheckDescription: "Redact PII before storing the prompt body.",
+    promptCaptureRedactionHelp:
+      "NetBird redacts emails, SSN-shaped, phone-shaped, and credit-card patterns before storing the prompt body. Enabling this guardrail adds strict redaction on top of the proxy's built-in token redaction.",
+    metricByDayTitle: "{metric} by day",
+    tokenUsage: "Token usage",
+    tokensPerDayDescription: "Input and output tokens per day.",
+    spendPerDayDescription: "Estimated spend per day.",
+    noUsageRecordedTitle: "No usage recorded yet",
+    noUsageRecordedDescription:
+      "Daily token and cost totals appear here as agents send requests through the providers you've connected.",
+    sourceGroupsLabel: "Source Groups",
+    sourceGroupsCellDescription:
+      "Members of these groups are allowed to call the destination providers.",
+    andNMore: "· and {count} more",
+    searchPoliciesPlaceholder: "Search by name or description...",
+    createFirstPolicyTitle: "Create your first policy",
+    createFirstPolicyDescription:
+      "Policies connect user and agent groups to AI providers, with optional token and budget limits and guardrails for model access and prompt capture.",
+    attachedGuardrailCount: "{count, plural, one {# Guardrail} other {# Guardrails}}",
+    guardrailsTabDescription:
+      "Guardrails enforce model allowlists and prompt capture per request.",
+    noGuardrailsYetTitle: "You haven't added any guardrails yet",
+    noGuardrailsYetDescription:
+      "Add guardrails to enforce model allowlists and prompt capture per request.",
+    attachedLimitCount: "{count, plural, one {# Limit} other {# Limits}}",
+    limitsTabDescription: "Token and budget caps applied directly to this policy.",
+    limitSummaryLine:
+      "Group {group} · Individual {individual} · resets every {window}",
+    noLimitsYetTitle: "You haven't added any limits yet",
+    noLimitsYetDescription: "Add token or budget caps that apply directly to this policy.",
+    tokenLimitModalDescription: "Cap tokens per group and per user over a rolling window.",
+    budgetLimitModalDescription: "Cap USD spend per group and per user over a rolling window.",
+    groupCapHelp:
+      "Caps the group's total consumption within the window. Once reached, every member is blocked until the window resets, regardless of individual usage.",
+    groupTotalWithinWindow: "Group total within the window.",
+    zeroMeansUncapped: "0 = uncapped",
+    individualCapHelp:
+      "Caps each member's own consumption within the window. A user that hits this cap is blocked even when the group still has headroom.",
+    perUserLimitWithinWindow: "Per-user limit within the window.",
+    resetWindowHelp: "How often the cap counters reset. Minimum 1 minute.",
+    updatePolicyTitle: "Update Agent Policy",
+    createPolicyTitle: "Create Agent Policy",
+    policyModalDescription:
+      "Govern which groups can call which AI providers and under what guardrails.",
+    sourceGroupsHelp:
+      "Group of users this policy authorises to call the destination providers. One group per policy in this release.",
+    legacyExtraGroupsWarning:
+      "This policy was created with multiple source groups. Only the first group is kept on save — {name} will be retained, the others removed.",
+    destinationProvidersHelp: "AI providers the source is allowed to reach.",
+    policyNamePlaceholder: "e.g. Engineering → OpenAI",
+    policyDescriptionPlaceholder: "e.g., Engineers can call OpenAI under production guardrails.",
+    selectSourceGroupsPlaceholder: "Select source group(s)...",
+    selectProvidersPlaceholder: "Select provider(s)...",
+    noProvidersConnectedYet: "No providers connected yet.",
+    noProvidersFound: "No providers found.",
+    endpointCopiedToClipboard: "Endpoint copied to clipboard",
+    copyEndpointAria: "Copy endpoint",
+    endpointHelpText:
+      "Use this URL as the base URL when configuring your AI agents or LLM SDK clients (e.g. OpenAI's <code>base_url</code>, Anthropic's <code>baseURL</code>, or any HTTP client). Calls hit NetBird first, get authorised by your policies, and only then reach the upstream provider.",
+    deleteProviderTitle: "Delete ''{name}''?",
+    providerInUseCannotDelete:
+      "{count, plural, one {This provider is referenced by # policy and cannot be deleted. Detach it from the policy first.} other {This provider is referenced by # policies and cannot be deleted. Detach it from the policy first.}}",
+    allModels: "All Models",
+    searchProvidersByName: "Search by name...",
+    providersEmptyDescription:
+      "Route OpenAI, Anthropic, and other LLM APIs through NetBird to enforce access control, track token spend, and capture prompts.",
+    noModelRestrictionUnknownList:
+      "No model restriction. This provider doesn't publish a model list, so use any model id its upstream accepts.",
+    noModelRestrictionKnownModels: "No model restriction. Known models for this provider:",
+    noProvidersAvailableTitle: "No providers available yet",
+    noAccessPolicyCoversUser:
+      "No access policy covers your user yet. Add one of your groups to a policy to route your agent through NetBird.",
+    noProviderAccessAskAdmin:
+      "You don’t have access to any providers yet. Ask your administrator to add you to an Agent Network access policy.",
+    couldNotReachProvider: "Could not reach the provider",
+    requestFailed: "Request failed",
+    savingChanges: "Saving changes…",
+    connectingProvider: "Connecting provider…",
+    openRouterAppBrandingHelp:
+      "<strong>{branding}</strong> (HTTP-Referer + X-OpenRouter-Title) is set per-provider on the Provider tab, not per-request. Operators who fill those in get their app surfaced on OpenRouter's public rankings and per-app analytics.",
+    accessLogRetentionHelp:
+      "How long access logs are kept before they're deleted. Usage history is kept separately.",
+    connectFirstProviderDescription:
+      "Connect your first provider to set up your agent network endpoint.",
+    providersPageDescription:
+      "Connect AI providers and gateways like LiteLLM, OpenAI, and Anthropic through one keyless endpoint, accessible only via NetBird's tunnel.",
+    denyReasonModelNotAvailable: "Model not available",
+    denyReasonNoAuthorizedProvider: "No authorized provider",
+    denyReasonModelNotAllowed: "Model not allowed",
+    denyReasonLimitExceeded: "Limit exceeded",
+    denyReasonTokenLimitExceeded: "Token limit exceeded",
+    denyReasonBudgetLimitExceeded: "Budget limit exceeded",
+    denyReasonAccountScoped: "Account {reason}",
   },
   integrations: {
     edrTabTitle: "MDM & EDR",
@@ -5423,5 +6149,19 @@ export default {
       "Deleting this integration will remove the ability to use Okta as an SSO provider. <br></br> If you delete the integration you will need to reconfigure it again to enable the Single Sign-On.",
     configurationTab: "Configuration",
     txtValueLabel: "Value",
+  },
+  integrationsWave2: {
+    sentineloneApplyGroupsHelp:
+      "Select groups you want to apply the SentinelOne integration to",
+    sentineloneSyncWindowTitle: "SentinelOne Sync Window",
+    sentineloneSyncWindowHelp:
+      "Devices not synced with SentinelOne in this time won't have network access.",
+    sentineloneSyncWindowExample:
+      "Example: This property is set to 24 hours. Jane's laptop hasn't synced with SentinelOne for 27 hours. Even though it's marked as Compliant in SentinelOne, it will still be blocked from network access.",
+    serviceAccountKeyLabel: "Service Account Key",
+  },
+  planTier: {
+    daysLeft: "{count, plural, one {# day left} other {# days left}}",
+    trialExpired: "Trial has expired",
   },
 };

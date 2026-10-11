@@ -176,8 +176,8 @@ const PickerContent = ({
       <ModalContent maxWidthClass={"max-w-lg"}>
         <ModalHeader
           icon={<NetworkRoutesIcon className={"fill-netbird"} />}
-          title={"Assign a network"}
-          description={"Pick a network for this resource or create a new one."}
+          title={t("assignNetworkTitle")}
+          description={t("assignNetworkDescription")}
           color={"netbird"}
         />
         <Separator />

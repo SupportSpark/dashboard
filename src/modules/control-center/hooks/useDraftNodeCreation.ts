@@ -1,4 +1,5 @@
 import { Node, useReactFlow, XYPosition } from "@xyflow/react";
+import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 import type { Network } from "@/interfaces/Network";
 import type { Policy } from "@/interfaces/Policy";
@@ -29,8 +30,9 @@ import { NodeType } from "@/modules/control-center/utils/nodes";
 const getNextPlaceholderName = (
   kind: PeerPlaceholderKind,
   nodes: Node[],
+  t: (key: string) => string,
 ): string => {
-  const base = PLACEHOLDER_BASE_NAMES[kind] ?? "Peer";
+  const base = PLACEHOLDER_BASE_NAMES[kind] ?? t("peerSingular");
   const taken = new Set(
     nodes
       .map((n) => (n.data as { placeholderName?: string })?.placeholderName)
@@ -45,6 +47,7 @@ const getNextPlaceholderName = (
 const getNextPolicyName = (
   policies: Policy[] | undefined,
   nodes: Node[],
+  t: (key: string) => string,
 ): string => {
   const taken = new Set<string>();
   policies?.forEach((p) => p.name && taken.add(p.name));
@@ -52,9 +55,9 @@ const getNextPolicyName = (
     const name = (n.data as { policy?: Policy })?.policy?.name;
     if (name) taken.add(name);
   });
-  let name = "Policy";
+  let name = t("policy");
   let i = 1;
-  while (taken.has(name)) name = `Policy (${i++})`;
+  while (taken.has(name)) name = `${t("policy")} (${i++})`;
   return name;
 };
 
@@ -84,6 +87,7 @@ const getNextUniqueName = (base: string, taken: Set<string>) => {
 };
 
 export function useDraftNodeCreation() {
+  const t = useTranslations("controlCenter");
   const reactFlow = useReactFlow();
   const { policies, networks, networkResources, groups } =
     useControlCenterData();
@@ -113,7 +117,7 @@ export function useDraftNodeCreation() {
   const addPeerPlaceholder = useCallback(
     (kind: PeerPlaceholderKind, position?: XYPosition) => {
       const nodeId = `peer-draft-${draftUid()}`;
-      const name = getNextPlaceholderName(kind, reactFlow.getNodes());
+      const name = getNextPlaceholderName(kind, reactFlow.getNodes(), t);
       placeNode(
         {
           id: nodeId,
@@ -131,13 +135,13 @@ export function useDraftNodeCreation() {
       trackInstallPeer({ clientId: nodeId.replace("peer-", ""), name, kind });
       return nodeId;
     },
-    [placeNode, reactFlow, trackInstallPeer],
+    [placeNode, reactFlow, trackInstallPeer, t],
   );
 
   // No changeset entry yet: a policy without both sides isn't deployable.
   const addBlankPolicy = useCallback(
     (position?: XYPosition) => {
-      const name = getNextPolicyName(policies, reactFlow.getNodes());
+      const name = getNextPolicyName(policies, reactFlow.getNodes(), t);
       const clientId = `new-${draftUid()}`;
       const policy: Policy = {
         id: clientId,
@@ -169,7 +173,7 @@ export function useDraftNodeCreation() {
         position,
       );
     },
-    [placeNode, policies, reactFlow],
+    [placeNode, policies, reactFlow, t],
   );
 
   const placeProviderNode = useCallback(
@@ -211,7 +215,7 @@ export function useDraftNodeCreation() {
     (position?: XYPosition) => {
       const clientId = `new-${draftUid()}`;
       const name = getNextAgentName(
-        "Agent Policy",
+        t("agentPolicyLabel"),
         agentPolicies,
         reactFlow.getNodes(),
         (n) =>
@@ -230,7 +234,7 @@ export function useDraftNodeCreation() {
       };
       placeAgentPolicyNode({ ...policy, id: clientId }, position);
     },
-    [agentPolicies, placeAgentPolicyNode, reactFlow],
+    [agentPolicies, placeAgentPolicyNode, reactFlow, t],
   );
 
   // Networks only need a name, so the change is recorded immediately.

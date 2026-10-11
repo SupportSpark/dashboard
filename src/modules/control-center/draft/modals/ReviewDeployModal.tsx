@@ -272,7 +272,7 @@ export const ReviewDeployModal = ({
             {/* A disabled button emits no hover, so the wrapper div FullTooltip
                 adds carries the tooltip. */}
             <FullTooltip
-              content={"Resolve issues before deploying"}
+              content={t("resolveIssuesBeforeDeploying")}
               disabled={!hasIssues}
               side={"top"}
             >

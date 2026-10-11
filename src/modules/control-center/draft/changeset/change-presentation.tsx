@@ -17,6 +17,7 @@ import {
   WaypointsIcon,
   WorkflowIcon,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React from "react";
 import {
   ChangeKind,
@@ -85,32 +86,36 @@ export const entityName = (change: DraftChange): string => {
   }
 };
 
-const KIND_BADGES: Record<
+// A factory, not a module constant: the labels come from useTranslations, which
+// is a React hook and cannot run at module scope.
+const kindBadges = (
+  t: (key: string) => string,
+): Record<
   ChangeKind,
   { label: string; icon: React.ReactNode; className: string }
-> = {
+> => ({
   add: {
-    label: "Add",
+    label: t("add"),
     icon: <SquarePlusIcon size={13} />,
     className: "bg-green-900/30 text-green-400 border border-green-500/20",
   },
   update: {
-    label: "Modify",
+    label: t("modify"),
     icon: <SquareDotIcon size={13} />,
     className: "bg-yellow-900/30 text-yellow-400 border border-yellow-500/20",
   },
   remove: {
-    label: "Delete",
+    label: t("delete"),
     icon: <SquareMinusIcon size={13} />,
     className: "bg-red-900/30 text-red-400 border border-red-500/20",
   },
   // Not an API call but a step the user performs; deploy leaves these pending.
   install: {
-    label: "Install",
+    label: t("install"),
     icon: <TriangleAlertIcon size={13} />,
     className: "bg-amber-900/30 text-amber-400 border border-amber-500/20",
   },
-};
+});
 
 // A role=button span, not a <button>: it lives inside the accordion trigger.
 export const IssueBadge = ({
@@ -165,7 +170,8 @@ export const IssueBadge = ({
 };
 
 export const KindBadge = ({ kind }: { kind: ChangeKind }) => {
-  const badge = KIND_BADGES[kind];
+  const t = useTranslations("controlCenter");
+  const badge = kindBadges((key) => t(key))[kind];
   return (
     <span
       className={cn(

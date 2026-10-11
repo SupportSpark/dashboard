@@ -1,6 +1,7 @@
 import { SmallBadge } from "@components/ui/SmallBadge";
 import { cn } from "@utils/helpers";
 import { Handle, type Node, Position, useConnection } from "@xyflow/react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useIsContextMenuTarget } from "@/modules/control-center/contexts/ControlCenterContext";
 import { useDraftMode } from "@/modules/control-center/draft/DraftModeContext";
@@ -17,6 +18,7 @@ type PolicyNode = Node<
 >;
 
 export const PolicyNode = ({ data, id }: PolicyNode) => {
+  const tCommon = useTranslations("common");
   const rule = data.policy.rules?.[0];
   const label = getPolicyProtocolAndPortText(data.policy);
   const isActive = rule?.enabled;
@@ -63,7 +65,7 @@ export const PolicyNode = ({ data, id }: PolicyNode) => {
           "border-l border-nb-gray-800 flex items-center text-nb-gray-300 text-[0.65rem] pl-2 pr-3 font-mono"
         }
       >
-        <div>{label === "" ? "All" : label}</div>
+        <div>{label === "" ? tCommon("all") : label}</div>
       </div>
 
       <Handle

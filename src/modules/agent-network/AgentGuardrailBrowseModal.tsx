@@ -51,14 +51,13 @@ export default function AgentGuardrailBrowseModal({
         <ModalHeader
           icon={<ShieldHalf size={19} />}
           title={t("browseGuardrails")}
-          description={"Pick one or more existing guardrails to attach."}
+          description={t("browseGuardrailsDescription")}
           color={"netbird"}
         />
         <div className={"px-8 pb-2"}>
           {available.length === 0 ? (
             <div className={"text-sm text-nb-gray-300 py-6 text-center"}>
-              No more guardrails available — all defined guardrails are already
-              attached.
+              {t("noMoreGuardrailsAvailable")}
             </div>
           ) : (
             <div className={"space-y-1.5 max-h-[420px] overflow-y-auto"}>

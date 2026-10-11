@@ -77,6 +77,7 @@ type ModalProps = {
 
 export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
   const t = useTranslations("integrations");
+  const tWave = useTranslations("integrationsWave2");
   const tCommon = useTranslations("common");
   const { mutate } = useSWRConfig();
   const sentinelOneRequest = useApiCall<SentinelOneIntegration>(
@@ -356,11 +357,11 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
         <div className={"px-8 py-3 flex flex-col gap-0 mt-4 mb-3"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <FolderGit2 size={16} />
-            Peer Approval
+            {t("peerApproval")}
           </p>
 
           <HelpText className={"max-w-lg mt-2"}>
-            Select groups you want to apply the SentinelOne integration to
+            {tWave("sentineloneApplyGroupsHelp")}
           </HelpText>
 
           <PeerGroupSelector values={groups} onChange={setGroups} />
@@ -371,11 +372,10 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
         <div className={"px-8 py-3 flex flex-col gap-0 mt-4 mb-3"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <ShieldCheckIcon size={16} />
-            Compliance Requirements
+            {t("complianceRequirements")}
           </p>
           <p className={"mt-2 !text-nb-gray-300 !leading-[1.5]"}>
-            Set the specific requirements that devices must meet to be
-            considered compliant.
+            {t("requirementsHelp")}
           </p>
 
           <SentinelOneMatchSettings
@@ -389,23 +389,19 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
         <div className={"px-8 py-3 flex flex-col gap-0 mt-4 mb-3"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <RefreshCcw size={16} />
-            SentinelOne Sync Window
+            {tWave("sentineloneSyncWindowTitle")}
           </p>
           <div className={"mt-2 flex flex-row gap-3"}>
             <FullTooltip
               interactive={false}
               content={
                 <div className={"max-w-xs text-xs"}>
-                  Example: This property is set to 24 hours. Jane&apos;s laptop
-                  hasn&apos;t synced with SentinelOne for 27 hours. Even though
-                  it&apos;s marked as Compliant in SentinelOne, it will still be
-                  blocked from network access.
+                  {tWave("sentineloneSyncWindowExample")}
                 </div>
               }
             >
               <HelpText className={"max-w-lg"}>
-                Devices not synced with SentinelOne in this time won&apos;t have
-                network access.
+                {tWave("sentineloneSyncWindowHelp")}
                 <IconInfoCircle
                   size={14}
                   className={"relative inline ml-1 -top-[1px]"}
@@ -420,7 +416,7 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
               value={lastSyncedInterval}
               type={"number"}
               onChange={(e) => setLastSyncedInterval(e.target.value)}
-              customSuffix={"Hours"}
+              customSuffix={t("hoursSuffix")}
             />
           </div>
         </div>
@@ -434,7 +430,7 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
             onClick={() => setStep(step - 1)}
           >
             <IconArrowLeft size={16} />
-            Back
+            {tCommon("back")}
           </Button>
         )}
         {step >= 0 && step < maxSteps && (
@@ -444,7 +440,7 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
             disabled={isDisabled}
             onClick={() => setStep(step + 1)}
           >
-            {step == 0 ? "Get Started" : "Continue"}
+            {step == 0 ? t("getStarted") : tCommon("continue")}
             <IconArrowRight size={16} />
           </Button>
         )}
@@ -456,7 +452,7 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
             onClick={connect}
           >
             <Repeat size={16} />
-            Connect
+            {t("connect")}
           </Button>
         )}
       </ModalFooter>

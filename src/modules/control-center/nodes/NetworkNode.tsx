@@ -46,6 +46,8 @@ type NetworkNodeProps = Node<NetworkNodeType, "networkNode">;
 
 // Resources are ReactFlow child nodes; the frame is sized via the node style.
 export const NetworkNode = ({ data, id }: NetworkNodeProps) => {
+  const t = useTranslations("controlCenter");
+  const tCommon = useTranslations("common");
   const {
     isDraft,
     setRoutingPeerModal,
@@ -195,8 +197,8 @@ export const NetworkNode = ({ data, id }: NetworkNodeProps) => {
           </div>
           <div className={cn("text-nb-gray-400 whitespace-nowrap mt-0.5")}>
             {resourceCount === 0
-              ? "No Resources"
-              : singularize("Resources", resourceCount, true)}
+              ? t("noResources")
+              : singularize(tCommon("resources"), resourceCount, true)}
           </div>
         </div>
       </div>

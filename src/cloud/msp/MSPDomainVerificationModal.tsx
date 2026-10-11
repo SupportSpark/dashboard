@@ -9,6 +9,7 @@ import { GradientFadedBackground } from "@components/ui/GradientFadedBackground"
 import { Mark } from "@components/ui/Mark";
 import { cn } from "@utils/helpers";
 import { ExternalLinkIcon, GlobeIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useState } from "react";
 import { useTenants } from "@/cloud/msp/contexts/TenantsProvider";
@@ -31,6 +32,8 @@ export const MSPDomainVerificationModal = ({
   onSuccess,
   onCancel,
 }: Props) => {
+  const t = useTranslations("msp");
+  const tIdp = useTranslations("idpSync");
   const { verifyDomain } = useTenants();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -56,22 +59,21 @@ export const MSPDomainVerificationModal = ({
         <GradientFadedBackground />
         <ModalHeader
           icon={<GlobeIcon size={20} />}
-          title={"Verify Domain Ownership"}
+          title={tIdp("verifyDomainOwnershipTitle")}
           description={domain}
           color={"netbird"}
         />
         <div className={"px-8 flex flex-col gap-0"}>
           <Steps className={"pt-0"}>
             <Steps.Step step={1}>
-              <p className={"font-normal"}>
-                Sign in to your domain name provider (e.g. cloudflare.com or
-                godaddy.com)
-              </p>
+              <p className={"font-normal"}>{t("signInToDomainProvider")}</p>
             </Steps.Step>
             <Steps.Step step={2} line={false}>
               <p className={"font-normal"}>
-                Copy the <Mark>TXT record</Mark> below and add it to your DNS
-                configuration for <Mark>{domain}</Mark>
+                {t.rich("domainOwnershipTxtHint", {
+                  mark: (chunks: React.ReactNode) => <Mark>{chunks}</Mark>,
+                })}{" "}
+                <Mark>{domain}</Mark>
               </p>
             </Steps.Step>
           </Steps>

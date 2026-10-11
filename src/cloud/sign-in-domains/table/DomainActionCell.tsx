@@ -19,6 +19,7 @@ type Props = {
 export default function DomainActionCell({
 domain }: Readonly<Props>) {
   const tsid = useTranslations("signInDomains");
+  const tCommon = useTranslations("common");
   const { permission } = usePermissions();
   const { verifyDomain, deleteDomain, mutate } = useSignInDomains();
   const { confirm } = useDialog();
@@ -29,33 +30,24 @@ domain }: Readonly<Props>) {
   const connections = domain.connections ?? [];
 
   const removeBlockedReason: React.ReactNode = domain.is_primary ? (
-    <>
-      This is the primary domain of your account
-      <br />
-      and cannot be removed.
-    </>
+    <>{tsid("primaryDomainCannotBeRemoved")}</>
   ) : connections.length > 0 ? (
-    <>
-      This domain is used by an SSO integration.
-      <br />
-      Remove it there before deleting it.
-    </>
+    <>{tsid("domainUsedBySso")}</>
   ) : undefined;
 
   const deleteDomainHandler = async () => {
     const choice = await confirm({
-      title: `Remove ${domain.name}?`,
-      description:
-        tsid("removeDescription"),
-      confirmText: "Remove",
-      cancelText: "Cancel",
+      title: tsid("removeDomainQuestion", { name: domain.name }),
+      description: tsid("removeDescription"),
+      confirmText: tCommon("remove"),
+      cancelText: tCommon("cancel"),
       type: "danger",
       maxWidthClass: "max-w-md",
     });
     if (!choice) return;
     notify({
       title: tsid("title"),
-      description: `${domain.name} has been removed`,
+      description: tsid("domainRemoved", { name: domain.name }),
       promise: deleteDomain(domain.id).then((res) => {
         mutate().catch(() => {});
         return res;
@@ -99,7 +91,7 @@ domain }: Readonly<Props>) {
       <FullTooltip
         content={
           <div className={"text-xs max-w-xs"}>
-            {removeBlockedReason ?? "Remove domain"}
+            {removeBlockedReason ?? tsid("removeDomain")}
           </div>
         }
         interactive={false}
@@ -113,7 +105,7 @@ domain }: Readonly<Props>) {
           )}
           disabled={!!removeBlockedReason || !permission.settings.update}
           onClick={deleteDomainHandler}
-          aria-label={"Remove domain"}
+          aria-label={tsid("removeDomain")}
           data-testid={"remove-domain"}
         >
           <TrashIcon size={14} />

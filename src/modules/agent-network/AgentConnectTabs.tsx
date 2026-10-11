@@ -97,6 +97,7 @@ function Snippet({
   lines: string[];
   copyText?: string;
 }) {
+  const t = useTranslations("agentNetwork");
   const tServiceUsers = useTranslations("serviceUsers");
   const [, copy, copied] = useCopyToClipboard(copyText ?? lines.join("\n"));
 
@@ -133,8 +134,8 @@ function Snippet({
           {action}
           <button
             type={"button"}
-            onClick={() => copy("Copied to clipboard")}
-            aria-label={"Copy snippet"}
+            onClick={() => copy(tServiceUsers("copySuccess"))}
+            aria-label={t("copySnippetAria")}
             className={
               "self-center text-nb-gray-400 hover:text-nb-gray-100 transition-colors cursor-pointer"
             }
@@ -514,11 +515,11 @@ export function AgentConnectTabs({
                 }
               />
               <SmallParagraph className={"mt-3"}>
-                Pairs with a Kimi provider keeping the default upstream URL{" "}
-                <code className={"font-mono"}>https://api.moonshot.ai</code>.
-                The <code className={"font-mono"}>/anthropic</code> suffix in
-                the base URL rides through the endpoint to Moonshot, which
-                serves the Anthropic Messages API under that path.
+                {t.rich("kimiClaudeCodePairing", {
+                  code: (chunks) => (
+                    <code className={"font-mono"}>{chunks}</code>
+                  ),
+                })}
               </SmallParagraph>
             </>
           )}
@@ -572,17 +573,10 @@ export function AgentConnectTabs({
             ]}
           />
           <SmallParagraph className={"mt-3"}>
-            Pairs with a Kimi provider keeping the default upstream URL{" "}
-            <code className={"font-mono"}>https://api.moonshot.ai</code>. For
-            the OpenAI shape instead, use{" "}
-            <code className={"font-mono"}>
-              type = &quot;openai_legacy&quot;
-            </code>{" "}
-            with{" "}
-            <code className={"font-mono"}>
-              base_url = &quot;{openaiBase}&quot;
-            </code>
-            .
+            {t.rich("kimiCliOpenAiShape", {
+              code: (chunks) => <code className={"font-mono"}>{chunks}</code>,
+              openaiBase,
+            })}
           </SmallParagraph>
         </div>
       </TabsContent>

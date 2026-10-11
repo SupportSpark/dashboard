@@ -138,9 +138,87 @@ const collectGroupStrip = (
   });
 };
 
+/** Translator shape shared by next-intl's useTranslations/getTranslations. */
+type Translator = (
+  key: string,
+  values?: Record<string, string | number>,
+) => string;
+
+/**
+ * The group-deletion confirmation, in one place.
+ *
+ * It is assembled from sentences rather than one ICU message: it carries a
+ * variable-length name list plus up to four count-dependent clauses, and
+ * nesting that many ICU plurals inside a single string is where a translator
+ * loses the thread. Called from a useCallback, so t() runs during render.
+ */
+const describeGroupDeletion = (
+  t: Translator,
+  args: {
+    deletableCount: number;
+    names: string;
+    emptiedLive: Policy[];
+    emptiedDraft: Policy[];
+    emptiedAgent: string[];
+    blockerNames: string[];
+  },
+) => {
+  const {
+    deletableCount,
+    names,
+    emptiedLive,
+    emptiedDraft,
+    emptiedAgent,
+    blockerNames,
+  } = args;
+  const nameList = (list: Policy[]) =>
+    list.map((p) => `“${p.name ?? t("policy")}”`).join(", ");
+  const groupPart = t("deleteGroupTitleGroups", { count: deletableCount });
+  const parts = [
+    t("deleteGroupTitle", { group: groupPart, names }),
+    t("deleteGroupDescription"),
+  ];
+
+  if (emptiedLive.length > 0) {
+    parts.push(
+      t("deleteGroupEmptiedPolicies", {
+        count: emptiedLive.length,
+        policies: nameList(emptiedLive),
+      }),
+    );
+  }
+  if (emptiedDraft.length > 0) {
+    parts.push(
+      t("deleteGroupEmptiedDraftPolicies", {
+        count: emptiedDraft.length,
+        policies: nameList(emptiedDraft),
+      }),
+    );
+  }
+  if (emptiedAgent.length > 0) {
+    parts.push(
+      t("deleteGroupEmptiedAgentPolicies", {
+        count: emptiedAgent.length,
+        policies: emptiedAgent.join(", "),
+      }),
+    );
+  }
+  if (blockerNames.length > 0) {
+    parts.push(
+      t("deleteGroupBlockedByChanges", {
+        count: blockerNames.length,
+        changes: blockerNames.join(", "),
+      }),
+    );
+  }
+
+  return parts.join(" ");
+};
+
 // Every action here touches only the canvas and the changeset; the API runs on deploy.
 export function useDraftGroupActions() {
   const tCommon = useTranslations("common");
+  const t = useTranslations("controlCenter");
   const reactFlow = useReactFlow();
   const { setNodes, setEdges, setSelectedDestinationGroup } = useCanvasState();
   const { groups, policies } = useControlCenterData();
@@ -881,7 +959,7 @@ export function useDraftGroupActions() {
         existing,
       );
       const nameList = (list: Policy[]) =>
-        list.map((p) => `“${p.name ?? "Policy"}”`).join(", ");
+        list.map((p) => `“${p.name ?? t("policy")}”`).join(", ");
       // A draft policy is not deleted — it has nothing to delete yet. It stays in
       // the changeset carrying a blocking issue until the user completes it.
       const emptiedLive = emptied.filter((p) => !p.id?.startsWith("new-"));
@@ -920,56 +998,18 @@ export function useDraftGroupActions() {
         .map(({ policy }) => `“${policy.name}”`);
 
       const choice = await confirm({
-        title: `Delete ${
-          deletable.length === 1 ? "group" : `${deletable.length} groups`
-        } ${names}?`,
-        description: `${
-          deletable.length === 1 ? "It" : "They"
-        } will be marked for deletion and deleted when you review and deploy.${
-          emptiedLive.length > 0
-            ? ` This also deletes ${
-                emptiedLive.length === 1
-                  ? "the policy"
-                  : `${emptiedLive.length} policies`
-              } ${nameList(
-                emptiedLive,
-              )}, which would be left authorizing nothing.`
-            : ""
-        }${
-          emptiedDraft.length > 0
-            ? ` ${
-                emptiedDraft.length === 1
-                  ? "The new policy"
-                  : `${emptiedDraft.length} new policies`
-              } ${nameList(
-                emptiedDraft,
-              )} would be left without a source or destination, and won't deploy until you complete ${
-                emptiedDraft.length === 1 ? "it" : "them"
-              }.`
-            : ""
-        }${
-          emptiedAgent.length > 0
-            ? ` ${
-                emptiedAgent.length === 1
-                  ? "The agent policy"
-                  : `${emptiedAgent.length} agent policies`
-              } ${emptiedAgent.join(", ")} authorize nothing without ${
-                deletable.length === 1 ? "it" : "them"
-              } and are deleted too.`
-            : ""
-        }${
-          blockerNames.length > 0
-            ? ` ${
-                blockerNames.length === 1 ? "Your change to" : "Your changes to"
-              } ${blockerNames.join(", ")} still ${
-                blockerNames.length === 1 ? "references" : "reference"
-              } ${
-                deletable.length === 1 ? "it" : "them"
-              }, and the deletion can't deploy until you take the group off ${
-                blockerNames.length === 1 ? "it" : "them"
-              }.`
-            : ""
-        }`,
+        title: t("deleteGroupTitle", {
+          group: t("deleteGroupTitleGroups", { count: deletable.length }),
+          names,
+        }),
+        description: describeGroupDeletion(t, {
+          deletableCount: deletable.length,
+          names,
+          emptiedLive,
+          emptiedDraft,
+          emptiedAgent,
+          blockerNames,
+        }),
         confirmText: tCommon("delete"),
         cancelText: tCommon("cancel"),
         type: "danger",
@@ -980,7 +1020,15 @@ export function useDraftGroupActions() {
       deleteGroups(deletable);
       return true;
     },
-    [confirm, deleteGroups, policySnapshots, agentPolicySnapshots, changes],
+    [
+      confirm,
+      deleteGroups,
+      policySnapshots,
+      agentPolicySnapshots,
+      changes,
+      t,
+      tCommon,
+    ],
   );
 
   return {

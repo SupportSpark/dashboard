@@ -1,4 +1,5 @@
 import useFetchApi from "@utils/api";
+import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 import { Network, NetworkRouter } from "@/interfaces/Network";
 import { usePeers } from "@/contexts/PeersProvider";
@@ -16,6 +17,7 @@ type Props = {
 };
 
 export const NetworkRoutingPeerCount = ({ network }: Props) => {
+  const tCommon = useTranslations("common");
   const { peers } = usePeers();
   const { groups } = useGroups();
   const { setRoutingPeerModal } = useDraftMode();
@@ -40,7 +42,7 @@ export const NetworkRoutingPeerCount = ({ network }: Props) => {
           return {
             key: r.id,
             peerOs: peer?.os,
-            name: peer?.name ?? group?.name ?? "Routing Peer",
+            name: peer?.name ?? group?.name ?? tCommon("routingPeer"),
             isGroup: !r.peer,
             peersCount: !r.peer ? group?.peers_count ?? 0 : undefined,
             enabled: r.enabled,
@@ -49,7 +51,7 @@ export const NetworkRoutingPeerCount = ({ network }: Props) => {
         }),
       ),
     // eslint-disable-next-line react-hooks/exhaustive-deps -- keyed on network?.id so revalidation doesn't rebuild rows
-    [apiRouters, peers, groups, network?.id],
+    [apiRouters, peers, groups, network?.id, tCommon],
   );
 
   return (

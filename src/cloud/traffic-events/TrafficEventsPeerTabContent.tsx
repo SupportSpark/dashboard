@@ -319,6 +319,7 @@ const TrafficEventsPeerDetailTable = ({
   totalEvents?: number;
 }) => {
   const tte = useTranslations("trafficEvents");
+  const tPolicies = useTranslations("policies");
   const { mutate } = useSWRConfig();
   const router = useRouter();
   const [sorting, setSorting] = useState<SortingState>([
@@ -352,13 +353,13 @@ const TrafficEventsPeerDetailTable = ({
         return <TrafficEventsDetailRow event={e} className={"ml-[11px]"} />;
       }}
       tableClassName={"mt-0"}
-      columns={TrafficEventsTableColumns(tte)}
+      columns={TrafficEventsTableColumns(tte, tPolicies)}
       keepStateInLocalStorage={false}
       data={events}
       globalFilter={searchQuery}
       onGlobalFilterChange={onSearchChange}
       manualFiltering={true}
-      searchPlaceholder={"Search by ip, port, peer or resource..."}
+      searchPlaceholder={tte("searchPlaceholder")}
       columnVisibility={{
         user: false,
         source: true,
@@ -385,12 +386,14 @@ const TrafficEventsPeerDetailTable = ({
         <NoResults
           className={"py-4"}
           title={
-            isSettingEnabled ? "No Traffic Events" : "Traffic Events Disabled"
+            isSettingEnabled
+              ? tte("noTrafficEvents")
+              : tte("trafficEventsDisabled")
           }
           description={
             isSettingEnabled
-              ? "It looks like you don't have any traffic events. Traffic events will appear here once clients start connecting to your network."
-              : "It looks like you don't have any traffic events. To start receiving traffic events, you need to enable it in your account settings."
+              ? tte("peerTabEmptyDescription")
+              : tte("peerTabDisabledDescription")
           }
           icon={<ArrowLeftRightIcon size={20} className={"text-nb-gray-200"} />}
         >

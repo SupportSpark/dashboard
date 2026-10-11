@@ -30,10 +30,10 @@ account }: Readonly<Props>) {
 
   const toggleMetricsPush = async (toggle: boolean) => {
     notify({
-      title: "Metrics",
-      description: `Metrics push successfully ${
-        toggle ? "enabled" : "disabled"
-      }.`,
+      title: t("metrics"),
+      description: t("metricsPushUpdated", {
+        state: toggle ? t("enabledState") : t("disabledState"),
+      }),
       promise: saveRequest
         .put({
           id: account.id,
@@ -56,25 +56,25 @@ account }: Readonly<Props>) {
         <Breadcrumbs>
           <Breadcrumbs.Item
             href={"/settings"}
-            label={"Settings"}
+            label={t("title")}
             icon={<SettingsIcon size={13} />}
           />
           <Breadcrumbs.Item
             href={"/settings?tab=metrics"}
-            label={"Metrics"}
+            label={t("metrics")}
             icon={<ChartNoAxesCombined size={14} />}
             active
           />
         </Breadcrumbs>
         <div>
-          <h1>Metrics</h1>
+          <h1>{t("metrics")}</h1>
           <Paragraph className={"block"}>
-            Share client performance metrics to help us improve NetBird.{" "}
+            {t("metricsDescription")}{" "}
             <InlineLink
               href={"https://docs.netbird.io/manage/client-metrics"}
               target={"_blank"}
             >
-              Learn more
+              {t("learnMore")}
               <ExternalLinkIcon size={12} />
             </InlineLink>
           </Paragraph>
@@ -87,12 +87,10 @@ account }: Readonly<Props>) {
           label={
             <>
               <ChartNoAxesCombined size={15} />
-              Share performance metrics
+              {t("sharePerformanceMetrics")}
             </>
           }
-          helpText={
-            "When enabled, clients will periodically send performance data to help us identify and fix issues."
-          }
+          helpText={t("sharePerformanceMetricsHelp")}
           disabled={!permission.settings.update}
         />
       </div>

@@ -37,6 +37,9 @@ export default function OidcSetupModal({
   logo,
   discoveryPlaceholder,
 }: Readonly<Props>) {
+  const t = useTranslations("idpSync");
+  const tCommon = useTranslations("common");
+  const tIntegrations = useTranslations("integrations");
   const { createOrUpdateConnection, verifyDomain, mutate } =
     useEnterpriseConnections();
   const [step, setStep] = useState(0);
@@ -54,9 +57,9 @@ export default function OidcSetupModal({
 
   const connect = () => {
     notify({
-      title: "Okta SSO Integration",
-      description: "Okta SSO was successfully connected",
-      loadingMessage: "Connecting Okta SSO...",
+      title: t("oktaSsoIntegrationTitle"),
+      description: t("oktaSsoWasConnected"),
+      loadingMessage: t("oktaSsoConnecting"),
       promise: createOrUpdateConnection({
         discovery_url: discoveryUrl,
         client_id: clientId,
@@ -72,16 +75,16 @@ export default function OidcSetupModal({
         );
         if (!oktaConnection) {
           notify({
-            title: "Okta SSO Integration",
-            description: "Failed to connect Okta SSO",
+            title: t("oktaSsoIntegrationTitle"),
+            description: t("oktaSsoConnectFailed"),
           });
           return;
         }
         const domain = oktaConnection.domains?.[0] || undefined;
         if (!domain) {
           notify({
-            title: "Okta SSO Integration",
-            description: "Failed to connect Okta SSO",
+            title: t("oktaSsoIntegrationTitle"),
+            description: t("oktaSsoConnectFailed"),
           });
           return;
         }
@@ -119,21 +122,19 @@ export default function OidcSetupModal({
 
           <IntegrationModalHeader
             image={logo}
-            title={`Connect NetBird with ${name}`}
-            description={`Use ${name} as a Single Sign-On provider to authenticate users. Follow the steps below to get started.`}
+            title={t("connectNetBirdWith", { name })}
+            description={t("oidcUseAsProvider", { name })}
           />
 
           <div className={"px-8 py-3 flex flex-col gap-0 mt-2"}>
             <Steps>
               <Steps.Step step={1}>
-                <p className={"font-normal"}>
-                  {
-                    "Obtaining the Client ID and Secret differs across providers. Please check your provider's documentation."
-                  }
-                </p>
+                <p className={"font-normal"}>{t("oidcClientCredentialsHelp")}</p>
                 <Input
                   customPrefix={
-                    <span className={"min-w-[90px]"}>Client ID</span>
+                    <span className={"min-w-[90px]"}>
+                      {tIntegrations("clientIdLabel")}
+                    </span>
                   }
                   placeholder={"0obflxtwxoVQcur0z3f3"}
                   value={clientId}
@@ -141,7 +142,9 @@ export default function OidcSetupModal({
                 />
                 <Input
                   customPrefix={
-                    <span className={"min-w-[90px]"}>Client Secret</span>
+                    <span className={"min-w-[90px]"}>
+                      {tIntegrations("clientSecretLabel")}
+                    </span>
                   }
                   placeholder={
                     "jfgbU1Wu3XWAKhGUF4d-PX54DSm3pAQCyNtpxp7Nu8Ij22stSz8_6KnWbO4nQBIb"
@@ -154,14 +157,14 @@ export default function OidcSetupModal({
               {name.toLowerCase() !== "jumpcloud" && (
                 <Steps.Step step={2}>
                   <p className={"font-normal"}>
-                    Please provide the <Mark>OpenID Connect Discovery</Mark>{" "}
-                    endpoint. It should be publicly accessible and SSL secured.
+                    {t.rich("oidcDiscoveryEndpointHelp", {
+                      mark: (chunks) => <Mark>{chunks}</Mark>,
+                    })}
                   </p>
                   <Input
                     customPrefix={<GlobeIcon size={16} />}
                     placeholder={
-                      discoveryPlaceholder ||
-                      "https://id.mydomain.com/.well-known/openid-configuration"
+                      discoveryPlaceholder || t("oidcDiscoveryPlaceholder")
                     }
                     value={discoveryUrl}
                     onChange={(e) => setDiscoveryUrl(e.target.value)}
@@ -174,9 +177,9 @@ export default function OidcSetupModal({
                 line={false}
               >
                 <p className={"font-normal"}>
-                  Enter your
-                  <Mark>Primary E-Mail Domain</Mark> which will later be used to
-                  log in to NetBird.
+                  {t.rich("primaryEmailDomainStep", {
+                    mark: (chunks) => <Mark>{chunks}</Mark>,
+                  })}
                 </p>
                 <Input
                   customPrefix={<GlobeIcon size={16} />}
@@ -190,26 +193,30 @@ export default function OidcSetupModal({
           <ModalFooter className={"items-center"}>
             <div className={"w-full"}>
               <Paragraph className={"text-sm mt-auto"}>
-                Learn more about
-                <InlineLink
-                  href={
-                    "https://docs.netbird.io/how-to/register-machines-using-setup-keys"
-                  }
-                  target={"_blank"}
-                >
-                  {name} Integration
-                  <ExternalLinkIcon size={12} />
-                </InlineLink>
+                {t.rich("learnMoreAboutIntegration", {
+                  link: (chunks) => (
+                    <InlineLink
+                      href={
+                        "https://docs.netbird.io/how-to/register-machines-using-setup-keys"
+                      }
+                      target={"_blank"}
+                    >
+                      {chunks}
+                      <ExternalLinkIcon size={12} />
+                    </InlineLink>
+                  ),
+                  name,
+                })}
               </Paragraph>
             </div>
             <div className={"flex gap-3 w-full justify-end"}>
               <ModalClose asChild={true}>
-                <Button variant={"secondary"}>Cancel</Button>
+                <Button variant={"secondary"}>{tCommon("cancel")}</Button>
               </ModalClose>
 
               <Button variant={"primary"}>
                 <Repeat size={16} />
-                Connect
+                {t("connect")}
               </Button>
             </div>
           </ModalFooter>

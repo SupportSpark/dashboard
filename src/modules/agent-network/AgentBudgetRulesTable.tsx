@@ -100,7 +100,7 @@ function TargetGroupsCell({ rule }: { rule: AgentBudgetRule }) {
     <MultipleGroups
       groups={groups}
       label={t("targetGroups")}
-      description={"This limit applies to members of these groups."}
+      description={t("targetGroupsLimitCellDescription")}
     />
   );
 }
@@ -167,9 +167,17 @@ function TokenCapCell({ rule }: { rule: AgentBudgetRule }) {
       content={
         <div className={"text-xs space-y-0.5"}>
           <div className={"font-semibold"}>{t("tokenLimit")}</div>
-          <div>· Group: {capDisplay(tl.groupCap, false)}</div>
-          <div>· Individual: {capDisplay(tl.userCap, false)}</div>
-          <div>· Resets every {formatLimitWindow(tl.windowSeconds)}</div>
+          <div>{t("groupCapTooltip", { value: capDisplay(tl.groupCap, false) })}</div>
+          <div>
+            {t("individualCapTooltip", {
+              value: capDisplay(tl.userCap, false),
+            })}
+          </div>
+          <div>
+            {t("resetsEveryTooltip", {
+              window: formatLimitWindow(tl.windowSeconds),
+            })}
+          </div>
         </div>
       }
     >
@@ -190,9 +198,19 @@ function BudgetCapCell({ rule }: { rule: AgentBudgetRule }) {
       content={
         <div className={"text-xs space-y-0.5"}>
           <div className={"font-semibold"}>{t("budgetLimit")}</div>
-          <div>· Group: {capDisplay(bl.groupCapUsd, true)}</div>
-          <div>· Individual: {capDisplay(bl.userCapUsd, true)}</div>
-          <div>· Resets every {formatLimitWindow(bl.windowSeconds)}</div>
+          <div>
+            {t("groupCapTooltip", { value: capDisplay(bl.groupCapUsd, true) })}
+          </div>
+          <div>
+            {t("individualCapTooltip", {
+              value: capDisplay(bl.userCapUsd, true),
+            })}
+          </div>
+          <div>
+            {t("resetsEveryTooltip", {
+              window: formatLimitWindow(bl.windowSeconds),
+            })}
+          </div>
         </div>
       }
     >
@@ -255,12 +273,13 @@ function ActionsCell({
 }) {
   const t = useTranslations("agentNetwork");
   const tCommon = useTranslations("common");
+  const tPolicies = useTranslations("policies");
   const { confirm } = useDialog();
   const { toggleBudgetRule, deleteBudgetRule } = useAIProviders();
 
   const onDelete = async () => {
     const ok = await confirm({
-      title: `Delete '${rule.name}'?`,
+      title: t("deleteGlobalLimitTitle", { name: rule.name }),
       description: t("deleteGlobalLimitConfirm"),
       confirmText: tCommon("delete"),
       cancelText: tCommon("cancel"),
@@ -294,7 +313,7 @@ function ActionsCell({
           <DropdownMenuItem onClick={() => toggleBudgetRule(rule.id)}>
             <div className={"flex gap-3 items-center"}>
               <Power size={14} className={"shrink-0"} />
-              {rule.enabled ? tCommon("disable") : "Enable"}
+              {rule.enabled ? tCommon("disable") : tPolicies("enable")}
             </div>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
@@ -427,12 +446,12 @@ export default function AgentBudgetRulesTable() {
 
       <DataTable
         isLoading={budgetRulesLoading}
-        text={"Global Limits"}
+        text={t("globalLimitsTitle")}
         sorting={sorting}
         setSorting={setSorting}
         columns={columns}
         data={budgetRules}
-        searchPlaceholder={"Search global limits by name..."}
+        searchPlaceholder={t("searchGlobalLimitsPlaceholder")}
         onRowClick={(row) => openEdit(row.original)}
         getStartedCard={
           <GetStartedTest
@@ -448,10 +467,8 @@ export default function AgentBudgetRulesTable() {
                 size={"large"}
               />
             }
-            title={"Set a Global Limit"}
-            description={
-              "Global limits cap token usage and spend across every policy. Apply a limit account-wide, or scope it to specific groups or users."
-            }
+            title={t("setGlobalLimitTitle")}
+            description={t("setGlobalLimitDescription")}
             button={
               <Button
                 variant={"primary"}

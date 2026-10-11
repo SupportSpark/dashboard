@@ -25,6 +25,7 @@ type Props = {
 export const OnboardingAgentDevice = ({
 onBack, onNext, device }: Props) => {
   const tonb = useTranslations("onboarding");
+  const tCommon = useTranslations("common");
   const [open, setOpen] = useState(false);
 
   // Close the install modal automatically once the device shows up so the
@@ -42,9 +43,7 @@ onBack, onNext, device }: Props) => {
             "text-sm text-nb-gray-300 font-light mt-2 block text-center sm:px-4"
           }
         >
-          {`Agent Network endpoints are private and reachable only over the
-          NetBird overlay. Install the client and sign in to join the network
-          with keyless, encrypted access.`}
+          {tonb("agentDeviceIntro")}
         </div>
       </div>
 
@@ -58,11 +57,11 @@ onBack, onNext, device }: Props) => {
             <DeviceCard device={device} className={"justify-center"} />
             <div className={"flex items-center gap-2 text-sm"}>
               <CheckCircle2Icon size={16} className={"text-green-500"} />
-              <span>Your device is connected to the network.</span>
+              <span>{tonb("deviceConnectedToNetwork")}</span>
             </div>
           </div>
         ) : (
-          <WaitingForDevice text={"Waiting for your device to connect"} />
+          <WaitingForDevice text={tonb("waitingForYourDeviceToConnect")} />
         )}
       </div>
 
@@ -80,14 +79,17 @@ onBack, onNext, device }: Props) => {
         ) : (
           <Button variant={"primary"} onClick={() => setOpen(true)}>
             <DownloadIcon size={16} />
-            Install NetBird
+            {tCommon("installNetBird")}
           </Button>
         )}
       </div>
 
       <Modal open={open} onOpenChange={setOpen}>
         <ModalContent className={"!z-[70]"}>
-          <SetupModalContent title={"Install NetBird"} isUserDevice={true} />
+          <SetupModalContent
+            title={tCommon("installNetBird")}
+            isUserDevice={true}
+          />
         </ModalContent>
       </Modal>
     </div>

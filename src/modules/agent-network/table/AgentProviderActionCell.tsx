@@ -22,6 +22,7 @@ type Props = {
 export default function AgentProviderActionCell({ provider }: Readonly<Props>) {
   const t = useTranslations("agentNetwork");
   const tCommon = useTranslations("common");
+  const tPolicies = useTranslations("policies");
   const { confirm } = useDialog();
   const { policies, toggleProvider, deleteProvider, openProviderEdit } =
     useAIProviders();
@@ -38,7 +39,7 @@ export default function AgentProviderActionCell({ provider }: Readonly<Props>) {
 
   const handleDelete = async () => {
     const ok = await confirm({
-      title: `Delete '${provider.name}'?`,
+      title: t("deleteProviderTitle", { name: provider.name }),
       description: t("deleteProviderConfirm"),
       confirmText: tCommon("delete"),
       cancelText: tCommon("cancel"),
@@ -84,7 +85,7 @@ export default function AgentProviderActionCell({ provider }: Readonly<Props>) {
             <DropdownMenuItem onClick={() => toggleProvider(provider.id)}>
               <div className={"flex gap-3 items-center"}>
                 <Power size={14} className={"shrink-0"} />
-                {provider.enabled ? tCommon("disable") : "Enable"}
+                {provider.enabled ? tCommon("disable") : tPolicies("enable")}
               </div>
             </DropdownMenuItem>
           )}
@@ -97,11 +98,9 @@ export default function AgentProviderActionCell({ provider }: Readonly<Props>) {
               interactive={false}
               content={
                 <div className={"text-xs max-w-xs"}>
-                  This provider is referenced by{" "}
-                  {referencingPolicies.length === 1
-                    ? "1 policy"
-                    : `${referencingPolicies.length} policies`}{" "}
-                  and cannot be deleted. Detach it from the policy first.
+                  {t("providerInUseCannotDelete", {
+                    count: referencingPolicies.length,
+                  })}
                 </div>
               }
             >

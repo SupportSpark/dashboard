@@ -734,14 +734,46 @@ type PreviewEdge = { source: string; target: string; data?: any };
 const plural = (n: number, one: string, many = one + "s") =>
   `${n} ${n === 1 ? one : many}`;
 
-/** Human-readable side effects of removing `change`, for the confirm dialog. */
+/** Human-readable side effects of removing `change`, for the confirm dialog.
+ *
+ * `t`, when given, localizes the summary and the effect lines. It is optional for
+ * the same reason getChangeIssue's is: the pure logic stays usable (and testable)
+ * without a React context.
+ */
 export function previewRemoveChange(
   change: DraftChange,
   changes: DraftChange[],
   nodes: PreviewNode[],
   edges: PreviewEdge[],
+  t?: (
+    key: string,
+    values?: Record<string, string | number>,
+  ) => string,
 ): CascadePreview {
   const effects: string[] = [];
+  /** Translate when a translator was supplied, otherwise keep the English. */
+  const l = (
+    key: string,
+    fallback: string,
+    values?: Record<string, string | number>,
+  ) => (t ? t(key, values) : fallback);
+  /**
+   * Effect line whose catalog entry is an ICU plural.
+   *
+   * `fallback` is the COMPLETE English sentence, not a bare noun phrase. This
+   * module is a pure function with no translator under unit test, and every
+   * `cascade*` catalog entry wraps the count in a sentence ("Detaches # resources
+   * to …"). An earlier version built the fallback from `plural(n, one, many)`,
+   * which dropped that wrapper — so the untranslated path disagreed with the
+   * translated one and produced "1 resource" where callers expect
+   * "Detaches 1 resource to …".
+   */
+  const count = (
+    n: number,
+    key: string,
+    fallback: string,
+    values: Record<string, string | number> = {},
+  ) => l(key, fallback, { count: n, ...values });
 
   const policiesTouchingNode = (nodeId: string) => {
     const ids = new Set<string>();
@@ -782,14 +814,32 @@ export function previewRemoveChange(
       ).length;
       if (policyCount)
         effects.push(
+          count(
+          policyCount,
+          "cascadeRemovesFromPolicies",
           `Removes it from ${plural(policyCount, "policy", "policies")}`,
+        ),
         );
       if (resourceCount)
-        effects.push(`Removes it from ${plural(resourceCount, "resource")}`);
+        effects.push(
+          count(
+          resourceCount,
+          "cascadeRemovesFromResources",
+          `Removes it from ${plural(resourceCount, "resource")}`,
+        ),
+        );
       if (routerCount)
-        effects.push(`Drops ${plural(routerCount, "routing-peer change")}`);
+        effects.push(
+          count(
+            routerCount,
+            "cascadeDropsRoutingPeerChanges",
+            `Drops ${plural(routerCount, "routing-peer change")}`,
+          ),
+        );
       return {
-        summary: `Remove the new group “${change.name}”?`,
+        summary: l("cascadeRemoveNewGroup", `Remove the new group “${change.name}”?`, {
+          name: change.name,
+        }),
         effects,
       };
     }
@@ -803,12 +853,30 @@ export function previewRemoveChange(
       ).length;
       if (childCount)
         effects.push(
-          `Detaches ${plural(childCount, "resource")} to “No Network”`,
+          count(
+            childCount,
+            "cascadeDetachesResources",
+            `Detaches ${plural(childCount, "resource")} to “${l(
+              "noNetwork",
+              "No Network",
+            )}”`,
+            { network: l("noNetwork", "No Network") },
+          ),
         );
       if (routerCount)
-        effects.push(`Drops ${plural(routerCount, "routing-peer change")}`);
+        effects.push(
+          count(
+            routerCount,
+            "cascadeDropsRoutingPeerChanges",
+            `Drops ${plural(routerCount, "routing-peer change")}`,
+          ),
+        );
       return {
-        summary: `Remove the new network “${change.name}”?`,
+        summary: l(
+          "cascadeRemoveNewNetwork",
+          `Remove the new network “${change.name}”?`,
+          { name: change.name },
+        ),
         effects,
       };
     }
@@ -825,10 +893,18 @@ export function previewRemoveChange(
       ).length;
       if (policyCount)
         effects.push(
+          count(
+          policyCount,
+          "cascadeRemovesFromPolicies",
           `Removes it from ${plural(policyCount, "policy", "policies")}`,
+        ),
         );
       return {
-        summary: `Remove the new resource “${change.name}”?`,
+        summary: l(
+          "cascadeRemoveNewResource",
+          `Remove the new resource “${change.name}”?`,
+          { name: change.name },
+        ),
         effects,
       };
     }
@@ -836,8 +912,17 @@ export function previewRemoveChange(
     case "install-peer": {
       if (change.installedPeerId) {
         return {
-          summary: `Remove the installed peer “${change.name}” from this list?`,
-          effects: ["The peer itself stays on the canvas and in your network"],
+          summary: l(
+            "cascadeRemoveInstalledPeer",
+            `Remove the installed peer “${change.name}” from this list?`,
+            { name: change.name },
+          ),
+          effects: [
+            l(
+              "cascadeInstalledPeerStays",
+              "The peer itself stays on the canvas and in your network",
+            ),
+          ],
         };
       }
       const nodeId = `peer-${change.clientId}`;
@@ -849,64 +934,129 @@ export function previewRemoveChange(
       ).length;
       if (policyCount)
         effects.push(
+          count(
+          policyCount,
+          "cascadeRemovesFromPolicies",
           `Removes it from ${plural(policyCount, "policy", "policies")}`,
+        ),
         );
       if (routerCount)
-        effects.push(`Drops ${plural(routerCount, "routing-peer change")}`);
-      effects.push("Deletes its generated setup key");
+        effects.push(
+          count(
+            routerCount,
+            "cascadeDropsRoutingPeerChanges",
+            `Drops ${plural(routerCount, "routing-peer change")}`,
+          ),
+        );
+      effects.push(l("cascadeDeletesSetupKey", "Deletes its generated setup key"));
       return {
-        summary: `Remove the peer “${change.name}”?`,
+        summary: l("cascadeRemovePeer", `Remove the peer “${change.name}”?`, {
+          name: change.name,
+        }),
         effects,
       };
     }
 
     case "delete-network":
       return {
-        summary: `Restore the network “${change.name}”?`,
-        effects: ["Re-adds it and its resources to the canvas"],
+        summary: l(
+          "cascadeRestoreNetwork",
+          `Restore the network “${change.name}”?`,
+          { name: change.name },
+        ),
+        effects: [
+          l(
+            "cascadeRestoreNetworkEffect",
+            "Re-adds it and its resources to the canvas",
+          ),
+        ],
       };
     case "delete-group":
       return {
-        summary: `Restore the group “${change.name}”?`,
-        effects: ["Re-adds it to the canvas and its policies"],
+        summary: l(
+          "cascadeRestoreGroup",
+          `Restore the group “${change.name}”?`,
+          { name: change.name },
+        ),
+        effects: [
+          l(
+            "cascadeRestoreGroupEffect",
+            "Re-adds it to the canvas and its policies",
+          ),
+        ],
       };
     case "delete-policy":
       return {
-        summary: `Restore the policy “${change.name}”?`,
-        effects: ["Re-adds it to the canvas"],
+        summary: l(
+          "cascadeRestorePolicy",
+          `Restore the policy “${change.name}”?`,
+          { name: change.name },
+        ),
+        effects: [l("cascadeReaddToCanvas", "Re-adds it to the canvas")],
       };
     case "delete-resource":
       return {
-        summary: `Restore the resource “${change.name}”?`,
-        effects: ["Re-adds it to the canvas"],
+        summary: l(
+          "cascadeRestoreResource",
+          `Restore the resource “${change.name}”?`,
+          { name: change.name },
+        ),
+        effects: [l("cascadeReaddToCanvas", "Re-adds it to the canvas")],
       };
 
     case "update-router":
       return {
-        summary: `Revert your changes to “${
-          change.peerName ?? change.groupName ?? "routing peer"
-        }”?`,
-        effects: ["Restores the live values on the canvas"],
+        summary: l(
+          "cascadeRevertChangesTo",
+          `Revert your changes to “${change.peerName ?? change.groupName ?? "routing peer"}”?`,
+          {
+            name:
+              change.peerName ??
+              change.groupName ??
+              l("routingPeerFallback", "routing peer"),
+          },
+        ),
+        effects: [
+          l("cascadeRestoresLiveValues", "Restores the live values on the canvas"),
+        ],
       };
     case "update-group":
     case "update-network":
     case "update-policy":
     case "update-resource":
       return {
-        summary: `Revert your changes to “${change.name}”?`,
-        effects: ["Restores the live values on the canvas"],
+        summary: l(
+          "cascadeRevertChangesTo",
+          `Revert your changes to “${change.name}”?`,
+          { name: change.name },
+        ),
+        effects: [
+          l("cascadeRestoresLiveValues", "Restores the live values on the canvas"),
+        ],
       };
 
     case "create-policy":
-      return { summary: `Remove the new policy “${change.name}”?`, effects };
+      return {
+        summary: l(
+          "cascadeRemoveNewPolicy",
+          `Remove the new policy “${change.name}”?`,
+          { name: change.name },
+        ),
+        effects,
+      };
     case "create-router":
       return {
-        summary: `Remove the routing peer “${
-          change.peerName ?? change.groupName ?? ""
-        }”?`,
+        summary: l(
+          "cascadeRemoveRoutingPeer",
+          `Remove the routing peer “${change.peerName ?? change.groupName ?? ""}”?`,
+          { name: change.peerName ?? change.groupName ?? "" },
+        ),
         effects,
       };
     default:
-      return { summary: "Remove this change?", effects };
+      return {
+        summary: l("cascadeRemoveChange", "Remove this change?"),
+        effects,
+      };
   }
 }

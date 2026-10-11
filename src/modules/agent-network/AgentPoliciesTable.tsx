@@ -85,6 +85,7 @@ function NameCell({ policy }: { policy: AgentPolicy }) {
 }
 
 function SourceCell({ policy }: { policy: AgentPolicy }) {
+  const t = useTranslations("agentNetwork");
   const { groups: realGroups } = useGroups();
   if (policy.sourceGroups.length === 0) return <EmptyRow />;
   const groups: Group[] = policy.sourceGroups.map((id) => {
@@ -96,10 +97,8 @@ function SourceCell({ policy }: { policy: AgentPolicy }) {
   return (
     <MultipleGroups
       groups={groups}
-      label={"Source Groups"}
-      description={
-        "Members of these groups are allowed to call the destination providers."
-      }
+      label={t("sourceGroupsLabel")}
+      description={t("sourceGroupsCellDescription")}
     />
   );
 }
@@ -215,7 +214,7 @@ function ModelsCell({
             {listed.map((model) => (
               <div key={model}>· {model}</div>
             ))}
-            {rest > 0 && <div>· and {rest} more</div>}
+            {rest > 0 && <div>{t("andNMore", { count: rest })}</div>}
           </div>
         }
       >
@@ -268,9 +267,19 @@ function LimitsCell({
           content={
             <div className={"text-xs space-y-0.5"}>
               <div className={"font-semibold"}>{t("tokenLimit")}</div>
-              <div>· Group: {capDisplay(tl.groupCap, false)}</div>
-              <div>· Individual: {capDisplay(tl.userCap, false)}</div>
-              <div>· Resets every {formatLimitWindow(tl.windowSeconds)}</div>
+              <div>
+                {t("groupCapTooltip", { value: capDisplay(tl.groupCap, false) })}
+              </div>
+              <div>
+                {t("individualCapTooltip", {
+                  value: capDisplay(tl.userCap, false),
+                })}
+              </div>
+              <div>
+                {t("resetsEveryTooltip", {
+                  window: formatLimitWindow(tl.windowSeconds),
+                })}
+              </div>
             </div>
           }
         >
@@ -285,9 +294,21 @@ function LimitsCell({
           content={
             <div className={"text-xs space-y-0.5"}>
               <div className={"font-semibold"}>{t("budgetLimit")}</div>
-              <div>· Group: {capDisplay(bl.groupCapUsd, true)}</div>
-              <div>· Individual: {capDisplay(bl.userCapUsd, true)}</div>
-              <div>· Resets every {formatLimitWindow(bl.windowSeconds)}</div>
+              <div>
+                {t("groupCapTooltip", {
+                  value: capDisplay(bl.groupCapUsd, true),
+                })}
+              </div>
+              <div>
+                {t("individualCapTooltip", {
+                  value: capDisplay(bl.userCapUsd, true),
+                })}
+              </div>
+              <div>
+                {t("resetsEveryTooltip", {
+                  window: formatLimitWindow(bl.windowSeconds),
+                })}
+              </div>
             </div>
           }
         >
@@ -405,7 +426,7 @@ function ActionsCell({
           <DropdownMenuItem onClick={() => togglePolicy(policy.id)}>
             <div className={"flex gap-3 items-center"}>
               <Power size={14} className={"shrink-0"} />
-              {policy.enabled ? tCommon("disable") : "Enable"}
+              {policy.enabled ? tCommon("disable") : tPolicies("enable")}
             </div>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
@@ -630,7 +651,7 @@ export default function AgentPoliciesTable({ headingTarget }: Readonly<Props>) {
         columns={columns}
         data={policies}
         initialSearch={initialSearch}
-        searchPlaceholder={"Search by name or description..."}
+        searchPlaceholder={t("searchPoliciesPlaceholder")}
         // Clicking the Models cell lands on the tab that actually owns the
         // model allowlist — the guardrails attached to the policy.
         onRowClick={(row, cell) =>
@@ -647,10 +668,8 @@ export default function AgentPoliciesTable({ headingTarget }: Readonly<Props>) {
                 size={"large"}
               />
             }
-            title={"Create your first policy"}
-            description={
-              "Policies connect user and agent groups to AI providers, with optional token and budget limits and guardrails for model access and prompt capture."
-            }
+            title={t("createFirstPolicyTitle")}
+            description={t("createFirstPolicyDescription")}
             button={
               <Button
                 variant={"primary"}

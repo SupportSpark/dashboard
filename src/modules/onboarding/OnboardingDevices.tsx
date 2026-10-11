@@ -76,7 +76,9 @@ export const OnboardingDevices = ({
       )}
     >
       {firstRoutingPeer && resource && (
-        <span className={"text-xs text-nb-gray-500"}>Network</span>
+        <span className={"text-xs text-nb-gray-500"}>
+          {tonb("networkLabel")}
+        </span>
       )}
 
       <div
@@ -120,8 +122,8 @@ export const OnboardingDevices = ({
           <WaitingForDevice
             text={
               !firstRoutingPeer
-                ? "Waiting for your routing peer to connect"
-                : "Waiting for your own device to connect"
+                ? tonb("waitingForRoutingPeerToConnect")
+                : tonb("waitingForOwnDeviceToConnect")
             }
           />
         )}

@@ -209,8 +209,14 @@ export default function AgentAccessLogTable({
 
   const providerDisplay = useCallback(
     (entry: AIAccessLogEntry): ProviderDisplay =>
-      resolveProviderDisplay(entry, providerByConfigId, catalogNameById),
-    [providerByConfigId, catalogNameById],
+      resolveProviderDisplay(
+        entry,
+        providerByConfigId,
+        catalogNameById,
+        t,
+        tCommon,
+      ),
+    [providerByConfigId, catalogNameById, t, tCommon],
   );
 
   const columns = useMemo<ColumnDef<AIAccessLogEntry>[]>(
@@ -754,7 +760,7 @@ export default function AgentAccessLogTable({
           <AgentAccessLogExpandedRow entry={row as AIAccessLogEntry} />
         )
       }
-      searchPlaceholder={"Search by user, agent, model, prompt…"}
+      searchPlaceholder={t("searchAccessLogPlaceholder")}
       text={grouped ? t("sessions") : t("requests")}
       uniqueKey={
         grouped
@@ -772,10 +778,8 @@ export default function AgentAccessLogTable({
               size={"large"}
             />
           }
-          title={"No Access Log Entries Yet"}
-          description={
-            "No agent network requests yet. Check that providers are connected, policies allow traffic, and log collection is on."
-          }
+          title={t("noAccessLogEntriesTitle")}
+          description={t("noAccessLogEntriesDescription")}
           learnMore={
             <>
               {tCommon("learnMoreAbout")}
@@ -850,12 +854,13 @@ function TimeCell({ timestamp }: { timestamp: string }) {
 // requests a clickable reference to the policy that authorised it — linking
 // to the Policies view pre-filtered to that policy.
 function ReasonCell({ entry }: { entry: AIAccessLogEntry }) {
+  const t = useTranslations("agentNetwork");
   const { policies } = useAIProviders();
 
   if (entry.decision === "deny") {
     return (
       <span className={"text-nb-gray-300 text-[0.82rem] px-3 py-2 text-left"}>
-        {formatDenyReason(entry.denyReason) || "-"}
+        {formatDenyReason(entry.denyReason, t) || "-"}
       </span>
     );
   }
@@ -874,7 +879,7 @@ function ReasonCell({ entry }: { entry: AIAccessLogEntry }) {
 
   return (
     <div className={"px-3 py-2"}>
-      <FullTooltip content={"This policy allowed the request"}>
+      <FullTooltip content={t("policyAllowedRequest")}>
         <Link
           href={`/agent-network/policies?search=${encodeURIComponent(
             policy.name,
@@ -907,6 +912,7 @@ function StatusCell({ entry }: { entry: AIAccessLogEntry }) {
 }
 
 function GroupCell({ groupNames }: { groupNames: string[] }) {
+  const t = useTranslations("agentNetwork");
   const { groups: realGroups } = useGroups();
   if (groupNames.length === 0) return <EmptyRow />;
   // Match real groups by name when available; otherwise synthesise a
@@ -920,8 +926,8 @@ function GroupCell({ groupNames }: { groupNames: string[] }) {
     <div className={"px-2 py-1.5"}>
       <MultipleGroups
         groups={groups}
-        label={"User Groups"}
-        description={"Groups the user belonged to at the time of the request."}
+        label={t("userGroupsLabel")}
+        description={t("userGroupsDescription")}
         countOnly
       />
     </div>
@@ -929,6 +935,7 @@ function GroupCell({ groupNames }: { groupNames: string[] }) {
 }
 
 function UserCell({ entry }: { entry: AIAccessLogEntry }) {
+  const t = useTranslations("agentNetwork");
   // The access log's userId field is whatever the proxy stamped as
   // the principal — for tunnel-peer auth that's peer.ID; for OIDC /
   // header / interactive flows that's user.ID. Look up users first,
@@ -969,7 +976,7 @@ function UserCell({ entry }: { entry: AIAccessLogEntry }) {
     };
   } else if (peer) {
     displayName = peer.name || entry.user || entry.userId;
-    displaySub = "Agent";
+    displaySub = t("agent");
     identityForColor = {
       id: peer.id ?? entry.userId,
       name: displayName,
@@ -1042,6 +1049,8 @@ function resolveProviderDisplay(
   entry: AIAccessLogEntry,
   providerByConfigId: Map<string, AIProvider>,
   catalogNameById: Map<string, string>,
+  t: (key: string, values?: any) => string,
+  tCommon: (key: string, values?: any) => string,
 ): ProviderDisplay {
   const resolved = entry.resolvedProviderId
     ? providerByConfigId.get(entry.resolvedProviderId)
@@ -1058,9 +1067,9 @@ function resolveProviderDisplay(
   if (!entry.providerVendor) {
     return {
       key: "unknown",
-      name: "Unknown",
+      name: tCommon("unknown"),
       resolved: false,
-      hint: "Not attributed to a provider. The request was rejected before NetBird recognised it as an LLM call.",
+      hint: t("providerNotAttributedHint"),
     };
   }
 
@@ -1079,7 +1088,7 @@ function resolveProviderDisplay(
       ? entry.providerVendor
       : (catalogNameById.get(entry.providerId) ?? entry.providerVendor),
     resolved: false,
-    hint: "Not attributed to a configured provider. This is the API shape the client called. Requests denied before routing never reach a provider.",
+    hint: t("providerNotAttributedShapeHint"),
   };
 }
 
@@ -1121,6 +1130,7 @@ function ProviderCell({
 // session's per-request rows: one line per token bucket plus a total. Buckets
 // default to 0 so it renders for denied requests that carry partial counts.
 function TokenBreakdown({ entry }: { entry: AIAccessLogEntry }) {
+  const t = useTranslations("agentNetwork");
   const cacheRead = entry.cachedInputTokens ?? 0;
   const cacheWrite = entry.cacheCreationTokens ?? 0;
   // Anthropic-shape cache buckets are additive to input tokens, so they count toward the total.
@@ -1135,21 +1145,25 @@ function TokenBreakdown({ entry }: { entry: AIAccessLogEntry }) {
         <span className={"font-medium"}>
           {(entry.inputTokens ?? 0).toLocaleString()}
         </span>
-        <span className={"text-nb-gray-400"}>input</span>
+        <span className={"text-nb-gray-400"}>
+          {t("tokenInputLower")}
+        </span>
       </div>
       <div className={"flex items-center gap-2 whitespace-nowrap"}>
         <span className={"font-medium"}>
           {(entry.outputTokens ?? 0).toLocaleString()}
         </span>
-        <span className={"text-nb-gray-400"}>output</span>
+        <span className={"text-nb-gray-400"}>
+          {t("tokenOutputLower")}
+        </span>
       </div>
       <div className={"flex items-center gap-2 whitespace-nowrap"}>
         <span className={"font-medium"}>{cacheRead.toLocaleString()}</span>
-        <span className={"text-nb-gray-400"}>cache read</span>
+        <span className={"text-nb-gray-400"}>{t("cacheReadLabel")}</span>
       </div>
       <div className={"flex items-center gap-2 whitespace-nowrap"}>
         <span className={"font-medium"}>{cacheWrite.toLocaleString()}</span>
-        <span className={"text-nb-gray-400"}>cache write</span>
+        <span className={"text-nb-gray-400"}>{t("cacheWriteLabel")}</span>
       </div>
       <div
         className={
@@ -1159,13 +1173,14 @@ function TokenBreakdown({ entry }: { entry: AIAccessLogEntry }) {
         <span className={"font-medium text-nb-gray-200"}>
           {total.toLocaleString()}
         </span>
-        <span>total</span>
+        <span>{t("totalLabel")}</span>
       </div>
     </div>
   );
 }
 
 function TokensCell({ entry }: { entry: AIAccessLogEntry }) {
+  const t = useTranslations("agentNetwork");
   // Cache-only requests carry no input/output but real cache read/write tokens,
   // so weigh all four buckets — matching TokenBreakdown's total.
   if (
@@ -1183,12 +1198,12 @@ function TokensCell({ entry }: { entry: AIAccessLogEntry }) {
       >
         <div className={"flex gap-2 items-center whitespace-nowrap"}>
           <ArrowUpIcon size={15} className={"text-sky-400"} />
-          <span className={"sr-only"}>Input:</span>
+          <span className={"sr-only"}>{t("inputSrOnly")}</span>
           {(entry.inputTokens ?? 0).toLocaleString()}
         </div>
         <div className={"flex gap-2 items-center whitespace-nowrap"}>
           <ArrowDownIcon size={15} className={"text-netbird"} />
-          <span className={"sr-only"}>Output:</span>
+          <span className={"sr-only"}>{t("outputSrOnly")}</span>
           {(entry.outputTokens ?? 0).toLocaleString()}
         </div>
       </div>
@@ -1241,6 +1256,7 @@ function CostBreakdown({
   cacheCreationCostUsd,
   outputCostUsd,
 }: CostFields) {
+  const t = useTranslations("agentNetwork");
   const cache = cacheCostUsd ?? 0;
   const hasBreakdown =
     inputCostUsd !== undefined || outputCostUsd !== undefined;
@@ -1253,15 +1269,18 @@ function CostBreakdown({
           {/* All four buckets, including zeros: a zero cache-read line is
               information (the request missed the cache), and a fixed set of
               rows keeps the hover comparable between requests. */}
-          <CostRow amount={inputCostUsd ?? 0} label={"input"} />
-          <CostRow amount={outputCostUsd ?? 0} label={"output"} />
-          <CostRow amount={cacheRead} label={"cache read"} />
-          <CostRow amount={cacheWrite} label={"cache write"} />
+          <CostRow amount={inputCostUsd ?? 0} label={t("tokenInputLower")} />
+          <CostRow amount={outputCostUsd ?? 0} label={t("tokenOutputLower")} />
+          <CostRow amount={cacheRead} label={t("cacheReadLabel")} />
+          <CostRow amount={cacheWrite} label={t("cacheWriteLabel")} />
         </>
       ) : (
         <>
-          <CostRow amount={costUsd - cache} label={"input + output"} />
-          <CostRow amount={cache} label={"cache"} />
+          <CostRow
+            amount={costUsd - cache}
+            label={t("inputPlusOutputLabel")}
+          />
+          <CostRow amount={cache} label={t("costCacheLabel")} />
         </>
       )}
       <div
@@ -1272,7 +1291,7 @@ function CostBreakdown({
         <span className={"font-medium text-nb-gray-200"}>
           ${costUsd.toFixed(4)}
         </span>
-        <span className={"font-sans"}>total</span>
+        <span className={"font-sans"}>{t("totalLabel")}</span>
       </div>
     </div>
   );
@@ -1474,6 +1493,8 @@ function SessionRequestsCell({ session }: { session: AIAccessLogSession }) {
 // omitted (constant across a session); the model is shown in full, and the
 // status carries the request duration plus a reason when it failed.
 function SessionEntriesRow({ session }: { session: AIAccessLogSession }) {
+  const t = useTranslations("agentNetwork");
+  const tCommon = useTranslations("common");
   const [open, setOpen] = useState<string[]>([]);
   const toggle = (id: string) =>
     setOpen((prev) =>
@@ -1487,8 +1508,7 @@ function SessionEntriesRow({ session }: { session: AIAccessLogSession }) {
           "text-[11px] font-medium uppercase tracking-wide text-nb-gray-400 mb-1.5"
         }
       >
-        {session.requestCount} request{session.requestCount === 1 ? "" : "s"} in
-        this session
+        {t("requestsInSession", { count: session.requestCount })}
       </div>
       <div
         className={
@@ -1565,7 +1585,8 @@ function SessionEntriesRow({ session }: { session: AIAccessLogSession }) {
                       "text-[11px] text-red-300 truncate max-w-[180px] shrink-0"
                     }
                   >
-                    {formatDenyReason(entry.denyReason) || "Failed"}
+                    {formatDenyReason(entry.denyReason, t) ||
+                      tCommon("failed")}
                   </span>
                 )}
                 <div className={"flex-1"} />

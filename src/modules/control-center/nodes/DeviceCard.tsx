@@ -1,6 +1,7 @@
 import TruncatedText from "@components/ui/TruncatedText";
 import { getOperatingSystem } from "@hooks/useOperatingSystem";
 import { cn } from "@utils/helpers";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import RoundedFlag from "@/assets/countries/RoundedFlag";
 import { ResourceIcon } from "@/assets/icons/ResourceIcon";
@@ -29,6 +30,7 @@ export const DeviceCard = ({
   badge,
   nameMaxWidth,
 }: DeviceCardProps) => {
+  const tCommon = useTranslations("common");
   if (!device && !resource) return;
 
   const isSmall = size === "small";
@@ -93,7 +95,7 @@ export const DeviceCard = ({
           )}
         >
           <TruncatedText
-            text={device?.name || resource?.name || "Unknown"}
+            text={device?.name || resource?.name || tCommon("unknown")}
             maxWidth={nameMaxWidth ?? (isSmall ? "120px" : "150px")}
             hideTooltip={true}
           />

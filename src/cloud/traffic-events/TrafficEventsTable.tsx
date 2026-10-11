@@ -45,28 +45,32 @@ import { useUsers } from "@/contexts/UsersProvider";
 import { NetworkResource } from "@/interfaces/Network";
 
 export const getTrafficEventTypeText = (
+  tte: ReturnType<typeof useTranslations>,
   t: TrafficEventType,
   isP2P: boolean,
   direction: TrafficEventDirection,
 ) => {
-  const name = isP2P ? "P2P" : "Routed";
+  const name = isP2P ? "P2P" : tte("routed");
   const isInbound = direction === TrafficEventDirection.INGRESS;
-  const directionText = isInbound ? "(inbound)" : "(outbound)";
+  const directionText = isInbound
+    ? tte("inboundParen")
+    : tte("outboundParen");
 
   switch (t) {
     case TrafficEventType.CONNECTED:
-      return `${name} connection started ${directionText}`;
+      return tte("connectionStarted", { name, direction: directionText });
     case TrafficEventType.BLOCKED:
-      return `${name} connection blocked ${directionText}`;
+      return tte("connectionBlocked", { name, direction: directionText });
     case TrafficEventType.STOPPED:
-      return `${name} connection stopped ${directionText}`;
+      return tte("connectionStopped", { name, direction: directionText });
     default:
-      return "Unknown";
+      return tte("unknown");
   }
 };
 
 export function TrafficEventsTableColumns(
   tte: ReturnType<typeof useTranslations>,
+  tPolicies: ReturnType<typeof useTranslations>,
 ): ColumnDef<TrafficEvent>[] {
   return [
     {
@@ -87,7 +91,12 @@ export function TrafficEventsTableColumns(
     accessorFn: (t) => {
       const isP2P =
         t.source.id === t.reporter_id || t.destination.id === t.reporter_id;
-      return getTrafficEventTypeText(t.events[0].type, isP2P, t.direction);
+      return getTrafficEventTypeText(
+        tte,
+        t.events[0].type,
+        isP2P,
+        t.direction,
+      );
     },
     filterFn: "arrIncludesSomeExact",
     header: ({ column }) => (
@@ -101,7 +110,12 @@ export function TrafficEventsTableColumns(
     accessorFn: (t) => {
       const isP2P =
         t.source.id === t.reporter_id || t.destination.id === t.reporter_id;
-      return getTrafficEventTypeText(t.events[0].type, isP2P, t.direction);
+      return getTrafficEventTypeText(
+        tte,
+        t.events[0].type,
+        isP2P,
+        t.direction,
+      );
     },
     filterFn: "arrIncludesSomeExact",
     header: ({ column }) => (
@@ -114,7 +128,7 @@ export function TrafficEventsTableColumns(
     id: "source",
     accessorFn: (row) => row.source.address,
     header: ({ column }) => (
-      <DataTableHeader column={column}>Source</DataTableHeader>
+      <DataTableHeader column={column}>{tPolicies("source")}</DataTableHeader>
     ),
     cell: ({ row }) => (
       <TrafficEventsMachineCell event={row.original} isSource={true} />
@@ -148,7 +162,7 @@ export function TrafficEventsTableColumns(
     accessorFn: (row) => row.destination.address,
     filterFn: "arrIncludesSomeExact",
     header: ({ column }) => (
-      <DataTableHeader column={column}>Destination</DataTableHeader>
+      <DataTableHeader column={column}>{tPolicies("destination")}</DataTableHeader>
     ),
     cell: ({ row }) => {
       return <TrafficEventsMachineCell event={row.original} isSource={false} />;
@@ -228,6 +242,8 @@ export default function TrafficEventsTable({
   isSettingEnabled,
 }: Readonly<Props>) {
   const t = useTranslations("trafficEvents");
+  const tNav = useTranslations("navigation");
+  const tPolicies = useTranslations("policies");
   const router = useRouter();
   const { users } = useUsers();
   const { peers } = usePeers();
@@ -416,7 +432,7 @@ export default function TrafficEventsTable({
   // untouched (the peer tab reuses it).
   const columns = useMemo<ColumnDef<TrafficEvent>[]>(
     () => [
-      ...TrafficEventsTableColumns(t),
+      ...TrafficEventsTableColumns(t, tPolicies),
       {
         id: "source_id",
         accessorFn: (row) => row.source.id,
@@ -440,24 +456,21 @@ export default function TrafficEventsTable({
           size={"large"}
         />
       }
-      title={"Traffic Events"}
-      description={
-        "Traffic Events help you understand the network activity in your organization. " +
-        "You can see which machines are connecting to each other, and what kind of traffic is flowing between them."
-      }
+      title={tNav("trafficEvents")}
+      description={t("gettingStartedDescription")}
       button={
         <Button
           variant={"primary"}
           onClick={() => router.push("/settings?tab=networks")}
         >
-          Enable Traffic Events
+          {t("enableTrafficEvents")}
         </Button>
       }
       learnMore={
         <>
-          Learn more about
+          {t("learnMoreAboutPrefix")}
           <InlineLink href={TRAFFIC_EVENTS_DOC_LINK} target={"_blank"}>
-            Traffic Events
+            {tNav("trafficEvents")}
             <ExternalLinkIcon size={12} />
           </InlineLink>
         </>
@@ -472,15 +485,13 @@ export default function TrafficEventsTable({
           size={"large"}
         />
       }
-      title={"No traffic events yet"}
-      description={
-        "We haven't detected any traffic events yet. This could be because you just enabled the feature, or because there hasn't been any network activity."
-      }
+      title={t("noTrafficEventsYet")}
+      description={t("emptyDescription")}
       learnMore={
         <>
-          Learn more about
+          {t("learnMoreAboutPrefix")}
           <InlineLink href={TRAFFIC_EVENTS_DOC_LINK} target={"_blank"}>
-            Traffic Events
+            {tNav("trafficEvents")}
             <ExternalLinkIcon size={12} />
           </InlineLink>
         </>
@@ -498,7 +509,7 @@ export default function TrafficEventsTable({
       {...paginationProps}
       serverSidePagination={false}
       headingTarget={headingTarget}
-      text={"Traffic Events"}
+      text={tNav("trafficEvents")}
       isLoading={isLoading}
       tableCellClassName={"py-2"}
       sorting={sorting}

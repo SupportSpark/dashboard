@@ -74,6 +74,7 @@ type ModalProps = {
 
 export function ConfigurationContent({ onSuccess, config }: ModalProps) {
   const t = useTranslations("idpSync");
+  const tWave = useTranslations("integrationsWave2");
   const tCommon = useTranslations("common");
   const { mutate } = useSWRConfig();
   const { confirm } = useDialog();
@@ -245,7 +246,7 @@ export function ConfigurationContent({ onSuccess, config }: ModalProps) {
               customPrefix={
                 <div className={"min-w-[165px] flex gap-2 items-center"}>
                   <KeyRound size={16} />
-                  Service Account Key
+                  {tWave("serviceAccountKeyLabel")}
                 </div>
               }
               placeholder={"YdV7Q~JJ62Xl.LvYoBanxZR2sJA2va_3UbqvncY8"}

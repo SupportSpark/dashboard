@@ -25,6 +25,7 @@ type Props = {
 export const AddSignInDomainModal = ({
 open, onOpenChange }: Props) => {
   const tsid = useTranslations("signInDomains");
+  const tCommon = useTranslations("common");
   const { addDomain, verifyDomain, mutate } = useSignInDomains();
   const [name, setName] = useState("");
   const [verifyModal, setVerifyModal] = useState(false);
@@ -92,8 +93,8 @@ open, onOpenChange }: Props) => {
         <ModalContent maxWidthClass={"max-w-md"}>
           <ModalHeader
             className={"pb-4 px-8"}
-            title={"Add Sign-in Domain"}
-            description={"Users on this domain are matched to your account."}
+            title={tsid("addSignInDomain")}
+            description={tsid("addSignInDomainDescription")}
           />
 
           <form
@@ -119,7 +120,7 @@ open, onOpenChange }: Props) => {
               <div className={"flex gap-3 w-full justify-end"}>
                 <ModalClose asChild={true}>
                   <Button variant={"secondary"} className={"w-full"}>
-                    Cancel
+                    {tCommon("cancel")}
                   </Button>
                 </ModalClose>
 

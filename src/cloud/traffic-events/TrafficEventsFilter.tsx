@@ -8,6 +8,7 @@ import { useSearch } from "@hooks/useSearch";
 import { Table } from "@tanstack/react-table";
 import { cn } from "@utils/helpers";
 import { FilterIcon, Share2Icon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
@@ -421,6 +422,7 @@ const TrafficEventTypeFilterItem = ({
   isP2P,
   direction,
 }: TrafficEventTypeFilterItemProps) => {
+  const tte = useTranslations("trafficEvents");
   return (
     <div className={"flex gap-2 items-center justify-center"}>
       <div className={"px-0.5 flex items-center justify-center"}>
@@ -433,7 +435,7 @@ const TrafficEventTypeFilterItem = ({
           )}
         ></span>
       </div>
-      {getTrafficEventTypeText(t, isP2P, direction)}
+      {getTrafficEventTypeText(tte, t, isP2P, direction)}
     </div>
   );
 };

@@ -33,6 +33,7 @@ import { useTranslations } from "next-intl";
 // Server/Agent installs arrive without a setup key: it is generated on demand
 // and written back onto the placeholder node so reopening Install reuses it.
 export const DraftInstallPeerModal = () => {
+  const t = useTranslations("controlCenter");
   const tCommon = useTranslations("common");
   const { installModal, setInstallModal } = useDraftMode();
   const { oidcUser: user } = useOidcUser();
@@ -300,8 +301,10 @@ export const DraftInstallPeerModal = () => {
           <ModalHeader
             icon={<CheckCircle2Icon size={20} />}
             color={"green"}
-            title={"Peer installed"}
-            description={`“${installedChange.name}” registered and took the placeholder's place in your draft.`}
+            title={t("peerInstalled")}
+            description={t("peerInstalledDescription", {
+              name: installedChange.name,
+            })}
           />
           <ModalFooter>
             <ModalClose asChild={true}>

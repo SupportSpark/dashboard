@@ -43,10 +43,11 @@ type Props = {
 
 const getLatestOrCustomVersion = (
 	t: ReturnType<typeof useTranslations>,
+	tCommon: ReturnType<typeof useTranslations>,
 ) =>
 	[
 		{
-			label: "Disabled",
+			label: tCommon("disabled"),
 			value: "disabled",
 		},
 		{
@@ -71,6 +72,7 @@ export default function ClientSettingsTab({ account }: Readonly<Props>) {
 
 function ClientSettingsTabContent({ account }: Readonly<Props>) {
 	const t = useTranslations("settings");
+	const tCommon = useTranslations("common");
 	const { permission } = usePermissions();
 	const { enabled: agentNetworkEnabled } = useAgentNetworkMode();
 
@@ -129,13 +131,13 @@ function ClientSettingsTabContent({ account }: Readonly<Props>) {
 	};
 
 	const versionError = useMemo(() => {
-		const msg = "Please enter a valid version, e.g., 0.2, 0.2.0, 0.2.0-alpha.1";
+		const msg = t("invalidVersionError");
 		if (autoUpdateCustomVersion == "") return "";
 		if (autoUpdateCustomVersion == "-") return "";
 		const validSemver = validator.isValidVersion(autoUpdateCustomVersion);
 		if (!validSemver) return msg;
 		return "";
-	}, [autoUpdateCustomVersion]);
+	}, [autoUpdateCustomVersion, t]);
 
 	const canSaveCustomVersion =
 		autoUpdateCustomVersion !== "" &&
@@ -166,7 +168,7 @@ function ClientSettingsTabContent({ account }: Readonly<Props>) {
 
 		notify({
 			title: t("clientSettings"),
-			description: `Client settings successfully updated.`,
+			description: t("clientSettingsSaved"),
 			promise: saveRequest
 				.put({
 					id: account.id,
@@ -194,10 +196,10 @@ function ClientSettingsTabContent({ account }: Readonly<Props>) {
 
 	const toggleLazyConnection = async (toggle: boolean) => {
 		notify({
-			title: "Lazy Connections",
-			description: `Lazy Connections successfully ${
-				toggle ? "enabled" : "disabled"
-			}.`,
+			title: t("lazyConnections"),
+			description: t("lazyConnectionsUpdated", {
+				state: toggle ? t("enabledState") : t("disabledState"),
+			}),
 			promise: saveRequest
 				.put({
 					id: account.id,
@@ -217,9 +219,9 @@ function ClientSettingsTabContent({ account }: Readonly<Props>) {
 	const toggleAgentNetworkOnly = async (toggle: boolean) => {
 		notify({
 			title: t("agentNetworkFocusedView"),
-			description: `Agent Network focused view successfully ${
-				toggle ? "enabled" : "disabled"
-			}.`,
+			description: t("agentNetworkFocusedViewUpdated", {
+				state: toggle ? t("enabledState") : t("disabledState"),
+			}),
 			promise: saveRequest
 				.put({
 					id: account.id,
@@ -290,7 +292,7 @@ function ClientSettingsTabContent({ account }: Readonly<Props>) {
 							<SelectDropdown
 								value={autoUpdateMethod}
 								onChange={handleUpdateMethodChange}
-								options={getLatestOrCustomVersion(t)}
+								options={getLatestOrCustomVersion(t, tCommon)}
 								data-testid="auto-update-method"
 							/>
 							<Input

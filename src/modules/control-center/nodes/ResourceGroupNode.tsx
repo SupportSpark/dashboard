@@ -2,6 +2,7 @@ import { SmallBadge } from "@components/ui/SmallBadge";
 import { GroupBadgeIcon } from "@components/ui/GroupBadgeIcon";
 import { cn, singularize } from "@utils/helpers";
 import { type Node, Position, useConnection, useStore } from "@xyflow/react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { Group } from "@/interfaces/Group";
 import {
@@ -27,6 +28,8 @@ type ResourceGroupNode = Node<
 // A resource group shown INSIDE a network frame: a flat row (no card
 // background), laid out by the frame like its resources.
 export const ResourceGroupNode = ({ data, id, parentId }: ResourceGroupNode) => {
+  const t = useTranslations("controlCenter");
+  const tCommon = useTranslations("common");
   const { group, showHandles = true } = data;
   const { isDraft, drillDownNetworkNodeId } = useDraftMode();
   const { selectedDestinationGroup, setSelectedDestinationGroup } =
@@ -105,8 +108,8 @@ export const ResourceGroupNode = ({ data, id, parentId }: ResourceGroupNode) => 
             }
           >
             {group?.resources_count
-              ? singularize("Resources", group.resources_count, true)
-              : "No Resources"}
+              ? singularize(tCommon("resources"), group.resources_count, true)
+              : t("noResources")}
           </span>
         </div>
       </div>

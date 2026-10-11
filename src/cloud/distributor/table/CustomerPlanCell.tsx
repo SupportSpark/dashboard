@@ -2,6 +2,7 @@ import Badge from "@components/Badge";
 import Button from "@components/Button";
 import { cn } from "@utils/helpers";
 import { CircleAlertIcon, CreditCardIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import Skeleton from "react-loading-skeleton";
 import { useCustomerPlan } from "@/cloud/distributor/hooks/useCustomerPlan";
@@ -70,14 +71,18 @@ type RemainingTrialDaysProps = {
 };
 
 const RemainingTrialDays = ({ days }: RemainingTrialDaysProps) => {
+  const tPlan = useTranslations("planTier");
   if (days === undefined) return null;
-  if (days === 1) return ` (${days} day left)`;
-  if (days === 0) return ` (Trial has expired)`;
+  if (days === 0) return ` (${tPlan("trialExpired")})`;
 
-  return ` (${days} days left)`;
+  return ` (${tPlan("daysLeft", { count: days })})`;
 };
 
 const CurrentPlan = ({ plan }: { plan: PlanTier }) => {
+  const tOnboarding = useTranslations("onboarding");
+  const tNavigation = useTranslations("navigation");
+  const tReverseProxy = useTranslations("reverseProxy");
+  const tCommon = useTranslations("common");
   return (
     <>
       <span
@@ -89,10 +94,10 @@ const CurrentPlan = ({ plan }: { plan: PlanTier }) => {
           plan == PlanTier.TRIAL && "bg-purple-400",
         )}
       ></span>
-      {plan == PlanTier.BUSINESS && "Business"}
-      {plan == PlanTier.TEAM && "Team"}
-      {plan == PlanTier.FREE && "Free"}
-      {plan == PlanTier.TRIAL && "Free Trial"}
+      {plan == PlanTier.BUSINESS && tOnboarding("business")}
+      {plan == PlanTier.TEAM && tNavigation("team")}
+      {plan == PlanTier.FREE && tReverseProxy("domainTypeFree")}
+      {plan == PlanTier.TRIAL && tCommon("freeTrial")}
     </>
   );
 };

@@ -20,6 +20,18 @@ export const ENDPOINT_HELP_TEXT = (
   </>
 );
 
+// Localized form of the same tooltip. Kept separate from ENDPOINT_HELP_TEXT so
+// callers without a translator (the providers page's bootstrap card) keep
+// working; they should switch to this one.
+export const endpointHelpText = (
+  t: ReturnType<typeof useTranslations>,
+): React.ReactNode =>
+  t.rich("endpointHelpText", {
+    code: (chunks: React.ReactNode) => (
+      <code className={"font-mono"}>{chunks}</code>
+    ),
+  });
+
 // EndpointBadge is the "API Base URL" card — the one presentation of the
 // endpoint everywhere it appears (providers page, Connect Agent). It shows the
 // URL and copies it; the per-tool config that goes with it lives inline on the
@@ -35,6 +47,7 @@ export default function EndpointBadge({
   variant?: "default" | "plain";
 }) {
   const t = useTranslations("agentNetwork");
+  const tCommon = useTranslations("common");
   const [, copy, copied] = useCopyToClipboard(`https://${endpoint}`);
 
   return (
@@ -47,7 +60,7 @@ export default function EndpointBadge({
       title={
         <>
           {t("apiBaseUrl")}
-          <HelpTooltip iconSize={11} content={ENDPOINT_HELP_TEXT} />
+          <HelpTooltip iconSize={11} content={endpointHelpText(t)} />
         </>
       }
       trailing={
@@ -56,11 +69,11 @@ export default function EndpointBadge({
           className={
             "inline-flex items-center gap-1.5 rounded-md border border-nb-gray-700 bg-nb-gray-800/60 px-2.5 py-1.5 text-[11px] font-medium text-nb-gray-200 hover:bg-nb-gray-800 hover:text-white transition-colors shrink-0"
           }
-          onClick={() => copy("Endpoint copied to clipboard")}
-          aria-label={"Copy endpoint"}
+          onClick={() => copy(t("endpointCopiedToClipboard"))}
+          aria-label={t("copyEndpointAria")}
         >
           {copied ? <CheckIcon size={11} /> : <CopyIcon size={11} />}
-          Copy
+          {tCommon("copy")}
         </button>
       }
       description={

@@ -60,6 +60,7 @@ type ActionCellProps = {
 
 function ActionCell({ provider, onEdit }: ActionCellProps) {
 	const t = useTranslations("settings");
+	const tCommon = useTranslations("common");
 	const { confirm } = useDialog();
 	const { mutate } = useSWRConfig();
 	const deleteRequest = useApiCall<SSOIdentityProvider>(
@@ -69,10 +70,10 @@ function ActionCell({ provider, onEdit }: ActionCellProps) {
 
 	const handleDelete = async () => {
 		const choice = await confirm({
-			title: `Delete '${provider.name}'?`,
+			title: t("deleteIdentityProviderTitle", { name: provider.name }),
 			description: t("deleteIdentityProviderConfirm"),
-			confirmText: "Delete",
-			cancelText: "Cancel",
+			confirmText: tCommon("delete"),
+			cancelText: tCommon("cancel"),
 			type: "danger",
 		});
 
@@ -102,7 +103,7 @@ function ActionCell({ provider, onEdit }: ActionCellProps) {
 						disabled={!permission.identity_providers.update}
 					>
 						<PencilIcon size={14} className="mr-2" />
-						Edit
+						{tCommon("edit")}
 					</DropdownMenuItem>
 					<DropdownMenuItem
 						onClick={handleDelete}
@@ -110,7 +111,7 @@ function ActionCell({ provider, onEdit }: ActionCellProps) {
 						className="text-red-500 focus:text-red-500"
 					>
 						<Trash2 size={14} className="mr-2" />
-						Delete
+						{t("delete")}
 					</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>
@@ -221,13 +222,13 @@ export default function IdentityProvidersTab() {
 
 			<DataTable
 				isLoading={isLoading}
-				text={"Identity Providers"}
+				text={t("identityProviders")}
 				sorting={sorting}
 				setSorting={setSorting}
 				columns={columns}
 				data={providers}
 				onRowClick={(row) => handleEdit(row.original)}
-				searchPlaceholder={"Search by name or type..."}
+				searchPlaceholder={t("searchIdpPlaceholder")}
 				getStartedCard={
 					<GetStartedTest
 						icon={
@@ -239,10 +240,8 @@ export default function IdentityProvidersTab() {
 								size={"large"}
 							/>
 						}
-						title={"Add Identity Provider"}
-						description={
-							"Configure an identity provider to enable SSO authentication for your users."
-						}
+						title={t("addIdentityProvider")}
+						description={t("addIdentityProviderCardDescription")}
 						button={
 							<Button
 								variant={"primary"}
@@ -250,7 +249,7 @@ export default function IdentityProvidersTab() {
 								disabled={!permission.identity_providers.create}
 							>
 								<PlusCircle size={16} />
-								Add Identity Provider
+								{t("addIdentityProvider")}
 							</Button>
 						}
 					/>
@@ -265,7 +264,7 @@ export default function IdentityProvidersTab() {
 								disabled={!permission.identity_providers.create}
 							>
 								<PlusCircle size={16} />
-								Add Identity Provider
+								{t("addIdentityProvider")}
 							</Button>
 						)}
 					</>

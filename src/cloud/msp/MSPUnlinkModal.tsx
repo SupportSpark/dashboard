@@ -15,6 +15,7 @@ import { UserSelector } from "@components/UserSelector";
 import useFetchApi from "@utils/api";
 import { cn } from "@utils/helpers";
 import { ExternalLinkIcon, InfoIcon, UnlinkIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useState } from "react";
 import { useTenants } from "@/cloud/msp/contexts/TenantsProvider";
@@ -28,6 +29,8 @@ type Props = {
 };
 
 export const MSPUnlinkModal = ({ open, setOpen, tenant }: Props) => {
+  const t = useTranslations("msp");
+  const tCommon = useTranslations("common");
   const { unlinkTenant } = useTenants();
   const { data: users } = useFetchApi<User[]>(
     `/users?service_user=false&account=${tenant.id}`,
@@ -47,21 +50,19 @@ export const MSPUnlinkModal = ({ open, setOpen, tenant }: Props) => {
         <ModalContent maxWidthClass={"max-w-lg"}>
           <ModalHeader
             icon={<UnlinkIcon size={16} />}
-            title={"Unlink Tenant"}
+            title={t("unlinkTenant")}
             description={`${tenant.name} (${tenant.domain})`}
             color={"yellow"}
           />
           <Separator />
           <div className={"px-8 py-6"}>
-            <Label>New Owner</Label>
-            <HelpText>
-              In order to unlink this tenant, you need to assign a new owner.
-            </HelpText>
+            <Label>{t("newOwner")}</Label>
+            <HelpText>{t("newOwnerHelp")}</HelpText>
             <UserSelector
               onChange={setSelectedUser}
               value={selectedUser}
               options={users}
-              placeholder={"Select a new owner..."}
+              placeholder={t("selectNewOwnerPlaceholder")}
             />
             <div
               className={cn(
@@ -71,26 +72,22 @@ export const MSPUnlinkModal = ({ open, setOpen, tenant }: Props) => {
               )}
             >
               <InfoIcon size={14} className={"shrink-0 relative top-[2.5px]"} />
-              <div>
-                After unlinking, the existing subscription for this tenant will
-                be canceled, and the new owner will need to set up their own
-                billing information.
-              </div>
+              <div>{t("unlinkWarning")}</div>
             </div>
           </div>
           <ModalFooter className={"items-center"}>
             <div className={"w-full"}>
               <Paragraph className={"text-sm mt-auto"}>
-                Learn more about
+                {t("learnMoreAbout")}
                 <InlineLink href={"https://docs.netbird.io/"} target={"_blank"}>
-                  Unlinking Tenants
+                  {t("unlinkingTenants")}
                   <ExternalLinkIcon size={12} />
                 </InlineLink>
               </Paragraph>
             </div>
             <div className={"flex gap-3 w-full justify-end"}>
               <ModalClose asChild={true}>
-                <Button variant={"secondary"}>Cancel</Button>
+                <Button variant={"secondary"}>{tCommon("cancel")}</Button>
               </ModalClose>
 
               <Button

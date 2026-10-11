@@ -61,6 +61,8 @@ export const OnboardingAddResource = ({
 
 		if (!myNetwork) return;
 
+		const resourceName = resourceType === "subnet" ? "My Subnet" : "My Resource";
+
 		notify({
 			title: t("myFirstNetwork"),
 			description: t("networkAndResourceCreated"),
@@ -68,7 +70,8 @@ export const OnboardingAddResource = ({
 			promise: resourceRequest
 				.post(
 					{
-						name: resourceType === "subnet" ? "My Subnet" : "My Resource",
+						// The resource name is sent to the API as data, so it stays English.
+						name: resourceName,
 						description: t("createdDuringOnboarding"),
 						address: normalizeHostCIDR(resourceAddress),
 						enabled: true,
@@ -118,19 +121,20 @@ export const OnboardingAddResource = ({
 		usersGroup: Group,
 	) => {
 		const isSubnet = r.type === "subnet";
+		// The policy name and description are API data, so they stay English.
+		const policyName = `Users to ${r.name}`;
+		const policyDescription = `Allows access to this ${
+			isSubnet ? `subnet ${r.address}` : `resource ${r.address}`
+		}`;
 
 		await policyRequest.post({
-			name: `Users to ${r.name}`,
-			description: `Allows access to this ${
-				isSubnet ? `subnet ${r.address}` : `resource ${r.address}`
-			}`,
+			name: policyName,
+			description: policyDescription,
 			enabled: true,
 			rules: [
 				{
-					name: `Users to ${r.name}`,
-					description: `Allows access to this ${
-						isSubnet ? `subnet ${r.address}` : `resource ${r.address}`
-					}`,
+					name: policyName,
+					description: policyDescription,
 					enabled: true,
 					action: "accept",
 					bidirectional: true,
@@ -180,20 +184,16 @@ export const OnboardingAddResource = ({
 	};
 
 	const description = useMemo(() => {
-		if (resourceType === "ip")
-			return "Enter a single IPv4 or IPv6 address of your resource";
-		if (resourceType === "subnet") return "Enter a CIDR range of your network";
-		if (resourceType === "domain")
-			return "Enter a domain name of your resource";
-	}, [resourceType]);
+		if (resourceType === "ip") return t("resourceIpDescription");
+		if (resourceType === "subnet") return t("resourceSubnetDescription");
+		if (resourceType === "domain") return t("resourceDomainDescription");
+	}, [resourceType, t]);
 
 	const placeholder = useMemo(() => {
-		if (resourceType === "ip") return "e.g., 192.168.31.45 or 2001:db8::1";
-		if (resourceType === "subnet")
-			return "e.g., 192.168.1.0/24 or 2001:db8::/64";
-		if (resourceType === "domain")
-			return "e.g., service.internal or *.services.internal";
-	}, [resourceType]);
+		if (resourceType === "ip") return t("resourceIpPlaceholder");
+		if (resourceType === "subnet") return t("resourceSubnetPlaceholder");
+		if (resourceType === "domain") return t("resourceDomainPlaceholder");
+	}, [resourceType, t]);
 
 	return (
 		<div className={"relative flex flex-col h-full gap-4"}>
@@ -205,37 +205,34 @@ export const OnboardingAddResource = ({
 							"text-sm text-nb-gray-300 font-light mt-2 block text-center sm:px-4"
 						}
 					>
-						Resources are your subnets, services, or machines inside your
-						network. Pick the type you want to connect to.
+						{t("resourcesIntro")}
 					</div>
 				</div>
 
 				<RadioCardGroup value={resourceType} onValueChange={setResourceType}>
 					<RadioCard
 						value={"ip"}
-						title={"Single IP Address"}
+						title={t("singleIpAddress")}
 						icon={<WorkflowIcon size={12} />}
-						description={"IPv4 or IPv6 address like 192.168.31.45"}
+						description={t("singleIpAddressHint")}
 					/>
 					<RadioCard
 						value={"subnet"}
-						title={"Entire Subnet"}
+						title={t("entireSubnet")}
 						icon={<NetworkIcon size={12} />}
-						description={"CIDR range like 192.168.0.0/24 or 2001:db8::/64"}
+						description={t("entireSubnetHint")}
 					/>
 					<RadioCard
 						value={"domain"}
-						title={"Domain"}
+						title={t("domain")}
 						icon={<GlobeIcon size={12} />}
-						description={
-							"A domain like service.internal or a wildcard like *.services.internal"
-						}
+						description={t("domainTypeHint")}
 					/>
 				</RadioCardGroup>
 
 				{resourceType && (
 					<ResourceSingleAddressInput
-						label={"What is the address of your resource?"}
+						label={t("resourceAddressLabel")}
 						value={resourceAddress}
 						onChange={setResourceAddress}
 						onError={setError}
@@ -246,7 +243,7 @@ export const OnboardingAddResource = ({
 
 				<div className={"flex gap-4"}>
 					<Button variant={"secondary"} className={"w-full"} onClick={onBack}>
-						Go Back
+						{t("goBack")}
 					</Button>
 					<Button
 						variant={"primary"}
@@ -254,7 +251,7 @@ export const OnboardingAddResource = ({
 						onClick={createResource}
 						disabled={resourceAddress === "" || error !== ""}
 					>
-						Create Resource
+						{t("createResource")}
 					</Button>
 				</div>
 			</div>

@@ -96,10 +96,10 @@ export default function AgentPolicyLimitsTab({
           <div className={"flex justify-between gap-10 mb-5 items-end"}>
             <div>
               <Label>
-                {attachedCount} {attachedCount === 1 ? "Limit" : t("limits")}
+                {t("attachedLimitCount", { count: attachedCount })}
               </Label>
               <HelpText className={"mb-0"}>
-                Token and budget caps applied directly to this policy.
+                {t("limitsTabDescription")}
               </HelpText>
             </div>
             <div className={"flex items-center justify-center gap-4"}>
@@ -201,8 +201,11 @@ function LimitRow({
         <div className={"flex flex-col gap-0.5 min-w-0"}>
           <div className={"text-sm text-nb-gray-100 truncate"}>{title}</div>
           <div className={"text-xs text-nb-gray-400 truncate"}>
-            Group {groupLabel} · Individual {userLabel} · resets every{" "}
-            {formatWindow(limit.windowSeconds)}
+            {t("limitSummaryLine", {
+              group: groupLabel,
+              individual: userLabel,
+              window: formatWindow(limit.windowSeconds),
+            })}
           </div>
         </div>
       </div>
@@ -253,10 +256,10 @@ function NoLimitsInfo({
         }
       >
         <h2 className={"text-lg my-0 leading-[1.5 text-center]"}>
-          {"You haven't added any limits yet"}
+          {t("noLimitsYetTitle")}
         </h2>
         <Paragraph className={cn("text-sm text-center max-w-md mt-1")}>
-          Add token or budget caps that apply directly to this policy.
+          {t("noLimitsYetDescription")}
         </Paragraph>
       </div>
       <div className={"flex items-center justify-center gap-4 mt-5"}>
@@ -393,9 +396,7 @@ function LimitEditModal({
           icon={isToken ? <Gauge size={19} /> : <Wallet size={19} />}
           title={isToken ? t("tokenLimit") : t("budgetLimit")}
           description={
-            isToken
-              ? "Cap tokens per group and per user over a rolling window."
-              : "Cap USD spend per group and per user over a rolling window."
+            isToken ? t("tokenLimitModalDescription") : t("budgetLimitModalDescription")
           }
           color={"netbird"}
         />
@@ -405,22 +406,14 @@ function LimitEditModal({
             <div>
               <Label>
                 {t("groupCap")}
-                <HelpTooltip
-                  content={
-                    <>
-                      Caps the group&apos;s total consumption within the window.
-                      Once reached, every member is blocked until the window
-                      resets, regardless of individual usage.
-                    </>
-                  }
-                />
+                <HelpTooltip content={t("groupCapHelp")} />
               </Label>
-              <HelpText>Group total within the window.</HelpText>
+              <HelpText>{t("groupTotalWithinWindow")}</HelpText>
               <Input
                 type={"number"}
                 min={0}
                 step={isToken ? "1" : "0.01"}
-                placeholder={"0 = uncapped"}
+                placeholder={t("zeroMeansUncapped")}
                 value={groupCapStr}
                 onChange={(e) => setGroupCapStr(e.target.value)}
               />
@@ -428,22 +421,14 @@ function LimitEditModal({
             <div>
               <Label>
                 {t("individualCap")}
-                <HelpTooltip
-                  content={
-                    <>
-                      Caps each member&apos;s own consumption within the window.
-                      A user that hits this cap is blocked even when the group
-                      still has headroom.
-                    </>
-                  }
-                />
+                <HelpTooltip content={t("individualCapHelp")} />
               </Label>
-              <HelpText>Per-user limit within the window.</HelpText>
+              <HelpText>{t("perUserLimitWithinWindow")}</HelpText>
               <Input
                 type={"number"}
                 min={0}
                 step={isToken ? "1" : "0.01"}
-                placeholder={"0 = uncapped"}
+                placeholder={t("zeroMeansUncapped")}
                 value={userCapStr}
                 onChange={(e) => setUserCapStr(e.target.value)}
               />
@@ -451,9 +436,7 @@ function LimitEditModal({
           </div>
           <div>
             <Label>{t("resetWindow")}</Label>
-            <HelpText>
-              How often the cap counters reset. Minimum 1 minute.
-            </HelpText>
+            <HelpText>{t("resetWindowHelp")}</HelpText>
             <div className={"flex gap-3"}>
               <Input
                 type={"number"}

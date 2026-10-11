@@ -14,12 +14,14 @@ import {
   RoutingPeerRow,
   sortRoutingPeerRows,
 } from "@/modules/control-center/panels/RoutingPeersBar";
+import { useTranslations } from "next-intl";
 
 // `enabled` defers the routers fetch until a frame actually needs it.
 export function useFrameRouterRows(
   networkNodeId: string | undefined,
   enabled: boolean,
 ) {
+  const tCommon = useTranslations("common");
   const { changes } = useDraftChangeset();
   const { peers } = usePeers();
   const { groups } = useGroups();
@@ -75,7 +77,7 @@ export function useFrameRouterRows(
       list.push({
         key: `api-${r.id}`,
         peerOs: peer?.os,
-        name: peer?.name ?? group?.name ?? "Routing Peer",
+        name: peer?.name ?? group?.name ?? tCommon("routingPeer"),
         isGroup: !peerId,
         peersCount: !peerId ? group?.peers_count ?? 0 : undefined,
         enabled,
@@ -93,7 +95,7 @@ export function useFrameRouterRows(
       list.push({
         key: `draft-${c.id}`,
         peerOs: peer?.os,
-        name: c.peerName ?? c.groupName ?? "Routing Peer",
+        name: c.peerName ?? c.groupName ?? tCommon("routingPeer"),
         isGroup: !c.peerId,
         peersCount: !c.peerId ? group?.peers_count ?? 0 : undefined,
         enabled: c.enabled ?? true,
@@ -110,6 +112,7 @@ export function useFrameRouterRows(
     groups,
     networkNodeId,
     setRoutingPeerModal,
+    tCommon,
   ]);
 
   return {

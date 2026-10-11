@@ -54,8 +54,13 @@ const issuerHints: Partial<Record<SSOIdentityProviderType, string>> = {
 	adfs: "https://adfs.example.com/adfs",
 };
 
-const defaultNames: Record<SSOIdentityProviderType, string> = {
-	oidc: "Generic OIDC",
+// A factory, not a module constant: "Generic OIDC" is prose and needs `t`, which
+// is a React hook and cannot run at module scope. The other entries are vendor
+// product names and stay as they are in both locales.
+const defaultNames = (
+	t: (key: string) => string,
+): Record<SSOIdentityProviderType, string> => ({
+	oidc: t("idpNameDefaultOidc"),
 	google: "Google",
 	microsoft: "Microsoft",
 	entra: "Microsoft Entra",
@@ -65,7 +70,7 @@ const defaultNames: Record<SSOIdentityProviderType, string> = {
 	authentik: "Authentik",
 	keycloak: "Keycloak",
 	adfs: "Microsoft AD FS",
-};
+});
 
 type Props = {
 	open: boolean;
@@ -85,6 +90,7 @@ export default function IdentityProviderModal({
 	provider,
 }: Readonly<Props>) {
 	const t = useTranslations("settings");
+	const tCommon = useTranslations("common");
 	const { mutate } = useSWRConfig();
 	const { permission } = usePermissions();
 	const isEditing = !!provider;
@@ -173,12 +179,12 @@ export default function IdentityProviderModal({
 					<ModalHeader
 						icon={<FingerprintIcon size={20} />}
 						title={
-							isEditing ? "Edit Identity Provider" : "Add Identity Provider"
+							isEditing ? t("editIdentityProvider") : t("addIdentityProvider")
 						}
 						description={
 							isEditing
-								? "Update the identity provider configuration"
-								: "Configure a new identity provider for authentication"
+								? t("updateIdentityProviderDescription")
+								: t("addIdentityProviderDescription")
 						}
 						color={"netbird"}
 					/>
@@ -195,12 +201,12 @@ export default function IdentityProviderModal({
 									const newType = v as SSOIdentityProviderType;
 									setType(newType);
 									if (!isEditing) {
-										setName(defaultNames[newType]);
+										setName(defaultNames(t)[newType]);
 									}
 								}}
 							>
 								<SelectTrigger className="w-full">
-									<SelectValue placeholder="Select provider type..." />
+									<SelectValue placeholder={tCommon("selectProviderType")} />
 								</SelectTrigger>
 								<SelectContent>
 									{SSOIdentityProviderOptions.map((idp) => (
@@ -219,7 +225,7 @@ export default function IdentityProviderModal({
 							<Label>{t("idpName")}</Label>
 							<HelpText>{t("idpNameHelp")}</HelpText>
 							<Input
-								placeholder={"e.g., Corporate SSO"}
+								placeholder={t("idpNamePlaceholder")}
 								value={name}
 								onChange={(e) => setName(e.target.value)}
 								customPrefix={
@@ -247,7 +253,7 @@ export default function IdentityProviderModal({
 							<Label>{t("idpClientId")}</Label>
 							<HelpText>{t("oauth2ConfidentialClientId")}</HelpText>
 							<Input
-								placeholder={"Enter client ID"}
+								placeholder={t("idpClientIdPlaceholder")}
 								value={clientId}
 								onChange={(e) => setClientId(e.target.value)}
 								customPrefix={<IdCard size={16} className="text-nb-gray-300" />}
@@ -259,13 +265,15 @@ export default function IdentityProviderModal({
 							<HelpText>
 								{isEditing
 									? clientIdChanged
-										? "Required when client ID is changed"
-										: "Leave empty to keep the existing secret, or enter a new one"
-									: "The OAuth2 client secret"}
+										? t("idpClientSecretRequiredOnChange")
+										: t("idpClientSecretKeepExisting")
+									: t("idpClientSecretHelp")}
 							</HelpText>
 							<Input
 								type="password"
-								placeholder={isEditing ? "••••••••" : "Enter client secret"}
+								placeholder={
+									isEditing ? "••••••••" : t("idpClientSecretPlaceholder")
+								}
 								value={clientSecret}
 								onChange={(e) => setClientSecret(e.target.value)}
 								customPrefix={
@@ -330,12 +338,12 @@ export default function IdentityProviderModal({
 								{isEditing ? (
 									<>
 										<SaveIcon size={16} />
-										Save Changes
+										{t("saveChangesButton")}
 									</>
 								) : (
 									<>
 										<PlusCircle size={16} />
-										Add Provider
+										{t("addProviderButton")}
 									</>
 								)}
 							</Button>

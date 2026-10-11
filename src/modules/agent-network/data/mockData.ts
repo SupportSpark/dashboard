@@ -259,6 +259,18 @@ export type AIAccessLogSession = {
 // reason (the prefix is stripped before lookup) so both forms the proxy emits
 // resolve — bare ("model_not_routable") and prefixed deny codes
 // ("llm_policy.token_cap_exceeded", "llm_account.budget_cap_exceeded").
+//
+// The catalogs hold the user-visible text; this maps a code to its key, and
+// DENY_REASON_LABELS mirrors it for callers that have no translator in scope.
+const DENY_REASON_KEYS: Record<string, string> = {
+  model_not_routable: "denyReasonModelNotAvailable",
+  no_authorised_provider: "denyReasonNoAuthorizedProvider",
+  model_blocked: "denyReasonModelNotAllowed",
+  cap_exceeded: "denyReasonLimitExceeded",
+  token_cap_exceeded: "denyReasonTokenLimitExceeded",
+  budget_cap_exceeded: "denyReasonBudgetLimitExceeded",
+};
+
 const DENY_REASON_LABELS: Record<string, string> = {
   model_not_routable: "Model not available",
   no_authorised_provider: "No authorized provider",
@@ -271,14 +283,43 @@ const DENY_REASON_LABELS: Record<string, string> = {
 // formatDenyReason turns a proxy llm_policy.reason value into short, concise
 // human text. Account-scoped caps (llm_account.*) are prefixed with "Account".
 // Unknown codes fall back to a humanised version of the raw value.
-export function formatDenyReason(reason: string | undefined): string {
+//
+// Pass the component's translator as `t` to get the localized label; callers
+// without one keep the English fallback.
+export function formatDenyReason(
+  reason: string | undefined,
+  t?: (key: string, values?: any) => string,
+): string {
   if (!reason) return "";
   const isAccount = reason.startsWith("llm_account.");
   const bare = reason.replace(/^llm_(policy|account)\./, "");
+
+  /**
+   * Resolve a key, treating an unresolved lookup as absent.
+   *
+   * next-intl returns the KEY ITSELF when it cannot resolve one (it does not
+   * throw and does not return undefined). So `t(key) ?? fallback` never falls
+   * back — it happily returns "onboarding.denyReasonModelNotAvailable" and the
+   * user reads the raw path. Spotting the key coming back unchanged is the only
+   * way to tell a miss from a hit without a locale-aware translator.
+   */
+  const lookup = (k: string, values?: Record<string, unknown>) => {
+    if (!t) return undefined;
+    const out = t(k, values);
+    return out === k ? undefined : out;
+  };
+
+  const mappedKey = DENY_REASON_KEYS[bare];
   const base =
+    (mappedKey ? lookup(mappedKey) : undefined) ??
     DENY_REASON_LABELS[bare] ??
     bare.replace(/_/g, " ").replace(/^\w/, (c) => c.toUpperCase());
-  return isAccount ? `Account ${base.toLowerCase()}` : base;
+
+  if (!isAccount) return base;
+  return (
+    lookup("denyReasonAccountScoped", { reason: base.toLowerCase() }) ??
+    `Account ${base.toLowerCase()}`
+  );
 }
 
 export const MOCK_GROUPS = [

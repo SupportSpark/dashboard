@@ -9,6 +9,7 @@ import SkeletonTable from "@components/skeletons/SkeletonTable";
 import { RestrictedAccess } from "@components/ui/RestrictedAccess";
 import { usePortalElement } from "@hooks/usePortalElement";
 import { ExternalLinkIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React, { Suspense } from "react";
 import AgentNetworkIcon from "@/assets/icons/AgentNetworkIcon";
 import { usePermissions } from "@/contexts/PermissionsProvider";
@@ -18,13 +19,14 @@ import AIProvidersProvider, {
   useAIProviders,
 } from "@/modules/agent-network/AIProvidersProvider";
 import EndpointBadge, {
-  ENDPOINT_HELP_TEXT,
+  endpointHelpText,
 } from "@/modules/agent-network/EndpointBadge";
 import AgentProvidersTable from "@/modules/agent-network/table/AgentProvidersTable";
 
 function EndpointHeader() {
   const { settings, settingsLoading, openWizard } = useAIProviders();
   const { permission } = usePermissions();
+  const t = useTranslations("agentNetwork");
   if (settingsLoading) return null;
   if (!settings) {
     // The bootstrap CTA opens the provider wizard, so only callers who can
@@ -40,15 +42,13 @@ function EndpointHeader() {
         }
         title={
           <>
-            API Base URL
+            {t("apiBaseUrl")}
             <span onClick={(e) => e.stopPropagation()}>
-              <HelpTooltip iconSize={11} content={ENDPOINT_HELP_TEXT} />
+              <HelpTooltip iconSize={11} content={endpointHelpText(t)} />
             </span>
           </>
         }
-        description={
-          "Connect your first provider to set up your agent network endpoint."
-        }
+        description={t("connectFirstProviderDescription")}
       />
     );
   }
@@ -74,6 +74,9 @@ function PageBody({
 
 export default function AgentNetworkProvidersPage() {
   const { permission } = usePermissions();
+  const t = useTranslations("agentNetwork");
+  const tCommon = useTranslations("common");
+  const tnav = useTranslations("navigation");
   const { ref: headingRef, portalTarget } =
     usePortalElement<HTMLHeadingElement>();
 
@@ -83,7 +86,7 @@ export default function AgentNetworkProvidersPage() {
           agent-network state, so they must not mount for users without
           read on the providers submodule. */}
       <RestrictedAccess
-        page={"Providers"}
+        page={t("providers")}
         hasAccess={permission?.["agent_network.providers"]?.read}
       >
         <AIProvidersProvider>
@@ -91,25 +94,23 @@ export default function AgentNetworkProvidersPage() {
             <Breadcrumbs>
               <Breadcrumbs.Item
                 href={"/agent-network/providers"}
-                label={"Agent Network"}
+                label={tnav("agentNetwork")}
                 icon={<AgentNetworkIcon size={16} />}
               />
               <Breadcrumbs.Item
                 href={"/agent-network/providers"}
-                label={"Providers"}
+                label={t("providers")}
                 active={true}
               />
             </Breadcrumbs>
-            <h1 ref={headingRef}>Providers</h1>
+            <h1 ref={headingRef}>{t("providers")}</h1>
             <Paragraph>
-              Connect AI providers and gateways like LiteLLM, OpenAI, and
-              Anthropic through one keyless endpoint, accessible only via
-              NetBird’s tunnel.
+              {t("providersPageDescription")}
               <InlineLink
                 href={"https://docs.netbird.io/agent-network/providers"}
                 target={"_blank"}
               >
-                Learn more
+                {tCommon("learnMore")}
                 <ExternalLinkIcon size={12} />
               </InlineLink>
             </Paragraph>

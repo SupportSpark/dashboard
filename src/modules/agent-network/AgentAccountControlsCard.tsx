@@ -143,8 +143,7 @@ export default function AgentAccountControlsCard() {
               <div className={"w-full"}>
                 <Label>{t("retentionPeriod")}</Label>
                 <HelpText className={"mt-1"}>
-                  How long access logs are kept before they&apos;re deleted.
-                  Usage history is kept separately.
+                  {t("accessLogRetentionHelp")}
                 </HelpText>
               </div>
               <div className={"w-40 shrink-0"}>

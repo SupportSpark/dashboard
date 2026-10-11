@@ -8,6 +8,7 @@ import {
   GroupIcon,
   LucideIcon,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 type Props = {
   open: boolean;
@@ -27,6 +28,7 @@ export const DraftStartPopover = ({
   onUseCurrent,
   children,
 }: Props) => {
+  const t = useTranslations("controlCenter");
   const choose = (fn: () => void) => {
     onOpenChange(false);
     // Defer past the close: the scroll-lock teardown forces a reflow that
@@ -52,15 +54,15 @@ export const DraftStartPopover = ({
         <div className={"p-1.5"}>
           <StartOption
             icon={CirclePlusIcon}
-            label={"New Empty Draft"}
-            description={"Start from a blank canvas"}
+            label={t("newEmptyDraft")}
+            description={t("newEmptyDraftDescription")}
             onClick={() => choose(onStartBlank)}
             data-testid={"cc-draft-start-blank-option"}
           />
           <StartOption
             icon={GroupIcon}
-            label={"From Current View"}
-            description={"Start from the current canvas"}
+            label={t("fromCurrentView")}
+            description={t("fromCurrentViewDescription")}
             onClick={() => choose(onUseCurrent)}
             data-testid={"cc-draft-use-current-option"}
           />

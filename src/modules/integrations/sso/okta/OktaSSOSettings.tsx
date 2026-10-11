@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@components/Tabs";
 import { GradientFadedBackground } from "@components/ui/GradientFadedBackground";
 import { cn } from "@utils/helpers";
 import { AlertOctagon, GlobeIcon, KeyRound, Settings } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useState } from "react";
 import integrationImage from "@/assets/integrations/okta.png";
@@ -29,6 +30,9 @@ type Props = {
   onOpenChange: (open: boolean) => void;
 };
 export const OktaSsoSettings = ({ open, onOpenChange, config }: Props) => {
+  const t = useTranslations("idpSync");
+  const tCommon = useTranslations("common");
+  const tIntegrations = useTranslations("integrations");
   const { deleteConnection, addDomain, verifyDomain, mutate } =
     useEnterpriseConnections();
   const [tab, setTab] = useState("domains");
@@ -37,31 +41,30 @@ export const OktaSsoSettings = ({ open, onOpenChange, config }: Props) => {
 
   const deleteIntegration = async () => {
     const choice = await confirm({
-      title: `Delete Integration?`,
-      description:
-        "Are you sure you want to delete this integration? This action cannot be undone.",
-      confirmText: "Delete",
-      cancelText: "Cancel",
+      title: t("deleteIntegrationUndoneQuestion"),
+      description: t("deleteIntegrationUndoneDescription"),
+      confirmText: tCommon("delete"),
+      cancelText: tCommon("cancel"),
       type: "danger",
     });
 
     if (!choice) return;
 
     notify({
-      title: "Okta SSO Integration",
-      description: `Okta was successfully deleted`,
+      title: t("oktaSsoIntegrationTitle"),
+      description: t("oktaWasDeleted"),
       promise: deleteConnection(config.id).then(() => {
         onOpenChange(false);
         mutate();
       }),
-      loadingMessage: "Deleting integration...",
+      loadingMessage: t("deletingIntegration"),
     });
   };
 
   const addDomainHandler = async () => {
     notify({
-      title: "Okta Domains",
-      description: `${domain} has been added`,
+      title: t("oktaDomainsTitle"),
+      description: t("domainAdded", { domain }),
       promise: addDomain(config.id, domain).then((res) => {
         const result = res as unknown as EnterpriseConnectionDomain;
         mutate();
@@ -73,7 +76,7 @@ export const OktaSsoSettings = ({ open, onOpenChange, config }: Props) => {
           setDomainVerificationModal(true);
         }
       }),
-      loadingMessage: "Adding domain...",
+      loadingMessage: t("addingDomain"),
     });
   };
 
@@ -102,10 +105,8 @@ export const OktaSsoSettings = ({ open, onOpenChange, config }: Props) => {
 
         <IntegrationModalHeader
           image={integrationImage}
-          title={"Okta SSO Configuration"}
-          description={
-            "Use Okta as a Single Sign-On provider to authenticate users."
-          }
+          title={t("oktaSsoConfigurationTitle")}
+          description={t("oktaSsoUseAsProviderShort")}
         />
 
         <Tabs
@@ -121,7 +122,7 @@ export const OktaSsoSettings = ({ open, onOpenChange, config }: Props) => {
                   "text-nb-gray-500 group-data-[state=active]/trigger:text-netbird transition-all"
                 }
               />
-              Domains
+              {t("domainsTitle")}
             </TabsTrigger>
             <TabsTrigger value={"settings"}>
               <Settings
@@ -130,7 +131,7 @@ export const OktaSsoSettings = ({ open, onOpenChange, config }: Props) => {
                   "text-nb-gray-500 group-data-[state=active]/trigger:text-netbird transition-all"
                 }
               />
-              Configuration
+              {t("configurationTab")}
             </TabsTrigger>
             <TabsTrigger value={"danger"}>
               <AlertOctagon
@@ -139,7 +140,7 @@ export const OktaSsoSettings = ({ open, onOpenChange, config }: Props) => {
                   "text-nb-gray-500 group-data-[state=active]/trigger:text-netbird transition-all"
                 }
               />
-              Danger Zone
+              {t("dangerZone")}
             </TabsTrigger>
           </TabsList>
           <TabsContent value={"settings"} className={"px-8 text-sm"}>
@@ -152,7 +153,7 @@ export const OktaSsoSettings = ({ open, onOpenChange, config }: Props) => {
                     label={
                       <>
                         <GlobeIcon size={16} />
-                        Okta Domain
+                        {t("oktaDomainLabel")}
                       </>
                     }
                     value={config?.discovery_domain}
@@ -163,7 +164,7 @@ export const OktaSsoSettings = ({ open, onOpenChange, config }: Props) => {
                     label={
                       <>
                         <KeyRound size={16} />
-                        Client ID
+                        {tIntegrations("clientIdLabel")}
                       </>
                     }
                     value={config?.client_id}
@@ -172,7 +173,7 @@ export const OktaSsoSettings = ({ open, onOpenChange, config }: Props) => {
                     label={
                       <>
                         <KeyRound size={16} />
-                        Client Secret
+                        {tIntegrations("clientSecretLabel")}
                       </>
                     }
                     value={"********"}
@@ -195,11 +196,11 @@ export const OktaSsoSettings = ({ open, onOpenChange, config }: Props) => {
                   className={"w-full text-sm"}
                   value={domain}
                   onChange={(e) => setDomain(e.target.value)}
-                  placeholder={"e.g. company.com"}
+                  placeholder={t("domainPlaceholder")}
                 />
               </div>
               <Button type={"submit"} variant={"secondaryLighter"}>
-                Add Domain
+                {t("addDomain")}
               </Button>
             </form>
             <div className={"flex flex-col gap-3"}>
@@ -218,13 +219,13 @@ export const OktaSsoSettings = ({ open, onOpenChange, config }: Props) => {
               <Label>
                 <div className={"flex gap-2 items-center"}>
                   <AlertOctagon size={16} />
-                  Delete Integration
+                  {t("deleteIntegration")}
                 </div>
               </Label>
               <HelpText className={"max-w-lg mt-2"}>
-                Deleting this integration will remove the ability to use Okta as
-                an SSO provider. <br /> If you delete the integration you will
-                need to reconfigure it again to enable the Single Sign-On.
+                {t.rich("oktaSsoDeleteHelp", {
+                  br: () => <br />,
+                })}
               </HelpText>
             </div>
             <Button
@@ -233,7 +234,7 @@ export const OktaSsoSettings = ({ open, onOpenChange, config }: Props) => {
               className={"mt-3"}
               onClick={deleteIntegration}
             >
-              Delete Integration
+              {t("deleteIntegration")}
             </Button>
           </TabsContent>
         </Tabs>

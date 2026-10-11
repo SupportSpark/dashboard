@@ -1,4 +1,5 @@
 import { Node } from "@xyflow/react";
+import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 import { Policy } from "@/interfaces/Policy";
 import { useDraftChangeset } from "@/modules/control-center/draft/DraftChangesetContext";
@@ -14,6 +15,7 @@ const GROUP_NODE_TYPES = new Set<string>([
 // Remove never confirms, but it still keeps the changeset honest — React Flow's
 // raw node deletion would skip the policy strips.
 export function useNodeRemoval() {
+  const t = useTranslations("controlCenter");
   const { removeGroups, removeNodeWithEdges } = useDraftGroupActions();
   const { trackDeletePolicy, trackDeleteProvider, trackDeleteAgentPolicy } =
     useDraftChangeset();
@@ -26,18 +28,18 @@ export function useNodeRemoval() {
         if (node.type === NodeType.ProviderNode) {
           trackDeleteProvider({
             providerId: recordId,
-            name: data?.name ?? "Provider",
+            name: data?.name ?? t("provider"),
           });
         } else {
           trackDeleteAgentPolicy({
             agentPolicyId: recordId,
-            name: data?.name ?? "Agent policy",
+            name: data?.name ?? t("agentPolicyLabel"),
           });
         }
       }
       removeNodeWithEdges(node.id);
     },
-    [trackDeleteProvider, trackDeleteAgentPolicy, removeNodeWithEdges],
+    [trackDeleteProvider, trackDeleteAgentPolicy, removeNodeWithEdges, t],
   );
 
   // Off the canvas a policy authorizes nothing, so it deploys as a deletion.
@@ -48,11 +50,11 @@ export function useNodeRemoval() {
 
       trackDeletePolicy({
         policyId: node.id.replace("policy-", ""),
-        name: nodePolicy.name ?? "Policy",
+        name: nodePolicy.name ?? t("policy"),
       });
       removeNodeWithEdges(node.id);
     },
-    [trackDeletePolicy, removeNodeWithEdges],
+    [trackDeletePolicy, removeNodeWithEdges, t],
   );
 
   // Remove is withheld where taking the node off the canvas amounts to deleting

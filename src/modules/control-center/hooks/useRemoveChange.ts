@@ -1,4 +1,5 @@
 import { Node } from "@xyflow/react";
+import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 import { Group } from "@/interfaces/Group";
 import { Policy } from "@/interfaces/Policy";
@@ -49,6 +50,7 @@ const policyRefsResource = (policy: Policy, refId: string) =>
 
 /** Reverts the draft as if the removed change had never happened. */
 export function useRemoveChange() {
+  const t = useTranslations("controlCenter");
   const { nodes, edges, setNodes, setEdges } = useCanvasState();
   const { changes, replaceChanges } = useDraftChangeset();
   const { groups, networks, networkResources, policies } =
@@ -60,8 +62,8 @@ export function useRemoveChange() {
 
   const previewRemove = useCallback(
     (change: DraftChange): CascadePreview =>
-      previewRemoveChange(change, changes, nodes, edges),
-    [changes, nodes, edges],
+      previewRemoveChange(change, changes, nodes, edges, t),
+    [changes, nodes, edges, t],
   );
 
   const dropNodes = useCallback(

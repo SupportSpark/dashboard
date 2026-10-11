@@ -51,6 +51,21 @@ type Props = {
 	account: Account;
 };
 
+const PeerApprovalTooltip = ({
+	integrationName,
+}: {
+	integrationName?: string;
+}) => {
+	const t = useTranslations("settings");
+	return (
+		<div className={"text-xs max-w-sm"}>
+			{t("peerApprovalDisabledByIntegration", {
+				integration: integrationName ?? "Integration",
+			})}
+		</div>
+	);
+};
+
 export default function AuthenticationTab({ account }: Readonly<Props>) {
 	const t = useTranslations("settings");
 	const { permission } = usePermissions();
@@ -187,28 +202,28 @@ export default function AuthenticationTab({ account }: Readonly<Props>) {
 				<Breadcrumbs>
 					<Breadcrumbs.Item
 						href={"/settings"}
-						label={"Settings"}
+						label={t("title")}
 						icon={<SettingsIcon size={13} />}
 					/>
 					<Breadcrumbs.Item
 						href={"/settings"}
-						label={"Authentication"}
+						label={t("authentication")}
 						icon={<ShieldIcon size={14} />}
 						active
 					/>
 				</Breadcrumbs>
 				<div className={"flex items-start justify-between -mt-1"}>
 					<div>
-						<h1>Authentication</h1>
+						<h1>{t("authentication")}</h1>
 						<Paragraph className={"block"}>
-							Control how peers and users authenticate.{" "}
+							{t("settingsAuthenticationDescription")}{" "}
 							<InlineLink
 								href={
 									"https://docs.netbird.io/how-to/enforce-periodic-user-authentication"
 								}
 								target={"_blank"}
 							>
-								Learn more
+								{t("learnMore")}
 								<ExternalLinkIcon size={12} />
 							</InlineLink>
 						</Paragraph>
@@ -220,7 +235,7 @@ export default function AuthenticationTab({ account }: Readonly<Props>) {
 						onClick={saveChanges}
 						data-testid={"save-authentication-settings"}
 					>
-						Save Changes
+						{t("saveChangesButton")}
 					</Button>
 				</div>
 
@@ -230,11 +245,7 @@ export default function AuthenticationTab({ account }: Readonly<Props>) {
 				>
 					<FullTooltip
 						content={
-							<div className={"text-xs max-w-sm"}>
-								Peer approval is disabled because the {activeIntegrationName}{" "}
-								integration is enabled. If you want to enable peer approval,
-								please disable first the {activeIntegrationName} integration.
-							</div>
+							<PeerApprovalTooltip integrationName={activeIntegrationName} />
 						}
 						disabled={!isAnyIntegrationEnabled}
 					>
@@ -251,13 +262,13 @@ export default function AuthenticationTab({ account }: Readonly<Props>) {
 									label={
 										<>
 											<IconDevicesCheck size={15} />
-											Peer Approval
+											{t("peerApprovalLabel")}
 										</>
 									}
 									disabled={
 										isAnyIntegrationEnabled || !permission.settings.update
 									}
-									helpText={"Require peers to be approved by an administrator."}
+									helpText={t("peerApprovalHelp")}
 								/>
 							</LockedFeatureBadge>
 						</div>
@@ -271,14 +282,11 @@ export default function AuthenticationTab({ account }: Readonly<Props>) {
 							label={
 								<>
 									<ShieldUserIcon size={15} />
-									User Approval Required
+									{t("userApprovalRequiredLabel")}
 								</>
 							}
 							helpText={
-								<>
-									Require manual approval for new users joining via <br />
-									domain matching. Users will be blocked until approved.
-								</>
+								<>{t.rich("userApprovalRequiredHelp", { br: () => <br /> })}</>
 							}
 							disabled={!permission.settings.update}
 						/>
@@ -294,9 +302,9 @@ export default function AuthenticationTab({ account }: Readonly<Props>) {
 								label={
 									<>
 										<KeyRound size={15} />
-										Enable Local MFA
+										{t("enableLocalMfa")}
 										<SmallBadge
-											text={"Beta"}
+											text={t("beta")}
 											variant={"sky"}
 											className={"text-[9px] leading-none py-[3px] px-[5px]"}
 											textClassName={"top-0"}
@@ -305,9 +313,7 @@ export default function AuthenticationTab({ account }: Readonly<Props>) {
 								}
 								helpText={
 									<>
-										Require multi-factor authentication for users
-										<br />
-										authenticating with local credentials.
+										{t.rich("enableLocalMfaHelp", { br: () => <br /> })}
 									</>
 								}
 								disabled={!permission.settings.update}
@@ -377,7 +383,7 @@ export default function AuthenticationTab({ account }: Readonly<Props>) {
 													className={"text-nb-gray-300"}
 												/>
 												<SelectValue
-													placeholder="Select interval..."
+													placeholder={t("selectIntervalPlaceholder")}
 													data-testid={"peer-login-expiration-select-value"}
 												/>
 											</div>

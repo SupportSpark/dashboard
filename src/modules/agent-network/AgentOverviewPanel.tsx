@@ -153,12 +153,14 @@ function OverviewContent({
           <div className={"flex items-start justify-between gap-3"}>
             <div>
               <h3 className={"text-sm font-medium text-nb-gray-100"}>
-                {metric === "tokens" ? "Token usage" : t("cost")} by day
+                {t("metricByDayTitle", {
+                  metric: metric === "tokens" ? t("tokenUsage") : t("cost"),
+                })}
               </h3>
               <p className={"text-xs text-nb-gray-400 leading-snug mt-0.5"}>
                 {metric === "tokens"
-                  ? "Input and output tokens per day."
-                  : "Estimated spend per day."}
+                  ? t("tokensPerDayDescription")
+                  : t("spendPerDayDescription")}
               </p>
             </div>
             <ButtonGroup>
@@ -256,19 +258,19 @@ function DailyBreakdownTable({ daily }: { daily: DayBucket[] }) {
                 <div className={"text-xs flex flex-col gap-1"}>
                   <BreakdownRow
                     value={d.input.toLocaleString()}
-                    label={"input"}
+                    label={t("tokenInputLower")}
                   />
                   <BreakdownRow
                     value={d.output.toLocaleString()}
-                    label={"output"}
+                    label={t("tokenOutputLower")}
                   />
                   <BreakdownRow
                     value={d.cacheRead.toLocaleString()}
-                    label={"cache read"}
+                    label={t("cacheReadLabel")}
                   />
                   <BreakdownRow
                     value={d.cacheWrite.toLocaleString()}
-                    label={"cache write"}
+                    label={t("cacheWriteLabel")}
                   />
                   <BreakdownTotal value={total.toLocaleString()} />
                 </div>
@@ -313,22 +315,22 @@ function DailyBreakdownTable({ daily }: { daily: DayBucket[] }) {
                       <BreakdownRow
                         mono={true}
                         value={usd(d.inputCost ?? 0)}
-                        label={"input"}
+                        label={t("tokenInputLower")}
                       />
                       <BreakdownRow
                         mono={true}
                         value={usd(d.outputCost ?? 0)}
-                        label={"output"}
+                        label={t("tokenOutputLower")}
                       />
                       <BreakdownRow
                         mono={true}
                         value={usd(d.cacheReadCost ?? 0)}
-                        label={"cache read"}
+                        label={t("cacheReadLabel")}
                       />
                       <BreakdownRow
                         mono={true}
                         value={usd(d.cacheWriteCost ?? 0)}
-                        label={"cache write"}
+                        label={t("cacheWriteLabel")}
                       />
                     </>
                   ) : (
@@ -336,12 +338,12 @@ function DailyBreakdownTable({ daily }: { daily: DayBucket[] }) {
                       <BreakdownRow
                         mono={true}
                         value={usd(d.cost - d.cacheCost)}
-                        label={"input + output"}
+                        label={t("inputPlusOutputLabel")}
                       />
                       <BreakdownRow
                         mono={true}
                         value={usd(d.cacheCost)}
-                        label={"cache"}
+                        label={t("costCacheLabel")}
                       />
                     </>
                   )}
@@ -355,7 +357,7 @@ function DailyBreakdownTable({ daily }: { daily: DayBucket[] }) {
         },
       },
     ],
-    [],
+    [t],
   );
 
   return (
@@ -379,10 +381,8 @@ function DailyBreakdownTable({ daily }: { daily: DayBucket[] }) {
               size={"large"}
             />
           }
-          title={"No usage recorded yet"}
-          description={
-            "Daily token and cost totals appear here as agents send requests through the providers you've connected."
-          }
+          title={t("noUsageRecordedTitle")}
+          description={t("noUsageRecordedDescription")}
           learnMore={
             <>
               {tCommon("learnMoreAbout")}

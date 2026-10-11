@@ -3,6 +3,7 @@ import { Modal, ModalContent, ModalFooter } from "@components/modal/Modal";
 import { GradientFadedBackground } from "@components/ui/GradientFadedBackground";
 import loadConfig from "@utils/config";
 import { ClockAlertIcon, LogOutIcon, MailIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useMemo } from "react";
 import { useMSP } from "@/cloud/msp/contexts/MSPProvider";
@@ -25,6 +26,8 @@ export const MSPTrialExpiredModal = () => {
     isAccountWithMSPParent,
     mspInfo,
   } = useMSP();
+
+  const t = useTranslations("msp");
 
   const {
     subscription,
@@ -62,19 +65,18 @@ export const MSPTrialExpiredModal = () => {
           <ClockAlertIcon size={24} className={"text-yellow-400"} />
           <div className={"text-xl font-medium"}>
             {isMSPInTenantContext
-              ? "The 14-Day Trial has expired!"
-              : "Your 14-Day Trial has expired!"}
+              ? t("trialExpiredTenant")
+              : t("trialExpiredOwn")}
           </div>
           {isMSPInTenantContext ? (
             <div className={"text-sm text-nb-gray-300 text-center"}>
-              <TenantName currentAccount={currentAccount} />
-              has reached the end of the free trial period. To continue using
-              NetBird, please upgrade the plan for this tenant.
+              <TenantName currentAccount={currentAccount} />{" "}
+              {t("tenantTrialEndedPrefix")}
             </div>
           ) : mspInfo?.reseller_status === "active" ? (
             <div className={"text-sm text-nb-gray-300 text-center"}>
-              Your account has reached the end of the free trial period. <br />{" "}
-              To continue using NetBird, please contact your distributor.
+              {t("ownTrialEndedBeforeContact")} <br />{" "}
+              {t("ownTrialEndedContactDistributor")}
             </div>
           ) : (
             <div className={"text-sm text-nb-gray-300 text-center"}>

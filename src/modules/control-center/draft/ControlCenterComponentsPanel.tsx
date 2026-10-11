@@ -894,8 +894,8 @@ const PanelContent = React.memo(
             <TemplateItem
               key={"policy-template"}
               icon={ShieldIcon}
-              label={"Policy"}
-              description={"Control access between sources and destinations"}
+              label={t("policy")}
+              description={t("policyTemplateDescription")}
               onPointerDown={(e) => handlePolicyDragStart(e)}
               data-testid={"cc-template-policy"}
             />,
@@ -978,14 +978,14 @@ const PanelContent = React.memo(
                   }
                 >
                   <TruncatedText
-                    text={policy.name ?? "Policy"}
+                    text={policy.name ?? t("policy")}
                     maxWidth={"150px"}
                     hideTooltip={true}
                   />
                   <SmallBadge />
                 </span>
                 <span className={"text-[0.72rem] text-nb-gray-400 truncate"}>
-                  {protocolLabel || "All"}
+                  {protocolLabel || tCommon("all")}
                 </span>
               </div>
             </div>
@@ -1020,7 +1020,7 @@ const PanelContent = React.memo(
               <span className={"text-[0.72rem] text-nb-gray-400 truncate"}>
                 {resourceCount
                   ? singularize(tCommon("resources"), resourceCount)
-                  : "No Resources"}
+                  : t("noResources")}
               </span>
             </div>
           </div>
@@ -1064,8 +1064,8 @@ const PanelContent = React.memo(
                 </span>
                 <span className={"text-[0.72rem] text-nb-gray-400 truncate"}>
                   {network.resources?.length
-                    ? singularize("Resources", network.resources.length)
-                    : "No Resources"}
+                    ? singularize(tCommon("resources"), network.resources.length)
+                    : t("noResources")}
                 </span>
               </div>
             </div>
@@ -1204,8 +1204,8 @@ const PanelContent = React.memo(
             <TemplateItem
               key={"agent-provider-template"}
               icon={SparklesIcon}
-              label={"Provider"}
-              description={"Connect an AI provider or gateway"}
+              label={t("provider")}
+              description={t("providerTemplateDescription")}
               onPointerDown={(e) =>
                 handleAgentDragStart(e, (position) =>
                   openProviderWizard(position),
@@ -1220,8 +1220,8 @@ const PanelContent = React.memo(
             <TemplateItem
               key={"agent-policy-template"}
               icon={ShieldIcon}
-              label={"Agent Policy"}
-              description={"Authorize groups to reach providers"}
+              label={t("agentPolicyTitle")}
+              description={t("agentPolicyTemplateDescription")}
               onPointerDown={(e) =>
                 handleAgentDragStart(e, (position) =>
                   addBlankAgentPolicy(position),
@@ -1363,7 +1363,7 @@ const PanelContent = React.memo(
                   {pendingDelete && <DeletedBadge />}
                 </span>
                 <span className={"text-[0.72rem] text-nb-gray-400 truncate"}>
-                  {protocolLabel || "All"}
+                  {protocolLabel || tCommon("all")}
                 </span>
               </div>
             </div>
@@ -1403,7 +1403,7 @@ const PanelContent = React.memo(
                 rows: [...buildDraftNetworkRows(), ...buildNetworkRows()],
               },
               {
-                title: "Resources",
+                title: tCommon("resources"),
                 rows: [...buildDraftResourceRows(), ...buildResourceRows()],
               },
               // The category tab is not reachable from a search, so its rows

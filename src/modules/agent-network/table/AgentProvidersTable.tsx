@@ -73,6 +73,7 @@ function NameCell({ provider }: { provider: AIProvider }) {
 // An empty allow-list means the provider is unrestricted, so the count is
 // replaced by what it actually means rather than showing a zero.
 function ModelsCell({ provider }: { provider: AIProvider }) {
+  const t = useTranslations("agentNetwork");
   const count = provider.models.length;
   return (
     <div className={"flex"}>
@@ -83,20 +84,23 @@ function ModelsCell({ provider }: { provider: AIProvider }) {
       >
         <Boxes size={11} />
         <span className={"font-medium text-xs"}>
-          {count === 0 ? "All Models" : count}
+          {count === 0 ? t("allModels") : count}
         </span>
       </Badge>
     </div>
   );
 }
 
-const columns: ColumnDef<AIProvider>[] = [
+const getColumns = (
+  t: (key: string, values?: any) => string,
+  tCommon: (key: string, values?: any) => string,
+): ColumnDef<AIProvider>[] => [
   {
     id: "name",
     accessorKey: "name",
     sortingFn: "text",
     header: ({ column }) => (
-      <DataTableHeader column={column}>Name</DataTableHeader>
+      <DataTableHeader column={column}>{tCommon("name")}</DataTableHeader>
     ),
     cell: ({ row }) => <NameCell provider={row.original} />,
   },
@@ -105,7 +109,7 @@ const columns: ColumnDef<AIProvider>[] = [
     accessorFn: (p) => p.models.length,
     sortingFn: "basic",
     header: ({ column }) => (
-      <DataTableHeader column={column}>Models</DataTableHeader>
+      <DataTableHeader column={column}>{t("models")}</DataTableHeader>
     ),
     cell: ({ row }) => <ModelsCell provider={row.original} />,
   },
@@ -162,9 +166,9 @@ export default function AgentProvidersTable({
         text={t("providers")}
         sorting={sorting}
         setSorting={setSorting}
-        columns={columns}
+        columns={getColumns(t, tCommon)}
         data={providers}
-        searchPlaceholder={"Search by name..."}
+        searchPlaceholder={t("searchProvidersByName")}
         onRowClick={
           canUpdate ? (row) => openProviderEdit(row.original) : undefined
         }
@@ -178,9 +182,7 @@ export default function AgentProvidersTable({
               />
             }
             title={t("connectProvider")}
-            description={
-              "Route OpenAI, Anthropic, and other LLM APIs through NetBird to enforce access control, track token spend, and capture prompts."
-            }
+            description={t("providersEmptyDescription")}
             button={
               <div className={"gap-x-4 flex items-center justify-center"}>
                 <AddProviderButton />

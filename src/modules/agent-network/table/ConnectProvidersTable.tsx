@@ -61,18 +61,16 @@ function ModelList({ models }: { models: string[] }) {
 // catalog) models, so "All Models" can say what it covers instead of leaving
 // the caller to guess which model ids to configure.
 function AllModelsTooltip({ models }: { models: string[] }) {
+  const t = useTranslations("agentNetwork");
   if (models.length === 0) {
     return (
-      <span className={"text-xs"}>
-        No model restriction. This provider doesn&apos;t publish a model list,
-        so use any model id its upstream accepts.
-      </span>
+      <span className={"text-xs"}>{t("noModelRestrictionUnknownList")}</span>
     );
   }
   return (
     <div className={"flex flex-col gap-2 text-xs"}>
       <span className={"text-nb-gray-300"}>
-        No model restriction. Known models for this provider:
+        {t("noModelRestrictionKnownModels")}
       </span>
       <ModelList models={models} />
     </div>
@@ -82,6 +80,7 @@ function AllModelsTooltip({ models }: { models: string[] }) {
 // Same badge the admin providers table uses for its allow-list, with the
 // model names on hover — the caller has no other page to look them up on.
 function ModelsCell({ provider }: { provider: APIMeProvider }) {
+  const t = useTranslations("agentNetwork");
   const allModels = provider.all_models_allowed;
   return (
     <div className={"flex"}>
@@ -97,7 +96,7 @@ function ModelsCell({ provider }: { provider: APIMeProvider }) {
         <Badge variant={"gray"} className={"h-[34px]"} useHover={true}>
           <Boxes size={11} />
           <span className={"font-medium text-xs"}>
-            {allModels ? "All Models" : provider.models.length}
+            {allModels ? t("allModels") : provider.models.length}
           </span>
           {allModels && provider.models.length > 0 && (
             <span className={"text-xs text-nb-gray-400"}>
@@ -110,13 +109,15 @@ function ModelsCell({ provider }: { provider: APIMeProvider }) {
   );
 }
 
-const columns: ColumnDef<APIMeProvider>[] = [
+const getColumns = (
+  t: (key: string, values?: any) => string,
+): ColumnDef<APIMeProvider>[] => [
   {
     id: "name",
     accessorKey: "name",
     sortingFn: "text",
     header: ({ column }) => (
-      <DataTableHeader column={column}>Provider</DataTableHeader>
+      <DataTableHeader column={column}>{t("provider")}</DataTableHeader>
     ),
     cell: ({ row }) => <NameCell provider={row.original} />,
   },
@@ -126,7 +127,7 @@ const columns: ColumnDef<APIMeProvider>[] = [
     accessorFn: (p) => (p.all_models_allowed ? Infinity : p.models.length),
     sortingFn: "basic",
     header: ({ column }) => (
-      <DataTableHeader column={column}>Models</DataTableHeader>
+      <DataTableHeader column={column}>{t("models")}</DataTableHeader>
     ),
     cell: ({ row }) => <ModelsCell provider={row.original} />,
   },
@@ -168,7 +169,7 @@ export default function ConnectProvidersTable({ providers }: Readonly<Props>) {
       text={t("providers")}
       sorting={sorting}
       setSorting={setSorting}
-      columns={columns}
+      columns={getColumns(t)}
       data={providers}
       showSearchAndFilters={false}
       initialPageSize={25}
@@ -178,11 +179,11 @@ export default function ConnectProvidersTable({ providers }: Readonly<Props>) {
         <NoResults
           className={"py-4"}
           icon={<AgentNetworkIcon className={"text-nb-gray-300"} size={20} />}
-          title={"No providers available yet"}
+          title={t("noProvidersAvailableTitle")}
           description={
             canManagePolicies
-              ? "No access policy covers your user yet. Add one of your groups to a policy to route your agent through NetBird."
-              : "You don’t have access to any providers yet. Ask your administrator to add you to an Agent Network access policy."
+              ? t("noAccessPolicyCoversUser")
+              : t("noProviderAccessAskAdmin")
           }
         >
           {canManagePolicies && (

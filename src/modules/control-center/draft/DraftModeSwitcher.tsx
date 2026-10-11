@@ -68,7 +68,7 @@ export const DraftModeSwitcher = ({}: Props) => {
           <PencilLineIcon size={12} />
           {t("draft")}
           <SmallBadge
-            text={"Beta"}
+            text={t("beta")}
             variant={"sky"}
             className={"text-[8px] leading-none py-[3px] px-[5px]"}
             textClassName={"top-0"}

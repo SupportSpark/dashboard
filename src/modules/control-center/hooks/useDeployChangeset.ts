@@ -577,9 +577,9 @@ export function useDeployChangeset() {
       deployInFlight.current = false;
       notify({
         title: t("deployFailed"),
-        description: `Policy “${
-          (contradicted as { name?: string }).name ?? "Policy"
-        }” is marked both for update and for deletion. Remove one of the two changes and try again.`,
+        description: t("policyDeployConflict", {
+          name: (contradicted as { name?: string }).name ?? t("policy"),
+        }),
         backgroundColor: "bg-red-500",
       });
       return false;
@@ -597,7 +597,7 @@ export function useDeployChangeset() {
           await executeChange(change, createdIds.current.get(change.id));
         } catch (err) {
           setDeployStatus((p) => ({ ...p, [change.id]: "error" }));
-          const label = getChangeLabel(change).title;
+          const label = getChangeLabel(change, t).title;
           const e = err as { message?: string; code?: number };
           // Failed + remaining changes stay in the draft for a retry.
           throw {

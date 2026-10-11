@@ -494,7 +494,9 @@ export function useSelectNodeHandlers(params: UseSelectNodeHandlersParams) {
         if (resource?.id && resNetworkId) {
           void (async () => {
             const choice = await confirm({
-              title: `Edit resource “${resource.name ?? "Resource"}”?`,
+              title: t("editResourceTitle", {
+                name: resource.name ?? t("resourceSingular"),
+              }),
               description: t("liveModeSaveNotice"),
               confirmText: tCommon("edit"),
               cancelText: tCommon("cancel"),

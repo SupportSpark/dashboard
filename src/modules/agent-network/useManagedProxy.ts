@@ -1,4 +1,5 @@
 import useFetchApi, { useApiCallWithStatus } from "@utils/api";
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import type { AgentNetworkManagedProxy } from "@/modules/agent-network/AIProvidersProvider";
 import {
@@ -14,6 +15,7 @@ const MANAGED_PROXY_PATH = "/integrations/agent-network/managed-proxy";
 // neither toasted nor retried. Once a deployment is known it is polled by its
 // state until it is ready.
 export function useManagedProxy(enabled: boolean) {
+  const t = useTranslations("agentNetwork");
   const { data, error, isLoading, mutate } =
     useFetchApi<AgentNetworkManagedProxy>(
       MANAGED_PROXY_PATH,
@@ -48,7 +50,7 @@ export function useManagedProxy(enabled: boolean) {
       outcome = provisionOutcome(await request.post());
     } catch (err) {
       const message = (err as { message?: string } | undefined)?.message;
-      return { kind: "error", message: message || "Request failed" };
+      return { kind: "error", message: message || t("requestFailed") };
     }
     if (outcome.kind === "deployment") {
       await mutate(outcome.proxy, { revalidate: false });

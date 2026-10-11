@@ -1,6 +1,7 @@
 import { cn } from "@utils/helpers";
 import dayjs from "dayjs";
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useMemo } from "react";
 import {
@@ -25,16 +26,19 @@ const isResource = (m: TrafficEventMachine) => {
   return m.type !== TrafficEventMachineType.PEER;
 };
 
-const getNamePrefix = (m: TrafficEventMachine) => {
+const getNamePrefix = (
+  t: ReturnType<typeof useTranslations>,
+  m: TrafficEventMachine,
+) => {
   switch (m.type) {
     case TrafficEventMachineType.PEER:
-      return "Peer ";
+      return t("machinePrefixPeer");
     case TrafficEventMachineType.ROUTE:
-      return "Route ";
+      return t("machinePrefixRoute");
     case TrafficEventMachineType.UNKNOWN:
       return "";
     default:
-      return "Resource ";
+      return t("machinePrefixResource");
   }
 };
 
@@ -43,12 +47,18 @@ export const TrafficEventDescription = ({
   type,
   showCaret = false,
 }: Props) => {
+  const t = useTranslations("trafficEvents");
+  const tCommon = useTranslations("common");
   const { peers } = usePeers();
 
   const routerName = useMemo(() => {
     const reporter = peers?.find((peer) => peer.id === event.reporter_id);
-    return reporter ? <Mark>{reporter.name}</Mark> : <Mark>Unknown</Mark>;
-  }, [event.reporter_id, peers]);
+    return reporter ? (
+      <Mark>{reporter.name}</Mark>
+    ) : (
+      <Mark>{tCommon("unknown")}</Mark>
+    );
+  }, [event.reporter_id, peers, tCommon]);
 
   const timestamp = event.events?.find((e) => e.type === type)?.timestamp;
 
@@ -76,13 +86,13 @@ export const TrafficEventDescription = ({
     const destinationAddress = stripZeroPort(event.destination.address);
     const sourceName = (
       <>
-        {getNamePrefix(event.source)}
+        {getNamePrefix(t, event.source)}
         <Mark>{event.source.name || sourceAddress}</Mark>
       </>
     );
     const destinationName = (
       <>
-        {getNamePrefix(event.destination)}
+        {getNamePrefix(t, event.destination)}
         <Mark>{event.destination.name || destinationAddress}</Mark>
       </>
     );
@@ -323,7 +333,7 @@ export const TrafficEventDescription = ({
 
     // Fallback to generic message
     return (
-      <>{getTrafficEventTypeText(info.type, info.isP2P, event.direction)}</>
+      <>{getTrafficEventTypeText(t, info.type, info.isP2P, event.direction)}</>
     );
   };
 
@@ -335,6 +345,7 @@ export const TrafficEventDescription = ({
             <span>
               {eventWindow.first.format("MMM D, YYYY [at] h:mm A")} &ndash;{" "}
               {eventWindow.last.format(
+                // dayjs format tokens, not UI copy.
                 eventWindow.first.isSame(eventWindow.last, "day")
                   ? "h:mm A"
                   : "MMM D, h:mm A",
