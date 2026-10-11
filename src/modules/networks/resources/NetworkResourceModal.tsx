@@ -296,8 +296,8 @@ export function ResourceModalContent({
                 ref={nameRef}
                 autoFocus={true}
                 tabIndex={0}
-data-testid="resource-name-input"
-				placeholder={t("resourceNamePlaceholder")}
+                data-testid="resource-name-input"
+                placeholder={t("resourceNamePlaceholder")}
                 value={name}
                 error={nameError}
                 onChange={(e) => setName(e.target.value)}
@@ -454,7 +454,7 @@ data-testid="resource-name-input"
           {!useSave ? (
             <>
               <ModalClose asChild={true}>
-                <Button variant={"secondary"}>Cancel</Button>
+                <Button variant={"secondary"}>{tCommon("cancel")}</Button>
               </ModalClose>
               <ModalClose asChild={true}>
                 <Button
@@ -463,7 +463,7 @@ data-testid="resource-name-input"
                   onClick={saveDraft}
                   disabled={!canCreate}
                 >
-                  {resource ? "Save Changes" : "Add Resource"}
+                  {resource ? t("saveChanges") : t("addResource")}
                 </Button>
               </ModalClose>
             </>
