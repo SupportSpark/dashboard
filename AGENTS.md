@@ -74,3 +74,38 @@ and listed under "New stories" in the report, so reviewers see the new UI.
   them (they need the Docker environment from `npm run test:setup`).
 - Folder guides (`CLAUDE.md` files) updated when the architecture or rules
   they describe changed.
+
+## This fork adds a Chinese localization layer
+
+Everything above describes upstream `netbirdio/dashboard`. This fork keeps that
+intact and adds one thing on top: a next-intl English/Chinese layer on the
+`i18n-zh` branch. `main` stays a pristine mirror of upstream.
+
+**Read [docs/I18N-SYNC.md](docs/I18N-SYNC.md) before changing this branch.** It
+covers the branch model, the automated upstream sync, and how to resolve the
+conflicts that sync produces. The two rules that matter most:
+
+- **Upstream always wins on everything that is not translation.** Logic,
+  structure, new features, props, refactors and bug fixes come from upstream
+  verbatim; this layer only adds `useTranslations()` wiring and the catalogs.
+- **Add text in `en.ts` and `zh.ts` together.** `src/i18n/global.d.ts` derives a
+  global `IntlMessages` type from `en.ts`, so a key missing from `zh.ts` fails
+  `tsc`, and a key used but never defined renders the raw key string at runtime.
+
+Localization-specific checks, all wired into CI:
+
+| Command | Catches |
+| --- | --- |
+| `node tools/check-catalog-parity.mjs .` | key present in `en.ts` but missing from `zh.ts` |
+| `node tools/check-translation-keys.mjs` | a literal `t("key")` that resolves to nothing in the namespace the component binds |
+| `node tools/find-dropped-upstream-code.mjs` | upstream imports/components/test-ids/routes that this branch dropped (a merge conflict cannot show these) |
+| `node tools/check-merge-integrity.ps1` | leftover conflict markers, missing i18n plumbing, stale deps |
+
+`npm run test:i18n` runs the standalone locale-detection assertions; note it is
+excluded from the vitest glob on purpose (it is a script that calls
+`process.exit()`, not a vitest suite).
+
+Upstream's own unit suite runs unmodified — `vitest.setup.ts` provides the
+translation context those tests would otherwise lack, so upstream's test files
+stay byte-identical to upstream and keep merging cleanly.
+
