@@ -55,6 +55,12 @@ jobs:
       - name: Catalog parity (en → zh)
         run: node tools/check-catalog-parity.mjs .
 
+      # Catches a second, distinct failure mode: a literal t("key") whose key
+      # does not exist in the namespace the component binds. next-intl renders
+      # the raw key at runtime, and neither tsc nor `next build` notices.
+      - name: Translation keys resolve
+        run: node tools/check-translation-keys.mjs
+
       - name: Summary
         if: always()
         run: |
@@ -63,5 +69,11 @@ jobs:
             echo
             echo '```'
             node tools/check-catalog-parity.mjs . 2>&1 | head -n 12
+            echo '```'
+            echo
+            echo "### Translation key resolution"
+            echo
+            echo '```'
+            node tools/check-translation-keys.mjs 2>&1 | head -n 12
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY" || true

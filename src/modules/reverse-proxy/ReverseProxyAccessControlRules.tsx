@@ -142,11 +142,11 @@ function rulesToRestrictions(
 			if (rule.action === "allow") allowed_countries.push(rule.value);
 			else blocked_countries.push(rule.value);
 		} else {
-			const suffix = rule.value.includes(":") ? "/128" : "/32";
-			const value =
-				rule.type === "ip" && !rule.value.includes("/")
-					? `${rule.value}${suffix}`
-					: rule.value;
+			let value = rule.value;
+			if (rule.type === "ip" && !value.includes("/")) {
+				const suffix = hostSuffixFor(value);
+				if (suffix !== null) value = `${value}/${suffix}`;
+			}
 			if (rule.action === "allow") allowed_cidrs.push(value);
 			else blocked_cidrs.push(value);
 		}

@@ -370,15 +370,15 @@ export function RouteModalContent({
 
 	const networkIdentifierError = useMemo(() => {
 		return (networkIdentifier?.length || 0) > 40
-			? t("networkIdentifierLengthError")
+			? tr("networkIdentifierLengthError")
 			: "";
-	}, [networkIdentifier]);
+	}, [networkIdentifier, tr]);
 
 	const metricError = useMemo(() => {
 		return parseInt(metric) < 1 || parseInt(metric) > 9999
-			? t("metricError")
+			? tr("metricError")
 			: "";
-	}, [metric]);
+	}, [metric, tr]);
 
 	const isNameEntered = useMemo(() => {
 		return networkIdentifier != "" && networkIdentifierError == "";
