@@ -47,6 +47,7 @@ export default function PeerProvider({
 }: Props) {
   const t = useTranslations("peers");
   const tCommon = useTranslations("common");
+  const tActions = useTranslations("peerActions");
   const { user, isLoading: isUserLoading } = usePeerUser(peer);
   const { peerGroups, isLoading: isGroupsLoading } = usePeerGroups(peer);
   const isLoading =
@@ -116,15 +117,15 @@ export default function PeerProvider({
     notify({
       title: peer.name,
       description: enable
-        ? "SSH Access successfully enabled"
-        : "SSH Access successfully disabled",
+        ? tActions("sshEnabled")
+        : tActions("sshDisabled"),
       promise: update({ ssh: enable }).then(() => {
         isPeerDetailPage ? mutate(`/peers/${peer.id}`) : mutate("/peers");
         setSSHInstructionsModal(false);
       }),
       loadingMessage: enable
-        ? "Enabling SSH Access..."
-        : "Disabling SSH Access...",
+        ? tActions("enablingSshAccess")
+        : tActions("disablingSshAccess"),
     });
   };
 

@@ -23,6 +23,7 @@ export const GroupsMultiSelect = ({
   onCanceled,
 }: Readonly<Props>) => {
   const tgrp = useTranslations("groups");
+  const tCommon = useTranslations("common");
   const { mutate } = useSWRConfig();
   const { confirm } = useDialog();
   const { deleteGroupDropdownOption } = useGroups();
@@ -34,12 +35,12 @@ export const GroupsMultiSelect = ({
     if (!permission.groups.delete || groupCount === 0) return;
 
     const choice = await confirm({
-      title: `Delete ${groupCount} ${groupCount > 1 ? "groups" : "group"}?`,
-      description: `Are you sure you want to delete ${
-        groupCount > 1 ? "these groups" : "this group"
-      }? This action cannot be undone.`,
-      confirmText: "Delete All",
-      cancelText: "Cancel",
+      title: tgrp("deleteGroupsConfirmTitle", { count: groupCount }),
+      description: tgrp("deleteGroupsConfirmDescription", {
+        count: groupCount,
+      }),
+      confirmText: tgrp("deleteAll"),
+      cancelText: tCommon("cancel"),
       type: "danger",
     });
     if (!choice) return;
@@ -67,46 +68,55 @@ export const GroupsMultiSelect = ({
       if (failures.length === 0) return;
 
       const firstError = failures[0].reason as ErrorResponse | undefined;
-      const failureMessage = firstError?.message ?? "Something went wrong...";
+      const failureMessage =
+        firstError?.message ?? tCommon("somethingWentWrong");
       return Promise.reject({
         code: firstError?.code ?? 418,
         requestId: firstError?.requestId,
         message:
           failures.length === groupCount
             ? failureMessage
-            : `${failures.length} of ${groupCount} groups could not be deleted. ${failureMessage}`,
+            : tgrp("groupsCouldNotBeDeleted", {
+                failed: failures.length,
+                total: groupCount,
+                message: failureMessage,
+              }),
       } satisfies ErrorResponse);
     });
 
     notify({
       title: tgrp("deleteGroupsTitle"),
       description:
-        groupCount > 1
-          ? "Groups were successfully deleted"
-          : "Group was successfully deleted",
+        groupCount > 1 ? tgrp("groupsDeleted") : tgrp("groupDeleted"),
       promise,
       loadingMessage:
         groupCount > 1
-          ? "Deleting the selected groups..."
-          : "Deleting the selected group...",
+          ? tgrp("deletingSelectedGroups")
+          : tgrp("deletingSelectedGroup"),
     });
   };
 
   return (
     <DataTableMultiSelectPopup
       selectedItems={selectedGroups}
-      label={groupCount === 1 ? "Group selected" : "Groups selected"}
+      label={
+        groupCount === 1
+          ? tgrp("groupSelected")
+          : tgrp("groupsSelected")
+      }
       onCanceled={onCanceled}
       icon={<FolderGit2 size={16} />}
       rightSide={
-        <FullTooltip content={<span className={"text-xs"}>Delete All</span>}>
+        <FullTooltip
+          content={<span className={"text-xs"}>{tgrp("deleteAll")}</span>}
+        >
           <Button
             variant={"danger-outline"}
             size={"xs"}
             className={"!h-9 !w-9"}
             onClick={deleteAllGroups}
             disabled={!permission.groups.delete}
-            aria-label={"Delete selected groups"}
+            aria-label={tgrp("deleteSelectedGroups")}
           >
             <Trash2 size={16} className={"shrink-0"} />
           </Button>

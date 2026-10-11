@@ -91,6 +91,7 @@ type Props = {
 
 function UserOverview({ user, initialGroups }: Readonly<Props>) {
 	const t = useTranslations("users");
+	const tNav = useTranslations("navigation");
 	const router = useRouter();
 	const userRequest = useApiCall<User>("/users");
 	const isServiceUser = !!user?.is_service_user;
@@ -156,7 +157,7 @@ function UserOverview({ user, initialGroups }: Readonly<Props>) {
 				<Breadcrumbs>
 					<Breadcrumbs.Item
 						href={"/team"}
-						label={"Team"}
+						label={t("team")}
 						disabled={!permission.users.read}
 						icon={<TeamIcon size={13} />}
 					/>
@@ -164,13 +165,13 @@ function UserOverview({ user, initialGroups }: Readonly<Props>) {
 					{isServiceUser ? (
 						<Breadcrumbs.Item
 							href={"/team/service-users"}
-							label={"Service Users"}
+							label={tNav("serviceUsers")}
 							icon={<IconSettings2 size={17} />}
 						/>
 					) : (
 						<Breadcrumbs.Item
 							href={"/team/users"}
-							label={"Users"}
+							label={t("title")}
 							disabled={!permission.users.read}
 							icon={<User2 size={16} />}
 						/>
@@ -346,6 +347,8 @@ function UserOverview({ user, initialGroups }: Readonly<Props>) {
 }
 
 function UserInformationCard({ user }: Readonly<{ user: User }>) {
+	const t = useTranslations("users");
+	const tCommon = useTranslations("common");
 	const isServiceUser = user.is_service_user || false;
 	const neverLoggedIn = dayjs(user.last_login).isBefore(
 		dayjs().subtract(1000, "years"),
@@ -359,7 +362,7 @@ function UserInformationCard({ user }: Readonly<{ user: User }>) {
 					label={
 						<>
 							<User2 size={16} />
-							{user.name ? "Name" : "User ID"}
+							{user.name ? t("name") : t("userId")}
 						</>
 					}
 					value={user.name || user.id}
@@ -370,7 +373,7 @@ function UserInformationCard({ user }: Readonly<{ user: User }>) {
 						label={
 							<>
 								<Mail size={16} />
-								E-Mail
+								{t("eMail")}
 							</>
 						}
 						value={user.email || "-"}
@@ -382,7 +385,7 @@ function UserInformationCard({ user }: Readonly<{ user: User }>) {
 					label={
 						<>
 							<GalleryHorizontalEnd size={16} />
-							Status
+							{t("status")}
 						</>
 					}
 					value={<UserStatusCell user={user} />}
@@ -397,12 +400,12 @@ function UserInformationCard({ user }: Readonly<{ user: User }>) {
 							!isPendingApproval && (
 								<Card.ListItem
 									tooltip={false}
-									label={
-										<>
-											<Ban size={16} />
-											Block User
-										</>
-									}
+										label={
+											<>
+												<Ban size={16} />
+												{tCommon("blockUser")}
+											</>
+										}
 									value={<UserBlockCell user={user} isUserPage={true} />}
 								/>
 							)}
@@ -411,12 +414,12 @@ function UserInformationCard({ user }: Readonly<{ user: User }>) {
 							label={
 								<>
 									<History size={16} />
-									Last login
+									{t("lastLogin")}
 								</>
 							}
 							value={
 								neverLoggedIn
-									? "Never"
+									? t("neverLoggedIn")
 									: dayjs(user.last_login).format("D MMMM, YYYY [at] h:mm A") +
 										" (" +
 										dayjs().to(user.last_login) +

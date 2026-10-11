@@ -5,6 +5,7 @@ import FullScreenLoading from "@components/ui/FullScreenLoading";
 import { IconCircleX } from "@tabler/icons-react";
 import useFetchApi from "@utils/api";
 import { Loader2Icon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import type { Peer } from "@/interfaces/Peer";
 import { getOperatingSystem } from "@hooks/useOperatingSystem";
@@ -49,6 +50,7 @@ type Props = {
 
 function RDPSession({ peer }: Props) {
   const client = useNetBirdClient();
+  const t = useTranslations("remoteAccess");
   const [isNetBirdConnecting, setIsNetBirdConnecting] = useState(false);
   const rdp = useRemoteDesktop(client);
   const [credentialsModal, setCredentialsModal] = useState(true);
@@ -104,7 +106,7 @@ function RDPSession({ peer }: Props) {
         status = NetBirdStatus.DISCONNECTED;
       } catch (error) {
         sendErrorNotification(
-          "NetBird Connection Error",
+          t("netBirdConnectionError"),
           (error as Error).message,
         );
         return;
@@ -121,7 +123,7 @@ function RDPSession({ peer }: Props) {
         setIsNetBirdConnecting(false);
       } catch (error) {
         sendErrorNotification(
-          "NetBird Connection Error",
+          t("netBirdConnectionError"),
           (error as Error).message,
         );
         setIsNetBirdConnecting(false);
@@ -148,7 +150,7 @@ function RDPSession({ peer }: Props) {
       } else {
       }
     } catch (error) {
-      sendErrorNotification("RDP Connection Error", (error as Error).message);
+      sendErrorNotification(t("rdpConnectionError"), (error as Error).message);
       setCredentialsModal(true);
       await reset();
     }
@@ -181,10 +183,10 @@ function RDPSession({ peer }: Props) {
    */
   useEffect(() => {
     if (rdp.error) {
-      sendErrorNotification("RDP Error", rdp.error);
+      sendErrorNotification(t("rdpError"), rdp.error);
     }
     if (client.error) {
-      sendErrorNotification("NetBird Client Error", client.error);
+      sendErrorNotification(t("netBirdClientError"), client.error);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rdp.error, client.error]);

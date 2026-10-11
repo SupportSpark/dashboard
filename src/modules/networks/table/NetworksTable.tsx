@@ -39,11 +39,17 @@ import { NetworkResourceCell } from "@/modules/networks/table/NetworkResourceCel
 import NetworkRoutingPeerCell from "@/modules/networks/table/NetworkRoutingPeerCell";
 import { GlobalSearchModal } from "@/modules/search/GlobalSearchModal";
 
-export const NetworkTableColumns: ColumnDef<Network>[] = [
+/**
+ * @deprecated Prefer {@link useNetworkTableColumns}, which is memoized and
+ * translates its headers. Kept exported for callers that need a plain array.
+ */
+export const NetworkTableColumns = (
+  t: ReturnType<typeof useTranslations>,
+): ColumnDef<Network>[] => [
   {
     accessorKey: "name",
     header: ({ column }) => (
-      <DataTableHeader column={column}>Network</DataTableHeader>
+      <DataTableHeader column={column}>{t("title")}</DataTableHeader>
     ),
     sortingFn: "text",
     cell: ({ row }) => <NetworkNameCell network={row.original} />,
@@ -55,7 +61,7 @@ export const NetworkTableColumns: ColumnDef<Network>[] = [
     accessorKey: "resources",
     accessorFn: (network) => network?.resources?.length,
     header: ({ column }) => {
-      return <DataTableHeader column={column}>Resources</DataTableHeader>;
+      return <DataTableHeader column={column}>{t("resources")}</DataTableHeader>;
     },
     cell: ({ row }) => <NetworkResourceCell network={row.original} />,
   },
@@ -63,7 +69,7 @@ export const NetworkTableColumns: ColumnDef<Network>[] = [
     accessorKey: "policies",
     accessorFn: (network) => network?.policies?.length,
     header: ({ column }) => {
-      return <DataTableHeader column={column}>Policies</DataTableHeader>;
+      return <DataTableHeader column={column}>{t("policies")}</DataTableHeader>;
     },
     cell: ({ row }) => <NetworkPolicyCell network={row.original} />,
   },
@@ -71,7 +77,7 @@ export const NetworkTableColumns: ColumnDef<Network>[] = [
     accessorKey: "routers",
     accessorFn: (network) => network?.routers?.length,
     header: ({ column }) => {
-      return <DataTableHeader column={column}>Routing Peers</DataTableHeader>;
+      return <DataTableHeader column={column}>{t("routingPeers")}</DataTableHeader>;
     },
     cell: ({ row }) => <NetworkRoutingPeerCell network={row.original} />,
   },

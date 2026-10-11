@@ -1,4 +1,5 @@
 import SidebarItem from "@components/SidebarItem";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useEffect, useMemo } from "react";
 import ActivityIcon from "@/assets/icons/ActivityIcon";
@@ -16,6 +17,9 @@ export const DistributorNavigation = () => {
   const { isOwnerOrAdmin, loggedInUser } = useLoggedInUser();
   const { permission, isRestricted } = usePermissions();
   const isBillingAdmin = loggedInUser?.role === Role.BillingAdmin;
+  const t = useTranslations("distributor");
+  const tCommon = useTranslations("common");
+  const tNav = useTranslations("navigation");
 
   const show = useMemo(() => {
     return isActive && isNetBirdCloud();
@@ -46,7 +50,7 @@ export const DistributorNavigation = () => {
           but user role has no other pages to navigate to */}
       <SidebarItem
         icon={<PeerIcon />}
-        label="Peers"
+        label={tCommon("peers")}
         href={"/peers"}
         visible={!isRestricted && loggedInUser?.role === Role.User}
       />
@@ -54,7 +58,7 @@ export const DistributorNavigation = () => {
       <SidebarItem
         icon={<MSPIcon size={17} />}
         visible={isOwnerOrAdmin}
-        label={"Customers"}
+        label={t("customersLabel")}
         href={"/customers"}
         exactPathMatch={true}
         labelClassName={"-left-[1.5px] relative"}
@@ -63,18 +67,18 @@ export const DistributorNavigation = () => {
       <SidebarItem
         icon={<TeamIcon />}
         visible={permission.users.read}
-        label={"Team"}
+        label={tNav("team")}
         href={"/team"}
         collapsible
       >
         <SidebarItem
-          label={"Users"}
+          label={tNav("users")}
           isChild
           href={"/team/users"}
           visible={permission.users.read}
         />
         <SidebarItem
-          label={"Service Users"}
+          label={tNav("serviceUsers")}
           isChild
           href={"/team/service-users"}
           visible={permission.users.read}
@@ -83,7 +87,7 @@ export const DistributorNavigation = () => {
       <SidebarItem
         icon={<ActivityIcon />}
         visible={permission.events.read}
-        label={"Audit Events"}
+        label={tNav("auditEvents")}
         href={"/events/audit"}
         exactPathMatch={true}
       />

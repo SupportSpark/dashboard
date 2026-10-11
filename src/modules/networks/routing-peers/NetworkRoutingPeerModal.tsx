@@ -106,6 +106,7 @@ export function RoutingPeerModalContent({
   onSaved,
 }: ContentProps) {
   const t = useTranslations("common");
+  const tNetworks = useTranslations("networks");
   const isRoutingPeer = router ? router.peer != "" : true;
 
   const [tab, setTab] = useState("router");
@@ -184,9 +185,11 @@ export function RoutingPeerModalContent({
     const isRoutingPeer = type === "peer";
 
     notify({
-      title: "Network Routing Peer",
-      description: "Routing Peer added successfully.",
-      loadingMessage: "Adding Routing Peer...",
+      title: tNetworks("networkRoutingPeer"),
+      description: router
+        ? tNetworks("routingPeerUpdated")
+        : tNetworks("routingPeerAdded"),
+      loadingMessage: tNetworks("addingRoutingPeer"),
       promise: create({
         peer: isRoutingPeer ? routingPeer?.id : undefined,
         peer_groups: !isRoutingPeer
@@ -211,9 +214,9 @@ export function RoutingPeerModalContent({
     const isRoutingPeer = type === "peer";
 
     notify({
-      title: "Network Routing Peer",
-      description: "Routing Peer added successfully.",
-      loadingMessage: "Adding Routing Peer...",
+      title: tNetworks("networkRoutingPeer"),
+      description: tNetworks("routingPeerUpdated"),
+      loadingMessage: tNetworks("updatingRoutingPeer"),
       promise: update({
         peer: isRoutingPeer ? routingPeer?.id : undefined,
         peer_groups: !isRoutingPeer
@@ -245,7 +248,7 @@ export function RoutingPeerModalContent({
     <ModalContent maxWidthClass={"max-w-xl"}>
       <ModalHeader
         icon={<Share2Icon size={16} />}
-        title={router ? "Update Routing Peer" : "Add Routing Peer"}
+        title={router ? tNetworks("updateRoutingPeer") : tNetworks("addRoutingPeer")}
         description={`Route traffic to '${network.name}'`}
         color={"netbird"}
       />
@@ -259,7 +262,7 @@ export function RoutingPeerModalContent({
                 "text-nb-gray-500 group-data-[state=active]/trigger:text-netbird transition-all"
               }
             />
-            Routing Peers
+            {tNetworks("routingPeers")}
           </TabsTrigger>
 
           <TabsTrigger value={"settings"} className={"ml-auto"}>
@@ -269,7 +272,7 @@ export function RoutingPeerModalContent({
                 "text-nb-gray-500 group-data-[state=active]/trigger:text-netbird transition-all"
               }
             />
-            Advanced Settings
+            {t("settingsAdvancedSettings")}
           </TabsTrigger>
         </TabsList>
         <TabsContent value={"router"} className={"pb-6"}>
@@ -297,32 +300,28 @@ export function RoutingPeerModalContent({
                     data-testid="routing-peer-tab-group"
                   >
                     <FolderGit2 size={16} />
-                    Peer Group
+                    {t("peerGroup")}
                   </SegmentedTabs.Trigger>
                 </SegmentedTabs.List>
                 <SegmentedTabs.Content value={"peer"}>
                   <div>
                     <HelpText>
-                      Assign a single or multiple peers as routing peers for the
-                      network.
+                      {tNetworks("routingPeersAssignHelp")}
                     </HelpText>
                     <PeerSelector
                       onChange={setSelectedPeer}
                       value={routingPeer}
                       disabled={peerLoading}
                       disabledPeers={assignedPeerIds}
-                      disabledPeerReason={
-                        "This peer is already a routing peer for this network and cannot be assigned again."
-                      }
+                      disabledPeerReason={tNetworks(
+                        "peerAlreadyRoutingPeer",
+                      )}
                     />
                   </div>
                 </SegmentedTabs.Content>
                 <SegmentedTabs.Content value={"group"}>
                   <div>
-                    <HelpText>
-                      Assign a peer group with machines to be used as routing
-                      peers.
-                    </HelpText>
+                    <HelpText>{tNetworks("routingPeerGroupAssignHelp")}</HelpText>
                     <PeerGroupSelector
                       max={1}
                       onChange={setRoutingPeerGroups}
@@ -335,10 +334,9 @@ export function RoutingPeerModalContent({
 
             <div className={cn("flex justify-between items-center mt-3")}>
               <div>
-                <Label>{"Don't have a routing peer?"}</Label>
+                <Label>{t("dontHaveRoutingPeer")}</Label>
                 <HelpText className={""}>
-                  You can install NetBird with a setup key on one or more
-                  machines to act as routing peers.
+                  {tNetworks("dontHaveRoutingPeerHelp")}
                 </HelpText>
               </div>
               <InstallNetBirdWithSetupKeyButton
@@ -356,12 +354,10 @@ export function RoutingPeerModalContent({
               label={
                 <>
                   <Power size={15} />
-                  Enable Routing Peer
+                  {tNetworks("enableRoutingPeer")}
                 </>
               }
-              helpText={
-                "Use this switch to enable or disable the routing peer."
-              }
+              helpText={tNetworks("enableRoutingPeerHelp")}
             />
 
             <RoutingPeerMasqueradeSwitch
@@ -374,9 +370,9 @@ export function RoutingPeerModalContent({
 
             <div className={cn("flex justify-between")}>
               <div>
-                <Label>Metric</Label>
+                <Label>{t("metric")}</Label>
                 <HelpText className={"max-w-[200px]"}>
-                  A lower metric indicates higher priority routing peers.
+                  {t("metricPriority")}
                 </HelpText>
               </div>
 
@@ -404,12 +400,12 @@ export function RoutingPeerModalContent({
       <ModalFooter className={"items-center"}>
         <div className={"w-full"}>
           <Paragraph className={"text-sm mt-auto"}>
-            Learn more about
+            {t("learnMoreAbout")}
             <InlineLink
               href={"https://docs.netbird.io/how-to/networks#routing-peers"}
               target={"_blank"}
             >
-              Routing Peers
+              {tNetworks("routingPeers")}
               <ExternalLinkIcon size={12} />
             </InlineLink>
           </Paragraph>
@@ -426,14 +422,14 @@ export function RoutingPeerModalContent({
                 disabled={!canContinue}
                 data-testid="routing-peer-continue"
               >
-                Continue
+                {t("continue")}
               </Button>
             </>
           )}
           {tab == "settings" && (
             <>
               <Button variant={"secondary"} onClick={() => setTab("router")}>
-                Back
+                {t("back")}
               </Button>
 
               <Button
@@ -447,11 +443,11 @@ export function RoutingPeerModalContent({
                 data-testid="submit-routing-peer"
               >
                 {router ? (
-                  <>Save Changes</>
+                  <>{tNetworks("saveChanges")}</>
                 ) : (
                   <>
                     <PlusCircle size={16} />
-                    Add Routing Peer
+                    {tNetworks("addRoutingPeer")}
                   </>
                 )}
               </Button>

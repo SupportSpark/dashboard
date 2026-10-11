@@ -379,33 +379,33 @@ export function ResourceModalContent({
                       />
                       {groupPolicyCount > 0 && (
                         <Callout variant={"info"} className={"mt-3"}>
-                          Your selected resource groups are used in{" "}
-                          <span className="text-white font-medium">
-                            {groupPolicyCount} Access Control{" "}
-                            {groupPolicyCount === 1 ? "Policy" : "Policies"}
-                          </span>
-                          . This resource will inherit access from{" "}
-                          {groupPolicyCount === 1
-                            ? "this policy"
-                            : "these policies"}
-                          .
+                          {t.rich("resourceGroupsUsedInPolicies", {
+                            count: groupPolicyCount,
+                            policies: (chunks) => (
+                              <span className="text-white font-medium">
+                                {chunks}
+                              </span>
+                            ),
+                          })}
                           {useSave && (isAddressValid || resource) ? (
                             <>
                               {" "}
-                              Please review them in the{" "}
-                              <InlineButtonLink
-                                onClick={() => setTab("access-control")}
-                                variant={"dashed"}
-                              >
-                                Access Control
-                              </InlineButtonLink>{" "}
-                              tab.
+                              {t.rich("reviewThemInAccessControlTab", {
+                                link: (chunks) => (
+                                  <InlineButtonLink
+                                    onClick={() => setTab("access-control")}
+                                    variant={"dashed"}
+                                  >
+                                    {chunks}
+                                  </InlineButtonLink>
+                                ),
+                              })}
                             </>
                           ) : useSave ? (
-                            " Please review them in the Access Control tab."
+                            t("resourceReviewInAccessControlTab")
                           ) : (
                             // Draft has no Access Control tab.
-                            " Review them on the canvas before you deploy."
+                            t("resourceReviewOnCanvasBeforeDeploy")
                           )}
                         </Callout>
                       )}

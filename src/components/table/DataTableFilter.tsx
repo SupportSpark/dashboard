@@ -118,7 +118,7 @@ export function DataTableFilter<TData>({
 
         const groupCounts: Record<string, number> = {};
         return tableRows.map((row) => {
-          const groupKey = filter?.group ?? "Ungrouped";
+          const groupKey = filter?.group ?? t("ungrouped");
           groupCounts[groupKey] = (groupCounts[groupKey] || 0) + 1;
 
           return {
@@ -132,7 +132,7 @@ export function DataTableFilter<TData>({
           } as FilterItem<TData>;
         });
       }),
-    [],
+    [t, table, filters],
   );
 
   const [filteredItems, search, setSearch] = useSearch<FilterItem<TData>>(

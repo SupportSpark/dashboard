@@ -76,30 +76,24 @@ export function NameserverTemplateModalContent({
           <NameserverTemplate
             onClick={() => onePresetSelection(NameserverPresets.Google)}
             src={GoogleLogo}
-            title={"Google DNS"}
-            description={
-              "A free, global DNS resolution service by Google that implements a number of security, performance, and compliance improvements."
-            }
+            title={t("presetGoogleTitle")}
+            description={t("presetGoogleDescription")}
             href={"https://developers.google.com/speed/public-dns"}
             data-testid="nameserver-preset-google"
           />
           <NameserverTemplate
             onClick={() => onePresetSelection(NameserverPresets.Cloudflare)}
             src={CloudflareLogo}
-            title={"Cloudflare DNS"}
-            description={
-              "Enterprise-grade DNS service that offers the fastest response time, unparalleled redundancy, and advanced security with built-in DDoS mitigation and DNSSEC."
-            }
+            title={t("presetCloudflareTitle")}
+            description={t("presetCloudflareDescription")}
             href={"https://www.cloudflare.com/learning/dns/what-is-1.1.1.1/"}
             data-testid="nameserver-preset-cloudflare"
           />
           <NameserverTemplate
             onClick={() => onePresetSelection(NameserverPresets.Quad9)}
             src={Quad9Logo}
-            title={"Quad9 DNS"}
-            description={
-              "The Quad9 DNS service is operated by the Swiss-based Quad9 Foundation, whose mission is to provide a safer and more robust Internet for everyone."
-            }
+            title={t("presetQuad9Title")}
+            description={t("presetQuad9Description")}
             href={"https://quad9.net/"}
             data-testid="nameserver-preset-quad9"
           />

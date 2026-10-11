@@ -3,8 +3,9 @@ import { DataTable } from "@components/table/DataTable";
 import DataTableHeader from "@components/table/DataTableHeader";
 import NoResults from "@components/ui/NoResults";
 import { ColumnDef, SortingState } from "@tanstack/react-table";
+import { useTranslations } from "next-intl";
 import * as React from "react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import DomainActionCell from "@/cloud/sign-in-domains/table/DomainActionCell";
 import DomainStatusCell from "@/cloud/sign-in-domains/table/DomainStatusCell";
@@ -28,10 +29,17 @@ const placeholderRow: SignInDomain = {
 
 const isPlaceholder = (domain: SignInDomain) => domain.id === PLACEHOLDER_ID;
 
-const SignInDomainsColumns: ColumnDef<SignInDomain>[] = [
+// Factory rather than a module-scope array: the headers are translated, and
+// `t` is a React hook, so it can only be called while rendering.
+const SignInDomainsColumns = (
+  t: (key: string) => string,
+  tCommon: (key: string) => string,
+): ColumnDef<SignInDomain>[] => [
   {
     header: ({ column }) => {
-      return <DataTableHeader column={column}>Domain</DataTableHeader>;
+      return (
+        <DataTableHeader column={column}>{t("domainColumn")}</DataTableHeader>
+      );
     },
     accessorKey: "name",
     sortingFn: "text",
@@ -44,7 +52,9 @@ const SignInDomainsColumns: ColumnDef<SignInDomain>[] = [
   },
   {
     header: ({ column }) => {
-      return <DataTableHeader column={column}>Status</DataTableHeader>;
+      return (
+        <DataTableHeader column={column}>{tCommon("status")}</DataTableHeader>
+      );
     },
     accessorKey: "validation_status",
     sortingFn: "text",
@@ -72,12 +82,19 @@ export default function SignInDomainsTable({
   domains,
   isLoading,
 }: Readonly<Props>) {
+  const t = useTranslations("signInDomains");
+  const tCommon = useTranslations("common");
   const [sorting, setSorting] = useState<SortingState>([
     {
       id: "name",
       desc: false,
     },
   ]);
+
+  const columns = useMemo(
+    () => SignInDomainsColumns(t, tCommon),
+    [t, tCommon],
+  );
 
   return (
     <DataTable
@@ -90,18 +107,16 @@ export default function SignInDomainsTable({
       showSearchAndFilters={false}
       inset={false}
       tableClassName={"mt-0"}
-      text={"Domains"}
-      columns={SignInDomainsColumns}
+      text={t("domainsTableTitle")}
+      columns={columns}
       keepStateInLocalStorage={false}
       data={isLoading ? [placeholderRow] : domains}
       getStartedCard={
         <NoResults
           className={"py-4"}
           hideIcon
-          title={"No sign-in domains yet"}
-          description={
-            "Add a domain, then verify ownership with a DNS record to start matching users to this account."
-          }
+          title={t("noSignInDomainsYet")}
+          description={t("noDomainsDescription")}
         />
       }
       paginationPaddingClassName={"px-0 pt-8"}

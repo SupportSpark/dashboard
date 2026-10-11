@@ -103,14 +103,14 @@ export default function Navigation({
 							<SidebarItemGroup>
 								<SidebarItem
 									icon={<ControlCenterIcon size={16} />}
-									label="Control Center"
+									label={t("controlCenter")}
 									href={"/control-center"}
 									visible={permission.policies.read}
 								/>
 
 								<SidebarItem
 									icon={<PeerIcon />}
-									label="Peers"
+									label={t("peers")}
 									href={"/peers"}
 									// Restricted users get the add-your-device view there, so
 									// the link stays even in the limited (user role) sidebar.
@@ -156,7 +156,7 @@ export default function Navigation({
 										<div className={"flex items-center gap-2"}>
 											{t("reverseProxy")}
 											<SmallBadge
-												text={"Beta"}
+												text={t("beta")}
 												variant={"sky"}
 												className={"text-[8px] leading-none py-[3px] px-[5px]"}
 												textClassName={"top-0"}
@@ -264,7 +264,7 @@ export default function Navigation({
 										}
 									/>
 									<SidebarItem
-										label="Policies"
+										label={t("policies")}
 										isChild
 										href={"/agent-network/policies"}
 										exactPathMatch={true}

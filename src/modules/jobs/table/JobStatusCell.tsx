@@ -1,4 +1,5 @@
 import { cn } from "@utils/helpers";
+import { useTranslations } from "next-intl";
 import React from "react";
 import { Job } from "@/interfaces/Job";
 
@@ -7,6 +8,8 @@ type Props = {
 };
 
 export default function JobStatusCell({ job }: Readonly<Props>) {
+  const t = useTranslations("common");
+  const tJobs = useTranslations("jobs");
   const status = job.status;
 
   return (
@@ -22,9 +25,9 @@ export default function JobStatusCell({ job }: Readonly<Props>) {
           status == "succeeded" && "bg-green-500",
         )}
       ></span>
-      {status == "pending" && "Pending"}
-      {status == "failed" && "Failed"}
-      {status == "succeeded" && "Completed"}
+      {status == "pending" && tJobs("statusPending")}
+      {status == "failed" && t("failed")}
+      {status == "succeeded" && tJobs("statusCompleted")}
     </div>
   );
 }

@@ -78,8 +78,28 @@ function tscErrors() {
   return errs;
 }
 
-const errors = tscErrors();
-if (errors.length === 0) {
+/**
+ * Line index where the function enclosing `lineIdx` starts.
+ *
+ * Approximated by scanning upwards for a line that closes a brace at
+ * indentation 0 (`};` / `}` / `) => {`-style endings) — good enough for the
+ * component-per-function layout these files use, and it only ever widens the
+ * search window, so a miss degrades to "no binding found" rather than to a
+ * binding inserted in the wrong place.
+ */
+function enclosingScopeStart(lines, lineIdx) {
+  for (let i = lineIdx; i >= 0; i--) {
+    const l = lines[i];
+    if (/^(export\s+)?(default\s+)?(async\s+)?function\s/.test(l)) return i;
+    if (/^(export\s+)?const\s+\w+\s*=\s*(async\s*)?\(/.test(l)) return i;
+    if (/^(export\s+)?const\s+\w+\s*=\s*(async\s*)?function/.test(l)) return i;
+    // A top-level closing brace marks the end of the PREVIOUS declaration.
+    if (i < lineIdx && /^\}/.test(l)) return i + 1;
+  }
+  return 0;
+}
+
+const errors = tscErrors();if (errors.length === 0) {
   console.log("No missing-name errors. Nothing to do.");
   process.exit(0);
 }
@@ -107,15 +127,19 @@ for (const [file, errs] of byFile) {
       console.log(`  ?? ${file}: no namespace mapping for '${name}' - skipped`);
       continue;
     }
-    // Already declared before the reference (same scope)? Then nothing to add.
+    // Already declared in THIS scope? Check the enclosing function only, not the
+    // whole file: the same name is commonly declared in several sibling
+    // components, and a file-wide test therefore concluded the binding existed
+    // when the reference was in a different component.
+    const scopeStart = enclosingScopeStart(lines, err.line - 1);
     const already = lines
-      .slice(0, err.line)
+      .slice(scopeStart, err.line)
       .some((l) => new RegExp(`^\\s*const\\s+${name}\\s*=`).test(l));
     if (already) continue;
 
     // Nearest preceding translator binding, to inherit scope + indentation.
     let anchor = -1;
-    for (let i = err.line - 1; i >= 0; i--) {
+    for (let i = err.line - 1; i >= scopeStart; i--) {
       if (/^\s*const\s+t[A-Za-z]*\s*=\s*(?:await\s+)?(?:useTranslations|getTranslations)\(/.test(lines[i])) {
         anchor = i;
         break;

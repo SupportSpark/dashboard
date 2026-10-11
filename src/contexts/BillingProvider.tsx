@@ -4,6 +4,7 @@ import { isNetBirdCloud } from "@utils/netbird";
 import md5 from "crypto-js/md5";
 import dayjs from "dayjs";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useSWRConfig } from "swr";
 import { PlanFeatures } from "@/cloud/cloud-hooks/useIsFeatureLocked";
@@ -28,27 +29,39 @@ type Props = {
   children: React.ReactNode;
 };
 
-export const usageLimitInfo: Announcement = {
-  tag: "Notice",
-  text: "You've reached your usage limits. For extended features and higher limits, please consider upgrading your plan.",
+/**
+ * Billing warnings shown in the announcement banner.
+ *
+ * These are factories rather than module-scope constants because they carry
+ * copy: `t` is a React hook, so the object has to be built where a translator
+ * is in scope. Both consumers (AnnouncementProvider and BillingProvider) call
+ * them inside a component and hash the same `text`, so the hashes still match.
+ */
+export const usageLimitInfo = (
+  t: (key: string) => string,
+): Announcement => ({
+  tag: t("noticeTag"),
+  text: t("usageLimitText"),
   link: "/settings?tab=plans-and-billing",
-  linkText: "Go to Plans & Billing",
+  linkText: t("goToPlansAndBilling"),
   variant: "default", // "default" or "important"
   isExternal: false,
   closeable: false,
   isCloudOnly: true,
-};
+});
 
-export const trialExpiresInfo: Announcement = {
-  tag: "Trial",
-  text: "Your trial is ending soon. Need more time? Contact us to extend your trial.",
+export const trialExpiresInfo = (
+  t: (key: string) => string,
+): Announcement => ({
+  tag: t("trialTag"),
+  text: t("trialExpiresText"),
   variant: "default", // "default" or "important"
   link: "mailto:support@netbird.io",
   linkText: "support@netbird.io",
   isExternal: false,
   closeable: false,
   isCloudOnly: true,
-};
+});
 
 export function resolveActiveCurrency(subscription?: Subscription): Currency {
   return subscription?.active && subscription?.currency
@@ -110,6 +123,8 @@ function BillingContextProvider({ children }: Readonly<Props>) {
   const { confirm } = useDialog();
   const { trackEvent } = useAnalytics();
   const { setAnnouncements } = useAnnouncement();
+  const t = useTranslations("billingProvider");
+  const tCommon = useTranslations("common");
   const freeUsers = 0;
 
   const redirectUrl = useMemo(() => {
@@ -251,9 +266,9 @@ function BillingContextProvider({ children }: Readonly<Props>) {
           mutate("/integrations/billing/subscription");
         });
         notify({
-          title: "NetBird Subscription",
-          description: `Successfully subscribed to the ${plan.name} plan`,
-          loadingMessage: "Subscribing to NetBird via AWS Marketplace...",
+          title: t("netBirdSubscription"),
+          description: t("subscribedToPlan", { plan: plan.name }),
+          loadingMessage: t("subscribingViaAws"),
           promise: promise,
         });
         return promise;
@@ -280,17 +295,16 @@ function BillingContextProvider({ children }: Readonly<Props>) {
     if (!priceID) return Promise.reject();
     const downgrade = isDowngrade(plan);
     const choice = await confirm({
-      title: `${downgrade ? "Downgrade" : "Upgrade"} to ${plan.name}?`,
+      title: downgrade
+        ? t("downgradeToPlan", { plan: plan.name })
+        : t("upgradeToPlan", { plan: plan.name }),
       description: (
         <div className={"flex flex-col gap-2 text-sm text-nb-gray-300 mt-1"}>
-          <div>
-            The transition to your new plan will take effect immediately.
-            Charges for the new plan will be incurred from this point forward.
-          </div>
+          <div>{t("planTransitionNotice")}</div>
         </div>
       ),
-      confirmText: downgrade ? "Downgrade" : "Upgrade",
-      cancelText: "Cancel",
+      confirmText: downgrade ? t("downgrade") : t("upgrade"),
+      cancelText: tCommon("cancel"),
       type: "default",
     });
     if (!choice) return;
@@ -312,10 +326,10 @@ function BillingContextProvider({ children }: Readonly<Props>) {
     });
 
     notify({
-      title: "Update Subscription",
-      description: "Your subscription has been successfully updated.",
+      title: t("updateSubscriptionTitle"),
+      description: t("subscriptionUpdated"),
       promise: promise,
-      loadingMessage: "Updating your subscription...",
+      loadingMessage: t("updatingSubscription"),
     });
 
     return promise;
@@ -421,9 +435,10 @@ function BillingContextProvider({ children }: Readonly<Props>) {
   useEffect(() => {
     if (isLoading) return;
     if (isTrial && trialDaysRemaining <= 3) {
+      const trialExpires = trialExpiresInfo(t);
       setAnnouncements((prev) => {
         const prevAnnouncements = prev || [];
-        const hash = md5(trialExpiresInfo.text).toString();
+        const hash = md5(trialExpires.text).toString();
         return prevAnnouncements.map((a) => {
           if (a.hash === hash) {
             return { ...a, isOpen: true };
@@ -432,14 +447,15 @@ function BillingContextProvider({ children }: Readonly<Props>) {
         });
       });
     }
-  }, [isTrial, setAnnouncements, isLoading, trialDaysRemaining]);
+  }, [isTrial, setAnnouncements, isLoading, trialDaysRemaining, t]);
 
   useEffect(() => {
     if (isLoading) return;
     if (usagePercentage > 100 && isFreePlan && !isTrial) {
+      const usageLimit = usageLimitInfo(t);
       setAnnouncements((prev) => {
         const prevAnnouncements = prev || [];
-        const usageInfoHash = md5(usageLimitInfo.text).toString();
+        const usageInfoHash = md5(usageLimit.text).toString();
         return prevAnnouncements.map((a) => {
           if (a.hash === usageInfoHash) {
             return { ...a, isOpen: true };
@@ -448,7 +464,7 @@ function BillingContextProvider({ children }: Readonly<Props>) {
         });
       });
     }
-  }, [isFreePlan, usagePercentage, setAnnouncements, isLoading, isTrial]);
+  }, [isFreePlan, usagePercentage, setAnnouncements, isLoading, isTrial, t]);
 
   return (
     <BillingContext.Provider

@@ -320,6 +320,7 @@ const TrafficEventsPeerDetailTable = ({
 }) => {
   const tte = useTranslations("trafficEvents");
   const tPolicies = useTranslations("policies");
+  const tReverseProxy = useTranslations("reverseProxy");
   const { mutate } = useSWRConfig();
   const router = useRouter();
   const [sorting, setSorting] = useState<SortingState>([
@@ -353,7 +354,7 @@ const TrafficEventsPeerDetailTable = ({
         return <TrafficEventsDetailRow event={e} className={"ml-[11px]"} />;
       }}
       tableClassName={"mt-0"}
-      columns={TrafficEventsTableColumns(tte, tPolicies)}
+      columns={TrafficEventsTableColumns(tte, tPolicies, tReverseProxy)}
       keepStateInLocalStorage={false}
       data={events}
       globalFilter={searchQuery}

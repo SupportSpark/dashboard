@@ -1,5 +1,4 @@
 import Button from "@components/Button";
-import { useTranslations } from "next-intl";
 import { notify } from "@components/Notification";
 import {
   Tooltip,
@@ -9,6 +8,7 @@ import {
 } from "@components/Tooltip";
 import { useApiCall } from "@utils/api";
 import { Trash2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useMemo } from "react";
 import { useSWRConfig } from "swr";
@@ -20,9 +20,10 @@ import { Route } from "@/interfaces/Route";
 type Props = {
   route: Route;
 };
-export default function PeerRouteActionCell({
-route }: Props) {
+export default function PeerRouteActionCell({ route }: Props) {
   const tpeer = useTranslations("peers");
+  const troutes = useTranslations("routes");
+  const tCommon = useTranslations("common");
   const { confirm } = useDialog();
   const routeRequest = useApiCall<Route>("/routes");
   const { mutate } = useSWRConfig();
@@ -39,22 +40,24 @@ route }: Props) {
 
   const handleRevoke = async () => {
     notify({
-      title: "Delete Route " + route.network_id,
-      description: "Route was successfully removed",
+      title: troutes("deleteRouteNotify", { network_id: route.network_id }),
+      description: troutes("routeRemoved"),
       promise: routeRequest.del("", `/${route.id}`).then(() => {
         mutate("/routes");
       }),
-      loadingMessage: "Deleting the route...",
+      loadingMessage: troutes("deletingRoute"),
     });
   };
 
   const handleConfirm = async () => {
     const choice = await confirm({
-      title: `Delete peer ${peer.name} from '${route.network_id}' network?`,
-      description:
-        tpeer("removePeerFromRouteConfirm"),
-      confirmText: "Delete",
-      cancelText: "Cancel",
+      title: tpeer("deletePeerFromRouteTitle", {
+        name: peer.name,
+        network_id: route.network_id,
+      }),
+      description: tpeer("removePeerFromRouteConfirm"),
+      confirmText: tCommon("delete"),
+      cancelText: tCommon("cancel"),
       type: "danger",
     });
     if (!choice) return;

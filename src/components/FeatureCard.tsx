@@ -1,5 +1,6 @@
 import { IconCircleFilled } from "@tabler/icons-react";
 import { cn } from "@utils/helpers";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 
 type Props = {
@@ -24,17 +25,20 @@ type Props = {
   "aria-label"?: string;
 };
 
-export const FeatureCardStatus = ({ enabled }: { enabled: boolean }) => (
-  <div
-    className={cn(
-      "text-xs flex gap-2 items-center font-medium shrink-0",
-      enabled ? "text-green-500" : "text-nb-gray-500",
-    )}
-  >
-    <IconCircleFilled size={8} />
-    {enabled ? "Enabled" : "Disabled"}
-  </div>
-);
+export const FeatureCardStatus = ({ enabled }: { enabled: boolean }) => {
+  const t = useTranslations("common");
+  return (
+    <div
+      className={cn(
+        "text-xs flex gap-2 items-center font-medium shrink-0",
+        enabled ? "text-green-500" : "text-nb-gray-500",
+      )}
+    >
+      <IconCircleFilled size={8} />
+      {enabled ? t("enabled") : t("disabled")}
+    </div>
+  );
+};
 
 /**
  * The compact "feature" card used to summarise a capability next to a table:

@@ -1,5 +1,4 @@
 import Button from "@components/Button";
-import { useTranslations } from "next-intl";
 import CopyToClipboardText from "@components/CopyToClipboardText";
 import SquareIcon from "@components/SquareIcon";
 import { DataTable } from "@components/table/DataTable";
@@ -10,7 +9,8 @@ import GetStartedTest from "@components/ui/GetStartedTest";
 import { ColumnDef, SortingState } from "@tanstack/react-table";
 import { PlusCircle, ReceiptTextIcon } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-import React from "react";
+import { useTranslations } from "next-intl";
+import React, { useMemo } from "react";
 import { useSWRConfig } from "swr";
 import MSPIcon from "@/assets/icons/MSPIcon";
 import { DistributorDocsLink } from "@/cloud/distributor/DistributorDocsLink";
@@ -39,6 +39,7 @@ const CustomerPlanCellWithUpgrade = ({
 
 const CustomersTableColumns = (
   td: ReturnType<typeof useTranslations>,
+  tCommon: (key: string) => string,
 ): ColumnDef<DistributorCustomer>[] => [
   {
     id: "name",
@@ -60,7 +61,7 @@ const CustomersTableColumns = (
     ),
     cell: ({ row }) =>
       row.original.reseller_customer_id ? (
-        <CopyToClipboardText message={`Customer ID copied to clipboard`}>
+        <CopyToClipboardText message={td("customerIdCopied")}>
           <span className={"text-sm text-nb-gray-300 font-mono"}>
             {row.original.reseller_customer_id}
           </span>
@@ -81,7 +82,7 @@ const CustomersTableColumns = (
     id: "tenants",
     accessorKey: "tenants",
     header: ({ column }) => (
-      <DataTableHeader column={column}>Tenants</DataTableHeader>
+      <DataTableHeader column={column}>{td("tenantsColumn")}</DataTableHeader>
     ),
     cell: ({ row }) => <CustomerTenantsCell customer={row.original} />,
   },
@@ -105,9 +106,16 @@ export default function DistributorCustomersTable({
   headingTarget,
 }: Readonly<Props>) {
   const td = useTranslations("distributor");
+  const tCommon = useTranslations("common");
+  const tInvoices = useTranslations("invoices");
   const { mutate } = useSWRConfig();
   const path = usePathname();
   const router = useRouter();
+
+  const columns = useMemo(
+    () => CustomersTableColumns(td, tCommon),
+    [td, tCommon],
+  );
 
   const refreshCustomers = () =>
     mutate(
@@ -134,12 +142,12 @@ export default function DistributorCustomersTable({
     <DataTable
       headingTarget={headingTarget}
       useRowId={true}
-      text={"Customers"}
+      text={td("customersLabel")}
       sorting={sorting}
       setSorting={setSorting}
-      columns={CustomersTableColumns(td)}
+      columns={columns}
       data={customers}
-      searchPlaceholder={"Search by name, domain or id..."}
+      searchPlaceholder={td("searchCustomersPlaceholder")}
       columnVisibility={{
         domain: false,
       }}
@@ -153,10 +161,8 @@ export default function DistributorCustomersTable({
               size={"large"}
             />
           }
-          title={"Add New Customer"}
-          description={
-            "It looks like you don't have any customers yet. Add a new customer to get started."
-          }
+          title={td("addNewCustomer")}
+          description={td("noCustomersYet")}
           button={<AddCustomerButton />}
           learnMore={<DistributorDocsLink />}
         />
@@ -170,7 +176,7 @@ export default function DistributorCustomersTable({
                 onClick={() => router.push("/settings?tab=invoices")}
               >
                 <ReceiptTextIcon size={16} />
-                Invoices
+                {tInvoices("title")}
               </Button>
               <AddCustomerButton />
             </div>
@@ -198,10 +204,11 @@ export default function DistributorCustomersTable({
 
 const AddCustomerButton = () => {
   const { openCreateCustomerModal } = useCustomers();
+  const td = useTranslations("distributor");
   return (
     <Button variant={"primary"} size={"sm"} onClick={openCreateCustomerModal}>
       <PlusCircle size={16} />
-      Add Customer
+      {td("addCustomer")}
     </Button>
   );
 };

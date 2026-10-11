@@ -53,9 +53,7 @@ function GroupPeersTableColumns(t: (key: string) => string): ColumnDef<Peer>[] {
 		{
 			accessorKey: "name",
 			header: ({ column }) => {
-				const t = useTranslations("common");
-
-				return <DataTableHeader column={column}>Name</DataTableHeader>;
+				return <DataTableHeader column={column}>{t("name")}</DataTableHeader>;
 			},
 			sortingFn: "text",
 			cell: ({ row }) => <PeerNameCell peer={row.original} />,
@@ -80,7 +78,9 @@ function GroupPeersTableColumns(t: (key: string) => string): ColumnDef<Peer>[] {
 		{
 			accessorKey: "dns_label",
 			header: ({ column }) => {
-				return <DataTableHeader column={column}>Address</DataTableHeader>;
+				return (
+					<DataTableHeader column={column}>{t("address")}</DataTableHeader>
+				);
 			},
 			cell: ({ row }) => <PeerAddressCell peer={row.original} />,
 		},
@@ -117,6 +117,7 @@ type Props = {
 
 export const GroupPeersSection = ({ peers, isLoading = true }: Props) => {
 	const t = useTranslations("common");
+	const tGroups = useTranslations("groups");
 	const { group, addPeersToGroup, removePeersFromGroup } = useGroupContext();
 	const [selectedRows, setSelectedRows] = useState<RowSelectionState>({});
 	const [open, setOpen] = useState(false);
@@ -133,10 +134,8 @@ export const GroupPeersSection = ({ peers, isLoading = true }: Props) => {
 				getStartedCard={
 					<NoResults
 						className={"py-4"}
-						title={"This group has no assigned peers yet"}
-						description={
-							"Install NetBird and assign existing peers to this group to see them listed here."
-						}
+						title={tGroups("noAssignedPeers")}
+						description={tGroups("noAssignedPeersDescription")}
 						icon={<PeerIcon size={20} className={"fill-nb-gray-300"} />}
 					>
 						{permission?.peers?.update && permission?.groups?.update && (
@@ -148,7 +147,7 @@ export const GroupPeersSection = ({ peers, isLoading = true }: Props) => {
 									onClick={() => setOpen(true)}
 								>
 									<PlusCircle size={16} />
-									Assign Peers
+									{tGroups("assignPeers")}
 								</Button>
 							</div>
 						)}

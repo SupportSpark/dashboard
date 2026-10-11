@@ -3,6 +3,7 @@ import Paragraph from "@components/Paragraph";
 import { cn } from "@utils/helpers";
 import { cva, VariantProps } from "class-variance-authority";
 import { AlertCircle, Eye, EyeOff } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useState } from "react";
 
@@ -68,6 +69,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     },
     ref,
   ) => {
+    const tCommon = useTranslations("common");
     const [showPassword, setShowPassword] = useState(false);
     const isPasswordType = type === "password";
     const inputType = isPasswordType && showPassword ? "text" : type;
@@ -78,7 +80,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           type="button"
           onClick={() => setShowPassword(!showPassword)}
           className={"hover:text-white transition-all"}
-          aria-label={"Toggle password visibility"}
+          aria-label={tCommon("togglePasswordVisibility")}
         >
           {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
         </button>

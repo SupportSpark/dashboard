@@ -15,6 +15,7 @@ import {
   FilterIcon,
   XIcon,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useState } from "react";
 
@@ -44,6 +45,7 @@ export function TableFiltersButton<TData>({
   filters,
   disabled,
 }: ButtonProps<TData>) {
+  const t = useTranslations("common");
   const [open, setOpen] = useState(false);
   const [activeFilterId, setActiveFilterId] = useState<string | null>(null);
 
@@ -70,7 +72,7 @@ export function TableFiltersButton<TData>({
         >
           <FilterIcon size={16} className={"shrink-0"} />
           <span className={"flex items-center gap-1.5"}>
-            Filters
+            {t("filters")}
             {activeCount > 0 && (
               <span
                 className={
@@ -97,7 +99,7 @@ export function TableFiltersButton<TData>({
               }
             >
               <button
-                aria-label={"Back"}
+                aria-label={t("back")}
                 className={
                   "flex items-center justify-center w-7 h-7 -ml-1 shrink-0 text-nb-gray-400 hover:text-white hover:bg-nb-gray-900 rounded transition-colors"
                 }
@@ -204,6 +206,7 @@ type FilterChipProps<TData> = {
 };
 
 function FilterChip<TData>({ def, text, table }: FilterChipProps<TData>) {
+  const t = useTranslations("common");
   const [open, setOpen] = useState(false);
 
   return (
@@ -227,7 +230,7 @@ function FilterChip<TData>({ def, text, table }: FilterChipProps<TData>) {
           </button>
         </PopoverTrigger>
         <button
-          aria-label={`Remove ${def.label} filter`}
+          aria-label={t("removeFilterLabel", { label: def.label })}
           className={cn(
             "flex items-center justify-center px-2",
             "border-l border-nb-gray-900",

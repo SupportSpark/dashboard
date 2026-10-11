@@ -3,6 +3,7 @@ import { Modal, ModalClose, ModalContent } from "@components/modal/Modal";
 import ModalHeader from "@components/modal/ModalHeader";
 import Paragraph from "@components/Paragraph";
 import { CreditCardIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useCustomerPlan } from "@/cloud/distributor/hooks/useCustomerPlan";
 import { PlanCard, PlanLoadingSkeleton } from "@/modules/billing/PlanCard";
@@ -51,6 +52,8 @@ const DistributorSubscriptionModalContent = ({
     subscribe,
     subscription,
   } = useCustomerPlan({ accountId });
+  const td = useTranslations("distributor");
+  const tAws = useTranslations("awsMarketplace");
 
   return (
     <ModalContent
@@ -62,8 +65,8 @@ const DistributorSubscriptionModalContent = ({
     >
       <ModalHeader
         icon={<CreditCardIcon size={18} />}
-        title={`NetBird Plan for ${name}`}
-        description={`Select the plan that best fits your customer's needs.`}
+        title={td("planForCustomer", { name })}
+        description={td("selectPlanForCustomerDescription")}
         color={"netbird"}
       />
       <div className={"px-8 pb-1"}>
@@ -87,18 +90,18 @@ const DistributorSubscriptionModalContent = ({
                 onClick={() => subscribe(plan).finally(() => setOpen(false))}
                 key={plan.name}
                 buttonText={{
-                  upgrade: "Continue with",
-                  downgrade: "Downgrade to",
+                  upgrade: td("continueWith"),
+                  downgrade: tAws("downgradeTo"),
                 }}
               />
             ))}
         </div>
         <div className={"pt-6 flex items-center justify-center"}>
           <Paragraph className={"inline text-sm"}>
-            Haven&apos;t decided for a plan yet?{" "}
+            {td("notDecidedYet")}{" "}
             <ModalClose asChild={true}>
               <InlineButtonLink variant={"white"}>
-                Continue with Trial
+                {td("continueWithTrial")}
               </InlineButtonLink>
             </ModalClose>
           </Paragraph>

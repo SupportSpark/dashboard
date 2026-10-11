@@ -2,6 +2,7 @@ import Button from "@components/Button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@components/Tooltip";
 import { motion } from "framer-motion";
 import { RefreshCcw } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useState } from "react";
 
@@ -10,6 +11,7 @@ type Props = {
   isDisabled?: boolean;
 };
 export default function DataTableRefreshButton({ onClick, isDisabled }: Props) {
+  const t = useTranslations("common");
   const [rotate, setRotate] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [hovered, setHovered] = useState(false);
@@ -57,7 +59,7 @@ export default function DataTableRefreshButton({ onClick, isDisabled }: Props) {
         }}
       >
         <span className={"text-xs text-neutral-300"}>
-          {disabled ? "You can refresh it again in 5 seconds" : "Refresh"}
+          {disabled ? t("refreshCooldown") : t("refresh")}
         </span>
       </TooltipContent>
     </Tooltip>

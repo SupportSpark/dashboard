@@ -80,7 +80,7 @@ export const FlowSelector = ({ value, onChange }: Props) => {
           >
             <SegmentedTabs.Trigger
               value={FlowView.PEERS}
-              className={"text-xs px-3 py-[0.45rem]"}
+              className={"text-xs px-3 py-[0.45rem] whitespace-nowrap shrink-0"}
               data-testid={"cc-flow-peers"}
             >
               <MonitorSmartphoneIcon size={12} />
@@ -88,7 +88,7 @@ export const FlowSelector = ({ value, onChange }: Props) => {
             </SegmentedTabs.Trigger>
             <SegmentedTabs.Trigger
               value={FlowView.USERS}
-              className={"text-xs px-3 py-[0.45rem]"}
+              className={"text-xs px-3 py-[0.45rem] whitespace-nowrap shrink-0"}
               data-testid={"cc-flow-users"}
             >
               <UsersIcon size={12} />
@@ -96,7 +96,7 @@ export const FlowSelector = ({ value, onChange }: Props) => {
             </SegmentedTabs.Trigger>
             <SegmentedTabs.Trigger
               value={FlowView.GROUPS}
-              className={"text-xs px-3 py-[0.45rem]"}
+              className={"text-xs px-3 py-[0.45rem] whitespace-nowrap shrink-0"}
               data-testid={"cc-flow-groups"}
             >
               <FolderGit2 size={12} />
@@ -107,7 +107,7 @@ export const FlowSelector = ({ value, onChange }: Props) => {
             {!agentNetworkOnly && (
               <SegmentedTabs.Trigger
                 value={FlowView.NETWORKS}
-                className={"text-xs px-3 py-[0.45rem]"}
+                className={"text-xs px-3 py-[0.45rem] whitespace-nowrap shrink-0"}
                 data-testid={"cc-flow-networks"}
               >
                 <NetworkIcon size={12} />

@@ -78,7 +78,9 @@ export function TrafficEventsFilter({
   onFilterChange,
   closeOnSelect = false,
 }: Readonly<Props>) {
-  const filterItems = useMemo(() => getFixedTypeFilters(), []);
+  const tte = useTranslations("trafficEvents");
+  const tCommon = useTranslations("common");
+  const filterItems = useMemo(() => getFixedTypeFilters(tte), [tte]);
   const searchRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = useState(false);
   const [activeFilterIds, setActiveFilterIds] = useState<string[]>([]);
@@ -245,7 +247,9 @@ export function TrafficEventsFilter({
             <span className={"text-white"}>
               {activeFilterIds.length > 0 && activeFilterIds.length}
             </span>
-            {activeFilterIds.length > 0 ? ` Filter(s)` : "Filter"}
+            {activeFilterIds.length > 0
+              ? tte("filterSuffix")
+              : tCommon("filter")}
           </span>
         </Button>
       </PopoverTrigger>
@@ -274,7 +278,7 @@ export function TrafficEventsFilter({
             ref={searchRef}
             value={search}
             onChange={setSearch}
-            placeholder={"Search filters..."}
+            placeholder={tte("searchFiltersPlaceholder")}
             hideEnterIcon={true}
           />
 
@@ -318,7 +322,9 @@ export function TrafficEventsFilter({
   );
 }
 
-const getFixedTypeFilters = () => {
+const getFixedTypeFilters = (
+  tte: (key: string, values?: any) => string,
+) => {
   let directions = [
     TrafficEventDirection.EGRESS,
     TrafficEventDirection.INGRESS,
@@ -335,14 +341,19 @@ const getFixedTypeFilters = () => {
     for (const d of directions) {
       const eventTypeText =
         t === TrafficEventType.CONNECTED
-          ? "started"
+          ? tte("filterStarted")
           : t === TrafficEventType.STOPPED
-          ? "stopped"
-          : "blocked";
+          ? tte("filterStopped")
+          : tte("filterBlocked");
       const directionText =
-        d === TrafficEventDirection.INGRESS ? "(inbound)" : "(outbound)";
+        d === TrafficEventDirection.INGRESS
+          ? tte("inboundParen")
+          : tte("outboundParen");
 
-      const displayText = `Connection ${eventTypeText} ${directionText}`;
+      const displayText = tte("combinedFilterLabel", {
+        type: eventTypeText,
+        direction: directionText,
+      });
 
       const combinedFilter: CombinedFilter = {
         id: getCombinedFilterId(t, d),

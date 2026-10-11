@@ -9,6 +9,7 @@ import { VerticalTabs } from "@components/VerticalTabs";
 import * as Tabs from "@radix-ui/react-tabs";
 import { ExternalLinkIcon, Gauge, ScrollText, ServerIcon } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import React, { lazy, Suspense, useMemo } from "react";
 import AgentNetworkIcon from "@/assets/icons/AgentNetworkIcon";
 import GroupsProvider from "@/contexts/GroupsProvider";
@@ -40,6 +41,9 @@ export default function AgentNetworkConfigurationPage() {
   const queryTab = queryParams.get("tab");
   const router = useRouter();
   const pathname = usePathname();
+  const tAn = useTranslations("agentNetworkLabels");
+  const tCommon = useTranslations("common");
+  const tNav = useTranslations("navigation");
 
   // Clusters is a reverse-proxy surface (its table and controls run on the
   // services permission), so it stays hidden from roles that only hold
@@ -67,21 +71,21 @@ export default function AgentNetworkConfigurationPage() {
         <VerticalTabs.List>
           <VerticalTabs.Trigger value={TAB_BUDGET_SETTINGS}>
             <Gauge size={14} />
-            Global Limits
+            {tAn("globalLimitsTab")}
           </VerticalTabs.Trigger>
           <VerticalTabs.Trigger value={TAB_LOG_SETTINGS}>
             <ScrollText size={14} />
-            Log Collection
+            {tAn("logCollectionTab")}
           </VerticalTabs.Trigger>
           {canReadClusters && (
             <VerticalTabs.Trigger value={TAB_CLUSTERS}>
               <ServerIcon size={14} />
-              Clusters
+              {tNav("clusters")}
             </VerticalTabs.Trigger>
           )}
         </VerticalTabs.List>
         <RestrictedAccess
-          page={"Configuration"}
+          page={tAn("configurationPage")}
           hasAccess={permission?.["agent_network.settings"]?.read}
         >
           <GroupsProvider>
@@ -93,12 +97,10 @@ export default function AgentNetworkConfigurationPage() {
                     className={"w-full"}
                   >
                     <ConfigTabHeader
-                      label={"Global Limits"}
+                      label={tAn("globalLimitsTab")}
                       href={"/agent-network/configuration?tab=budget-settings"}
                     >
-                      Account-wide caps on token usage and spend, applied across
-                      every policy. Scope a limit to specific groups or users,
-                      or leave it account-wide.
+                      {tAn("globalLimitsDescription")}
                     </ConfigTabHeader>
                     {/* DataTable applies its own p-default, so it is rendered
                         directly (no extra wrapper) to align with the header. */}
@@ -118,17 +120,17 @@ export default function AgentNetworkConfigurationPage() {
                   {canReadClusters && (
                     <Tabs.Content value={TAB_CLUSTERS} className={"w-full"}>
                       <ConfigTabHeader
-                        label={"Clusters"}
+                        label={tNav("clusters")}
                         href={"/agent-network/configuration?tab=clusters"}
                       >
                         {agentNetworkOnly
-                          ? "Proxy clusters route your agents' traffic to AI providers and run on your own infrastructure. Add multiple clusters to scale your environment."
-                          : "Proxy clusters route inbound traffic to your services. Shared clusters are run by the platform; account clusters (self-hosted) run on your own infrastructure."}{" "}
+                          ? tAn("clustersDescriptionFocused")
+                          : tAn("clustersDescriptionDefault")}{" "}
                         <InlineLink
                           href={REVERSE_PROXY_CLUSTERS_DOCS_LINK}
                           target={"_blank"}
                         >
-                          Learn more
+                          {tCommon("learnMore")}
                           <ExternalLinkIcon size={12} />
                         </InlineLink>
                       </ConfigTabHeader>
@@ -158,12 +160,13 @@ function ConfigTabHeader({
   href: string;
   children?: React.ReactNode;
 }) {
+  const tNav = useTranslations("navigation");
   return (
     <div className={"p-default py-6"}>
       <Breadcrumbs>
         <Breadcrumbs.Item
           href={"/agent-network/providers"}
-          label={"Agent Network"}
+          label={tNav("agentNetwork")}
           icon={<AgentNetworkIcon size={16} />}
         />
         <Breadcrumbs.Item href={href} label={label} active />

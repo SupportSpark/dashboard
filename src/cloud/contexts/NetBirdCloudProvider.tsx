@@ -93,8 +93,8 @@ export const NetBirdCloudProvider = () => {
       notify({
         title: t("agentNetworkLabel"),
         description: isNewAccount
-          ? "Agent Network focused view enabled for your account."
-          : "Agent Network enabled for your account.",
+          ? t("focusedViewEnabled")
+          : t("agentNetworkEnabled"),
         promise: accountRequest(
           { id: account.id, settings },
           "/" + account.id,
@@ -109,11 +109,11 @@ export const NetBirdCloudProvider = () => {
           localStorage.removeItem(SIGNUP_SOURCE_LOCAL_STORAGE_KEY);
         }),
         loadingMessage: isNewAccount
-          ? "Enabling Agent Network focused view..."
-          : "Enabling Agent Network...",
+          ? t("enablingFocusedView")
+          : t("enablingAgentNetwork"),
       });
     } catch (e) {}
-  }, [account]);
+  }, [account, t]);
 
   const hasFreeOrTrialAWSPlan =
     subscription?.plan_tier === PlanTier.FREE ||

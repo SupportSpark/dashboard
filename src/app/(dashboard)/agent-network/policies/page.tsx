@@ -7,6 +7,7 @@ import SkeletonTable from "@components/skeletons/SkeletonTable";
 import { RestrictedAccess } from "@components/ui/RestrictedAccess";
 import { usePortalElement } from "@hooks/usePortalElement";
 import { ExternalLinkIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React, { Suspense } from "react";
 import AgentNetworkIcon from "@/assets/icons/AgentNetworkIcon";
 import { usePermissions } from "@/contexts/PermissionsProvider";
@@ -18,6 +19,8 @@ export default function AgentNetworkPoliciesPage() {
   const { permission } = usePermissions();
   const { ref: headingRef, portalTarget } =
     usePortalElement<HTMLHeadingElement>();
+  const tNav = useTranslations("navigation");
+  const tAn = useTranslations("agentNetworkLabels");
 
   return (
     <PageContainer>
@@ -25,24 +28,21 @@ export default function AgentNetworkPoliciesPage() {
         <Breadcrumbs>
           <Breadcrumbs.Item
             href={"/agent-network/providers"}
-            label={"Agent Network"}
+            label={tNav("agentNetwork")}
             icon={<AgentNetworkIcon size={16} />}
           />
           <Breadcrumbs.Item
             href={"/agent-network/policies"}
-            label={"Policies"}
+            label={tNav("policies")}
             active={true}
           />
         </Breadcrumbs>
-        <h1 ref={headingRef}>Policies</h1>
-        <Paragraph>
-          Bind IdP groups to providers: Engineering gets Claude, Finance
-          doesn&apos;t. Enforce token limits, budgets, and guardrails.
-        </Paragraph>
+        <h1 ref={headingRef}>{tNav("policies")}</h1>
+        <Paragraph>{tAn("policiesDescription")}</Paragraph>
       </div>
 
       <RestrictedAccess
-        page={"Policies"}
+        page={tNav("policies")}
         hasAccess={permission?.["agent_network.policies"]?.read}
       >
         <AIProvidersProvider>

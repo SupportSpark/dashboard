@@ -3,6 +3,7 @@
 import { PageNotFound } from "@components/ui/PageNotFound";
 import useFetchApi, { ErrorResponse } from "@utils/api";
 import { CircleXIcon, InfoIcon, Loader2Icon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React, { useEffect, useRef } from "react";
 import type { Peer } from "@/interfaces/Peer";
 import { Terminal } from "@/modules/remote-access/ssh/Terminal";
@@ -19,6 +20,7 @@ import {
 
 export default function SSHPage() {
   const { peerId, username, port, ipVersion } = useSSHQueryParams();
+  const t = useTranslations("remoteAccess");
 
   const {
     data: peer,
@@ -31,8 +33,7 @@ export default function SSHPage() {
       <div className={"w-screen h-screen overflow-hidden"}>
         <ErrorMessage
           error={{
-            message:
-              "This peer may have been deleted, or you may not have permission to view it.",
+            message: t("peerUnavailable"),
             code: error.code,
           }}
         />
@@ -51,7 +52,7 @@ export default function SSHPage() {
           ipVersion={ipVersion}
         />
       ) : (
-        <LoadingMessage message={"Starting ssh session..."} />
+        <LoadingMessage message={t("startingSshSession")} />
       )}
     </div>
   );
@@ -66,6 +67,7 @@ type Props = {
 
 function SSHTerminal({ username, port, peer, ipVersion }: Props) {
   const client = useNetBirdClient();
+  const t = useTranslations("remoteAccess");
   const connected = useRef(false);
   const sshConnectedOnce = useRef(false);
 
@@ -178,7 +180,9 @@ function SSHTerminal({ username, port, peer, ipVersion }: Props) {
     <>
       {session && <Terminal session={session} onClose={disconnect} />}
       {!isSSHConnected && (
-        <LoadingMessage message={`Connecting to ${username}@${peer.ip}...`} />
+        <LoadingMessage
+          message={t("connectingTo", { target: `${username}@${peer.ip}` })}
+        />
       )}
     </>
   );
@@ -230,6 +234,7 @@ const DisconnectedMessage = ({
   peerIp,
   onReconnect,
 }: DisconnectedMessageProps) => {
+  const t = useTranslations("remoteAccess");
   return (
     <div
       className={
@@ -238,14 +243,14 @@ const DisconnectedMessage = ({
     >
       <div className="text-nb-gray-200 font-normal text-base flex gap-2 items-center justify-center">
         <InfoIcon size={16} className={"shrink-0 text-nb-gray-200"} />
-        Disconnected from {username}@{peerIp}
+        {t("disconnectedFrom", { target: `${username}@${peerIp}` })}
         <button
           className={
             "underline-offset-4 items-center transition-all duration-200 inline-flex texts-inherit gap-1 text-netbird hover:underline font-normal"
           }
           onClick={onReconnect}
         >
-          Reconnect
+          {t("reconnect")}
         </button>
       </div>
     </div>

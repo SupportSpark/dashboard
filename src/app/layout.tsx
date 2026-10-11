@@ -1,10 +1,14 @@
 import { globalMetaTitle } from "@utils/meta";
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import AppLayout from "@/layouts/AppLayout";
 
-export const metadata: Metadata = {
-  title: `${globalMetaTitle}`,
-  description:
-    "NetBird combines a configuration-free peer-to-peer private network and a centralized access control system in a single open-source platform",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("common");
+  return {
+    title: `${globalMetaTitle}`,
+    description: t("metaDescription"),
+  };
+}
+
 export default AppLayout;

@@ -11,6 +11,7 @@ import { VirtualScrollAreaList } from "@components/VirtualScrollAreaList";
 import { useSearch } from "@hooks/useSearch";
 import { cn, generateColorFromString } from "@utils/helpers";
 import { ArrowUpRightIcon, ChevronsUpDown, CircleHelp } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useEffect, useMemo, useState } from "react";
 import { useMSP } from "@/cloud/msp/contexts/MSPProvider";
@@ -79,6 +80,7 @@ type Props = {
 
 const TenantDropdown = ({ tenants, currentAccount, mspAccount }: Props) => {
   const { loginAs } = useMSP();
+  const t = useTranslations("msp");
   const [open, setOpen] = useState(false);
 
   const [filteredItems, search, setSearch] = useSearch(
@@ -144,14 +146,14 @@ const TenantDropdown = ({ tenants, currentAccount, mspAccount }: Props) => {
           <DropdownInput
             value={search}
             onChange={setSearch}
-            placeholder={"Search by name or domain..."}
+            placeholder={t("searchTenantsSwitcherPlaceholder")}
             hideEnterIcon={true}
           />
 
           {tenantListItems.length == 0 && search == "" && (
             <div className={"max-w-xs mx-auto px-4"}>
               <DropdownInfoText>
-                {"Seems like you don't have any customers."}
+                {t("noCustomersYet")}
               </DropdownInfoText>
             </div>
           )}
@@ -159,8 +161,7 @@ const TenantDropdown = ({ tenants, currentAccount, mspAccount }: Props) => {
           {tenantListItems.length == 0 && search != "" && (
             <div className={"max-w-xs mx-auto px-4"}>
               <DropdownInfoText>
-                There are no customers matching your search. Try another search
-                term.
+                {t("noCustomersMatchingSearch")}
               </DropdownInfoText>
             </div>
           )}

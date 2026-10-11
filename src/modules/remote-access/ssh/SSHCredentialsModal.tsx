@@ -35,6 +35,7 @@ type Props = {
 
 export const SSHCredentialsModal = ({ open, onOpenChange, peer }: Props) => {
   const t = useTranslations("common");
+  const tRemote = useTranslations("remoteAccess");
   const [username, setUsername] = useState(
     getOperatingSystem(peer.os) === OperatingSystem.WINDOWS
       ? "Administrator"
@@ -45,16 +46,15 @@ export const SSHCredentialsModal = ({ open, onOpenChange, peer }: Props) => {
   const [port, setPort] = useState(initialPort);
 
   const userNameError = useMemo(() => {
-
-    if (username?.length === 0) return "Username cannot be empty";
-  }, [username]);
+    if (username?.length === 0) return tRemote("usernameCannotBeEmpty");
+  }, [tRemote, username]);
 
   const portError = useMemo(() => {
     const portNumber = Number(port);
     const isValid =
       Number.isInteger(portNumber) && portNumber > 0 && portNumber <= 65535;
-    if (!isValid) return "Port must be a number between 1 and 65535";
-  }, [port]);
+    if (!isValid) return tRemote("portRangeError");
+  }, [tRemote, port]);
 
   const hasAnyError = useMemo(() => {
     if (userNameError !== undefined) return true;
@@ -79,7 +79,7 @@ export const SSHCredentialsModal = ({ open, onOpenChange, peer }: Props) => {
         <ModalHeader
           icon={<TerminalIcon className={"text-netbird"} size={18} />}
           title={peer.name}
-          description={`Connect to ${peer.ip} via SSH`}
+          description={tRemote("connectToPeerViaSsh", { ip: peer.ip })}
           color={"netbird"}
         />
         <Separator />
@@ -87,9 +87,7 @@ export const SSHCredentialsModal = ({ open, onOpenChange, peer }: Props) => {
         <div className={"px-8 py-6 flex flex-col gap-8"}>
           <div className={""}>
             <Label>{t("usernameAndPort")}</Label>
-            <HelpText>
-              The username and port you will use to connect to the remote host.
-            </HelpText>
+            <HelpText>{tRemote("sshCredentialsHelp")}</HelpText>
             <div className={"flex flex-col gap-2 w-full"}>
               <Input
                 placeholder={"root"}
@@ -130,7 +128,7 @@ export const SSHCredentialsModal = ({ open, onOpenChange, peer }: Props) => {
         <ModalFooter className={"items-center"}>
           <div className={"w-full"}>
             <Paragraph className={"text-sm mt-auto"}>
-              Learn more about
+              {t("learnMoreAbout")}
               <InlineLink href={SSH_DOCS_LINK} target={"_blank"}>
                 SSH
                 <ExternalLinkIcon size={12} />
@@ -147,7 +145,7 @@ export const SSHCredentialsModal = ({ open, onOpenChange, peer }: Props) => {
               disabled={hasAnyError}
               onClick={openSSHWindow}
             >
-              Connect
+              {tRemote("connect")}
             </Button>
           </div>
         </ModalFooter>

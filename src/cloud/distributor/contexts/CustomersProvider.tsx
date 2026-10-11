@@ -30,6 +30,7 @@ const CustomersContext = React.createContext(
 export const CustomersProvider = ({
 children }: Props) => {
   const td = useTranslations("distributor");
+  const tCommon = useTranslations("common");
   const { data: customers } = useFetchApi<DistributorCustomer[]>(
     "/integrations/msp/reseller/msps",
   );
@@ -48,11 +49,10 @@ children }: Props) => {
 
   const unlinkCustomer = async (customer: DistributorCustomer) => {
     const choice = await confirm({
-      title: `Unlink '${customer.name}'?`,
-      description:
-        td("unlinkDescription"),
+      title: td("unlinkCustomerTitle", { name: customer.name }),
+      description: td("unlinkDescription"),
       confirmText: td("unlink"),
-      cancelText: "Cancel",
+      cancelText: tCommon("cancel"),
       type: "danger",
       maxWidthClass: "max-w-[480px]",
     });
@@ -63,9 +63,12 @@ children }: Props) => {
     });
 
     notify({
-      title: `Unlinking ${customer.name}`,
-      description: `Successfully unlinked ${customer.name} (${customer.domain})`,
-      loadingMessage: `Unlinking ${customer.name}...`,
+      title: td("unlinkingCustomerTitle", { name: customer.name }),
+      description: td("customerUnlinkedSuccess", {
+        name: customer.name,
+        domain: customer.domain,
+      }),
+      loadingMessage: td("unlinkingCustomer", { name: customer.name }),
       promise,
     });
 
@@ -89,7 +92,7 @@ children }: Props) => {
       });
 
     notify({
-      title: `Request Account Access`,
+      title: td("requestAccountAccess"),
       description: td("requestSent"),
       loadingMessage: td("sendingRequest"),
       promise: request,

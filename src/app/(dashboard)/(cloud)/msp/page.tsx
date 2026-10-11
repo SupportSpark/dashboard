@@ -10,6 +10,7 @@ import useRedirect from "@hooks/useRedirect";
 import { useApiCall } from "@utils/api";
 import { LockIcon } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import React, { useMemo, useState } from "react";
 import { useSWRConfig } from "swr";
 import NetBirdIcon from "@/assets/icons/NetBirdIcon";
@@ -19,6 +20,8 @@ import { useLoggedInUser } from "@/contexts/UsersProvider";
 export default function JoinMspPage() {
   const searchParams = useSearchParams();
   const inviteCode = searchParams.get("invite");
+  const t = useTranslations("msp");
+  const tCommon = useTranslations("common");
 
   const { mutate } = useSWRConfig();
   const router = useRouter();
@@ -35,10 +38,10 @@ export default function JoinMspPage() {
   });
 
   const declineButtonText = useMemo(() => {
-    if (isMSPAccount && !calledOnce) return "Go to Tenants";
-    if (isOwner) return "Decline";
-    return "Go to Peers";
-  }, [isMSPAccount, calledOnce, isOwner]);
+    if (isMSPAccount && !calledOnce) return t("goToTenants");
+    if (isOwner) return t("decline");
+    return t("goToPeers");
+  }, [isMSPAccount, calledOnce, isOwner, t]);
 
   if (isAccountWithMSPParent || !inviteCode) return <Redirect />;
 
@@ -58,9 +61,9 @@ export default function JoinMspPage() {
       .finally(() => setIsAccepting(false));
 
     notify({
-      title: `NetBird Managed Service Provider`,
-      description: `Successfully joined as an Managed Service Provider`,
-      loadingMessage: `Processing your invitation...`,
+      title: t("mspNotifyTitle"),
+      description: t("joinedAsMsp"),
+      loadingMessage: t("processingInvitation"),
       promise,
     });
     return promise;
@@ -96,11 +99,10 @@ export default function JoinMspPage() {
           </div>
 
           <div className={"text-xl font-medium text-center max-w-xs mb-1"}>
-            NetBird invites you to join as an Managed Service Provider (MSP)
+            {t("mspInviteTitle")}
           </div>
           <div className={"text-sm text-nb-gray-300 text-center"}>
-            You will get access to the NetBird MSP portal where you can manage
-            multiple customers and their networks from a single place.
+            {t("mspInviteDescription")}
           </div>
           {!isOwner && !isMSPAccount && (
             <Callout
@@ -109,13 +111,12 @@ export default function JoinMspPage() {
               }
               className={"text-xs mt-3"}
             >
-              Only the owner of the account can accept this invitation. Please
-              contact the owner of the account to accept the invitation.
+              {t("ownerOnlyNotice")}
             </Callout>
           )}
           {isMSPAccount && !calledOnce && (
             <Callout className={"text-xs mt-3 w-full"}>
-              The invitation has already been accepted
+              {t("invitationAlreadyAccepted")}
             </Callout>
           )}
         </div>
@@ -136,7 +137,7 @@ export default function JoinMspPage() {
             disabled={isDisabled}
             onClick={acceptInvitation}
           >
-            Accept
+            {tCommon("accept")}
           </Button>
         </ModalFooter>
       </ModalContent>

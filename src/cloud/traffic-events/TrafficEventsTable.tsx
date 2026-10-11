@@ -71,12 +71,15 @@ export const getTrafficEventTypeText = (
 export function TrafficEventsTableColumns(
   tte: ReturnType<typeof useTranslations>,
   tPolicies: ReturnType<typeof useTranslations>,
+  tReverseProxy: (key: string) => string,
 ): ColumnDef<TrafficEvent>[] {
   return [
     {
       id: "timestamp",
       header: ({ column }) => (
-        <DataTableHeader column={column}>Time</DataTableHeader>
+        <DataTableHeader column={column}>
+          {tReverseProxy("time")}
+        </DataTableHeader>
       ),
     cell: ({ row }) => (
       <TrafficEventsTimeCell timestamp={row.original.events[0].timestamp} />
@@ -244,6 +247,7 @@ export default function TrafficEventsTable({
   const t = useTranslations("trafficEvents");
   const tNav = useTranslations("navigation");
   const tPolicies = useTranslations("policies");
+  const tReverseProxy = useTranslations("reverseProxy");
   const router = useRouter();
   const { users } = useUsers();
   const { peers } = usePeers();
@@ -351,7 +355,7 @@ export default function TrafficEventsTable({
     () => [
       {
         id: "source_id",
-        label: "Source",
+        label: tPolicies("source"),
         renderPicker: (p) => (
           <PeerResourcePicker
             value={p.value as string | undefined}
@@ -381,7 +385,7 @@ export default function TrafficEventsTable({
       },
       {
         id: "destination_id",
-        label: "Destination",
+        label: tPolicies("destination"),
         renderPicker: (p) => (
           <PeerResourcePicker
             value={p.value as string | undefined}
@@ -408,6 +412,7 @@ export default function TrafficEventsTable({
       sourceChipOptions,
       destinationChipOptions,
       setFilter,
+      tPolicies,
     ],
   );
 
@@ -432,7 +437,7 @@ export default function TrafficEventsTable({
   // untouched (the peer tab reuses it).
   const columns = useMemo<ColumnDef<TrafficEvent>[]>(
     () => [
-      ...TrafficEventsTableColumns(t, tPolicies),
+      ...TrafficEventsTableColumns(t, tPolicies, tReverseProxy),
       {
         id: "source_id",
         accessorFn: (row) => row.source.id,
@@ -444,7 +449,7 @@ export default function TrafficEventsTable({
         enableGlobalFilter: false,
       },
     ],
-    [t],
+    [t, tPolicies, tReverseProxy],
   );
 
   const getStartedCard = !isSettingEnabled ? (

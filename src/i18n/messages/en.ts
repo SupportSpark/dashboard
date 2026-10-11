@@ -213,6 +213,25 @@ export default {
     requestFailedStatus: "Request failed with status code {code}",
     remove: "Remove",
     networkActions: "Network actions",
+    removeFilterLabel: "Remove {label} filter",
+    togglePasswordVisibility: "Toggle password visibility",
+    requestId: "Request ID",
+    copyRequestId: "Copy request ID",
+    somethingWentWrong: "Something went wrong...",
+    refreshCooldown: "You can refresh it again in 5 seconds",
+    addGroupByPressingEnter: "Add this group by pressing <key>''Enter''</key>",
+    noProxyClustersGoToCustomDomains:
+      "No proxy clusters available. Go to <link>Custom Domains</link> to configure one that supports private services.",
+    searchNetworkByNameOrCidr: "Search for network by name or cidr...",
+    noNetworkRoutesCreatedYet: "Seems like you don't have any network routes created yet.",
+    noNetworksMatchingSearch: "There are no networks matching your search.",
+    dontHaveRoutingPeer: "Don't have a routing peer?",
+    parametersCount: "{count, plural, one {# Parameter} other {# Parameters}}",
+    enable: "Enable",
+    metaDescription:
+      "NetBird combines a configuration-free peer-to-peer private network and a centralized access control system in a single open-source platform",
+    users: "Users",
+    goToNetworks: "Go to Networks",
   },
   navigation: {
     controlCenter: "Control Center",
@@ -282,6 +301,8 @@ export default {
     filterCount: "{count} filter(s)",
     searchFilters: "Search filters...",
     noMatchingFilters: "There are no filters matching your search.",
+    noUsersMatchingSearch: "There are no users matching your search.",
+    ungrouped: "Ungrouped",
   },
   dateRange: {
     selectDateRange: "Select date range",
@@ -631,6 +652,24 @@ export default {
       "Are you sure you want to delete this peer? This action cannot be undone.",
     peerDeletedDescription: "Peer was successfully deleted",
     deletingPeer: "Deleting peer...",
+    filters: "Filters",
+    agent: "Agent",
+    lastSeenLower: "Last seen",
+    sshPolicyRequired:
+      "Starting from NetBird v0.61.0, SSH requires an explicit access control policy to allow SSH connections to this machine.",
+    ephemeralPeerTooltip:
+      "This peer is an ephemeral peer. If it is disconnected for more than 10 minutes it will be removed.",
+    expirationDisabledPeerTooltip: "Expiration is disabled for this peer.",
+    bypassedIssueTooltip:
+      "This peer has compliance bypassed by an administrator. The bypass will be automatically removed when the device becomes compliant.",
+    loginExpiredIssueTooltip:
+      "This peer's login has expired. Re-authenticate from the NetBird client on the device to bring it back online.",
+    notCompliantIssueTooltip:
+      "This peer is not compliant with {integrationName} and cannot connect until compliance is restored or bypassed.",
+    approvalRequiredIssueTooltip:
+      "This peer needs admin approval before it can connect. Approve it from the row's actions menu.",
+    thisPeerCanConnect: "This peer can now connect to other peers.",
+    deletePeerFromRouteTitle: "Delete peer {name} from '{network_id}' network?",
   },
   policies: {
     title: "Policies",
@@ -776,6 +815,9 @@ export default {
     filterPostureChecks: "Posture Checks",
     filterWith: "With",
     filterWithout: "Without",
+    notifyTitle: "Access Control Policy {name}",
+    policyDeleteSuccess: "The policy was successfully deleted.",
+    updatePolicySuccess: "The access control policy was successfully updated",
   },
   groups: {
     title: "Groups",
@@ -887,6 +929,36 @@ export default {
     addUsersToGroupTitle: "Add Users to Group {group}",
     usersAddedToGroup: "Users were successfully added to group '{group}'.",
     addingUsersToGroup: "Adding users to group...",
+    deleteGroupsConfirmTitle:
+      "{count, plural, one {Delete # group?} other {Delete # groups?}}",
+    deleteGroupsConfirmDescription:
+      "{count, plural, one {Are you sure you want to delete this group? This action cannot be undone.} other {Are you sure you want to delete these groups? This action cannot be undone.}}",
+    deleteAll: "Delete All",
+    groupsDeleted: "Groups were successfully deleted",
+    deletingSelectedGroups: "Deleting the selected groups...",
+    deletingSelectedGroup: "Deleting the selected group...",
+    groupsSelected: "Groups selected",
+    groupSelected: "Group selected",
+    deleteSelectedGroups: "Delete selected groups",
+    groupsCouldNotBeDeleted: "Something went wrong...",
+    usersSelected: "Users selected",
+    assignPeers: "Assign Peers",
+    manageAssignedPeers: "Manage Assigned Peers",
+    viewAssignedPeers: "View Assigned Peers",
+    noAssignedPeers: "No peers assigned",
+    noAssignedPeersDescription:
+      "Assign peers to this group to control which nodes the group applies to.",
+    noAssignedUsers: "No users assigned",
+    noAssignedUsersDescription:
+      "Assign users to this group to control which people the group applies to.",
+    noAssignedResourcesDescription:
+      "Assign resources to this group to control which resources the group applies to.",
+    noPeersToAssign: "No peers to assign",
+    noPeersToAssignDescription: "Every peer is already a member of this group.",
+    noUsersToAssign: "No users to assign",
+    noUsersToAssignDescription: "Every user is already a member of this group.",
+    searchPeersByNameIpOrOwner: "Search peers by name, IP or owner...",
+    searchUsersByNameEmailOrRole: "Search users by name, email or role...",
   },
   users: {
     title: "Users",
@@ -1134,6 +1206,9 @@ export default {
     changesSaved: "Changes successfully saved.",
     savingChanges: "Saving changes...",
     onlyOwnerCanChangeRole: "Only the account owner can change the owner's role.",
+    eMail: "E-Mail",
+    neverLoggedIn: "Never",
+    userId: "User ID",
   },
   userDropdown: {
     profileSettings: "Profile Settings",
@@ -2148,6 +2223,15 @@ export default {
     addRecordBtn: "Add",
     // DNSRecordsTable
     contentColumn: "Content",
+    presetGoogleTitle: "Google DNS",
+    presetGoogleDescription:
+      "A free, global DNS resolution service by Google that implements a number of security, performance, and compliance improvements.",
+    presetCloudflareTitle: "Cloudflare DNS",
+    presetCloudflareDescription:
+      "Enterprise-grade DNS service that offers the fastest response time, unparalleled redundancy, and advanced security with built-in DDoS mitigation and DNSSEC.",
+    presetQuad9Title: "Quad9 DNS",
+    presetQuad9Description:
+      "The Quad9 DNS service is operated by the Swiss-based Quad9 Foundation, whose mission is to provide a safer and more robust Internet for everyone.",
   },
   networks: {
     title: "Networks",
@@ -2440,6 +2524,26 @@ export default {
     // ResourcesTable column headers
     resourceColumn: "Resource",
     policiesColumn: "Policies",
+    routingPeerAdded: "Routing Peer added successfully.",
+    routingPeerUpdated: "Routing Peer updated successfully.",
+    addingRoutingPeer: "Adding Routing Peer...",
+    updateRoutingPeer: "Update Routing Peer",
+    routingPeersAssignHelp:
+      "Assign a single or multiple peers as routing peers for the network.",
+    routingPeerGroupAssignHelp:
+      "Assign a peer group with machines to be used as routing peers.",
+    peerAlreadyRoutingPeer:
+      "This peer is already a routing peer for this network and cannot be assigned again.",
+    dontHaveRoutingPeerHelp:
+      "You can install NetBird with a setup key on one or more machines to act as routing peers.",
+    enableRoutingPeer: "Enable Routing Peer",
+    enableRoutingPeerHelp: "Use this switch to enable or disable the routing peer.",
+    resourceGroupsUsedInPolicies:
+      "Your selected resource groups are used in <policies>{count, plural, one {# Access Control Policy} other {# Access Control Policies}}</policies>. This resource will inherit access from {count, plural, one {this policy} other {these policies}}.",
+    reviewThemInAccessControlTab: "Please review them in the <link>Access Control</link> tab.",
+    resourceReviewInAccessControlTab: "Please review them in the Access Control tab.",
+    resourceReviewOnCanvasBeforeDeploy: "Review them on the canvas before you deploy.",
+    searchResourcesPlaceholder: "Search resources by name or address...",
   },
   postureChecks: {
     title: "Posture Checks",
@@ -3347,6 +3451,8 @@ export default {
     edrSyncTokenExpiredHelp: "Notify when the EDR sync token has expired and needs renewal",
     channelSlack: "Slack",
     webhookUrlLabel: "Webhook URL",
+    invalidWebhookUrl:
+      "Please enter a valid url, e.g., https://hooks.slack.com/services/...",
   },
   invoices: {
     title: "Invoices",
@@ -3413,6 +3519,7 @@ export default {
     logout: "Logout",
     subscribeTo: "Subscribe to",
     downgradeTo: "Downgrade to",
+    thanksRegisteringLineBreak: "Thanks for registering via <br />AWS Marketplace!",
   },
   routes: {
     // Table columns
@@ -3585,6 +3692,10 @@ export default {
     // Badge labels
     exitNodeLabel: "Exit Node",
     routingPeersBadge: "Routing Peers",
+    creatingRoute: "Creating route...",
+    routeCreatedSuccess: "The network route was successfully created",
+    routeUpdatedSuccess: "The network route was successfully updated",
+    updatingRoute: "Updating route...",
   },
   onboarding: {
     title: "Get started with NetBird",
@@ -4507,6 +4618,9 @@ export default {
     noRemoteJobs: "This peer has no remote jobs",
     noRemoteJobsDescription:
       "Create a debug bundle or trigger other remote jobs to see them listed here.",
+    uploadKeyCopied: "Upload key has been copied to your clipboard",
+    statusPending: "Pending",
+    statusCompleted: "Completed",
   },
   countries: {
     afghanistan: "Afghanistan",
@@ -4776,6 +4890,80 @@ export default {
     noTenantsYet:
       "It looks like you don't have any tenants yet. Add a new tenant to get started.",
     managingTenants: "Managing Tenants",
+    addAccount: "Add Account",
+    addDomainAccount: "Add {domain} account",
+    addTenantDescription: "Add a new tenant account to your organization.",
+    continueWithTrial: "Continue with Trial",
+    decline: "Decline",
+    deleteTenantTitle: "Delete '{name}'?",
+    deletingTenant: "Deleting {name}...",
+    deletingTenantTitle: "Deleting {name}",
+    deny: "Deny",
+    domainHelpExisting: "Primary domain of the tenant.",
+    domainHelpNew: "Enter the primary domain of the tenant.",
+    domainLabel: "Domain",
+    domainVerificationLabel: "Domain Verification",
+    emailFromDomainNotice:
+      "The email should be sent from the domain you are trying to verify.",
+    estCostPerMonth: "Est. Cost / Month",
+    estCostTooltip:
+      "The estimated price is calculated based on the number of active users and active peers.",
+    goToPeers: "Go to Peers",
+    goToTenants: "Go to Tenants",
+    grantAccessConfirmDescription:
+      "Are you sure you want to grant access? This action cannot be undone.",
+    grantAccessTitle: "Granting access to {domain}?",
+    grantingAccessTo: "Granting access to {domain}",
+    invalidDomainError: "Please enter a valid domain, e.g. netbird.io",
+    invitationAlreadyAccepted: "The invitation has already been accepted",
+    joinedAsMsp: "Successfully joined as an Managed Service Provider",
+    mspInviteDescription:
+      "You will get access to the NetBird MSP portal where you can manage multiple customers and their networks from a single place.",
+    mspInviteTitle:
+      "NetBird invites you to join as an Managed Service Provider (MSP)",
+    mspNotifyTitle: "NetBird Managed Service Provider",
+    noCustomersMatchingSearch:
+      "There are no customers matching your search. Try another search term.",
+    noCustomersYet: "Seems like you don't have any customers.",
+    notDecidedYet: "Haven't decided for a plan yet?",
+    ownerOnlyNotice:
+      "Only the owner of the account can accept this invitation. Please contact the owner of the account to accept the invitation.",
+    ownershipVerified: "Ownership Verified",
+    pendingVerification: "Pending Verification",
+    permissionAccount: "Manage your account, settings and configurations",
+    permissionDevices: "Manage all devices and associated resources",
+    permissionUsers: "Manage all users, groups and permissions",
+    planForTenant: "NetBird Plan for {name}",
+    pricingAndPlans: "Pricing & Plans",
+    processingInvitation: "Processing your invitation...",
+    requestAccountAccess: "Request Account Access",
+    requestDescription:
+      "A Managed Service Provider (MSP) is requesting access to manage your account and all of its associated resources.",
+    requestHeading: "<tenant>{name}</tenant> is requesting access to your account",
+    requestHeadingWithOwner:
+      "{owner} from <tenant>{name}</tenant> is requesting access to your account",
+    reviewRequestNotice:
+      "Please review the request carefully before proceeding. Granting them access will allow them to:",
+    saveChanges: "Save Changes",
+    searchTenantsPlaceholder: "Search by name, email or group...",
+    searchTenantsSwitcherPlaceholder: "Search by name or domain...",
+    selectPlanDescription: "Select the plan that best fits your tenant's needs.",
+    startVerificationBtn: "Start Verification",
+    subscribedToPlan: "Successfully subscribed to the {plan} plan.",
+    subscribingToPlan: "Subscribing to {plan}...",
+    subscriptionFor: "Subscription for {name}",
+    tabGeneral: "General",
+    tabPermissions: "Permissions",
+    tenantDeletedSuccess: "Successfully deleted {name} ({domain})",
+    tenantNameHelp: "Set an easily recognizable name for the tenant.",
+    tenantUnlinkedSuccess: "Successfully unlinked {name} ({domain})",
+    unlinkingTenant: "Unlinking {name}...",
+    unlinkingTenantTitle: "Unlinking {name}",
+    updateDomainAccount: "Update {domain} account",
+    verificationOf: "Verification of {domain}",
+    verifyDomainAction: "Verify Domain",
+    verifyLaterBtn: "Verify Later",
+    verifyingOwnershipOf: "Verifying ownership of {domain}",
   },
   distributor: {
     customer: "Customer",
@@ -4801,6 +4989,43 @@ export default {
     customersLabel: "Customers",
     customersPageDescription: "Use this view to manage customer accounts and their plans.",
     customersDocsSuffix: "in our documentation.",
+    addCustomer: "Add Customer",
+    addCustomerDescription: "Add a new customer account to your distributor organization.",
+    addDomainCustomer: "Add {domain} customer",
+    addNewCustomer: "Add New Customer",
+    companyNameHelp: "Enter the name of your customers company.",
+    continueWith: "Continue with",
+    continueWithTrial: "Continue with Trial",
+    customerIdCopied: "Customer ID copied to clipboard",
+    customerIdHelp:
+      "An optional identifier to easier map customers to your <systems>internal systems</systems>.",
+    customerIdOptional: "Customer ID (optional)",
+    customerUnlinkedSuccess: "Successfully unlinked {name} ({domain})",
+    deny: "Deny",
+    domainHelp: "The domain associated with this customer account.",
+    domainLabel: "Domain",
+    editCustomer: "Edit Customer",
+    grantAccessConfirmDescription:
+      "Are you sure you want to grant access? This action cannot be undone.",
+    grantAccessTitle: "Grant access to distributor?",
+    invalidDomainError: "Please enter a valid domain, e.g. netbird.io",
+    noCustomersYet:
+      "It looks like you don't have any customers yet. Add a new customer to get started.",
+    notDecidedYet: "Haven't decided for a plan yet?",
+    planForCustomer: "NetBird Plan for {name}",
+    pricingAndPlans: "Pricing & Plans",
+    requestAccountAccess: "Request Account Access",
+    requestDescription:
+      "Granting access allows the distributor to manage billing and subscription for your account.",
+    requestHeading: "A distributor is requesting access to your account",
+    searchCustomersPlaceholder: "Search by name, domain or id...",
+    selectPlanForCustomerDescription: "Select the plan that best fits your customer's needs.",
+    tabGeneral: "General",
+    tenantsColumn: "Tenants",
+    unlinkCustomerTitle: "Unlink '{name}'?",
+    unlinkingCustomer: "Unlinking {name}...",
+    unlinkingCustomerTitle: "Unlinking {name}",
+    updateCustomerTitle: "Update {name}",
   },
   signInDomains: {
     title: "Sign-in Domains",
@@ -4833,6 +5058,9 @@ export default {
     txtValueCopyText: "TXT Value",
     hostLabel: "Host",
     valueLabel: "Value",
+    domainColumn: "Domain",
+    noDomainsDescription:
+      "Add a domain, then verify ownership with a DNS record to start matching users to this account.",
   },
   trafficEvents: {
     updatingTrafficEventsSetting: "Updating traffic events setting...",
@@ -4881,6 +5109,27 @@ export default {
     peerTabDisabledDescription:
       "It looks like you don't have any traffic events. To start receiving traffic events, you need to enable it in your account settings.",
     searchPlaceholder: "Search by ip, port, peer or resource...",
+    combinedFilterLabel: "Connection {type} {direction}",
+    enableTrafficEventsHelp:
+      "Enable traffic events for all peers. This requires NetBird client v0.39 or higher.",
+    enableTrafficReportingHelp:
+      "Traffic reporting is always enabled in userspace, and this setting only applies to kernel. If enabled, network packets and their size will be counted and reported.",
+    experimentalDescription:
+      "Traffic events is an experimental feature. Functionality and behavior may evolve, including changes to how data is collected or reported. Traffic events data retention is limited to 48 hours and capped at a maximum of 50,000 events.",
+    experimentalHeading: "Experimental",
+    filterBlocked: "blocked",
+    filterStarted: "started",
+    filterStopped: "stopped",
+    filterSuffix: " Filter(s)",
+    limitToGroupsHelp:
+      "Select peer groups for which traffic events will be logged. <br />If no group is selected, logging applies to all peers.",
+    reportingDisabled: "Traffic reporting successfully disabled.",
+    reportingEnabled: "Traffic reporting successfully enabled.",
+    saveGroups: "Save Groups",
+    searchFiltersPlaceholder: "Search filters...",
+    selectGroupsPlaceholder: "Select groups to log traffic events for...",
+    settingDisabled: "Traffic events successfully disabled.",
+    settingEnabled: "Traffic events successfully enabled.",
   },
   cloudMfa: {
     title: "Multi-Factor Authentication (MFA)",
@@ -4890,9 +5139,41 @@ export default {
     resettingMfa: "Resetting MFA for user...",
     resetMfaDescription:
       "Are you sure you want to reset the current MFA methods for this user? The user will be prompted to set up MFA again on their next login.",
+    activate: "Activate",
+    active: "Active",
+    enableMfaDescription: "Enable NetBird MFA if not configured in your IdP",
+    mfaTooltip:
+      "NetBird MFA is primarily intended for users who log in with email and password. You may not need NetBird MFA if your SSO provider (e.g., Google, Microsoft) already has MFA enabled.",
+    netBirdMfa: "NetBird MFA",
+    notEnrolled: "Not Enrolled",
+    resetMfa: "Reset MFA",
+    resetMfaTitle: "Reset Multi-factor Authentication?",
   },
   agentNetworkLabels: {
     agentNetworkLabel: "Agent Network",
+    accessLogsTab: "Access Logs",
+    agentNetworkEnabled: "Agent Network enabled for your account.",
+    clustersDescriptionDefault:
+      "Proxy clusters route inbound traffic to your services. Shared clusters are run by the platform; account clusters (self-hosted) run on your own infrastructure.",
+    clustersDescriptionFocused:
+      "Proxy clusters route your agents' traffic to AI providers and run on your own infrastructure. Add multiple clusters to scale your environment.",
+    configurationPage: "Configuration",
+    connectAgentDescription:
+      "Point your agent at the NetBird endpoint as its base URL. No provider API key is required on the client. <br />NetBird authenticates you through your identity provider and authorizes each request against your access policies.",
+    connectAgentTitle: "Connect Your Agent",
+    enablingAgentNetwork: "Enabling Agent Network...",
+    enablingFocusedView: "Enabling Agent Network focused view...",
+    focusedViewEnabled: "Agent Network focused view enabled for your account.",
+    globalLimitsDescription:
+      "Account-wide caps on token usage and spend, applied across every policy. Scope a limit to specific groups or users, or leave it account-wide.",
+    globalLimitsTab: "Global Limits",
+    logCollectionTab: "Log Collection",
+    policiesDescription:
+      "Bind IdP groups to providers: Engineering gets Claude, Finance doesn't. Enforce token limits, budgets, and guardrails.",
+    providersAndModels: "Your Providers & Models",
+    usageAndLogsDescription:
+      "Per-request audit with real caller identity, cost attribution, and budget controls.",
+    usageTab: "Usage",
   },
   instanceSetup: {
     genericError: "An error occurred. Please try again.",
@@ -4911,6 +5192,28 @@ export default {
     oneSpecialCharacter: "One special character (!@#$%^&*)",
     confirmPassword: "Confirm Password",
     passwordsDoNotMatch: "Passwords do not match",
+    accountCreatedDescription:
+      "Your account has been created successfully. You can now log in with your email and password.",
+    accountCreatedTitle: "Account Created!",
+    creatingAccount: "Creating Account...",
+    failedToAccept: "Failed to accept invite",
+    goToLogin: "Go to Login",
+    invalidInviteDescription:
+      "This invite link is invalid or has expired. Please contact your administrator to receive a new invitation.",
+    invalidInviteTitle: "Invalid Invite",
+    invalidOrExpired: "Invalid or expired invite link",
+    inviteExpiredDescription:
+      "This invite link has expired. Please contact your administrator to receive a new invitation.",
+    inviteExpiredTitle: "Invite Expired",
+    inviteExpiresOn: "Invite expires on {date}",
+    noTokenError: "No invite token provided",
+    tooManyAttempts: "Too many attempts. Please wait a moment and try again.",
+    tooManyRequestsDescription:
+      "You've made too many requests. Please wait a moment and try again.",
+    tooManyRequestsTitle: "Too Many Requests",
+    welcomeDescription:
+      "You've been invited by <name>{inviter}</name> to join the network. Set your password to complete your account setup.",
+    welcomeTitle: "Welcome to NetBird",
   },
   agentNetwork: {
     saveAnyway: "Save anyway",
@@ -6163,5 +6466,135 @@ export default {
   planTier: {
     daysLeft: "{count, plural, one {# day left} other {# days left}}",
     trialExpired: "Trial has expired",
+  },
+  remoteAccess: {
+    rdpCertificate: "RDP Certificate",
+    certificateChangedWarning:
+      "Warning! Certificate has changed. Only proceed if you trust this connection.",
+    certificateDetails: "Certificate Details",
+    certificateUnverifiedHelp:
+      "Certificated could not be verified by a trusted authority. Review the certificate information before proceeding with the connection.",
+    alwaysTrustIssuer:
+      "Always trust \"<bold>{issuer}</bold>\" when connecting to \"<bold>{hostname}</bold>\"",
+    acceptAndContinue: "Accept & Continue",
+    notAvailable: "N/A",
+    issuer: "Issuer",
+    subject: "Subject",
+    validFrom: "Valid From",
+    validTo: "Valid To",
+    keySize: "Key Size",
+    serialNumber: "Serial Number",
+    fingerprint: "Fingerprint",
+    bits: "{size} bits",
+    connect: "Connect",
+    port: "Port",
+    usernameCannotBeEmpty: "Username cannot be empty",
+    portRangeError: "Port must be a number between 1 and 65535",
+    connectToPeerViaRdp: "Connect to {ip} via RDP",
+    connectToPeerViaSsh: "Connect to {ip} via SSH",
+    rdpCredentialsHelp:
+      "Enter the credentials required to authenticate with the remote host. For domain accounts, use DOMAIN\\username or username@domain format.",
+    rdpUsernamePlaceholder: "Administrator or DOMAIN\\username",
+    enterPasswordPlaceholder: "Enter password",
+    rdpPortHelp: "Specify the RDP port for your remote connection.",
+    sshCredentialsHelp:
+      "The username and port you will use to connect to the remote host.",
+    connectingTo: "Connecting to {target}...",
+    disconnectedFrom: "Disconnected from {target}",
+    netBirdClientError: "NetBird Client Error",
+    netBirdConnectionError: "NetBird Connection Error",
+    peerUnavailable:
+      "This peer may have been deleted, or you may not have permission to view it.",
+    rdpConnectionError: "RDP Connection Error",
+    rdpError: "RDP Error",
+    reconnect: "Reconnect",
+    startingSshSession: "Starting ssh session...",
+  },
+  components: {
+    noUsersMatchingSearch: "There are no users matching your search.",
+    includeAllUsers: "Include all users",
+    searchUser: "Search user...",
+    noUsersAvailableToSelect: "No users available to select.",
+    noMatchingResults: "No matching results.",
+    usersTab: "Users",
+    noGroupsContainResources: "There are no groups that contain resources yet.",
+    groupAlreadyRoutingPeer:
+      "This group is already part of the routing peer and can not be used for the access control groups.",
+  },
+  announcements: {
+    mspHuntressText: "Huntress now integrates with NetBird",
+    mspTagNew: "New",
+  },
+  billingProvider: {
+    downgrade: "Downgrade",
+    downgradeToPlan: "Downgrade to {plan}?",
+    goToPlansAndBilling: "Go to Plans & Billing",
+    netBirdSubscription: "NetBird Subscription",
+    noticeTag: "Notice",
+    planTransitionNotice:
+      "The transition to your new plan will take effect immediately. Charges for the new plan will be incurred from this point forward.",
+    subscribedToPlan: "Successfully subscribed to the {plan} plan",
+    subscribingViaAws: "Subscribing to NetBird via AWS Marketplace...",
+    subscriptionUpdated: "Your subscription has been successfully updated.",
+    trialExpiresText:
+      "Your trial is ending soon. Need more time? Contact us to extend your trial.",
+    trialTag: "Trial",
+    updateSubscriptionTitle: "Update Subscription",
+    updatingSubscription: "Updating your subscription...",
+    upgrade: "Upgrade",
+    upgradeToPlan: "Upgrade to {plan}?",
+    usageLimitText:
+      "You've reached your usage limits. For extended features and higher limits, please consider upgrading your plan.",
+  },
+  dialog: {
+    confirmDefaultDescription:
+      "Are you sure you want to continue? This action cannot be undone.",
+    confirmation: "Confirmation",
+  },
+  peerActions: {
+    disablingSshAccess: "Disabling SSH Access...",
+    enablingSshAccess: "Enabling SSH Access...",
+    sshDisabled: "SSH Access successfully disabled",
+    sshEnabled: "SSH Access successfully enabled",
+  },
+  reverseProxyToasts: {
+    addingTarget: "Adding target...",
+    creatingService: "Creating service...",
+    deleteDomainDescription:
+      "Are you sure you want to delete this domain? This action cannot be undone.",
+    deleteOnlyTargetDescription:
+      "This is the only target for this service. Deleting it will remove the entire service. This action cannot be undone.",
+    deleteProxyDescription:
+      "Are you sure you want to delete this reverse proxy? This action cannot be undone.",
+    deleteTargetDescription:
+      "Are you sure you want to delete this target? This action cannot be undone.",
+    deleteTargetTitle: "Delete target?",
+    deleteTitle: "Delete '{domain}'?",
+    deletingDomain: "Deleting domain...",
+    deletingProxy: "Deleting reverse proxy...",
+    deletingService: "Deleting service...",
+    deletingTarget: "Deleting target...",
+    disablingProxy: "Disabling reverse proxy...",
+    disablingTarget: "Disabling target...",
+    domainAddedSuccess: "Domain successfully added",
+    domainDeletedSuccess: "Domain was successfully deleted",
+    domainValidationStarted: "Domain validation started",
+    domainValidationTitle: "Domain Validation",
+    enablingProxy: "Enabling reverse proxy...",
+    enablingTarget: "Enabling target...",
+    proxyDeletedSuccess: "Reverse proxy was successfully deleted",
+    proxyDisabledSuccess: "Reverse proxy disabled",
+    proxyEnabledSuccess: "Reverse proxy enabled",
+    serviceCreatedSuccess: "Service was successfully created",
+    serviceDeletedSuccess: "Service was successfully deleted",
+    serviceUpdatedSuccess: "Service was successfully updated",
+    targetAddedSuccess: "Target added successfully",
+    targetDeletedSuccess: "Target was successfully deleted",
+    targetDisabledSuccess: "Target disabled",
+    targetEnabledSuccess: "Target enabled",
+    targetUpdatedSuccess: "Target updated successfully",
+    updatingService: "Updating service...",
+    updatingTarget: "Updating target...",
+    validatingDomain: "Validating domain...",
   },
 };

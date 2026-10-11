@@ -1,5 +1,6 @@
 import { notify } from "@components/Notification";
 import { useApiCall } from "@utils/api";
+import { useTranslations } from "next-intl";
 import React from "react";
 import { useSWRConfig } from "swr";
 import { Route } from "@/interfaces/Route";
@@ -28,6 +29,8 @@ const RoutesContext = React.createContext(
 export default function RoutesProvider({ children }: Readonly<Props>) {
   const routeRequest = useApiCall<Route>("/routes", true);
   const { mutate } = useSWRConfig();
+  const t = useTranslations("routes");
+  const tCommon = useTranslations("common");
 
   const updateRoute = async (
     route: Route,
@@ -39,8 +42,8 @@ export default function RoutesProvider({ children }: Readonly<Props>) {
     const hasDomains = route.domains ? route.domains.length > 0 : false;
 
     notify({
-      title: "Network " + route.network_id + "-" + route.network,
-      description: message ?? "The network route was successfully updated",
+      title: `${tCommon("network")} ${route.network_id}-${route.network}`,
+      description: message ?? t("routeUpdatedSuccess"),
       promise: routeRequest
         .put(
           {
@@ -69,7 +72,7 @@ export default function RoutesProvider({ children }: Readonly<Props>) {
           mutate("/groups");
           onSuccess && onSuccess(route);
         }),
-      loadingMessage: "Updating route...",
+      loadingMessage: t("updatingRoute"),
     });
   };
 
@@ -79,8 +82,8 @@ export default function RoutesProvider({ children }: Readonly<Props>) {
     message?: string,
   ) => {
     notify({
-      title: "Network " + route.network_id + "-" + route.network,
-      description: message ?? "The network route was successfully created",
+      title: `${tCommon("network")} ${route.network_id}-${route.network}`,
+      description: message ?? t("routeCreatedSuccess"),
       promise: routeRequest
         .post({
           network_id: route.network_id,
@@ -102,7 +105,7 @@ export default function RoutesProvider({ children }: Readonly<Props>) {
           mutate("/groups");
           onSuccess && onSuccess(route);
         }),
-      loadingMessage: "Creating route...",
+      loadingMessage: t("creatingRoute"),
     });
   };
 

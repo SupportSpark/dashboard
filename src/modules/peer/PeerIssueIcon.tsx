@@ -1,5 +1,6 @@
 import FullTooltip from "@components/FullTooltip";
 import { AlertTriangle } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { PeerDisapprovalReason } from "@/cloud/edr/PeerDisapprovalReason";
 import { useBypassedPeers } from "@/cloud/edr/useBypass";
@@ -19,6 +20,7 @@ import { useIntegrations } from "@/modules/integrations/edr/useIntegrations";
 //
 // Priority: bypassed → login_expired → non-compliant → approval_required.
 export const usePeerIssueIcon = (peer: Peer): React.ReactNode | null => {
+  const t = useTranslations("peers");
   const { isAnyIntegrationEnabled, activeIntegrationName } = useIntegrations();
   const { isBypassed: checkBypassed } = useBypassedPeers();
   const isBypassed = peer.id ? checkBypassed(peer.id) : false;
@@ -30,10 +32,7 @@ export const usePeerIssueIcon = (peer: Peer): React.ReactNode | null => {
       <FullTooltip
         interactive={false}
         content={
-          <div className={"text-xs max-w-xs"}>
-            This peer has compliance bypassed by an administrator. The bypass
-            will be automatically removed when the device becomes compliant.
-          </div>
+          <div className={"text-xs max-w-xs"}>{t("bypassedIssueTooltip")}</div>
         }
       >
         <AlertTriangle
@@ -50,8 +49,7 @@ export const usePeerIssueIcon = (peer: Peer): React.ReactNode | null => {
         interactive={false}
         content={
           <div className={"text-xs max-w-xs"}>
-            This peer&apos;s login has expired. Re-authenticate from the
-            NetBird client on the device to bring it back online.
+            {t("loginExpiredIssueTooltip")}
           </div>
         }
       >
@@ -71,8 +69,9 @@ export const usePeerIssueIcon = (peer: Peer): React.ReactNode | null => {
           content={
             <div className={"max-w-xs text-xs"}>
               <div>
-                This peer is not compliant with {activeIntegrationName} and
-                cannot connect until compliance is restored or bypassed.
+                {t("notCompliantIssueTooltip", {
+                  integrationName: activeIntegrationName,
+                })}
               </div>
               <PeerDisapprovalReason peer={peer} />
             </div>
@@ -90,8 +89,7 @@ export const usePeerIssueIcon = (peer: Peer): React.ReactNode | null => {
         interactive={false}
         content={
           <div className={"text-xs max-w-xs"}>
-            This peer needs admin approval before it can connect. Approve it
-            from the row&apos;s actions menu.
+            {t("approvalRequiredIssueTooltip")}
           </div>
         }
       >

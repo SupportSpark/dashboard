@@ -95,6 +95,8 @@ export const AssignGroupToPeerModalContent = ({
 }: ContentProps) => {
   const t = useTranslations("common");
   const tassign = useTranslations("common");
+  const tTable = useTranslations("table");
+  const tGroups = useTranslations("groups");
   const resolvedButtonText = buttonText ?? tassign("confirmChanges");
   const { data: peers, isLoading } = useFetchApi<Peer[]>("/peers");
   const { users } = useUsers();
@@ -186,14 +188,14 @@ export const AssignGroupToPeerModalContent = ({
     }
     notify({
       title: tassign("savingChanges"),
-      description: `${group?.name || "Group"} was successfully saved.`,
+      description: tGroups("groupUpdated", { name: group?.name || "" }),
       promise: request()
         .then((g: Group) => {
           mutate("/groups");
           onSuccess && onSuccess(g);
         })
         .catch(() => {}),
-      loadingMessage: "Updating group...",
+      loadingMessage: tGroups("groupUpdating"),
     });
   };
 
@@ -256,8 +258,8 @@ export const AssignGroupToPeerModalContent = ({
             }
             description={
               isAllGroup
-                ? "View assigned peers for this group"
-                : "Manage assigned peers for this group"
+                ? tGroups("viewAssignedPeers")
+                : tGroups("manageAssignedPeers")
             }
             color={"blue"}
           />
@@ -270,17 +272,17 @@ export const AssignGroupToPeerModalContent = ({
           rowSelection={selectedRows}
           setRowSelection={setSelectedRows}
           onRowClick={(row) => row.toggleSelected()}
-          text={"Peers"}
+          text={t("peers")}
           resetRowSelectionOnSearch={false}
           uniqueKey={group?.id ?? group?.name}
           sorting={sorting}
           keepStateInLocalStorage={false}
           setSorting={setSorting}
-          columns={PeersTableColumns(t)}
+          columns={PeersTableColumns(t, tTable)}
           data={data}
           isLoading={isLoading && !initialPeersSet}
           tableCellClassName={"!py-1 scale-[95%]"}
-          searchPlaceholder={"Search by name, IP or owner..."}
+          searchPlaceholder={tGroups("searchPeersByNameIpOrOwner")}
           searchClassName={"w-[350px]"}
           minimal={false}
           columnVisibility={{
@@ -296,10 +298,8 @@ export const AssignGroupToPeerModalContent = ({
           getStartedCard={
             <NoResultsCard
               className={"mb-8"}
-              title={"You don't have any peers to assign"}
-              description={
-                "In order to assign peers to this group you need to have at least one peer that is not already part of this group."
-              }
+              title={tGroups("noPeersToAssign")}
+              description={tGroups("noPeersToAssignDescription")}
               icon={<PeerIcon className={"fill-nb-gray-200"} size={14} />}
             />
           }
@@ -308,10 +308,14 @@ export const AssignGroupToPeerModalContent = ({
               <div className={"text-sm"}>
                 {Object.keys(selectedRows).length > 0 && (
                   <div className={"text-nb-gray-200"}>
-                    <span className={"text-netbird font-medium"}>
-                      {Object.keys(selectedRows).length}
-                    </span>{" "}
-                    Peer(s) selected
+                    {tGroups.rich("peersSelected", {
+                      count: Object.keys(selectedRows).length,
+                      count2: (chunks) => (
+                        <span className={"text-netbird font-medium"}>
+                          {chunks}
+                        </span>
+                      ),
+                    })}
                   </div>
                 )}
               </div>
@@ -345,6 +349,7 @@ export const AssignGroupToPeerModalContent = ({
 
 export function PeersTableColumns(
   t: (key: string) => string,
+  tTable: (key: string) => string = t,
 ): ColumnDef<Peer>[] {
   return [
     {
@@ -354,7 +359,7 @@ export function PeersTableColumns(
           <Checkbox
             checked={table.getIsAllPageRowsSelected()}
             onCheckedChange={(value) => table.toggleAllRowsSelected(!!value)}
-            aria-label={t("selectAll")}
+            aria-label={tTable("selectAll")}
           />
         </div>
       ),
@@ -367,7 +372,7 @@ export function PeersTableColumns(
               variant={"tableCell"}
               checked={row.getIsSelected()}
               onCheckedChange={(value) => row.toggleSelected(!!value)}
-              aria-label={t("selectRow")}
+              aria-label={tTable("selectRow")}
             />
           </div>
         );
@@ -376,7 +381,7 @@ export function PeersTableColumns(
     {
       accessorKey: "name",
       header: ({ column }) => {
-        return <DataTableHeader column={column}>Name</DataTableHeader>;
+        return <DataTableHeader column={column}>{t("name")}</DataTableHeader>;
       },
       sortingFn: "text",
       cell: ({ row }) => (
@@ -409,7 +414,7 @@ export function PeersTableColumns(
     {
       accessorKey: "dns_label",
       header: ({ column }) => {
-        return <DataTableHeader column={column}>Address</DataTableHeader>;
+        return <DataTableHeader column={column}>{t("address")}</DataTableHeader>;
       },
       cell: ({ row }) => <PeerAddressCell peer={row.original} />,
     },

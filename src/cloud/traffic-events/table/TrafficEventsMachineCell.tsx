@@ -250,6 +250,7 @@ export const MachineCard = ({
   onClick,
   showUser = false,
 }: MachineCardProps) => {
+  const tCommon = useTranslations("common");
   const isPeer = machine.type === TrafficEventMachineType.PEER;
 
   return (
@@ -297,7 +298,7 @@ export const MachineCard = ({
           }
         >
           <TextWithTooltip
-            text={machine.name || "Unknown"}
+            text={machine.name || tCommon("unknown")}
             maxChars={20}
             hideTooltip={true}
           />

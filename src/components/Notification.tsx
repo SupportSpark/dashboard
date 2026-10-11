@@ -4,6 +4,7 @@ import { cn } from "@utils/helpers";
 import classNames from "classnames";
 import { motion } from "framer-motion";
 import { CheckIcon, CopyIcon, Loader2, XIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -42,6 +43,7 @@ export default function Notification<T>({
   errorMessages,
   requestId: requestIdProp,
 }: NotificationProps<T>) {
+  const t = useTranslations("common");
   const [error, setError] = useState("");
   const [requestId, setRequestId] = useState(requestIdProp);
   const [copied, setCopied] = useState(false);
@@ -123,6 +125,12 @@ export default function Notification<T>({
     };
   }, [readyToDismiss, toastId, startTimer, pauseTimer]);
 
+  // The promise effect below runs once on mount, so it reads the fallback
+  // message through a ref — that keeps `t` out of its dependency array (which
+  // would re-run the promise) while still using the localized text.
+  const fallbackErrorMessageRef = useRef(t("somethingWentWrong"));
+  fallbackErrorMessageRef.current = t("somethingWentWrong");
+
   useEffect(() => {
     // Run the promise
     if (promise) {
@@ -137,7 +145,7 @@ export default function Notification<T>({
         })
         .catch((e) => {
           const err = e as ErrorResponse;
-          let message = err.message || "Something went wrong...";
+          let message = err.message || fallbackErrorMessageRef.current;
           message = message.charAt(0).toUpperCase() + message.slice(1);
           const code: number = err.code || 418;
 
@@ -226,13 +234,13 @@ export default function Notification<T>({
               <button
                 type={"button"}
                 data-testid={"notification-request-id"}
-                title={"Copy request ID"}
+                title={t("copyRequestId")}
                 onClick={copyRequestId}
                 className={
                   "group/req flex items-center gap-1.5 mt-1 text-[11px] text-gray-500 dark:text-nb-gray-400 hover:text-gray-700 dark:hover:text-nb-gray-200 cursor-pointer text-left"
                 }
               >
-                <span>Request ID:</span>
+                <span>{t("requestId")}:</span>
                 <span className={"font-mono select-all"}>{requestId}</span>
                 {copied ? (
                   <CheckIcon size={12} className={"text-green-500 shrink-0"} />

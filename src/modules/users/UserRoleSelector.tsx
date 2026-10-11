@@ -53,13 +53,19 @@ type IconComponent = React.ComponentType<{
   className?: string;
 }>;
 
-export const userRoleCategoryValues: {
+export const userRoleCategoryValues: (
+  t: ReturnType<typeof useTranslations>,
+) => {
   value: UserRoleCategory;
   name: string;
   icon: IconComponent;
-}[] = [
-  { value: "general", name: "General", icon: UsersIcon },
-  { value: "agent-network", name: "Agent Network", icon: AgentNetworkIcon },
+}[] = (t) => [
+  { value: "general", name: t("categoryGeneral"), icon: UsersIcon },
+  {
+    value: "agent-network",
+    name: t("categoryAgentNetwork"),
+    icon: AgentNetworkIcon,
+  },
 ];
 
 export const getUserRoles: (
@@ -75,57 +81,57 @@ export const getUserRoles: (
   description: string;
 }[] = (t) => [
   {
-    name: "Owner",
+    name: t("owner"),
     value: Role.Owner,
     icon: NetBirdIcon,
     category: "general",
     description: t("roleOwnerDescription"),
   },
   {
-    name: "Admin",
+    name: t("admin"),
     value: Role.Admin,
     icon: Cog,
     category: "general",
     description: t("roleAdminDescription"),
   },
   {
-    name: "Network Admin",
+    name: t("networkAdmin"),
     value: Role.NetworkAdmin,
     icon: NetworkIcon,
     category: "general",
     description: t("roleNetworkAdminDescription"),
   },
   {
-    name: "Billing Admin",
+    name: t("billingAdmin"),
     value: Role.BillingAdmin,
     icon: CreditCard,
     category: "general",
     description: t("roleBillingAdminDescription"),
   },
   {
-    name: "Auditor",
+    name: t("auditor"),
     value: Role.Auditor,
     icon: EyeIcon,
     category: "general",
     description: t("roleAuditorDescription"),
   },
   {
-    name: "User",
+    name: t("user"),
     value: Role.User,
     icon: User2,
     category: "general",
     description: t("roleUserDescription"),
   },
   {
-    name: "Agent Network Admin",
-    shortName: "Admin",
+    name: t("agentNetworkAdmin"),
+    shortName: t("admin"),
     value: Role.AgentNetworkAdmin,
     icon: AgentNetworkIcon,
     category: "agent-network",
     description: t("roleAgentNetworkAdminDescription"),
   },
   {
-    name: "Usage Viewer",
+    name: t("usageViewer"),
     value: Role.UsageViewer,
     icon: GaugeIcon,
     category: "agent-network",
@@ -279,7 +285,7 @@ export function UserRoleSelector({
       return true;
     };
 
-    return userRoleCategoryValues.map((category) => ({
+    return userRoleCategoryValues(t).map((category) => ({
       ...category,
       roles: getUserRoles(t).filter(
         (role) => role.category === category.value && isVisible(role.value),
@@ -291,6 +297,7 @@ export function UserRoleSelector({
       return category.roles.length > 0;
     });
   }, [
+    t,
     isOwner,
     hideOwner,
     hideBillingAdmin,
@@ -301,13 +308,13 @@ export function UserRoleSelector({
   // A single group is just a list — the tab row would only add noise.
   const showTabs = categories.length > 1;
   const [tab, setTab] = useState<string>(
-    selectedRole?.category ?? userRoleCategoryValues[0].value,
+    selectedRole?.category ?? userRoleCategoryValues(t)[0].value,
   );
   // Fall back to the first group when the remembered tab is not available, e.g.
   // when the role was cleared or a group got filtered out.
   const activeTab = categories.some((category) => category.value === tab)
     ? tab
-    : (categories[0]?.value ?? userRoleCategoryValues[0].value);
+    : (categories[0]?.value ?? userRoleCategoryValues(t)[0].value);
 
   return (
     <Popover

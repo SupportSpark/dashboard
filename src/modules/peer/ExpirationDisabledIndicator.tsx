@@ -1,5 +1,6 @@
 import FullTooltip from "@components/FullTooltip";
 import { TimerResetIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { Peer } from "@/interfaces/Peer";
 
@@ -7,11 +8,13 @@ type Props = {
   peer: Peer;
 };
 export const ExpirationDisabledIndicator = ({ peer }: Props) => {
+  const t = useTranslations("peers");
+
   if (peer.login_expiration_enabled) {
     return null;
   }
 
-  const tooltipContent = "Expiration is disabled for this peer.";
+  const tooltipContent = t("expirationDisabledPeerTooltip");
 
   return (
     <FullTooltip

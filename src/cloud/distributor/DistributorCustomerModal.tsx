@@ -75,6 +75,7 @@ const CustomerModalContent = ({
   onCreated,
 }: Omit<Props, "open">) => {
   const td = useTranslations("distributor");
+  const tCommon = useTranslations("common");
   const { mutate } = useSWRConfig();
   const customerRequest = useApiCall<DistributorCustomer>(
     "/integrations/msp/reseller/msps",
@@ -91,10 +92,10 @@ const CustomerModalContent = ({
   const domainInputError = useMemo(() => {
     if (domain === "") return "";
     if (!validator.isValidDomain(domain)) {
-      return "Please enter a valid domain, e.g. netbird.io";
+      return td("invalidDomainError");
     }
     return "";
-  }, [domain]);
+  }, [domain, td]);
 
   const createCustomer = async () => {
     const body: Record<string, string> = {
@@ -110,7 +111,7 @@ const CustomerModalContent = ({
     });
 
     notify({
-      title: `Add ${domain} customer`,
+      title: td("addDomainCustomer", { domain }),
       description: td("customerCreated"),
       preventSuccessToast: true,
       loadingMessage: td("creatingCustomer"),
@@ -128,7 +129,7 @@ const CustomerModalContent = ({
     });
 
     notify({
-      title: `Update ${customer.name}`,
+      title: td("updateCustomerTitle", { name: customer.name }),
       description: td("customerUpdated"),
       loadingMessage: td("updatingCustomer"),
       promise,
@@ -150,11 +151,11 @@ const CustomerModalContent = ({
     <ModalContent maxWidthClass={cn(ModalWidth[tab] || ModalWidth.general)}>
       <ModalHeader
         icon={<UserIcon size={18} />}
-        title={customer ? "Edit Customer" : "Add Customer"}
+        title={customer ? td("editCustomer") : td("addCustomer")}
         description={
           customer
             ? `${customer.name} (${customer.domain})`
-            : "Add a new customer account to your distributor organization."
+            : td("addCustomerDescription")
         }
         color={"netbird"}
       />
@@ -168,7 +169,7 @@ const CustomerModalContent = ({
                   "text-nb-gray-500 group-data-[state=active]/trigger:text-netbird transition-all"
                 }
               />
-              General
+              {td("tabGeneral")}
             </TabsTrigger>
             {isActive && (
               <TabsTrigger value={"plan"}>
@@ -178,7 +179,7 @@ const CustomerModalContent = ({
                     "text-nb-gray-500 group-data-[state=active]/trigger:text-netbird transition-all"
                   }
                 />
-                Plan
+                {td("plan")}
               </TabsTrigger>
             )}
           </TabsList>
@@ -186,9 +187,7 @@ const CustomerModalContent = ({
             <div className={"flex flex-col gap-6"}>
               <div>
                 <Label>{td("company")}</Label>
-                <HelpText>
-                  Enter the name of your customers company.
-                </HelpText>
+                <HelpText>{td("companyNameHelp")}</HelpText>
                 <Input
                   autoFocus={true}
                   tabIndex={0}
@@ -199,10 +198,8 @@ const CustomerModalContent = ({
                 />
               </div>
               <div>
-                <Label>Domain</Label>
-                <HelpText>
-                  The domain associated with this customer account.
-                </HelpText>
+                <Label>{td("domainLabel")}</Label>
+                <HelpText>{td("domainHelp")}</HelpText>
                 <Input
                   customPrefix={<GlobeIcon size={16} />}
                   tabIndex={0}
@@ -215,10 +212,13 @@ const CustomerModalContent = ({
               </div>
 
               <div>
-                <Label>Customer ID (optional)</Label>
+                <Label>{td("customerIdOptional")}</Label>
                 <HelpText>
-                  An optional identifier to easier map customers to your{" "}
-                  <b className="text-white">internal systems</b>.
+                  {td.rich("customerIdHelp", {
+                    systems: (chunks) => (
+                      <b className="text-white">{chunks}</b>
+                    ),
+                  })}
                 </HelpText>
                 <Input
                   tabIndex={0}
@@ -243,9 +243,7 @@ const CustomerModalContent = ({
             <div className={"flex flex-col gap-6"}>
               <div>
                 <Label>{td("company")}</Label>
-                <HelpText>
-                  Enter the name of your customers company.
-                </HelpText>
+                <HelpText>{td("companyNameHelp")}</HelpText>
                 <Input
                   autoFocus={true}
                   tabIndex={0}
@@ -256,10 +254,8 @@ const CustomerModalContent = ({
                 />
               </div>
               <div>
-                <Label>Domain</Label>
-                <HelpText>
-                  The domain associated with this customer account.
-                </HelpText>
+                <Label>{td("domainLabel")}</Label>
+                <HelpText>{td("domainHelp")}</HelpText>
                 <Input
                   customPrefix={<GlobeIcon size={16} />}
                   tabIndex={0}
@@ -271,10 +267,13 @@ const CustomerModalContent = ({
                 />
               </div>
               <div>
-                <Label>Customer ID (optional)</Label>
+                <Label>{td("customerIdOptional")}</Label>
                 <HelpText>
-                  An optional identifier to easier map customers to your{" "}
-                  <b className="text-white">internal systems</b>.
+                  {td.rich("customerIdHelp", {
+                    systems: (chunks) => (
+                      <b className="text-white">{chunks}</b>
+                    ),
+                  })}
                 </HelpText>
                 <Input
                   tabIndex={0}
@@ -293,12 +292,12 @@ const CustomerModalContent = ({
           <Paragraph className={"text-sm mt-auto"}>
             {tab === "plan" ? (
               <>
-                Learn more about
+                {tCommon("learnMoreAbout")}
                 <InlineLink
                   href={"https://netbird.io/pricing"}
                   target={"_blank"}
                 >
-                  Pricing & Plans
+                  {td("pricingAndPlans")}
                   <ExternalLinkIcon size={12} />
                 </InlineLink>
               </>
@@ -311,7 +310,7 @@ const CustomerModalContent = ({
           {!customer && (
             <>
               <ModalClose asChild={true}>
-                <Button variant={"secondary"}>Cancel</Button>
+                <Button variant={"secondary"}>{tCommon("cancel")}</Button>
               </ModalClose>
               <Button
                 variant={"primary"}
@@ -319,21 +318,21 @@ const CustomerModalContent = ({
                 disabled={!canCreate}
               >
                 <PlusCircle size={16} />
-                Add Customer
+                {td("addCustomer")}
               </Button>
             </>
           )}
           {customer && (
             <>
               <ModalClose asChild={true}>
-                <Button variant={"secondary"}>Cancel</Button>
+                <Button variant={"secondary"}>{tCommon("cancel")}</Button>
               </ModalClose>
               <Button
                 variant={"primary"}
                 onClick={saveCustomer}
                 disabled={!hasChanges || name === ""}
               >
-                Save
+                {tCommon("save")}
               </Button>
             </>
           )}

@@ -43,6 +43,7 @@ export const RDPCredentialsModal = ({
   loading,
 }: Props) => {
   const tcommon = useTranslations("common");
+  const t = useTranslations("remoteAccess");
   const defaultUsername =
     getOperatingSystem(peer?.os) === OperatingSystem.WINDOWS
       ? "Administrator"
@@ -53,15 +54,15 @@ export const RDPCredentialsModal = ({
   const [port, setPort] = useState("3389");
 
   const userNameError = useMemo(() => {
-    if (username?.length === 0) return "Username cannot be empty";
-  }, [username]);
+    if (username?.length === 0) return t("usernameCannotBeEmpty");
+  }, [t, username]);
 
   const portError = useMemo(() => {
     const portNumber = Number(port);
     const isValid =
       Number.isInteger(portNumber) && portNumber > 0 && portNumber <= 65535;
-    if (!isValid) return "Port must be a number between 1 and 65535";
-  }, [port]);
+    if (!isValid) return t("portRangeError");
+  }, [t, port]);
 
   const hasAnyError = useMemo(() => {
     if (userNameError !== undefined) return true;
@@ -114,7 +115,7 @@ export const RDPCredentialsModal = ({
         <ModalHeader
           icon={<MonitorIcon className={"text-netbird"} size={18} />}
           title={peer.name}
-          description={`Connect to ${peer.ip} via RDP`}
+          description={t("connectToPeerViaRdp", { ip: peer.ip })}
           color={"netbird"}
         />
         <Separator />
@@ -133,20 +134,17 @@ export const RDPCredentialsModal = ({
                   "flex items-center gap-2 text-red-800 font-medium mb-1"
                 }
               >
-                Error
+                {tcommon("error")}
               </div>
               <p className={"text-sm text-red-700"}>{error}</p>
             </div>
           )}
           <div>
             <Label>{tcommon("usernameAndPassword")}</Label>
-            <HelpText>
-              Enter the credentials required to authenticate with the remote
-              host. For domain accounts, use DOMAIN\username or username@domain format.
-            </HelpText>
+            <HelpText>{t("rdpCredentialsHelp")}</HelpText>
             <div className={"flex flex-col gap-2 w-full"}>
               <Input
-                placeholder={"Administrator or DOMAIN\\username"}
+                placeholder={t("rdpUsernamePlaceholder")}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 onKeyDown={handleKeyDown}
@@ -161,7 +159,7 @@ export const RDPCredentialsModal = ({
               />
               <Input
                 value={password}
-                placeholder={"Enter password"}
+                placeholder={t("enterPasswordPlaceholder")}
                 type={"password"}
                 onChange={(e) => setPassword(e.target.value)}
                 onKeyDown={handleKeyDown}
@@ -177,10 +175,8 @@ export const RDPCredentialsModal = ({
             </div>
           </div>
           <div>
-            <Label>Port</Label>
-            <HelpText>
-              Specify the RDP port for your remote connection.
-            </HelpText>
+            <Label>{t("port")}</Label>
+            <HelpText>{t("rdpPortHelp")}</HelpText>
             <Input
               maxWidthClass={""}
               placeholder={"3389"}
@@ -206,7 +202,7 @@ export const RDPCredentialsModal = ({
         <ModalFooter className={"items-center"}>
           <div className={"w-full"}>
             <Paragraph className={"text-sm mt-auto"}>
-              Learn more about
+              {tcommon("learnMoreAbout")}
               <InlineLink href={RDP_DOCS_LINK} target={"_blank"}>
                 RDP
                 <ExternalLinkIcon size={12} />
@@ -221,7 +217,7 @@ export const RDPCredentialsModal = ({
               onClick={handleConnect}
             >
               {loading && <IconLoader2 size={16} className={"animate-spin"} />}
-              Connect
+              {t("connect")}
             </Button>
           </div>
         </ModalFooter>

@@ -7,6 +7,7 @@ import { DialogContent } from "@radix-ui/react-dialog";
 import { cn } from "@utils/helpers";
 import { LogOutIcon, MailIcon, PlusIcon } from "lucide-react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
@@ -32,6 +33,8 @@ export const AWSChoosePlan = ({ onSuccess }: Props) => {
     subscribe,
   } = useBilling();
   const { logout } = useLoggedInUser();
+  const t = useTranslations("awsMarketplace");
+  const tCommon = useTranslations("common");
 
   const teamAndBusinessPlans = plans?.filter(
     (plan) =>
@@ -131,9 +134,11 @@ export const AWSChoosePlan = ({ onSuccess }: Props) => {
                       "text-xl my-0 leading-[1.5] mb-2 text-center w-full"
                     }
                   >
-                    Thanks for registering via{" "}
-                    <br className={cn(!hasActiveStripePlan && "hidden")} />
-                    AWS Marketplace!
+                    {t.rich("thanksRegisteringLineBreak", {
+                      br: () => (
+                        <br className={cn(!hasActiveStripePlan && "hidden")} />
+                      ),
+                    })}
                   </h2>
                   <Paragraph
                     className={cn(
@@ -141,17 +146,11 @@ export const AWSChoosePlan = ({ onSuccess }: Props) => {
                     )}
                   >
                     {hasActiveStripePlan ? (
-                      <>
-                        It seems you already have an active subscription with
-                        us. In order to use AWS as a billing provider, please
-                        contact our support team.
-                      </>
+                      <>{t("activeStripePlan")}</>
                     ) : (
                       <>
-                        With our flexible pricing, you are only billed for
-                        active users and active peers through your AWS account.
-                        Please choose the plan that fits your needs. <br />
-                        You can always change your plan later.
+                        {t("flexiblePricing")} <br />
+                        {t("changePlanLater")}
                       </>
                     )}
                   </Paragraph>
@@ -174,8 +173,8 @@ export const AWSChoosePlan = ({ onSuccess }: Props) => {
                               currentSubscription={subscription}
                               plan={plan}
                               buttonText={{
-                                upgrade: "Subscribe to",
-                                downgrade: "Downgrade to",
+                                upgrade: t("subscribeTo"),
+                                downgrade: t("downgradeTo"),
                               }}
                               currency={Currency.USD}
                               isSubscribing={isSubscribing}
@@ -195,7 +194,7 @@ export const AWSChoosePlan = ({ onSuccess }: Props) => {
                       >
                         <Button variant={"primary"} className={"w-full"}>
                           <MailIcon size={15} className={"shrink-0"} />
-                          Get Support
+                          {t("getSupport")}
                         </Button>
                       </a>
                       <Button
@@ -203,7 +202,7 @@ export const AWSChoosePlan = ({ onSuccess }: Props) => {
                         className={"w-full"}
                         onClick={onSuccess}
                       >
-                        Continue to Dashboard
+                        {t("continueDashboard")}
                       </Button>
                     </div>
                   )}

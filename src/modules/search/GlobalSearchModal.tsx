@@ -20,6 +20,7 @@ import * as React from "react";
 import { useMemo } from "react";
 import Skeleton from "react-loading-skeleton";
 import { Network, NetworkResource } from "@/interfaces/Network";
+import { useTranslations } from "next-intl";
 
 type Props = {
   open: boolean;
@@ -359,6 +360,8 @@ const LoadingState = () => {
 };
 
 const KeyboardShortcutsFooter = () => {
+  const t = useTranslations("common");
+  const tNotifications = useTranslations("notifications");
   return (
     <div
       className={
@@ -372,19 +375,19 @@ const KeyboardShortcutsFooter = () => {
         <Kbd variant={"darker"}>
           <ArrowDownIcon size={12} />
         </Kbd>
-        <div className={"ml-1"}>Navigate</div>
+        <div className={"ml-1"}>{t("navigate")}</div>
       </div>
       <div className={"flex items-center gap-1.5"}>
         <Kbd variant={"darker"}>
           <CornerDownLeft size={12} />
         </Kbd>
-        <div className={"ml-1"}>Open</div>
+        <div className={"ml-1"}>{tNotifications("open")}</div>
       </div>
       <div className={"flex items-center gap-1.5"}>
         <Kbd variant={"darker"} className={"text-[0.65rem] font-medium"}>
           esc
         </Kbd>
-        <div className={"ml-1"}>Close</div>
+        <div className={"ml-1"}>{t("close")}</div>
       </div>
     </div>
   );

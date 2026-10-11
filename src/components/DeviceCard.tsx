@@ -1,5 +1,6 @@
 import TruncatedText from "@components/ui/TruncatedText";
 import { cn } from "@utils/helpers";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useMemo } from "react";
 import RoundedFlag from "@/assets/countries/RoundedFlag";
@@ -23,6 +24,7 @@ export const DeviceCard = ({
   address,
   description,
 }: DeviceCardProps) => {
+  const t = useTranslations("common");
   if (!device && !resource) return null;
 
   const descriptionText = useMemo(() => {
@@ -75,7 +77,7 @@ export const DeviceCard = ({
           }
         >
           <TruncatedText
-            text={device?.name || resource?.name || "Unknown"}
+            text={device?.name || resource?.name || t("unknown")}
             maxWidth={"150px"}
             hideTooltip={true}
           />

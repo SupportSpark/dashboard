@@ -30,6 +30,8 @@ export default function InviteAcceptPage() {
 
 function InviteAcceptContent() {
   const tinvite = useTranslations("invite");
+  const tCommon = useTranslations("common");
+  const tAuth = useTranslations("auth");
   const searchParams = useSearchParams();
   const router = useRouter();
   const token = searchParams?.get("token");
@@ -46,7 +48,7 @@ function InviteAcceptContent() {
 
   useEffect(() => {
     if (!token) {
-      setError("No invite token provided");
+      setError(tinvite("noTokenError"));
       setLoading(false);
       return;
     }
@@ -58,15 +60,15 @@ function InviteAcceptContent() {
       })
       .catch((err) => {
         if (err.code === 429) {
-          setError("Too many attempts. Please wait a moment and try again.");
+          setError(tinvite("tooManyAttempts"));
           setIsRateLimited(true);
         } else {
-          setError(err.message || "Invalid or expired invite link");
+          setError(err.message || tinvite("invalidOrExpired"));
           setIsRateLimited(false);
         }
         setLoading(false);
       });
-  }, [token]);
+  }, [token, tinvite]);
 
   const passwordsMatch = password === confirmPassword;
   const hasMinLength = password.length >= 8;
@@ -88,7 +90,7 @@ function InviteAcceptContent() {
       await acceptInvite(token, password);
       setSuccess(true);
     } catch (err: any) {
-      setError(err.message || "Failed to accept invite");
+      setError(err.message || tinvite("failedToAccept"));
     } finally {
       setSubmitting(false);
     }
@@ -114,18 +116,17 @@ function InviteAcceptContent() {
               </div>
             </div>
             <h1 className="text-2xl font-semibold text-white mb-2">
-              Too Many Requests
+              {tinvite("tooManyRequestsTitle")}
             </h1>
             <Paragraph className="text-nb-gray-400 text-base">
-              You&apos;ve made too many requests. Please wait a moment and try
-              again.
+              {tinvite("tooManyRequestsDescription")}
             </Paragraph>
             <Button
               variant="secondary"
               className="mt-6"
               onClick={() => window.location.reload()}
             >
-              Try Again
+              {tCommon("tryAgain")}
             </Button>
           </div>
         </div>
@@ -141,18 +142,17 @@ function InviteAcceptContent() {
             </div>
           </div>
           <h1 className="text-2xl font-semibold text-white mb-2">
-            Invalid Invite
+            {tinvite("invalidInviteTitle")}
           </h1>
           <Paragraph className="text-nb-gray-400 text-base">
-            This invite link is invalid or has expired. Please contact your
-            administrator to receive a new invitation.
+            {tinvite("invalidInviteDescription")}
           </Paragraph>
           <Button
             variant="secondary"
             className="mt-6"
             onClick={() => router.push("/")}
           >
-            Go to Login
+            {tinvite("goToLogin")}
           </Button>
         </div>
       </div>
@@ -169,18 +169,17 @@ function InviteAcceptContent() {
             </div>
           </div>
           <h1 className="text-2xl font-semibold text-white mb-2">
-            Account Created!
+            {tinvite("accountCreatedTitle")}
           </h1>
           <Paragraph className="text-nb-gray-400">
-            Your account has been created successfully. You can now log in with
-            your email and password.
+            {tinvite("accountCreatedDescription")}
           </Paragraph>
           <Button
             variant="primary"
             className="mt-6"
             onClick={() => router.push("/")}
           >
-            Go to Login
+            {tinvite("goToLogin")}
           </Button>
         </div>
       </div>
@@ -197,18 +196,17 @@ function InviteAcceptContent() {
             </div>
           </div>
           <h1 className="text-2xl font-semibold text-white mb-2">
-            Invite Expired
+            {tinvite("inviteExpiredTitle")}
           </h1>
           <Paragraph className="text-nb-gray-400">
-            This invite link has expired. Please contact your administrator to
-            receive a new invitation.
+            {tinvite("inviteExpiredDescription")}
           </Paragraph>
           <Button
             variant="secondary"
             className="mt-6"
             onClick={() => router.push("/")}
           >
-            Go to Login
+            {tinvite("goToLogin")}
           </Button>
         </div>
       </div>
@@ -224,10 +222,17 @@ function InviteAcceptContent() {
 
         <div className="text-center mb-8">
           <h1 className="text-2xl font-semibold text-white mb-2">
-            Welcome to NetBird
+            {tinvite("welcomeTitle")}
           </h1>
           <p className="dark:text-nb-gray-400 text-nb-gray-500 text-base">
-            You&apos;ve been invited by <span className="dark:text-white text-nb-gray-900 font-medium">{inviteInfo.invited_by}</span> to join the network. Set your password to complete your account setup.
+            {tinvite.rich("welcomeDescription", {
+              name: (chunks) => (
+                <span className="dark:text-white text-nb-gray-900 font-medium">
+                  {chunks}
+                </span>
+              ),
+              inviter: inviteInfo.invited_by,
+            })}
           </p>
         </div>
 
@@ -296,13 +301,15 @@ function InviteAcceptContent() {
               className="w-full"
               disabled={!canSubmit}
             >
-              {submitting ? "Creating Account..." : "Create Account"}
+              {submitting ? tinvite("creatingAccount") : tAuth("createAccount")}
             </Button>
           </form>
         </div>
 
         <p className="text-center text-xs text-nb-gray-500">
-          Invite expires on {dayjs(inviteInfo.expires_at).format("D MMMM, YYYY [at] h:mm A")}
+          {tinvite("inviteExpiresOn", {
+            date: dayjs(inviteInfo.expires_at).format("D MMMM, YYYY [at] h:mm A"),
+          })}
         </p>
       </div>
     </div>

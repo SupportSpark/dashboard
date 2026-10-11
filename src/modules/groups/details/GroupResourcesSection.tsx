@@ -23,8 +23,11 @@ import { ResourceEnabledCell } from "@/modules/networks/resources/ResourceEnable
 import { ResourceGroupCell } from "@/modules/networks/resources/ResourceGroupCell";
 import ResourceNameCell from "@/modules/networks/resources/ResourceNameCell";
 import { ResourcePolicyCell } from "@/modules/networks/resources/ResourcePolicyCell";
+import { useTranslations } from "next-intl";
 
-const GroupResourcesColumns: ColumnDef<NetworkResourceWithNetwork>[] = [
+const GroupResourcesColumns = (
+  t: (key: string) => string,
+): ColumnDef<NetworkResourceWithNetwork>[] => [
   {
     id: "id",
     accessorKey: "id",
@@ -34,7 +37,11 @@ const GroupResourcesColumns: ColumnDef<NetworkResourceWithNetwork>[] = [
     id: "name",
     accessorKey: "name",
     header: ({ column }) => {
-      return <DataTableHeader column={column}>Resource</DataTableHeader>;
+      return (
+        <DataTableHeader column={column}>
+          {t("resourceLabel")}
+        </DataTableHeader>
+      );
     },
     cell: ({ row }) => {
       return <ResourceNameCell resource={row.original} />;
@@ -50,7 +57,7 @@ const GroupResourcesColumns: ColumnDef<NetworkResourceWithNetwork>[] = [
     id: "address",
     accessorKey: "address",
     header: ({ column }) => {
-      return <DataTableHeader column={column}>Address</DataTableHeader>;
+      return <DataTableHeader column={column}>{t("address")}</DataTableHeader>;
     },
     cell: ({ row }) => {
       return <ResourceAddressCell resource={row.original} />;
@@ -64,7 +71,7 @@ const GroupResourcesColumns: ColumnDef<NetworkResourceWithNetwork>[] = [
     header: ({ column }) => {
       return (
         <DataTableHeader column={column} sorting={false}>
-          Active
+          {t("active")}
         </DataTableHeader>
       );
     },
@@ -82,7 +89,7 @@ const GroupResourcesColumns: ColumnDef<NetworkResourceWithNetwork>[] = [
       return groups.map((group) => group.name).join(", ");
     },
     header: ({ column }) => {
-      return <DataTableHeader column={column}>Groups</DataTableHeader>;
+      return <DataTableHeader column={column}>{t("groups")}</DataTableHeader>;
     },
     cell: ({ row }) => {
       return <ResourceGroupCell resource={row.original} />;
@@ -92,7 +99,7 @@ const GroupResourcesColumns: ColumnDef<NetworkResourceWithNetwork>[] = [
     id: "policies",
     accessorKey: "id",
     header: ({ column }) => {
-      return <DataTableHeader column={column}>Policies</DataTableHeader>;
+      return <DataTableHeader column={column}>{t("policies")}</DataTableHeader>;
     },
     cell: ({ row }) => {
       return <ResourcePolicyCell resource={row.original} />;
@@ -117,6 +124,9 @@ export const GroupResourcesSection = ({
   resources,
   isLoading = true,
 }: Props) => {
+  const t = useTranslations("common");
+  const tNetworks = useTranslations("networks");
+  const tGroups = useTranslations("groups");
   const [sorting, setSorting] = useState<SortingState>([]);
   const { permission } = usePermissions();
   const router = useRouter();
@@ -145,18 +155,16 @@ export const GroupResourcesSection = ({
           )}
           inset={false}
           tableClassName={"mt-0"}
-          text={"Resources"}
-          columns={GroupResourcesColumns}
+          text={t("resources")}
+          columns={GroupResourcesColumns(t)}
           keepStateInLocalStorage={false}
           data={resources}
-          searchPlaceholder={"Search by name, address or group..."}
+          searchPlaceholder={tNetworks("searchResourcesPlaceholder")}
           getStartedCard={
             <NoResults
               className={"py-4"}
-              title={"This group has no assigned resources"}
-              description={
-                "Assign this group to your resources inside your networks to see them listed here."
-              }
+              title={tNetworks("noAssignedResources")}
+              description={tGroups("noAssignedResourcesDescription")}
               icon={<Layers3Icon size={20} className={"text-nb-gray-300"} />}
             >
               {permission?.networks?.create && (
@@ -166,7 +174,7 @@ export const GroupResourcesSection = ({
                     className={"mt-4"}
                     onClick={() => router.push("/networks")}
                   >
-                    Go to Networks
+                    {t("goToNetworks")}
                     <ArrowUpRightIcon size={16} />
                   </Button>
                 </>

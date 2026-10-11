@@ -34,6 +34,7 @@ export const MSPDomainVerificationModal = ({
 }: Props) => {
   const t = useTranslations("msp");
   const tIdp = useTranslations("idpSync");
+  const tDomains = useTranslations("signInDomains");
   const { verifyDomain } = useTenants();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -81,23 +82,21 @@ export const MSPDomainVerificationModal = ({
             <Card.List>
               <Card.ListItem
                 copy
-                copyText={"TXT Host"}
-                label={"Host"}
+                copyText={tDomains("txtHostCopyText")}
+                label={tDomains("hostLabel")}
                 value={domain}
               />
               <Card.ListItem
                 copy
-                copyText={"TXT Value"}
-                label={"Value"}
+                copyText={tDomains("txtValueCopyText")}
+                label={tDomains("valueLabel")}
                 value={`nb-verification=${token}`}
               />
             </Card.List>
           </Card>
 
           <Paragraph className={"text-sm mt-4"}>
-            {
-              "Note: DNS changes may take some time to apply. If NetBird doesn't find the record immediately, please wait a day and try again."
-            }
+            {tDomains("dnsChangesNote")}
           </Paragraph>
 
           <div
@@ -105,8 +104,7 @@ export const MSPDomainVerificationModal = ({
               "bg-nb-gray-900/70 px-4 py-3 rounded-md border border-nb-gray-800/70 my-6 !text-nb-gray-300 text-sm"
             }
           >
-            If you do not have access to your DNS configuration, you can also
-            verify your domain by sending us an email to{" "}
+            {tDomains("noDnsAccessHint")}{" "}
             <InlineLink
               href={"mailto:support@netbird.io"}
               className={"inline font-medium"}
@@ -114,25 +112,25 @@ export const MSPDomainVerificationModal = ({
               {" "}
               support@netbird.io
             </InlineLink>
-            . The email should be sent from the domain you are trying to verify.
+            . {t("emailFromDomainNotice")}
           </div>
         </div>
         <ModalFooter className={"items-center"}>
           <div className={"w-full"}>
             <Paragraph className={"text-sm mt-auto"}>
-              Learn more about
+              {t("learnMoreAbout")}
               <InlineLink href={"#"} target={"_blank"}>
-                Domain Verification
+                {t("domainVerificationLabel")}
                 <ExternalLinkIcon size={12} />
               </InlineLink>
             </Paragraph>
           </div>
           <div className={"flex gap-3 w-full justify-end"}>
             <Button variant={"secondary"} onClick={onCancel}>
-              Verify Later
+              {t("verifyLaterBtn")}
             </Button>
             <Button variant={"primary"} onClick={verify} disabled={isLoading}>
-              Start Verification
+              {t("startVerificationBtn")}
             </Button>
           </div>
         </ModalFooter>

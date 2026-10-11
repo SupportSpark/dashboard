@@ -207,6 +207,8 @@ export function PeerGroupSelector({
 }: Readonly<MultiSelectProps>) {
   const t = useTranslations("common");
   const tTable = useTranslations("table");
+  const tComponents = useTranslations("components");
+  const tGroups = useTranslations("groups");
   const resolvedPlaceholder = placeholder ?? t("addOrSelectGroups");
   // Network resources sit behind the networks permission; callers without
   // it (e.g. agent_network_admin opening the policy modal) get a plain
@@ -696,10 +698,13 @@ export function PeerGroupSelector({
                         <div
                           className={"text-neutral-500 dark:text-nb-gray-300"}
                         >
-                          Add this group by pressing{" "}
-                          <span className={"font-bold text-netbird"}>
-                            {"'Enter'"}
-                          </span>
+                          {t.rich("addGroupByPressingEnter", {
+                            key: (chunks) => (
+                              <span className={"font-bold text-netbird"}>
+                                {chunks}
+                              </span>
+                            ),
+                          })}
                         </div>
                       </CommandItem>
                     )}
@@ -709,8 +714,8 @@ export function PeerGroupSelector({
                         className={"mt-5 mb-5 max-w-sm mx-auto"}
                       >
                         {search !== ""
-                          ? "There are no groups matching your search. Please try a different search term."
-                          : "There are no groups that contain resources yet."}
+                          ? tGroups("noGroupsMatching")
+                          : tComponents("noGroupsContainResources")}
                       </DropdownInfoText>
                     )}
 
@@ -730,8 +735,7 @@ export function PeerGroupSelector({
                         <FullTooltip
                           content={
                             <div className={"text-xs max-w-xs"}>
-                              This group is already part of the routing peer and
-                              can not be used for the access control groups.
+                              {tComponents("groupAlreadyRoutingPeer")}
                             </div>
                           }
                           disabled={!isDisabled}
@@ -1040,6 +1044,8 @@ const PolicyCounter = ({
   group: Group;
   policies: Policy[];
 }) => {
+  const t = useTranslations("common");
+  const tPolicies = useTranslations("policies");
   const count = useMemo(() => {
     if (!group.id) return 0;
     return policies.filter((policy) => {
@@ -1061,7 +1067,7 @@ const PolicyCounter = ({
       }
     >
       <ShieldCheck size={14} className={"shrink-0"} />
-      {count} {count === 1 ? "Policy" : "Policies"}
+      {count} {count === 1 ? tPolicies("tabPolicy") : t("policies")}
     </div>
   );
 };
@@ -1187,14 +1193,17 @@ const ClustersList = ({
   value?: string;
   onChange: (cluster?: ClusterOption) => void;
 }) => {
+  const t = useTranslations("common");
   if (clusters.length === 0) {
     return (
       <DropdownInfoText className={"mt-5 max-w-sm mx-auto"}>
-        No proxy clusters available. Go to{" "}
-        <InlineLink href={"/reverse-proxy/custom-domains"}>
-          Custom Domains
-        </InlineLink>{" "}
-        to configure one that supports private services.
+        {t.rich("noProxyClustersGoToCustomDomains", {
+          link: (chunks) => (
+            <InlineLink href={"/reverse-proxy/custom-domains"}>
+              {chunks}
+            </InlineLink>
+          ),
+        })}
       </DropdownInfoText>
     );
   }

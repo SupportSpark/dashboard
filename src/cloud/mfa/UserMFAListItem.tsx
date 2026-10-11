@@ -45,6 +45,8 @@ interface UserAuthMethods {
 }
 
 const ListItem = ({ userId }: Props) => {
+  const tmfa = useTranslations("cloudMfa");
+  const tCommon = useTranslations("common");
   const { data: userMfa, isLoading: isUserMfaLoading } = useFetchApi<
     UserAuthMethods[]
   >(`/service/mfa/${userId}`, true, false, !!config.authServiceUrl, {
@@ -71,21 +73,19 @@ const ListItem = ({ userId }: Props) => {
       label={
         <>
           <ShieldCheckIcon size={16} />
-          NetBird MFA
+          {tmfa("netBirdMfa")}
           <FullTooltip
             variant={"lighter"}
             content={
               <div className={"text-xs max-w-xs"}>
-                NetBird MFA is primarily intended for users who log in with
-                email and password. You may not need NetBird MFA if your SSO
-                provider (e.g., Google, Microsoft) already has MFA enabled.{" "}
+                {tmfa("mfaTooltip")}{" "}
                 <InlineLink
                   href={
                     "https://docs.netbird.io/how-to/multi-factor-authentication"
                   }
                   target={"_blank"}
                 >
-                  Learn more
+                  {tCommon("learnMore")}
                   <ExternalLinkIcon size={10} />
                 </InlineLink>
               </div>
@@ -126,6 +126,7 @@ const MFAStatus = ({
   hasAuthMethods: boolean;
   userId: string;
 }) => {
+  const tmfa = useTranslations("cloudMfa");
   return (
     <div className={"flex gap-4 items-center"}>
       {hasAuthMethods && enabled && <ResetMFAButton userId={userId} />}
@@ -139,19 +140,19 @@ const MFAStatus = ({
           {hasAuthMethods ? (
             <>
               <span className={cn("h-2 w-2 rounded-full", "bg-green-500")} />{" "}
-              Active
+              {tmfa("active")}
             </>
           ) : (
             <>
               <span className={cn("h-2 w-2 rounded-full", "bg-yellow-400")} />{" "}
-              Not Enrolled
+              {tmfa("notEnrolled")}
             </>
           )}
         </div>
       ) : (
         <div className={"h-[30px] flex items-center"}>
           <InlineLink href={"/settings?tab=authentication"}>
-            Activate
+            {tmfa("activate")}
             <ArrowUpRightIcon size={14} />
           </InlineLink>
         </div>
@@ -162,6 +163,7 @@ const MFAStatus = ({
 
 const ResetMFAButton = ({ userId }: Props) => {
   const tmfa = useTranslations("cloudMfa");
+  const tCommon = useTranslations("common");
   const mfaDeleteRequest = useApiCall(`/service/mfa/${userId}`, true, {
     origin: config.authServiceUrl,
   }).del;
@@ -171,11 +173,10 @@ const ResetMFAButton = ({ userId }: Props) => {
 
   const resetMFA = async () => {
     const choice = await confirm({
-      title: `Reset Multi-factor Authentication?`,
-      description:
-        tmfa("resetMfaDescription"),
-      confirmText: "Confirm",
-      cancelText: "Cancel",
+      title: tmfa("resetMfaTitle"),
+      description: tmfa("resetMfaDescription"),
+      confirmText: tCommon("confirm"),
+      cancelText: tCommon("cancel"),
       type: "warning",
     });
     if (!choice) return;
@@ -203,7 +204,7 @@ const ResetMFAButton = ({ userId }: Props) => {
       ) : (
         <RotateCcw size={12} />
       )}
-      Reset MFA
+      {tmfa("resetMfa")}
     </Button>
   );
 };

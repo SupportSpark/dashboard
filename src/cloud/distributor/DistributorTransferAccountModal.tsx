@@ -16,6 +16,7 @@ import { useAccount } from "@/modules/account/useAccount";
 
 export const DistributorTransferAccountModal = () => {
   const td = useTranslations("distributor");
+  const tCommon = useTranslations("common");
   const { mspInfo } = useMSP();
   const account = useAccount();
   const { confirm } = useDialog();
@@ -32,10 +33,10 @@ export const DistributorTransferAccountModal = () => {
 
   const grantAccess = async () => {
     const choice = await confirm({
-      title: `Grant access to distributor?`,
-      description: `Are you sure you want to grant access? This action cannot be undone.`,
+      title: td("grantAccessTitle"),
+      description: td("grantAccessConfirmDescription"),
       confirmText: td("grantAccess"),
-      cancelText: "Cancel",
+      cancelText: tCommon("cancel"),
       type: "danger",
     });
     if (!choice) return;
@@ -101,24 +102,23 @@ export const DistributorTransferAccountModal = () => {
             <h2
               className={"text-lg my-0 leading-[1.5] text-center text-balance"}
             >
-              A distributor is requesting access to your account
+              {td("requestHeading")}
             </h2>
             <Paragraph
               className={cn("text-sm text-center max-w-[450px] px-4 mt-2")}
             >
-              Granting access allows the distributor to manage billing and
-              subscription for your account.
+              {td("requestDescription")}
             </Paragraph>
             <div className={"flex gap-4 items-center mt-6 w-full"}>
               <Button className={"w-full"} variant={"secondary"} onClick={deny}>
-                Deny
+                {td("deny")}
               </Button>
               <Button
                 className={"w-full"}
                 variant={"danger"}
                 onClick={grantAccess}
               >
-                Grant Access
+                {td("grantAccess")}
               </Button>
             </div>
           </div>

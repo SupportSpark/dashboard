@@ -1,5 +1,6 @@
 import { notify } from "@components/Notification";
 import useFetchApi, { useApiCall } from "@utils/api";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useMemo, useState } from "react";
 import { useSWRConfig } from "swr";
@@ -54,6 +55,9 @@ export const TenantsProvider = ({ children }: Props) => {
   const [unlinkModal, setUnlinkModal] = useState(false);
   const [accountExistsModal, setAccountExistsModal] = useState(false);
   const { confirm } = useDialog();
+  // Bound as `tm`, not `t`: `verifyDomain` below uses `t` for the tenant.
+  const tm = useTranslations("msp");
+  const tCommon = useTranslations("common");
 
   const tenantRequest = useApiCall<TenantDNSResponse>(
     `/integrations/msp/tenants`,
@@ -67,11 +71,10 @@ export const TenantsProvider = ({ children }: Props) => {
 
   const deleteTenant = async (tenant: Tenant) => {
     const choice = await confirm({
-      title: `Delete '${tenant.name}'?`,
-      description:
-        "Deleting this tenant will permanently remove all of its associated data, including its peers, users, groups and everything else. Please be aware that this action is irreversible and cannot be undone.",
-      confirmText: "Delete",
-      cancelText: "Cancel",
+      title: tm("deleteTenantTitle", { name: tenant.name }),
+      description: tm("tenantDeleteDescription"),
+      confirmText: tCommon("delete"),
+      cancelText: tCommon("cancel"),
       type: "danger",
       maxWidthClass: "max-w-[480px]",
     });
@@ -82,9 +85,12 @@ export const TenantsProvider = ({ children }: Props) => {
     });
 
     notify({
-      title: `Deleting ${tenant.name}`,
-      description: `Successfully deleted ${tenant.name} (${tenant.domain})`,
-      loadingMessage: `Deleting ${tenant.name}...`,
+      title: tm("deletingTenantTitle", { name: tenant.name }),
+      description: tm("tenantDeletedSuccess", {
+        name: tenant.name,
+        domain: tenant.domain,
+      }),
+      loadingMessage: tm("deletingTenant", { name: tenant.name }),
       promise,
     });
 
@@ -106,9 +112,12 @@ export const TenantsProvider = ({ children }: Props) => {
       });
 
     notify({
-      title: `Unlinking ${tenant.name}`,
-      description: `Successfully unlinked ${tenant.name} (${tenant.domain})`,
-      loadingMessage: `Unlinking ${tenant.name}...`,
+      title: tm("unlinkingTenantTitle", { name: tenant.name }),
+      description: tm("tenantUnlinkedSuccess", {
+        name: tenant.name,
+        domain: tenant.domain,
+      }),
+      loadingMessage: tm("unlinkingTenant", { name: tenant.name }),
       promise,
     });
     return promise;
@@ -138,9 +147,9 @@ export const TenantsProvider = ({ children }: Props) => {
         );
 
     notify({
-      title: `Subscription for ${tenant.name}`,
-      description: `Successfully subscribed to the ${plan.name} plan.`,
-      loadingMessage: `Subscribing to ${plan.name}...`,
+      title: tm("subscriptionFor", { name: tenant.name }),
+      description: tm("subscribedToPlan", { plan: plan.name }),
+      loadingMessage: tm("subscribingToPlan", { plan: plan.name }),
       promise,
     });
     return promise;
@@ -165,15 +174,15 @@ export const TenantsProvider = ({ children }: Props) => {
       });
 
     notify({
-      title: `Verification of ${domain}`,
-      description: "The domain ownership has been verified successfully.",
-      loadingTitle: `Verifying ownership of ${domain}`,
-      loadingMessage: "Please wait while we verify the domain ownership...",
+      title: tm("verificationOf", { domain }),
+      description: tm("domainVerified"),
+      loadingTitle: tm("verifyingOwnershipOf", { domain }),
+      loadingMessage: tm("verifyingDomainOwnership"),
       promise: dnsPromise,
       errorMessages: [
         {
           code: 501,
-          message: "DNS record not found. Please try again...",
+          message: tm("dnsRecordNotFound"),
         },
       ],
     });
@@ -200,9 +209,9 @@ export const TenantsProvider = ({ children }: Props) => {
       });
 
     notify({
-      title: `Request Account Access`,
-      description: "Request has been sent successfully.",
-      loadingMessage: "Sending request...",
+      title: tm("requestAccountAccess"),
+      description: tm("requestSent"),
+      loadingMessage: tm("sendingRequest"),
       promise: request,
     });
 

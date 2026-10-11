@@ -7,6 +7,7 @@ import {
 } from "@components/modal/Modal";
 import ModalHeader from "@components/modal/ModalHeader";
 import { AlertCircle, AlertTriangle } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React, { useCallback, useRef, useState } from "react";
 
 type Props = {
@@ -39,6 +40,8 @@ export default function DialogProvider({ children }: Props) {
   });
   const [dialogOptions, setDialogOptions] = useState<DialogOptions>();
   const fn = useRef<Function>(undefined);
+  const t = useTranslations("dialog");
+  const tCommon = useTranslations("common");
 
   const confirm = useCallback((data: DialogOptions): Promise<boolean> => {
     return new Promise((resolve) => {
@@ -81,13 +84,12 @@ export default function DialogProvider({ children }: Props) {
               center={dialogOptions.center ?? dialogOptions.type == "center"}
               title={
                 <span data-testid={"confirmation.title"}>
-                  {dialogOptions.title || "Confirmation"}
+                  {dialogOptions.title || t("confirmation")}
                 </span>
               }
               margin={"mt-1"}
               description={
-                dialogOptions.description ||
-                "Are you sure you want to continue? This action cannot be undone."
+                dialogOptions.description || t("confirmDefaultDescription")
               }
               icon={
                 dialogOptions.hideIcon
@@ -121,7 +123,7 @@ export default function DialogProvider({ children }: Props) {
                   data-testid={"confirmation.cancel"}
                   onClick={() => fn.current && fn.current(false)}
                 >
-                  {dialogOptions.cancelText || "Cancel"}
+                  {dialogOptions.cancelText || tCommon("cancel")}
                 </Button>
               </ModalClose>
               <Button
@@ -137,7 +139,7 @@ export default function DialogProvider({ children }: Props) {
                 data-testid={"confirmation.confirm"}
                 onClick={() => fn.current && fn.current(true)}
               >
-                {dialogOptions.confirmText || "Confirm"}
+                {dialogOptions.confirmText || tCommon("confirm")}
               </Button>
             </ModalFooter>
           </ModalContent>

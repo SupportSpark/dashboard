@@ -129,6 +129,7 @@ type Props = {
 
 export const GroupUsersSection = ({ users, isLoading = true }: Props) => {
 	const t = useTranslations("common");
+	const tGroups = useTranslations("groups");
 	const { group, addUsersToGroup, removeUsersFromGroup } = useGroupContext();
 	const [selectedRows, setSelectedRows] = useState<RowSelectionState>({});
 	const [open, setOpen] = useState(false);
@@ -148,10 +149,8 @@ export const GroupUsersSection = ({ users, isLoading = true }: Props) => {
 				getStartedCard={
 					<NoResults
 						className={"py-4"}
-						title={"This group has no assigned users yet"}
-						description={
-							"Invite new users or assign existing ones to this group to see them listed here."
-						}
+						title={tGroups("noAssignedUsers")}
+						description={tGroups("noAssignedUsersDescription")}
 						icon={<TeamIcon size={20} className={"fill-nb-gray-300"} />}
 					>
 						{permission?.users?.update && (
@@ -162,7 +161,7 @@ export const GroupUsersSection = ({ users, isLoading = true }: Props) => {
 									onClick={() => setOpen(true)}
 								>
 									<PlusCircle size={16} />
-									Assign Users
+									{t("assignUsers")}
 								</Button>
 								<InviteUserButton show={true} groups={[group]} />
 							</div>
@@ -173,7 +172,7 @@ export const GroupUsersSection = ({ users, isLoading = true }: Props) => {
 					return (
 						<>
 							<DataTableMultiSelectPopup
-								label={"User(s) selected"}
+								label={tGroups("usersSelected")}
 								selectedItems={table
 									.getSelectedRowModel()
 									.rows.map((row) => row.original)}

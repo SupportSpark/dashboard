@@ -8,6 +8,7 @@ import { RestrictedAccess } from "@components/ui/RestrictedAccess";
 import { LayoutDashboard, ScrollText } from "lucide-react";
 import dayjs from "dayjs";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import React, { Suspense, useMemo, useState } from "react";
 import AgentNetworkIcon from "@/assets/icons/AgentNetworkIcon";
 import GroupsProvider from "@/contexts/GroupsProvider";
@@ -34,6 +35,8 @@ export default function UsageAndLogsPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
+  const tNav = useTranslations("navigation");
+  const tAn = useTranslations("agentNetworkLabels");
 
   const canReadUsage = !!permission?.["agent_network.usage"]?.read;
   const canReadLogs = !!permission?.["agent_network.logs"]?.read;
@@ -89,24 +92,21 @@ export default function UsageAndLogsPage() {
         <Breadcrumbs>
           <Breadcrumbs.Item
             href={"/agent-network/providers"}
-            label={"Agent Network"}
+            label={tNav("agentNetwork")}
             icon={<AgentNetworkIcon size={16} />}
           />
           <Breadcrumbs.Item
             href={"/agent-network/usage"}
-            label={"Usage & Logs"}
+            label={tNav("usageAndLogs")}
             active={true}
           />
         </Breadcrumbs>
-        <h1>Usage & Logs</h1>
-        <Paragraph>
-          Per-request audit with real caller identity, cost attribution, and
-          budget controls.
-        </Paragraph>
+        <h1>{tNav("usageAndLogs")}</h1>
+        <Paragraph>{tAn("usageAndLogsDescription")}</Paragraph>
       </div>
 
       <RestrictedAccess
-        page={"Usage & Logs"}
+        page={tNav("usageAndLogs")}
         hasAccess={canUseUsage || canUseLogs}
       >
         <GroupsProvider>
@@ -121,13 +121,13 @@ export default function UsageAndLogsPage() {
                   {canUseUsage && (
                     <TabsTrigger value={TAB_USAGE}>
                       <LayoutDashboard size={16} />
-                      Usage
+                      {tAn("usageTab")}
                     </TabsTrigger>
                   )}
                   {canUseLogs && (
                     <TabsTrigger value={TAB_ACCESS_LOGS}>
                       <ScrollText size={16} />
-                      Access Logs
+                      {tAn("accessLogsTab")}
                     </TabsTrigger>
                   )}
                 </TabsList>

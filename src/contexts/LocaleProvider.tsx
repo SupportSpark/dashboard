@@ -1,5 +1,8 @@
 "use client";
 
+import dayjs from "dayjs";
+import "dayjs/locale/zh-cn";
+import relativeTime from "dayjs/plugin/relativeTime";
 import { NextIntlClientProvider } from "next-intl";
 import React, {
   createContext,
@@ -17,6 +20,19 @@ import {
   type Locale,
 } from "@/i18n/config";
 import { detectLocale, persistLocale } from "@/i18n/detection";
+
+dayjs.extend(relativeTime);
+
+/**
+ * dayjs locale for each app locale.
+ *
+ * dayjs keeps ONE global locale rather than taking one per call, so it has to be
+ * kept in step with next-intl by hand. Without this, every relative timestamp —
+ * `dayjs().to(date)` in LastTimeRow, used by peers, users, jobs, setup keys,
+ * groups, access tokens and Okta SSO — renders in English ("6 days ago") inside
+ * an otherwise Chinese UI.
+ */
+const DAYJS_LOCALES: Record<Locale, string> = { en: "en", zh: "zh-cn" };
 
 type LocaleContextValue = {
   /** Active locale. Defaults to {@link defaultLocale} until `mounted` is true. */
@@ -75,6 +91,16 @@ export default function LocaleProvider({ children }: Props) {
       document.documentElement.lang = locale;
     }
   }, [locale]);
+
+  // Set dayjs's global locale DURING render, not in an effect.
+  //
+  // `dayjs().to(date)` reads the locale when it is called, i.e. while children
+  // render. Setting it in an effect would run after that pass had already
+  // formatted its dates, and nothing would re-render them afterwards — the
+  // timestamps would stay in the previous language indefinitely. The call is
+  // idempotent and guarded, so re-renders are free.
+  const dayjsLocale = DAYJS_LOCALES[locale];
+  if (dayjs.locale() !== dayjsLocale) dayjs.locale(dayjsLocale);
 
   const setLocale = useCallback((next: Locale) => {
     persistLocale(next);

@@ -36,6 +36,8 @@ export const TrafficEventSetting = ({
   account,
 }: Props) => {
   const tte = useTranslations("trafficEvents");
+  const tCommon = useTranslations("common");
+  const tNav = useTranslations("navigation");
   const { permission } = usePermissions();
   const { groups } = useGroups();
   const { mutate } = useSWRConfig();
@@ -56,10 +58,10 @@ export const TrafficEventSetting = ({
       setTrafficPacketCounterEnabled(false);
     }
     notify({
-      title: "Traffic Events",
-      description: `Traffic events successfully ${
-        toggle ? "enabled" : "disabled"
-      }.`,
+      title: tNav("trafficEvents"),
+      description: toggle
+        ? tte("settingEnabled")
+        : tte("settingDisabled"),
       promise: saveRequest
         .put({
           id: account.id,
@@ -89,8 +91,8 @@ export const TrafficEventSetting = ({
         title: tte("enableTrafficReportingKernel"),
         description:
           tte("enableTrafficReportingWarning"),
-        confirmText: "Enable",
-        cancelText: "Cancel",
+        confirmText: tCommon("enable"),
+        cancelText: tCommon("cancel"),
         type: "default",
       });
       if (!choice) return;
@@ -98,9 +100,9 @@ export const TrafficEventSetting = ({
 
     notify({
       title: tte("trafficReporting"),
-      description: `Traffic reporting successfully ${
-        toggle ? "enabled" : "disabled"
-      }.`,
+      description: toggle
+        ? tte("reportingEnabled")
+        : tte("reportingDisabled"),
       promise: saveRequest
         .put({
           id: account.id,
@@ -124,19 +126,16 @@ export const TrafficEventSetting = ({
     <>
       <div className={"mt-4"}>
         <h2 className={"text-lg font-medium"}>
-          Experimental
+          {tte("experimentalHeading")}
           <FlaskConicalIcon
             size={16}
             className={"inline ml-1.5 relative -top-[2px]"}
           />
         </h2>
         <div className={"text-sm text-gray-400"}>
-          Traffic events is an experimental feature. Functionality and behavior
-          may evolve, including changes to how data is collected or reported.
-          Traffic events data retention is limited to 48 hours and capped at a
-          maximum of 50,000 events.{" "}
+          {tte("experimentalDescription")}{" "}
           <InlineLink href={TRAFFIC_EVENTS_DOC_LINK} target={"_blank"}>
-            Learn more
+            {tCommon("learnMore")}
             <ExternalLinkIcon size={12} />
           </InlineLink>
         </div>
@@ -144,7 +143,7 @@ export const TrafficEventSetting = ({
       <div className={"relative"}>
         <LockedFeatureBadge
           center={true}
-          featureText={"Traffic Events"}
+          featureText={tNav("trafficEvents")}
           feature={"TRAFFIC_EVENTS"}
           disabled={trafficEventsEnabled}
         >
@@ -156,15 +155,10 @@ export const TrafficEventSetting = ({
               label={
                 <>
                   <ArrowLeftRightIcon size={15} />
-                  Enable Traffic Events
+                  {tte("enableTrafficEvents")}
                 </>
               }
-              helpText={
-                <>
-                  Enable traffic events for all peers. This requires NetBird
-                  client v0.39 or higher.
-                </>
-              }
+              helpText={<>{tte("enableTrafficEventsHelp")}</>}
               disabled={!permission.settings.update}
             />
 
@@ -182,22 +176,14 @@ export const TrafficEventSetting = ({
                 value={trafficPacketCounterEnabled}
                 onChange={toggleTrafficPacketCounter}
                 data-testid="traffic-reporting-kernel"
-                label={<>Enable Traffic Reporting (Kernel)</>}
-                helpText={
-                  <>
-                    Traffic reporting is always enabled in userspace, and this
-                    setting only applies to kernel. If enabled, network packets
-                    and their size will be counted and reported.
-                  </>
-                }
+                label={<>{tte("enableTrafficReportingKernel")}</>}
+                helpText={<>{tte("enableTrafficReportingHelp")}</>}
                 disabled={!permission.settings.update}
               />
               <div className={"mt-2"}>
                 <Label>{tte("limitToSpecificGroups")}</Label>
                 <HelpText className={"mb-3"}>
-                  Select peer groups for which traffic events will be logged.{" "}
-                  <br />
-                  If no group is selected, logging applies to all peers.
+                  {tte.rich("limitToGroupsHelp", { br: () => <br /> })}
                 </HelpText>
                 {!groups ? (
                   <Skeleton height={46} />
@@ -266,7 +252,7 @@ export const TrafficEventGroupsSetting = ({
         hideAllGroup={true}
         showResources={false}
         showResourceCounter={false}
-        placeholderForSearch={"Select groups to log traffic events for..."}
+        placeholderForSearch={tte("selectGroupsPlaceholder")}
         data-testid="traffic-events-groups-selector"
       />
       <Button
@@ -276,7 +262,7 @@ export const TrafficEventGroupsSetting = ({
         onClick={saveTrafficGroups}
         data-testid="save-traffic-groups"
       >
-        Save Groups
+        {tte("saveGroups")}
       </Button>
     </div>
   );

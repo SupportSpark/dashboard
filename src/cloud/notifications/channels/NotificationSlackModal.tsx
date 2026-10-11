@@ -63,10 +63,10 @@ function SlackModalContent({ onSave }: Readonly<ModalContentProps>) {
   const urlError = useMemo(() => {
     if (url === "") return "";
     if (!validator.isValidUrl(url)) {
-      return "Please enter a valid url, e.g., https://hooks.slack.com/services/...";
+      return t("invalidWebhookUrl");
     }
     return "";
-  }, [url]);
+  }, [url, t]);
 
   const canConnect = !isEmpty(url) && urlError === "";
 
@@ -119,18 +119,18 @@ function SlackModalContent({ onSave }: Readonly<ModalContentProps>) {
                   href={"https://api.slack.com/apps?new_app=1"}
                   target={"_blank"}
                 >
-                  Slack App Management
+                  {t("slackAppManagement")}
                   <ExternalLinkIcon size={12} />
                 </InlineLink>{" "}
-                {t("click")} <Mark>Create an app</Mark> <br />
-                {t("andChoose")} <Mark>From scratch</Mark>
+                {t("click")} <Mark>{t("createAnApp")}</Mark> <br />
+                {t("andChoose")} <Mark>{t("fromScratch")}</Mark>
               </p>
             </Steps.Step>
             <Steps.Step step={2} line={false}>
               <p className={"font-normal"}>
                 {t("setAppNameTo")}{" "}
-                <Mark copy={true}>NetBird Notifications</Mark> {t("andSelectWorkspace")}{" "}
-                <Mark>Create App</Mark>
+                <Mark copy={true}>{t("netBirdNotifications")}</Mark>{" "}
+                {t("andSelectWorkspace")} <Mark>{t("createApp")}</Mark>
               </p>
             </Steps.Step>
           </Steps>
@@ -147,14 +147,15 @@ function SlackModalContent({ onSave }: Readonly<ModalContentProps>) {
           <Steps>
             <Steps.Step step={1}>
               <p className={"font-normal"}>
-                {t("inAppSettings")} <Mark>Incoming Webhooks</Mark> {t("andToggle")}{" "}
-                <Mark>Activate Incoming Webhooks</Mark> {t("to")} <Mark>On</Mark>
+                {t("inAppSettings")} <Mark>{t("incomingWebhooks")}</Mark>{" "}
+                {t("andToggle")} <Mark>{t("activateIncomingWebhooks")}</Mark>{" "}
+                {t("to")} <Mark>{t("on")}</Mark>
               </p>
             </Steps.Step>
             <Steps.Step step={2}>
               <p className={"font-normal"}>
-                {t("addNewWebhook")} <Mark>Add New Webhook</Mark> {t("andSelectChannel")}{" "}
-                <Mark>Allow</Mark>
+                {t("addNewWebhook")} <Mark>{t("addNewWebhook")}</Mark>{" "}
+                {t("andSelectChannel")} <Mark>{t("allow")}</Mark>
               </p>
             </Steps.Step>
             <Steps.Step step={3} line={false}>

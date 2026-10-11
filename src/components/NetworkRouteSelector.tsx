@@ -8,6 +8,7 @@ import { cn } from "@utils/helpers";
 import { Command, CommandGroup, CommandInput, CommandList } from "cmdk";
 import { sortBy, trim, unionBy } from "lodash";
 import { ChevronsUpDown, SearchIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useEffect, useMemo, useState } from "react";
 import NetworkRoutesIcon from "@/assets/icons/NetworkRoutesIcon";
@@ -26,6 +27,7 @@ export function NetworkRouteSelector({
   value,
   disabled = false,
 }: MultiSelectProps) {
+  const t = useTranslations("common");
   const { data: routes } = useFetchApi<Route[]>("/routes");
   const groupedRoutes = useGroupedRoutes({ routes });
 
@@ -165,7 +167,7 @@ export function NetworkRouteSelector({
                 ref={searchRef}
                 value={search}
                 onValueChange={setSearch}
-                placeholder={"Search for network by name or cidr..."}
+                placeholder={t("searchNetworkByNameOrCidr")}
               />
               <div
                 className={
@@ -198,12 +200,12 @@ export function NetworkRouteSelector({
                     "text-center pb-2 text-nb-gray-500 max-w-xs mx-auto"
                   }
                 >
-                  {"Seems like you don't have any network routes created yet."}
+                  {t("noNetworkRoutesCreatedYet")}
                 </div>
               )}
               {notFound && (
                 <div className={"text-center pb-2 text-nb-gray-500"}>
-                  There are no networks matching your search.
+                  {t("noNetworksMatchingSearch")}
                 </div>
               )}
               <CommandGroup>

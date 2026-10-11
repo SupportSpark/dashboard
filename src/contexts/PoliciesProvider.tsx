@@ -2,6 +2,7 @@ import { Modal } from "@components/modal/Modal";
 import { notify } from "@components/Notification";
 import useFetchApi, { useApiCall } from "@utils/api";
 import { cloneDeep } from "@utils/helpers";
+import { useTranslations } from "next-intl";
 import React, { useState } from "react";
 import { useSWRConfig } from "swr";
 import { useGroups } from "@/contexts/GroupsProvider";
@@ -49,6 +50,9 @@ export default function PoliciesProvider({ children }: Props) {
   const [currentPolicy, setCurrentPolicy] = useState<Policy>();
   const [initialPolicyTab, setInitialPolicyTab] = useState("");
   const [isDuplicate, setIsDuplicate] = useState(false);
+  const t = useTranslations("policies");
+  const tCommon = useTranslations("common");
+  const tOnboarding = useTranslations("onboarding");
 
   // Every policy name in the account, so a duplicate gets a name not already in
   // use, even where the table only lists some policies (group details).
@@ -156,9 +160,8 @@ export default function PoliciesProvider({ children }: Props) {
     message?: string,
   ) => {
     notify({
-      title: "Access Control Policy " + policy.name,
-      description:
-        message || "The access control policy was successfully updated",
+      title: t("notifyTitle", { name: policy.name }),
+      description: message || t("updatePolicySuccess"),
       promise: request
         .put(
           {
@@ -177,7 +180,7 @@ export default function PoliciesProvider({ children }: Props) {
         .then((p) => {
           onSuccess && onSuccess(p);
         }),
-      loadingMessage: "Updating policy...",
+      loadingMessage: tOnboarding("updatingPolicy"),
     });
   };
 
@@ -187,10 +190,10 @@ export default function PoliciesProvider({ children }: Props) {
       onSuccess?.();
     });
     notify({
-      title: "Access Control Policy " + policy.name,
-      description: "The policy was successfully deleted.",
+      title: t("notifyTitle", { name: policy.name }),
+      description: t("policyDeleteSuccess"),
       promise,
-      loadingMessage: "Deleting policy...",
+      loadingMessage: t("policyDeleteLoading"),
     });
     return promise;
   };

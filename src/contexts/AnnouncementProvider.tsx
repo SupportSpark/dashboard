@@ -3,6 +3,7 @@ import { deploymentAnnouncement } from "@utils/announcement";
 import loadConfig from "@utils/config";
 import { isNetBirdCloud } from "@utils/netbird";
 import md5 from "crypto-js/md5";
+import { useTranslations } from "next-intl";
 import React, {
   createContext,
   useContext,
@@ -21,13 +22,17 @@ const ANNOUNCEMENTS_URL =
 const STORAGE_KEY = "netbird-announcements";
 const CACHE_DURATION_MS = 30 * 60 * 1000;
 
-// MSP only
-const initialMSPAnnouncements: Announcement[] = [
+// MSP only. A factory rather than a module-scope constant: the banner copy is
+// translated, and `t` is a React hook that only exists inside a component.
+const initialMSPAnnouncements = (
+  t: (key: string) => string,
+  tCommon: (key: string) => string,
+): Announcement[] => [
   {
-    tag: "New",
-    text: "Huntress now integrates with NetBird",
+    tag: t("mspTagNew"),
+    text: t("mspHuntressText"),
     link: "https://docs.netbird.io/manage/access-control/endpoint-detection-and-response/huntress-edr",
-    linkText: "Learn more",
+    linkText: tCommon("learnMore"),
     variant: "default",
     isExternal: true,
     closeable: true,
@@ -143,6 +148,9 @@ export default function AnnouncementProvider({ children }: Readonly<Props>) {
   const { isRestricted } = usePermissions();
   const { isMSPInTenantContext, isMSPInMSPContext, isMspInfoLoading } =
     useMSP();
+  const t = useTranslations("announcements");
+  const tCommon = useTranslations("common");
+  const tBilling = useTranslations("billingProvider");
   const fetchingRef = useRef(false);
 
   useEffect(() => {
@@ -170,7 +178,7 @@ export default function AnnouncementProvider({ children }: Readonly<Props>) {
 
         // Add MSP announcements if in MSP context
         if (isMSPInTenantContext || isMSPInMSPContext) {
-          const mspAnnouncements = initialMSPAnnouncements
+          const mspAnnouncements = initialMSPAnnouncements(t, tCommon)
             .filter((a) => !a.isCloudOnly || isCloud)
             .map((a) => {
               const hash = md5(a.text).toString();
@@ -196,15 +204,17 @@ export default function AnnouncementProvider({ children }: Readonly<Props>) {
         }
 
         // Add billing announcements (initially closed, opened by BillingProvider)
+        const trialExpires = trialExpiresInfo(tBilling);
         allAnnouncements.unshift({
-          ...trialExpiresInfo,
-          hash: md5(trialExpiresInfo.text).toString(),
+          ...trialExpires,
+          hash: md5(trialExpires.text).toString(),
           isOpen: false,
         });
 
+        const usageLimit = usageLimitInfo(tBilling);
         allAnnouncements.unshift({
-          ...usageLimitInfo,
-          hash: md5(usageLimitInfo.text).toString(),
+          ...usageLimit,
+          hash: md5(usageLimit.text).toString(),
           isOpen: false,
         });
 
@@ -217,6 +227,9 @@ export default function AnnouncementProvider({ children }: Readonly<Props>) {
     isMspInfoLoading,
     isMSPInTenantContext,
     isMSPInMSPContext,
+    t,
+    tCommon,
+    tBilling,
   ]);
 
   const closeAnnouncement = (hash: string) => {

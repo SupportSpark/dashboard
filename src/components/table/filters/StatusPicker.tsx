@@ -2,6 +2,7 @@
 
 import { cn } from "@utils/helpers";
 import { CheckIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 
 // StatusPicker — three-way radio that maps to the `connected` column.
@@ -14,12 +15,6 @@ type Option = {
   dotClass: string;
 };
 
-const OPTIONS: Option[] = [
-  { value: undefined, label: "All", dotClass: "bg-nb-gray-500" },
-  { value: true, label: "Online", dotClass: "bg-green-500" },
-  { value: false, label: "Offline", dotClass: "bg-nb-gray-700" },
-];
-
 type Props = {
   value: boolean | undefined;
   onChange: (next: boolean | undefined) => void;
@@ -27,9 +22,16 @@ type Props = {
 };
 
 export function StatusPicker({ value, onChange, close }: Props) {
+  const t = useTranslations("common");
+  const options: Option[] = [
+    { value: undefined, label: t("all"), dotClass: "bg-nb-gray-500" },
+    { value: true, label: t("online"), dotClass: "bg-green-500" },
+    { value: false, label: t("offline"), dotClass: "bg-nb-gray-700" },
+  ];
+
   return (
     <div className={"flex flex-col gap-0.5"}>
-      {OPTIONS.map((option) => {
+      {options.map((option) => {
         const selected = value === option.value;
         return (
           <button
@@ -66,8 +68,13 @@ export function StatusPicker({ value, onChange, close }: Props) {
 }
 
 // formatChip helper exported for use in the filter def's formatChip().
-export function formatStatusChip(value: boolean | undefined): string | null {
-  if (value === true) return "Online";
-  if (value === false) return "Offline";
+// `translate` is optional so existing callers keep today's English output; pass
+// the namespace-bound translator to localize the chip.
+export function formatStatusChip(
+  value: boolean | undefined,
+  translate?: (key: string) => string,
+): string | null {
+  if (value === true) return translate?.("online") ?? "Online";
+  if (value === false) return translate?.("offline") ?? "Offline";
   return null;
 }
