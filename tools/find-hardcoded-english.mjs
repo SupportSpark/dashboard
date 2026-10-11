@@ -94,6 +94,33 @@ function looksLikeProse(s) {
   if (/^(Promise|Partial|Record|Array|Readonly|Map|Set|Date|Error|Function|Object|String|Number|Boolean|void|null|undefined)$/.test(t)) {
     return false;
   }
+  // Colour literals: rgb()/rgba()/hsl()/oklch() and their comma-separated parts.
+  // The scanner matched `rgba(99, 102, 241, 0.6)` as a short-circuit/ternary
+  // candidate because of its internal commas.
+  if (/^(?:rgba?|hsla?|oklch|oklab|lab|lch|color-mix)\s*\(/i.test(t)) return false;
+  if (/^\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}/.test(t)) return false;
+  // Tailwind / CSS utility strings. Two shapes appear in practice:
+  //   (a) a run of hyphenated lowercase tokens: "flex items-center gap-2"
+  //   (b) a token containing a Tailwind variant prefix or a slash/percent
+  //       modifier: "hover:bg-nb-gray-930", "dark:hover:bg-x/[15%]",
+  //       "group-hover/trigger:dark:bg-y", "hover:ring-2 ring-white"
+  // Both are class names, never user-visible prose.
+  //
+  // NOTE: these patterns are deliberately CASE-SENSITIVE. With the `i` flag a
+  // character class like [a-z0-9:/._-] also matches capitals, so "Save Changes"
+  // would be classified as a class-name run and silently dropped from the work
+  // list. Utility strings are lowercase by construction, so requiring lowercase
+  // is both correct and much safer.
+  const utilityRun = /^[a-z0-9:/[\].%_-]+(?:\s+[a-z0-9:/[\].%_-]+)*$/;
+  if (utilityRun.test(t)) return false;
+  if (/(?:^|\s)[a-z-]+:[a-z0-9:[\]/.%_-]+/.test(t) && !/[A-Z]/.test(t)) return false;
+  // A run of only lowercase/hyphen/slash/percent tokens with no uppercase and no
+  // sentence punctuation is styling, not copy.
+  if (!/[A-Z]/.test(t) && /^[a-z0-9][a-z0-9\s:/[\].%_-]*$/.test(t)) return false;
+  // Numbers with units, and spacing/sizing shorthands.
+  if (/^\d+(?:\.\d+)?(?:px|rem|em|%|vh|vw|s|ms)$/.test(t)) return false;
+  // Data-URL / base64 / SVG path fragments.
+  if (/^data:|^M\d/.test(t)) return false;
   return true;
 }
 
@@ -216,7 +243,18 @@ for (const file of files) {
       const litIdx = line.indexOf(`"${s}"`);
       return tIdx !== -1 && litIdx !== -1 && tIdx < litIdx;
     };
-    const reject = (s) => isComparisonEcho(s) || isTArgument(s);
+    const reject = (s) => isComparisonEcho(s) || isTArgument(s) || isCodeFragment(s);
+
+    /** Reject fragments that are clearly code, not copy. */
+    const isCodeFragment = (s) => {
+      // Method calls / property access / comparisons leaked into a candidate.
+      if (/^[)\]]?\s*[?.:]|\b\w+\.\w+\(|\)\s*[?.:]|[=<>!]==?/.test(s)) return true;
+      // Ends mid-expression.
+      if (/[([{.,]$/.test(s) || /^[)\]}]/.test(s)) return true;
+      // Contains a JS operator without being a sentence.
+      if (/[?&|]{1,2}\s*$/.test(s)) return true;
+      return false;
+    };
 
     // `? "Then text"` / `: "Else text"` — ternaries in JSX
     for (const m of line.matchAll(/[?:]\s*"([^"]{3,})"/g)) {
