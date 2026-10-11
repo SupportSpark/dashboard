@@ -73,7 +73,25 @@ export default function LocaleSwitcher() {
           return (
             <DropdownMenuItem
               key={option}
-              onSelect={() => {
+              // onClick, NOT onSelect.
+              //
+              // The DropdownMenuItem wrapper ends its own onClick with
+              // preventDefault() + stopPropagation(), and Radix composes the
+              // caller's handler with its internal one through
+              // composeEventHandlers — which SKIPS the internal handler when the
+              // caller called preventDefault. That internal handler is
+              // `handleSelect`: it is what dispatches the `menu.itemSelect` event
+              // that invokes onSelect, and what closes the menu.
+              //
+              // So an item whose only action is onSelect does nothing at all —
+              // the menu opens, the click lands, and the language never changes.
+              // `moved` closing is kept explicit here for the same reason.
+              //
+              // The settings-page switcher was unaffected because it is built on
+              // cmdk's CommandItem, which has no such short-circuit. This was the
+              // only onSelect-on-DropdownMenuItem in the codebase; the other 95
+              // menu items use onClick.
+              onClick={() => {
                 setLocale(option);
                 setOpen(false);
               }}
