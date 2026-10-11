@@ -154,7 +154,60 @@ foreach ($b in $banned) {
   }
 }
 
-# ------------------------------------------------------------ 5. i18n plumbing
+# ------------------------------------------------- 5. catalog source of truth
+Section "catalog provenance"
+# The catalogs are a DERIVED artifact: i18n-fragments/*.json are merged into them
+# by tools/merge-i18n-fragments.mjs. A real incident during the localization pass
+# had a helper script restore the catalogs from a stale snapshot, silently wiping
+# every key merged after the snapshot was taken (two workers lost their
+# namespaces for ~20 minutes and their verification reported hundreds of
+# "missing key" failures that were not their fault).
+#
+# Two guards, both cheap:
+#   a) no stray restore/snapshot scripts in the repo root
+#   b) every fragment key is actually present in the catalog
+$a = @()
+foreach ($pat in @('restore-catalog', 'merge-local', 'revert-catalog')) {
+  $a += @(Get-ChildItem -Path . -Filter "*$pat*" -File -ErrorAction SilentlyContinue)
+}
+$a += @(Get-ChildItem -Path . -Filter "*.mjs" -File -ErrorAction SilentlyContinue |
+  Where-Object { (Get-Content $_.FullName -Raw -ErrorAction SilentlyContinue) -match 'catalog-backup' })
+if ($a.Count -eq 0) { Pass "no stray catalog restore/snapshot scripts" }
+else {
+  Fail "found script(s) that may restore the catalogs from a stale snapshot:"
+  $a | Select-Object -Unique | ForEach-Object { Write-Host "           $($_.Name)" -ForegroundColor Red }
+}
+if (Test-Path ".catalog-backup") {
+  Warn ".catalog-backup/ exists - a stale catalog snapshot; the fragments are the source of truth"
+}
+
+$fragDir = "i18n-fragments"
+if (Test-Path $fragDir) {
+  $fragFiles = @(Get-ChildItem $fragDir -Filter *.json -File)
+  if ($fragFiles.Count -gt 0) {
+    $enText = Get-Content -LiteralPath 'src/i18n/messages/en.ts' -Raw
+    $zhText = Get-Content -LiteralPath 'src/i18n/messages/zh.ts' -Raw
+    $missing = @()
+    foreach ($ff in $fragFiles) {
+      $data = Get-Content $ff.FullName -Raw | ConvertFrom-Json
+      foreach ($ns in $data.PSObject.Properties) {
+        if ($ns.Name -like '_*') { continue }
+        foreach ($k in $ns.Value.PSObject.Properties) {
+          if ($enText -notmatch "(?m)^\s+$([regex]::Escape($k.Name)):") {
+            $missing += "$($ff.Name): $($ns.Name).$($k.Name)"
+          }
+        }
+      }
+    }
+    if ($missing.Count -eq 0) { Pass "all $($fragFiles.Count) fragment(s) are merged into en.ts" }
+    else {
+      Fail "$($missing.Count) fragment key(s) are NOT in en.ts - run tools/merge-i18n-fragments.mjs"
+      $missing | Select-Object -First 15 | ForEach-Object { Write-Host "           $_" -ForegroundColor Red }
+    }
+  }
+} else { Pass "no fragment directory (nothing to reconcile)" }
+
+# ------------------------------------------------------------ 6. i18n plumbing
 Section "i18n plumbing"
 $required = @(
   'src/i18n/config.ts',
@@ -205,7 +258,7 @@ if (Test-Path -LiteralPath 'package.json') {
   if ($pkg.dependencies.'next') { Pass "next declared ($($pkg.dependencies.'next'))" }
 }
 
-# --------------------------------------------------------------- 6. call sites
+# --------------------------------------------------------------- 7. call sites
 Section "translation call sites"
 $users = @(git grep -l 'useTranslations' -- src 2>$null)
 Write-Host "         files using useTranslations(): $($users.Count)"
