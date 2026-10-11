@@ -1,5 +1,6 @@
 import Button from "@components/Button";
 import { PenSquare, Trash2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { usePermissions } from "@/contexts/PermissionsProvider";
 import { useReverseProxies } from "@/contexts/ReverseProxiesProvider";
@@ -11,6 +12,7 @@ type Props = {
 };
 
 export const ReverseProxyTargetActionCell = ({ target }: Props) => {
+  const tCommon = useTranslations("common");
   const reverseProxy = useReverseProxyTarget();
   const { permission } = usePermissions();
   const { openTargetModal, handleDeleteTarget } = useReverseProxies();
@@ -27,7 +29,7 @@ export const ReverseProxyTargetActionCell = ({ target }: Props) => {
         }}
       >
         <PenSquare size={16} />
-        Edit
+        {tCommon("edit")}
       </Button>
       <Button
         variant={"danger-outline"}
@@ -39,7 +41,7 @@ export const ReverseProxyTargetActionCell = ({ target }: Props) => {
         }}
       >
         <Trash2 size={16} />
-        Delete
+        {tCommon("delete")}
       </Button>
     </div>
   );

@@ -160,6 +160,31 @@ for (const file of files) {
           findings.push({ file, line: idx + 1, kind: "jsx-text", text: s });
         }
       }
+
+      // 1b. JSX text on its OWN line, following a tag on the previous one:
+      //
+      //       <PenSquare size={16} />
+      //       Edit
+      //
+      // The rule above is line-scoped, so it never sees the `>` that closes the
+      // previous tag and misses the text entirely. Two real strings survived a
+      // full localization pass this way (the target row's Edit/Delete buttons and
+      // the add-service modal's "Learn more about"), and the build, tsc and key
+      // gates cannot see them either — only a reader can.
+      if (idx > 0 && /\/?>\s*$/.test(lines[idx - 1].trim())) {
+        const text = trimmed;
+        const isBareProse =
+          /^[A-Za-z][A-Za-z0-9 ,.'’\-]*$/.test(text) && !text.includes("{");
+        // Exclude code that merely happens to start with a capital or sit after a
+        // tag: statement keywords, type members and single identifiers.
+        const isCode =
+          /^(const|let|var|import|export|return|type|interface|function|case|break|await|throw|new|else|try|catch|default)\b/.test(
+            text,
+          ) || !/[\s.]/.test(text);
+        if (isBareProse && !isCode && looksLikeProse(text)) {
+          findings.push({ file, line: idx + 1, kind: "jsx-text-line", text });
+        }
+      }
     }
 
     // 2. visible string attributes

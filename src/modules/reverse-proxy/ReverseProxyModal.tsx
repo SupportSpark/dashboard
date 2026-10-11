@@ -654,8 +654,7 @@ export default function ReverseProxyModal({
 
               {isPrivate && accessGroups.length === 0 && (
                 <Paragraph className={"!text-yellow-400 !text-xs !mt-0"}>
-                  NetBird-only is on but no access groups are set. Open it
-                  on the Authentication tab and pick at least one group.
+                  {t("netBirdOnlyNoGroupsWarning")}
                 </Paragraph>
               )}
 
@@ -955,7 +954,7 @@ value={passHostHeader}
               }[tab];
               return docsLink ? (
                 <Paragraph className={"text-sm mt-auto"}>
-                  Learn more about
+                  {tCommon("learnMoreAbout")}
                   <InlineLink href={docsLink.href} target={"_blank"}>
                     {docsLink.label}
                     <ExternalLinkIcon size={12} />

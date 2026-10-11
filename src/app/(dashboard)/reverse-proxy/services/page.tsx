@@ -54,11 +54,11 @@ export default function ReverseProxyServicesPage() {
 				</Paragraph>
 
 {isNetBirdCloud() ? (
-					<Callout className={"max-w-xl mt-5"} variant={"info"}>
+					<Callout className={"max-w-2xl mt-5 mb-5"} variant={"info"}>
 						{t("betaNoticeCloud")}
 					</Callout>
 				) : (
-					<Callout className={"max-w-xl mt-5"} variant={"info"}>
+					<Callout className={"max-w-2xl mt-5 mb-5"} variant={"info"}>
 						{t("betaNoticeSelfHosted")}
 					</Callout>
 				)}
