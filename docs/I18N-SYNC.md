@@ -299,23 +299,58 @@ done
    ```
 6. 按 §7 的验证命令确认 200 / 401 / 200 与中文串存在。
 
-### 合并后一定要跑的四项检查
+### 合并后一定要跑的检查
 
-同步合并**跑绿不等于没问题**。本次同步实测中，`npm run build`、`tsc --noEmit`
-和全部单元测试都通过，但仍有 **31 个翻译 key 根本没定义**、**13 个上游 e2e
-data-testid 被改名**、**两处上游功能被静默删除**。这类问题只有下面这些检查能发现：
+同步合并**跑绿不等于没问题**。实测中 `npm run build`、`tsc --noEmit` 和全部单元测试
+都通过的情况下，仍然存在 **31 个 key 根本没定义**、**13 个上游 e2e data-testid 被改名**、
+**两处上游功能被静默删除**。这类问题只有下面这些检查能发现：
 
 ```bash
 npm run build                               # 静态导出是否成立
 npm run test:unit                           # 上游单测（884 项）
 npm run test:i18n                           # 语言探测断言
-node tools/check-catalog-parity.mjs .       # en/zh key 是否对齐
+node tools/check-catalog-parity.mjs .       # en/zh key 是否对齐（TS 编译级，权威）
 node tools/check-translation-keys.mjs       # 每个 t("key") 是否真的能解析
+node tools/classify-remaining.mjs           # 还剩多少真正需要翻译的界面文案
+node tools/find-hardcoded-english.mjs       # 硬编码英文清扫
 node tools/find-dropped-upstream-code.mjs   # 上游代码是否被静默丢弃
-pwsh -File tools/check-merge-integrity.ps1  # 冲突标记 / i18n 接线是否完好
+node tools/check-english-fidelity.mjs       # 英文目录是否与上游原文有出入
+pwsh -File tools/check-merge-integrity.ps1  # 冲突标记 / i18n 接线 / 目录来源
 ```
 
-前三项与最后三项都已接进 CI（`i18n-parity.yml`）。
+`i18n-parity.yml` 已接入目录对齐与 key 解析两项。
+
+> ⚠️ **`tsc` 不是可信的钥匙**：next-intl 的 key **不做类型检查**，写错 key 一样编译通过，
+> 只在运行时把原始 key 渲染到界面上。而且只要有任何一个文件存在**语法错误**，
+> `tsc` 会**抑制全部语义错误**——此时它可能在 373 处绑定缺失的情况下报“0 错误”。
+> 判断 key 是否可用只看 `check-translation-keys.mjs`。
+
+---
+
+## 8.5 翻译工作流（批量补译时）
+
+大面积补译不要直接改 `src/i18n/messages/{en,zh}.ts`：多个执行者会互相覆盖。
+用 fragment：
+
+1. 每个执行者只写自己的 `i18n-fragments/<名字>.json`：
+   ```json
+   { "命名空间": { "keyName": { "en": "English", "zh": "中文" } } }
+   ```
+   每个 key **必须**同时有 en 和 zh；合并工具会校验，缺一个整份 fragment 被拒。
+   两份 fragment 若对同一个 `命名空间.key` 给出不同值，合并**整体失败**（不会写半个）。
+2. 由**单一写入者**执行合并：`node tools/merge-i18n-fragments.mjs`
+   它是幂等的、只新增不覆盖，可以反复运行。
+3. `node tools/check-merge-integrity.ps1` 的 *catalog provenance* 段会验证
+   “每份 fragment 的每个 key 都已在 en.ts 里”，防止“看着没事”其实是没合进去。
+
+**命名空间冲突**：动手前先 `Select-String -Path src/i18n/messages/en.ts -Pattern '^  名字: \{'`
+确认目标命名空间是否已被占用；已被别的 fragment 声明的 key 不要重复定义。
+
+**模块级常量**：如果英文文案在模块级 `const items = [{ label: "X" }]` 里，
+**不能**在那里调用 `t()`——它是 React hook，模块作用域调用会在浏览器 import 时抛
+"Invalid hook call"，而构建仍然成功、`tsc` 也不会报错。改成工厂函数：
+`const items = (t) => [...]`，在组件内 `useMemo(() => items(t), [t])`。
+
 
 ---
 
@@ -357,16 +392,35 @@ pwsh -File tools/check-merge-integrity.ps1  # 冲突标记 / i18n 接线是否�
 
 ## 10. 翻译覆盖现状
 
+**目录规模**：en/zh 各 4413 个 key（2625 → 4413，本轮补译 +1788），结构完全对齐，
+4369 个命名空间内字面量 key 全部可解析。
+
 - **已本地化**：导航、Peers/节点详情、Access Control/策略、Groups/组、Users/用户、
   Service Users、Setup Keys、DNS（nameservers/zones/settings）、Networks/网络、
-  Network Routes/路由、Posture Checks、Reverse Proxy（services/domains/clusters/logs）、
-  Activity/活动日志（含约 105 个事件描述模板）、Settings 全部标签页、
-  Notifications、Invoices、Webhooks、Onboarding、Error/404、语言切换器。
-- **仍是英文**：`src/i18n/messages/*.ts` 里 `untranslated` 命名空间下的 485 条
-  （这是 PR #671 留下的待译基线，**目前没有任何组件引用它**，所以不影响界面）。
-  实际界面上剩余的英文集中在合并后上游新增的模块：`integrations`、
-  `control-center`、`agent-network`、`billing` 的部分文案。
-- 想补译时按 §5 走：`en.ts` 与 `zh.ts` 同名 key 成对添加。
+  Network Routes/路由、Posture Checks、Reverse Proxy（services/domains/clusters/logs/
+  auth/targets/events 全部子模块）、Activity/活动日志（含约 105 个事件描述模板）、
+  Settings 全部标签页、Notifications、Invoices、Webhooks、Onboarding（含注册表单、
+  调查、Agent Network 引导）、Integrations（EDR / Event Streaming / IdP Sync / SSO）、
+  Agent Network、Control Center（画布、菜单、面板、草稿模态框）、
+  Cloud（MSP / Distributor / Traffic Events / Sign-in Domains / MFA）、
+  Billing、Error/404、语言切换器。
+- **有意保留英文**：品牌与协议名（NetBird、Cluster、Integration、SSO、SCIM、
+  Okta、CrowdStrike、Datadog…）与参考数据（ICMP 类型名、OS 版本标签、
+  云区域列表、国家英文值——后者是 HubSpot 表单提交所需）。用
+  `node tools/classify-remaining.mjs` 可以把“真正待人翻译的文案”和“参考数据”分开统计。
+- **技术债**：`untranslated` 命名空间（485 条英文占位）仍在目录里，**无任何组件引用**，
+  因此对界面没有影响。删除脚本因用花括号计数、在含 `{}` 的 ICU 字符串上会算错而损坏目录，
+  已被移除；要清理请用基于行范围的编辑器，不要用括号匹配。
+
+### 本轮补译的经验（值得保留）
+
+| 坑 | 表现 | 防御 |
+| --- | --- | --- |
+| key 拼错/命名空间错 | 编译、构建、测试全过，界面显示原始 key | `check-translation-keys.mjs` |
+| 模块级 `t()` 调用 | 浏览器 import 时抛 Invalid hook call | 工厂函数 + 该工具的 `--area` 检查 |
+| 并发写目录 | 互相覆盖、命名空间消失 | fragment + 单一写入者 + provenance 守卫 |
+| 凭记忆改英文 | `You're all set!` → `You are all set!` | 上游单测（最强门禁）+ `check-english-fidelity.mjs` |
+| 扫描器误报/漏报 | 漏报 95%，或把 Tailwind/rgba 当文案 | 采样人工核对，别只看数字 |
 
 ---
 

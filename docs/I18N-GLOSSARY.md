@@ -30,9 +30,10 @@
 | Nameserver | 名称服务器 | |
 | DNS Zone | DNS 区域 | |
 | Domain | 域名 | |
-| Cluster | Cluster | **保留英文**（产品名） |
+| Cluster | 集群 | **译作集群**（见下方说明） |
 | Identity Provider | Identity Provider | **保留英文**（缩略 IDP） |
 | Integration | Integration | **保留英文** |
+| Reverse Proxy | 反向代理 | |
 | Role | 角色 | |
 | Status | 状态 | |
 | Enabled / Disabled | 已启用 / 已禁用 | |
@@ -96,7 +97,6 @@
 ## 保留英文不译
 
 以下属于产品名、协议名、技术缩写，**保留原文**：
-
 - 产品/品牌：`NetBird`、`NetBird Cloud`、`Cluster`、`Integration`、`Identity Provider`/`IDP`
 - 协议/技术：`SSH`、`RDP`、`DNS`、`API`、`JWT`、`OIDC`、`SAML`、`SCIM`、`OAuth`、`MFA`、`TLS`、`SSO`、`HTTP`/`HTTPS`、`TCP`/`UDP`、`ICMP`、`CIDR`、`IP`/`IPv4`/`IPv6`、`MAC`、`ACL`、`EDR`、`VPN`、`WireGuard`、`STUN`、`TURN`、`gRPC`、`WebSocket`、`WASM`
 - 第三方厂商：`Okta`、`Entra ID`、`Azure AD`、`Google Workspace`、`JumpCloud`、`CrowdStrike`、`SentinelOne`、`FleetDM`、`Huntress`、`Intune`、`Datadog`、`Firehose`、`S3`、`Slack`、`Webhook`、`Grafana`、`Sentry`、`BigQuery` 等
@@ -122,3 +122,16 @@
 6. **占位符与标签**：保留 `\n`、`<b>`、`<code>` 等富文本标签原样（`t.rich()` 用）。
 
 ## 待补充（遇到新概念请追加到上表）
+
+### 关于「Cluster」的裁决（2026-10-12 定案）
+
+本表早期版本写的是「保留英文」，与仓库实际情况矛盾：迁移后的中文目录里
+**52 处用「集群」**，只有少数几处残留英文，且那几处是不一致的个例。
+因此裁决为 **统一译作「集群」**（代理集群、自托管集群、集群名称…），
+理由是该词在中文技术语境中有稳定对应，且仓库既有多数用法已经如此。
+Cluster 仅在作为 API 字段值或用户输入回显时保留原文。
+
+> 本轮已修掉 4 处残留：proxyClusters、searchClusterPlaceholder、
+> everseProxyClusterRequired、
+oActiveProxyClusters。
+> 若后续发现新的不一致，以「集群」为准。
