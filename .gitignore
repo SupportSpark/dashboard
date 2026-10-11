@@ -62,3 +62,7 @@ src/.local-config*
 
 # Translation fragment workspace (merged into src/i18n/messages by tools/merge-i18n-fragments.mjs)
 i18n-fragments/
+
+# Agent scratch directories and helper scripts (see docs/I18N-SYNC.md)
+.tmp-*/
+tools/_*.mjs
