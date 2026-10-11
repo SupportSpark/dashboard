@@ -2,6 +2,7 @@ import Button from "@components/Button";
 import { Input } from "@components/Input";
 import { useDebounce } from "@hooks/useDebounce";
 import { Folder, MinusCircleIcon, PlusIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useEffect, useState } from "react";
 
@@ -17,13 +18,18 @@ type GroupPrefixInputProps = {
 export function GroupPrefixInput({
   value,
   onChange,
-  addText = "Add group filter",
+  addText,
   icon = <Folder size={14} />,
-  text = "Group starts with...",
-  placeholder = "e.g., NetBird_",
+  text,
+  placeholder,
 }: GroupPrefixInputProps) {
+  const t = useTranslations("idpSync");
   const [groupPrefixes, setGroupPrefixes] = useState<string[]>(value);
   const prefixes = useDebounce(groupPrefixes, 100);
+
+  const addTextLabel = addText ?? t("addGroupFilter");
+  const textLabel = text ?? t("groupStartsWith");
+  const placeholderLabel = placeholder ?? t("groupPrefixPlaceholder");
 
   useEffect(() => {
     onChange(prefixes);
@@ -68,10 +74,10 @@ export function GroupPrefixInput({
                       customPrefix={
                         <div className={"flex gap-2 items-center"}>
                           {icon}
-                          <span>{text}</span>
+                          <span>{textLabel}</span>
                         </div>
                       }
-                      placeholder={placeholder}
+                      placeholder={placeholderLabel}
                       maxWidthClass={"w-full"}
                       value={g}
                       className={" !text-[13px]"}
@@ -99,7 +105,7 @@ export function GroupPrefixInput({
         onClick={onAddGroupPrefix}
       >
         <PlusIcon size={14} />
-        {addText}
+        {addTextLabel}
       </Button>
     </div>
   );

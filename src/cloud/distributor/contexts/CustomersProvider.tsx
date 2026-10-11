@@ -1,4 +1,5 @@
 import { notify } from "@components/Notification";
+import { useTranslations } from "next-intl";
 import useFetchApi, { useApiCall } from "@utils/api";
 import * as React from "react";
 import { useMemo, useState } from "react";
@@ -26,7 +27,9 @@ const CustomersContext = React.createContext(
   },
 );
 
-export const CustomersProvider = ({ children }: Props) => {
+export const CustomersProvider = ({
+children }: Props) => {
+  const td = useTranslations("distributor");
   const { data: customers } = useFetchApi<DistributorCustomer[]>(
     "/integrations/msp/reseller/msps",
   );
@@ -47,8 +50,8 @@ export const CustomersProvider = ({ children }: Props) => {
     const choice = await confirm({
       title: `Unlink '${customer.name}'?`,
       description:
-        "Unlinking this customer will remove it from your distributor account. The account will continue to exist independently.",
-      confirmText: "Unlink",
+        td("unlinkDescription"),
+      confirmText: td("unlink"),
       cancelText: "Cancel",
       type: "danger",
       maxWidthClass: "max-w-[480px]",
@@ -87,8 +90,8 @@ export const CustomersProvider = ({ children }: Props) => {
 
     notify({
       title: `Request Account Access`,
-      description: "Request has been sent successfully.",
-      loadingMessage: "Sending request...",
+      description: td("requestSent"),
+      loadingMessage: td("sendingRequest"),
       promise: request,
     });
 

@@ -7,6 +7,7 @@ import {
   ReverseProxy,
   ReverseProxyEvent,
 } from "@/interfaces/ReverseProxy";
+import { useTranslations } from "next-intl";
 
 type Props = {
   event: ReverseProxyEvent;
@@ -29,6 +30,7 @@ export const ReverseProxyEventsMethodCell = ({ event }: Props) => {
 };
 
 export const ReverseProxyEventsUrlCell = ({ event, service }: Props) => {
+  const t = useTranslations("reverseProxy");
   const isL4 = isL4Event(event);
   const listenPort = service?.listen_port;
 
@@ -50,7 +52,7 @@ export const ReverseProxyEventsUrlCell = ({ event, service }: Props) => {
         </div>
       }
     >
-      <CopyToClipboardText message={"URL has been copied to your clipboard"}>
+      <CopyToClipboardText message={t("urlCopied")}>
         <span className="font-mono text-[0.82rem] whitespace-nowrap">
           <span className="text-nb-gray-200">{wrappedHost}</span>
           {isL4 && listenPort && (

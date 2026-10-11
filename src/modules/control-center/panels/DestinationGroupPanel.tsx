@@ -55,6 +55,7 @@ import {
   pinByOrder,
   useStructuralNodes,
 } from "@/modules/control-center/utils/helpers";
+import { useTranslations } from "next-intl";
 
 interface DestinationGroupPanelProps {
   // Real group id, or the canvas node id for draft groups without an API id.
@@ -354,6 +355,8 @@ export const DestinationGroupPanel = ({
   groupId,
   onClose,
 }: DestinationGroupPanelProps) => {
+  const t = useTranslations("controlCenter");
+  const tCommon = useTranslations("common");
   const { peers, networkResources, groups, users } = useControlCenterData();
   // Structural subscription: a nodes subscription re-renders the panel on every canvas update.
   const nodes = useStructuralNodes();
@@ -827,10 +830,9 @@ export const DestinationGroupPanel = ({
     if (!group.id) return;
     const choice = await confirm({
       title: `Save group “${group.name}”?`,
-      description:
-        "You are in live mode. Saving your changes will apply them to your account immediately.",
-      confirmText: "Save",
-      cancelText: "Cancel",
+      description: t("liveModeSaveNotice"),
+      confirmText: tCommon("save"),
+      cancelText: tCommon("cancel"),
       type: "warning",
       dismissOnOutsideClick: true,
     });
@@ -959,7 +961,7 @@ export const DestinationGroupPanel = ({
     await mutate("/users?service_user=false");
     if (failed.length > 0) {
       notify({
-        title: "Some users were not updated",
+        title: t("someUsersNotUpdated"),
         description: `${failed.join(", ")} could not be moved in or out of “${
           group?.name ?? "this group"
         }”. Their membership is unchanged.`,
@@ -1140,14 +1142,14 @@ export const DestinationGroupPanel = ({
   const confirmDiscard = async () => {
     if (!dirty || !canSave) return true;
     return !!(await confirm({
-      title: "Unsaved Changes",
+      title: t("unsavedChanges"),
       description: `The members you toggled for “${
         group?.name ?? "this group"
       }” haven't been ${
         isDraft ? "applied" : "saved"
       } yet. Closing the panel will lose them.`,
-      confirmText: "Discard",
-      cancelText: "Cancel",
+      confirmText: t("discard"),
+      cancelText: tCommon("cancel"),
       type: "danger",
       dismissOnOutsideClick: true,
     }));
@@ -1211,10 +1213,10 @@ export const DestinationGroupPanel = ({
             autoFocus
             placeholder={
               tab === "peers"
-                ? "Search peer by name or ip..."
+                ? tCommon("searchPeerByNameOrIp")
                 : tab === "users"
                 ? "Search user by name, email or role..."
-                : "Search resource..."
+                : tCommon("searchResourcePlaceholder")
             }
           />
           {/* top-1 mirrors the row's pt-1 so the icon centers on the input. */}
@@ -1234,7 +1236,7 @@ export const DestinationGroupPanel = ({
               "hover:bg-nb-gray-910 hover:text-nb-gray-200 transition-colors",
             )}
           >
-            ESC
+            {t("escKey")}
           </button>
         </div>
 
@@ -1247,7 +1249,7 @@ export const DestinationGroupPanel = ({
                   "text-nb-gray-500 group-data-[state=active]/trigger:text-netbird transition-all"
                 }
               />
-              Peers
+              {tCommon("peers")}
             </TabsTrigger>
             <TabsTrigger
               value={"resources"}
@@ -1259,7 +1261,7 @@ export const DestinationGroupPanel = ({
                   "text-nb-gray-500 group-data-[state=active]/trigger:text-netbird transition-all"
                 }
               />
-              Resources
+              {tCommon("resources")}
             </TabsTrigger>
             <TabsTrigger value={"users"} className={"text-[.8rem] font-normal"}>
               <UsersIcon
@@ -1268,7 +1270,7 @@ export const DestinationGroupPanel = ({
                   "text-nb-gray-500 group-data-[state=active]/trigger:text-netbird transition-all"
                 }
               />
-              Users
+              {t("users")}
             </TabsTrigger>
           </TabsList>
         </div>
@@ -1325,7 +1327,7 @@ export const DestinationGroupPanel = ({
             <div className={"px-3 pt-3"}>
               <DropdownInfoText className={"mt-5 max-w-sm mx-auto text-sm"}>
                 {query
-                  ? "There are no peers matching your search. Please try a different search term."
+                  ? tCommon("noPeersMatchingSearch")
                   : "There are no peers in this group yet."}
               </DropdownInfoText>
             </div>
@@ -1370,7 +1372,7 @@ export const DestinationGroupPanel = ({
                         !(resource as { draftNetwork?: unknown })
                           .draftNetwork && (
                           <DraftStatusChip
-                            label={"No Network"}
+                            label={t("noNetwork")}
                             onClick={() =>
                               setResourceNetworkPicker({
                                 nodeId: `resource-${resource.id}`,
@@ -1389,7 +1391,7 @@ export const DestinationGroupPanel = ({
             <div className={"px-3 pt-3"}>
               <DropdownInfoText className={"mt-5 max-w-sm mx-auto text-sm"}>
                 {query
-                  ? "There are no resources matching your search. Please try a different search term."
+                  ? tCommon("noResourcesMatchingSearch")
                   : "There are no resources in this group yet."}
               </DropdownInfoText>
             </div>
@@ -1454,7 +1456,7 @@ export const DestinationGroupPanel = ({
               className={"py-2.5"}
               onClick={onClose}
             >
-              Cancel
+              {tCommon("cancel")}
             </Button>
             <Button
               variant={"primary"}
@@ -1465,7 +1467,7 @@ export const DestinationGroupPanel = ({
             >
               {/* Keep the label's width while saving so nothing jumps. */}
               <span className={cn(saving && "invisible")}>
-                {isDraft ? "Assign" : "Save"}
+                {isDraft ? t("assign") : tCommon("save")}
               </span>
               {saving && (
                 <Loader2

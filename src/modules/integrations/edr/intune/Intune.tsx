@@ -3,6 +3,7 @@ import { notify } from "@components/Notification";
 import { SkeletonIntegration } from "@components/skeletons/SkeletonIntegration";
 import { useApiCall } from "@utils/api";
 import { Settings } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useSWRConfig } from "swr";
@@ -22,6 +23,8 @@ type Props = {
 };
 
 export const Intune = ({ account }: Props) => {
+  const t = useTranslations("integrations");
+  const tCommon = useTranslations("common");
   const { mutate } = useSWRConfig();
   const [setupModal, setSetupModal] = useState(false);
   const { permission } = usePermissions();
@@ -48,11 +51,10 @@ export const Intune = ({ account }: Props) => {
 
     const choice = isCurrentlyEnabled
       ? await confirm({
-          title: `Disable Intune?`,
-          description:
-            "Are you sure you want to disable the Intune integration?",
-          confirmText: "Disable",
-          cancelText: "Cancel",
+          title: t("disableIntegrationTitle", { name: "Intune" }),
+          description: t("disableIntegrationDescription", { name: "Intune" }),
+          confirmText: tCommon("disable"),
+          cancelText: tCommon("cancel"),
           type: "warning",
         })
       : true;
@@ -62,10 +64,11 @@ export const Intune = ({ account }: Props) => {
       integration.groups?.map((group) => (group as Group).id) || [];
 
     notify({
-      title: "Intune Integration",
-      description: `Intune was successfully ${
-        isCurrentlyEnabled ? "disabled" : "enabled"
-      }`,
+      title: t("integrationLinkText", { name: "Intune" }),
+      description: t("integrationWasEnabledOrDisabled", {
+        name: "Intune",
+        status: isCurrentlyEnabled ? t("disableAction") : t("enableAction"),
+      }),
       promise: intuneRequest
         .put({
           ...integration,
@@ -76,7 +79,7 @@ export const Intune = ({ account }: Props) => {
         .then(() => {
           mutate("/integrations/edr/intune");
         }),
-      loadingMessage: "Updating integration...",
+      loadingMessage: t("updatingIntegration"),
     });
   };
 
@@ -86,7 +89,7 @@ export const Intune = ({ account }: Props) => {
     <>
       <IntegrationCard
         name="Intune"
-        description="Microsoft Intune is a cloud-based unified endpoint management for your organization."
+        description={t("intuneDescription")}
         url={{
           title: "microsoft.com",
           href: "https://www.microsoft.com/en-us/security/business/endpoint-management/microsoft-intune",
@@ -118,6 +121,7 @@ type ConfigurationProps = {
   config: IntuneIntegration;
 };
 const ConfigurationButton = ({ config }: ConfigurationProps) => {
+  const t = useTranslations("integrations");
   const [configModal, setConfigModal] = useState(false);
 
   return (
@@ -132,7 +136,7 @@ const ConfigurationButton = ({ config }: ConfigurationProps) => {
           }}
         >
           <Settings size={14} />
-          Settings
+          {t("settings")}
         </Button>
       </div>
       <IntuneConfiguration

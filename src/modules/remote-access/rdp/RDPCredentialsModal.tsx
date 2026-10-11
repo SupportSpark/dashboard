@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
 import { Modal, ModalContent, ModalFooter } from "@components/modal/Modal";
 import ModalHeader from "@components/modal/ModalHeader";
@@ -34,12 +35,14 @@ type Props = {
 };
 
 export const RDPCredentialsModal = ({
+
   open,
   peer,
   onConnect,
   error,
   loading,
 }: Props) => {
+  const tcommon = useTranslations("common");
   const defaultUsername =
     getOperatingSystem(peer?.os) === OperatingSystem.WINDOWS
       ? "Administrator"
@@ -136,7 +139,7 @@ export const RDPCredentialsModal = ({
             </div>
           )}
           <div>
-            <Label>Username & Password</Label>
+            <Label>{tcommon("usernameAndPassword")}</Label>
             <HelpText>
               Enter the credentials required to authenticate with the remote
               host. For domain accounts, use DOMAIN\username or username@domain format.

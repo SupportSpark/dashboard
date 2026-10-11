@@ -1,4 +1,5 @@
 import Button from "@components/Button";
+import { useTranslations } from "next-intl";
 import HelpText from "@components/HelpText";
 import InlineLink from "@components/InlineLink";
 import { Label } from "@components/Label";
@@ -25,6 +26,7 @@ export const useCanViewSignInDomains = () => {
 };
 
 export const SignInDomainsSettings = () => {
+  const tsid = useTranslations("signInDomains");
   const { permission } = usePermissions();
   const { domains, isLoading, isUnavailable } =
     useSignInDomains(POLL_INTERVAL_MS);
@@ -42,11 +44,11 @@ export const SignInDomainsSettings = () => {
     >
       <div className={"flex items-end justify-between gap-4 mb-4"}>
         <div className={"min-w-0"}>
-          <Label>Sign-in Domains</Label>
+          <Label>{tsid("title")}</Label>
           <HelpText className={"!mb-0"}>
-            Users from these domains can join your account.{" "}
+            {tsid("settingsDescription")}{" "}
             <InlineLink href={SIGN_IN_DOMAINS_DOCS_LINK} target={"_blank"}>
-              Learn more
+              {tsid("learnMore")}
               <ExternalLinkIcon size={12} />
             </InlineLink>
           </HelpText>

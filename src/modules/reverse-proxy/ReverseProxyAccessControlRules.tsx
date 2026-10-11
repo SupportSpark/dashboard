@@ -25,36 +25,54 @@ import { useTranslations } from "next-intl";
 type AccessAction = "allow" | "block";
 type AccessRuleType = "country" | "ip" | "cidr";
 
-const ACTION_OPTIONS: SelectOption[] = [
-	{
-		label: "Allow Only",
-		value: "allow",
-		icon: (props) => <ShieldCheckIcon {...props} className="text-green-500" />,
-	},
-	{
-		label: "Block Only",
-		value: "block",
-		icon: (props) => <ShieldXIcon {...props} className="text-red-500" />,
-	},
-];
+type RulesTranslator = ReturnType<typeof useTranslations<"reverseProxy">>;
 
-const TYPE_OPTIONS: SelectOption[] = [
-	{
-		label: "Country",
-		value: "country",
-		icon: (props) => <FlagIcon {...props} />,
-	},
-	{
-		label: "IP Address",
-		value: "ip",
-		icon: (props) => <WorkflowIcon {...props} />,
-	},
-	{
-		label: "CIDR Block",
-		value: "cidr",
-		icon: (props) => <NetworkIcon {...props} />,
-	},
-];
+/** Action select options; labels live in the reverseProxy catalog. */
+function useActionOptions(t: RulesTranslator): SelectOption[] {
+	return useMemo(
+		() => [
+			{
+				label: t("actionAllowOnly"),
+				value: "allow",
+				icon: (props) => (
+					<ShieldCheckIcon {...props} className="text-green-500" />
+				),
+			},
+			{
+				label: t("actionBlockOnly"),
+				value: "block",
+				icon: (props) => (
+					<ShieldXIcon {...props} className="text-red-500" />
+				),
+			},
+		],
+		[t],
+	);
+}
+
+/** Rule type select options; labels live in the reverseProxy catalog. */
+function useTypeOptions(t: RulesTranslator): SelectOption[] {
+	return useMemo(
+		() => [
+			{
+				label: t("typeCountry"),
+				value: "country",
+				icon: (props) => <FlagIcon {...props} />,
+			},
+			{
+				label: t("typeIpAddress"),
+				value: "ip",
+				icon: (props) => <WorkflowIcon {...props} />,
+			},
+			{
+				label: t("typeCidrBlock"),
+				value: "cidr",
+				icon: (props) => <NetworkIcon {...props} />,
+			},
+		],
+		[t],
+	);
+}
 
 type AccessRule = {
 	id: string;
@@ -178,7 +196,7 @@ type Props = {
 	supportsCrowdSec?: boolean;
 };
 
-function validateRule(rule: AccessRule): string {
+function validateRule(rule: AccessRule, t: RulesTranslator): string {
 	if (rule.type === "country" || !rule.value) return "";
 	if (rule.type === "ip") {
 		let val = rule.value;
@@ -187,11 +205,11 @@ function validateRule(rule: AccessRule): string {
 			val = `${val}/${suffix}`;
 		}
 		if (!isValidIP(val)) {
-			return "Please enter a valid IP address, e.g., 85.203.15.42 or 2001:db8::1";
+			return t("invalidIpAddress");
 		}
 	} else {
 		if (!rule.value.includes("/") || !isValidIP(rule.value)) {
-			return "Please enter a valid CIDR block, e.g., 74.125.0.0/16 or 2001:db8::/64";
+			return t("invalidCidrBlock");
 		}
 	}
 	return "";
@@ -204,6 +222,12 @@ export const ReverseProxyAccessControlRules = ({
 	supportsCrowdSec,
 }: Props) => {
 	const t = useTranslations("common");
+	const tr = useTranslations("reverseProxy");
+	// "Add Rule" lives in the policies namespace (shared with access control),
+	// not in reverseProxy.
+	const tCommonAddRule = useTranslations("policies")("addRule");
+	const actionOptions = useActionOptions(tr);
+	const typeOptions = useTypeOptions(tr);
 	const [rules, dispatch] = useReducer(
 		rulesReducer,
 		value,
@@ -215,8 +239,8 @@ export const ReverseProxyAccessControlRules = ({
 	);
 
 	const errors = useMemo(
-		() => Object.fromEntries(rules.map((r) => [r.id, validateRule(r)])),
-		[rules],
+		() => Object.fromEntries(rules.map((r) => [r.id, validateRule(r, tr)])),
+		[rules, tr],
 	);
 
 	const hasErrors = useMemo(
@@ -256,10 +280,7 @@ export const ReverseProxyAccessControlRules = ({
 			<div>
 				<Label>{t("accessControlRules")}</Label>
 				<HelpText>
-					Define rules to allow or block traffic based on country, IP address,
-					or CIDR block.
-					<br />
-					Block rules always take priority over allow rules.
+					{tr.rich("accessControlRulesHelp", { br: () => <br /> })}
 				</HelpText>
 			</div>
 			{rules.length > 0 && (
@@ -284,7 +305,7 @@ export const ReverseProxyAccessControlRules = ({
 											value: v,
 										})
 									}
-									options={ACTION_OPTIONS}
+									options={actionOptions}
 									compact
 								/>
 							</div>
@@ -303,7 +324,7 @@ export const ReverseProxyAccessControlRules = ({
 											value: v,
 										})
 									}
-									options={TYPE_OPTIONS}
+									options={typeOptions}
 									compact
 								/>
 							</div>
@@ -328,8 +349,8 @@ export const ReverseProxyAccessControlRules = ({
 									<Input
 										placeholder={
 											rule.type === "ip"
-												? "e.g., 85.203.15.42 or 2001:db8::1"
-												: "e.g., 74.125.0.0/16 or 2001:db8::/64"
+												? tr("ipAddressPlaceholder")
+												: tr("cidrBlockPlaceholder")
 										}
 										value={rule.value}
 										onChange={(e) =>
@@ -370,7 +391,7 @@ export const ReverseProxyAccessControlRules = ({
 					data-testid="add-access-rule"
 				>
 					<PlusIcon size={14} />
-					Add Rule
+					{tCommonAddRule}
 				</Button>
 			</div>
 		</div>

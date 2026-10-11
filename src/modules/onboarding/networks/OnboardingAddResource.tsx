@@ -50,7 +50,7 @@ export const OnboardingAddResource = ({
 			await networkRequest
 				.post({
 					name: "My First Network",
-					description: "Created during onboarding",
+					description: t("createdDuringOnboarding"),
 				})
 				.then((n) => {
 					myNetwork = n;
@@ -62,14 +62,14 @@ export const OnboardingAddResource = ({
 		if (!myNetwork) return;
 
 		notify({
-			title: "My First Network",
-			description: "Network & Resource created successfully",
-			loadingMessage: "Creating your resource...",
+			title: t("myFirstNetwork"),
+			description: t("networkAndResourceCreated"),
+			loadingMessage: t("creatingYourResource"),
 			promise: resourceRequest
 				.post(
 					{
 						name: resourceType === "subnet" ? "My Subnet" : "My Resource",
-						description: "Created during onboarding",
+						description: t("createdDuringOnboarding"),
 						address: normalizeHostCIDR(resourceAddress),
 						enabled: true,
 						groups: [],

@@ -23,6 +23,7 @@ import {
   RefreshCcw,
   UserCircle,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React, { useState } from "react";
 import { useSWRConfig } from "swr";
 import integrationImage from "@/assets/integrations/generic-scim.png";
@@ -83,6 +84,9 @@ export function ConfigurationContent({
   image,
   provider,
 }: ModalProps) {
+  const t = useTranslations("idpSync");
+  const tCommon = useTranslations("common");
+  const integrationName = name ?? "Generic SCIM";
   const { mutate } = useSWRConfig();
   const { confirm } = useDialog();
 
@@ -114,54 +118,55 @@ export function ConfigurationContent({
 
   const regenerateAuthToken = async () => {
     const choice = await confirm({
-      title: `Regenerate Auth Token?`,
-      description:
-        "Are you sure you want to regenerate the auth token? You will need to update the token in your identity providers configuration.",
-      confirmText: "Regenerate",
-      cancelText: "Cancel",
+      title: t("regenerateAuthTokenQuestion"),
+      description: t("regenerateAuthTokenDescription", {
+        provider: integrationName,
+      }),
+      confirmText: t("regenerateAction"),
+      cancelText: tCommon("cancel"),
       type: "default",
     });
 
     if (!choice) return;
 
     notify({
-      title: `${name} Integration`,
-      description: `Auth token was successfully regenerated`,
+      title: t("integrationLinkText", { name: integrationName }),
+      description: t("authTokenRegenerated"),
       promise: scimRequest.post({}, `/${config.id}/token`).then((r) => {
         mutate("/integrations/scim-idp");
         setAuthToken(r.auth_token);
         updateRef([r.auth_token, groupPrefixes, userGroupPrefixes]);
       }),
-      loadingMessage: "Updating your auth token...",
+      loadingMessage: t("updatingAuthToken"),
     });
   };
 
   const deleteIntegration = async () => {
     const choice = await confirm({
-      title: `Delete integration?`,
-      description: "Are you sure you want to delete this integration?",
-      confirmText: "Delete",
-      cancelText: "Cancel",
+      title: t("deleteIntegrationQuestion"),
+      description: t("deleteIntegrationDescription"),
+      confirmText: tCommon("delete"),
+      cancelText: tCommon("cancel"),
       type: "danger",
     });
 
     if (!choice) return;
 
     notify({
-      title: `${name} Integration`,
-      description: `${name} was successfully deleted`,
+      title: t("integrationLinkText", { name: integrationName }),
+      description: t("integrationWasDeleted", { name: integrationName }),
       promise: scimRequest.del({}, `/${config.id}`).then(() => {
         mutate("/integrations/scim-idp");
         onSuccess();
       }),
-      loadingMessage: "Deleting integration...",
+      loadingMessage: t("deletingIntegration"),
     });
   };
 
   const updateIntegration = async () => {
     notify({
-      title: `${name} Integration`,
-      description: `${name} was successfully updated`,
+      title: t("integrationLinkText", { name: integrationName }),
+      description: t("integrationWasUpdated", { name: integrationName }),
       promise: scimRequest
         .put(
           {
@@ -180,7 +185,7 @@ export function ConfigurationContent({
           mutate("/integrations/scim-idp");
           onSuccess();
         }),
-      loadingMessage: "Updating integration...",
+      loadingMessage: t("updatingIntegration"),
     });
   };
 
@@ -195,10 +200,8 @@ export function ConfigurationContent({
 
       <IntegrationModalHeader
         image={image || integrationImage}
-        title={`${name} Configuration`}
-        description={
-          "Sync your users and groups from your identity provider to NetBird."
-        }
+        title={t("configurationTitle", { name: integrationName })}
+        description={t("genericSyncDescription")}
       />
 
       <Tabs
@@ -214,7 +217,7 @@ export function ConfigurationContent({
                 "text-nb-gray-500 group-data-[state=active]/trigger:text-netbird transition-all"
               }
             />
-            Settings
+            {tCommon("settings")}
           </TabsTrigger>
           <TabsTrigger value={"group-sync"}>
             <FolderGit2
@@ -223,7 +226,7 @@ export function ConfigurationContent({
                 "text-nb-gray-500 group-data-[state=active]/trigger:text-netbird transition-all"
               }
             />
-            Group Sync
+            {t("groupSync")}
           </TabsTrigger>
           <TabsTrigger value={"user-sync"}>
             <UserCircle
@@ -232,7 +235,7 @@ export function ConfigurationContent({
                 "text-nb-gray-500 group-data-[state=active]/trigger:text-netbird transition-all"
               }
             />
-            User Sync
+            {t("userSync")}
           </TabsTrigger>
           <TabsTrigger value={"danger"}>
             <AlertOctagon
@@ -241,7 +244,7 @@ export function ConfigurationContent({
                 "text-nb-gray-500 group-data-[state=active]/trigger:text-netbird transition-all"
               }
             />
-            Danger Zone
+            {t("dangerZone")}
           </TabsTrigger>
         </TabsList>
         <TabsContent value={"settings"} className={"px-8 text-sm"}>
@@ -250,11 +253,11 @@ export function ConfigurationContent({
               <Card.List>
                 <Card.ListItem
                   copy={!authToken.includes("*")}
-                  copyText={"Auth token"}
+                  copyText={t("authTokenCopyLabel")}
                   label={
                     <>
                       <KeyRound size={16} />
-                      Auth Token
+                      {t("authTokenLabel")}
                     </>
                   }
                   value={authToken}
@@ -263,7 +266,7 @@ export function ConfigurationContent({
             </Card>
             <Button variant={"secondary"} onClick={regenerateAuthToken}>
               <RefreshCcw size={16} />
-              Regenerate Auth Token
+              {t("regenerateAuthToken")}
             </Button>
             <EmbeddedIdentityProviderSelect
               value={connectorId}
@@ -278,7 +281,7 @@ export function ConfigurationContent({
             <Label>
               <div className={"flex gap-2 items-center"}>
                 <FolderGit2 size={16} />
-                Synchronize Groups
+                {t("synchronizeGroups")}
               </div>
             </Label>
             <GroupPrefixHelpText />
@@ -291,14 +294,14 @@ export function ConfigurationContent({
             <Label>
               <div className={"flex gap-2 items-center"}>
                 <UserCircle size={16} />
-                Synchronize Users
+                {t("synchronizeUsers")}
               </div>
             </Label>
             <GroupPrefixHelpText type={"user-groups"} />
           </div>
           <GroupPrefixInput
-            addText={"Add user group filter"}
-            text={"User group starts with..."}
+            addText={t("addUserGroupFilter")}
+            text={t("userGroupStartsWith")}
             value={userGroupPrefixes}
             onChange={setUserGroupPrefixes}
           />
@@ -309,14 +312,11 @@ export function ConfigurationContent({
             <Label>
               <div className={"flex gap-2 items-center"}>
                 <AlertOctagon size={16} />
-                Delete Integration
+                {t("deleteIntegration")}
               </div>
             </Label>
             <HelpText className={"max-w-lg mt-2"}>
-              Deleting this integration will remove the ability to sync users
-              and groups from your IdP to NetBird. If you delete the integration
-              you will need to reconfigure it again to enable the
-              synchronization.
+              {t("deleteIntegrationHelp")}
             </HelpText>
           </div>
           <Button
@@ -325,7 +325,7 @@ export function ConfigurationContent({
             className={"mt-3"}
             onClick={deleteIntegration}
           >
-            Delete Integration
+            {t("deleteIntegration")}
           </Button>
         </TabsContent>
       </Tabs>
@@ -334,7 +334,7 @@ export function ConfigurationContent({
       <ModalFooter className={"items-center gap-4"}>
         <ModalClose asChild={true}>
           <Button variant={"secondary"} className={"w-full"}>
-            Cancel
+            {tCommon("cancel")}
           </Button>
         </ModalClose>
 
@@ -344,7 +344,7 @@ export function ConfigurationContent({
           disabled={!hasChanges}
           onClick={updateIntegration}
         >
-          Save
+          {tCommon("save")}
         </Button>
       </ModalFooter>
     </ModalContent>

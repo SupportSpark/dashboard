@@ -7,6 +7,7 @@ import { IconCirclePlus } from "@tabler/icons-react";
 import { cn } from "@utils/helpers";
 import { orderBy } from "lodash";
 import { ArrowRightIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useMemo } from "react";
 import { useTenants } from "@/cloud/msp/contexts/TenantsProvider";
@@ -19,7 +20,7 @@ import { useGroups } from "@/contexts/GroupsProvider";
 import { useUsers } from "@/contexts/UsersProvider";
 import { Group } from "@/interfaces/Group";
 import { HorizontalUsersStack } from "@/modules/users/HorizontalUsersStack";
-import { UserRoles } from "@/modules/users/UserRoleSelector";
+import { getUserRoles } from "@/modules/users/UserRoleSelector";
 
 type Props = {
   tenant: Tenant;
@@ -141,11 +142,12 @@ const MultipleGroupsWithUser = ({
 };
 
 const GroupWithUserItem = ({ group }: { group: TenantGroup }) => {
+  const t = useTranslations("users");
   const { users } = useUsers();
   const usersOfGroup =
     users?.filter((user) => user.auto_groups.includes(group.id as string)) ||
     [];
-  const selectedRole = UserRoles.find((r) => r.value === group.role);
+  const selectedRole = getUserRoles(t).find((r) => r.value === group.role);
 
   return (
     <div className={"flex items-center gap-2 justify-between w-full"}>
@@ -172,8 +174,9 @@ const GroupWithUserItem = ({ group }: { group: TenantGroup }) => {
 };
 
 const GroupSuffix = () => {
+  const t = useTranslations("users");
   const oneOrTwo = Math.random() > 0.5 ? 1 : 2;
-  const selectedRole = UserRoles[oneOrTwo];
+  const selectedRole = getUserRoles(t)[oneOrTwo];
   return (
     <div
       className={

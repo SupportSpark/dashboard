@@ -14,6 +14,7 @@ import { GradientFadedBackground } from "@components/ui/GradientFadedBackground"
 import { Mark } from "@components/ui/Mark";
 import { cn } from "@utils/helpers";
 import { ExternalLinkIcon, GlobeIcon, Repeat } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import React, { useState } from "react";
 import { DomainValidationStatus } from "@/interfaces/Account";

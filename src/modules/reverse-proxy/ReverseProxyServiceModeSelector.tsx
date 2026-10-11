@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode, useEffect, useMemo } from "react";
 import {
   isL4Mode as isL4ServiceMode,
   type ReverseProxyDomain,
@@ -15,6 +15,7 @@ import { ArrowRightFromLine, Globe, LockKeyhole } from "lucide-react";
 import { HelpTooltip } from "@components/HelpTooltip";
 import { Label } from "@components/Label";
 import HelpText from "@components/HelpText";
+import { useTranslations } from "next-intl";
 
 type Props = {
   value?: ServiceMode;
@@ -29,32 +30,39 @@ type ServiceModeConfig = {
   icon: ReactNode;
 };
 
-export const SERVICE_MODES: Record<ServiceMode, ServiceModeConfig> = {
-  [ServiceMode.HTTP]: {
-    label: "HTTPS Service",
-    description:
-      "Reverse proxy with path routing and built-in authentication (SSO, PIN, password). Typically used for web applications and APIs.",
-    icon: <Globe size={14} />,
-  },
-  [ServiceMode.TLS]: {
-    label: "TLS Passthrough",
-    description:
-      "Passes encrypted TLS traffic straight through to the backend. Typically used for services that manage their own TLS certificates.",
-    icon: <LockKeyhole size={14} />,
-  },
-  [ServiceMode.TCP]: {
-    label: "TCP Service",
-    description:
-      "Forwards raw TCP traffic to your backend on a dedicated port. Typically used for databases, custom protocols, or any TCP-based service.",
-    icon: <ArrowRightFromLine size={14} />,
-  },
-  [ServiceMode.UDP]: {
-    label: "UDP Service",
-    description:
-      "Forwards raw UDP traffic to your backend on a dedicated port. Typically used for real-time services like voice, video, or streaming.",
-    icon: <ArrowRightFromLine size={14} />,
-  },
-};
+/**
+ * Labels for each service mode. Kept as a translator-driven hook so the
+ * strings stay in the reverseProxy catalog; `ReverseProxyTypeCell` renders
+ * the bare protocol name from `serviceModeShortLabel`.
+ */
+export const useServiceModes = (
+  t: ReturnType<typeof useTranslations<"reverseProxy">>,
+): Record<ServiceMode, ServiceModeConfig> =>
+  useMemo(
+    () => ({
+      [ServiceMode.HTTP]: {
+        label: t("httpsService"),
+        description: t("httpsServiceDescription"),
+        icon: <Globe size={14} />,
+      },
+      [ServiceMode.TLS]: {
+        label: t("tlsPassthrough"),
+        description: t("tlsPassthroughDescription"),
+        icon: <LockKeyhole size={14} />,
+      },
+      [ServiceMode.TCP]: {
+        label: t("tcpService"),
+        description: t("tcpServiceDescription"),
+        icon: <ArrowRightFromLine size={14} />,
+      },
+      [ServiceMode.UDP]: {
+        label: t("udpService"),
+        description: t("udpServiceDescription"),
+        icon: <ArrowRightFromLine size={14} />,
+      },
+    }),
+    [t],
+  );
 
 export const ReverseProxyServiceModeSelector = ({
   value,
@@ -62,8 +70,10 @@ export const ReverseProxyServiceModeSelector = ({
   disabled,
   domain,
 }: Props) => {
+  const t = useTranslations("reverseProxy");
+  const serviceModes = useServiceModes(t);
   const selected = value ?? ServiceMode.HTTP;
-  const selectedMode = SERVICE_MODES[selected];
+  const selectedMode = serviceModes[selected];
   const isL4Supported = domain?.supports_custom_ports !== undefined;
 
   // Reset to HTTP if the current L4 mode becomes unsupported (e.g. domain changed)
@@ -76,11 +86,8 @@ export const ReverseProxyServiceModeSelector = ({
   return (
     <div className="flex justify-between items-center gap-10 mt-2">
       <div>
-        <Label>Service Type</Label>
-        <HelpText>
-          Select a type to define how the proxy handles and forwards traffic to
-          your backend services.
-        </HelpText>
+        <Label>{t("serviceTypeLabel")}</Label>
+        <HelpText>{t("serviceTypeHelp")}</HelpText>
       </div>
       <Select
         value={selected}
@@ -93,11 +100,11 @@ export const ReverseProxyServiceModeSelector = ({
             data-testid={"service-mode-select-button"}
           >
             {selectedMode.icon}
-            <SelectValue placeholder="Select type..." />
+            <SelectValue placeholder={t("selectTypePlaceholder")} />
           </div>
         </SelectTrigger>
         <SelectContent data-testid={"service-mode-selection"}>
-          {Object.entries(SERVICE_MODES)
+          {Object.entries(serviceModes)
             .filter(
               ([mode]) =>
                 isL4Supported || !isL4ServiceMode(mode as ServiceMode),

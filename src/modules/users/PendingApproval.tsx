@@ -1,6 +1,7 @@
 "use client";
 
 import Button from "@components/Button";
+import { useTranslations } from "next-intl";
 import InlineLink from "@components/InlineLink";
 import { NetBirdLogo } from "@components/NetBirdLogo";
 import Paragraph from "@components/Paragraph";
@@ -18,23 +19,24 @@ import * as React from "react";
 const parseApproverEmail = (message?: string): string =>
   message?.match(/[^\s@]+@[a-z0-9.-]+\.[a-z]{2,}/i)?.[0] ?? "";
 
-const steps = [
-  {
-    label: "Account Created",
-    status: "complete",
-    icon: <CheckIcon size={16} />,
-  },
-  {
-    label: "Waiting for Approval",
-    status: "current",
-    icon: <Loader2Icon size={16} className={"animate-spin text-netbird"} />,
-  },
-  {
-    label: "Join Account",
-    status: "upcoming",
-    icon: <UserCircleIcon size={16} />,
-  },
-] as const;
+const getSteps = (tusers: ReturnType<typeof useTranslations>) =>
+  [
+    {
+      label: tusers("accountCreated"),
+      status: "complete",
+      icon: <CheckIcon size={16} />,
+    },
+    {
+      label: tusers("waitingForApproval"),
+      status: "current",
+      icon: <Loader2Icon size={16} className={"animate-spin text-netbird"} />,
+    },
+    {
+      label: tusers("joinAccount"),
+      status: "upcoming",
+      icon: <UserCircleIcon size={16} />,
+    },
+  ] as const;
 
 type Props = {
   // The refusal from management, which names the owner who can approve.
@@ -43,7 +45,13 @@ type Props = {
   onLogout: () => void;
 };
 
-export const PendingApproval = ({ error, onRefresh, onLogout }: Props) => {
+export const PendingApproval = ({
+  error,
+  onRefresh,
+  onLogout,
+}: Props) => {
+  const tusers = useTranslations("users");
+  const steps = getSteps(tusers);
   const owner = parseApproverEmail(error?.message);
 
   return (

@@ -28,10 +28,12 @@ import {
   PLACEHOLDER_BASE_NAMES,
 } from "@/modules/control-center/utils/helpers";
 import SetupModal from "@/modules/setup-netbird-modal/SetupModal";
+import { useTranslations } from "next-intl";
 
 // Server/Agent installs arrive without a setup key: it is generated on demand
 // and written back onto the placeholder node so reopening Install reuses it.
 export const DraftInstallPeerModal = () => {
+  const tCommon = useTranslations("common");
   const { installModal, setInstallModal } = useDraftMode();
   const { oidcUser: user } = useOidcUser();
   const reactFlow = useReactFlow();
@@ -138,7 +140,7 @@ export const DraftInstallPeerModal = () => {
     reactFlow.getNodes().forEach((n) => {
       const group = (n.data as { group?: { id?: string; name?: string } })
         ?.group;
-      if (!group?.id || group.name === "All") return;
+      if (!group?.id || group.name === tCommon("all")) return;
       const added = n.data?.addedMembers as Set<string> | undefined;
       if (added?.has(draftId)) ids.add(group.id);
     });
@@ -304,7 +306,7 @@ export const DraftInstallPeerModal = () => {
           <ModalFooter>
             <ModalClose asChild={true}>
               <Button variant={"primary"} className={"w-full"}>
-                Continue
+                {tCommon("continue")}
               </Button>
             </ModalClose>
           </ModalFooter>

@@ -28,6 +28,7 @@ import {
   Shield,
   UserCircle,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React, { useState } from "react";
 import { useEmbeddedIdentityProviders } from "@/hooks/useEmbeddedIdentityProviders";
 import { useSWRConfig } from "swr";
@@ -71,6 +72,9 @@ type ModalProps = {
 };
 
 export function SetupContent({ onSuccess }: ModalProps) {
+  const t = useTranslations("idpSync");
+  const tCommon = useTranslations("common");
+  const tNav = useTranslations("navigation");
   const { mutate } = useSWRConfig();
   const googleRequest = useApiCall<GoogleWorkspaceIntegration>(
     "/integrations/google-idp",
@@ -102,8 +106,8 @@ export function SetupContent({ onSuccess }: ModalProps) {
 
   const connect = async () => {
     notify({
-      title: "Google Workspace Integration",
-      description: `Google Workspace was successfully connected to NetBird.`,
+      title: t("googleWorkspaceIntegrationTitle"),
+      description: t("googleWorkspaceWasConnected"),
       promise: googleRequest
         .post({
           service_account_key: btoa(serviceAccountKey), // Encode client secret to base64
@@ -120,7 +124,7 @@ export function SetupContent({ onSuccess }: ModalProps) {
           mutate("/integrations/google-idp");
           onSuccess();
         }),
-      loadingMessage: "Setting up integration...",
+      loadingMessage: t("settingUpIntegration"),
     });
   };
 
@@ -155,10 +159,8 @@ export function SetupContent({ onSuccess }: ModalProps) {
 
       <IntegrationModalHeader
         image={integrationImage}
-        title={"Connect NetBird with Google Workspace"}
-        description={
-          "Start syncing your users and groups from Google Workspace to NetBird. Follow the steps below to get started."
-        }
+        title={t("connectNetBirdWith", { name: "Google Workspace" })}
+        description={t("startSyncingWithProvider", { name: "Google Workspace" })}
       />
 
       {step === -1 && (
@@ -182,21 +184,16 @@ export function SetupContent({ onSuccess }: ModalProps) {
             }
           >
             <Shield size={16} />
-            Required Permissions
+            {t("requiredPermissions")}
           </div>
           <p className={"mt-2 !text-nb-gray-300 !leading-[1.5]"}>
-            Ensure that you have an{" "}
-            <span className={"text-nb-gray-100 font-semibold"}>
-              Google Workspace user account
-            </span>{" "}
-            with the following{" "}
-            <span className={"text-nb-gray-100 font-semibold"}>
-              permissions
-            </span>
-            .{" "}
-            {
-              "If you don't have the required permissions, ask your workspace administrator to grant them to you."
-            }
+            {t.rich("googleWorkspacePermissionsIntro", {
+              accent: (chunks) => (
+                <span className={"text-nb-gray-100 font-semibold"}>
+                  {chunks}
+                </span>
+              ),
+            })}
           </p>
           <div
             className={
@@ -209,7 +206,7 @@ export function SetupContent({ onSuccess }: ModalProps) {
               }
             >
               <PlusCircle size={14} className={"text-sky-500"} />
-              Create Google Workspace applications
+              {t("createGoogleWorkspaceApplications")}
             </div>
             <div
               className={
@@ -217,7 +214,7 @@ export function SetupContent({ onSuccess }: ModalProps) {
               }
             >
               <Settings2 size={14} className={"text-sky-500"} />
-              Manage Google Workspace applications
+              {t("manageGoogleWorkspaceApplications")}
             </div>
           </div>
         </div>
@@ -227,35 +224,41 @@ export function SetupContent({ onSuccess }: ModalProps) {
         <div className={"px-8 py-3 flex flex-col gap-0 mt-4"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <Folder size={20} />
-            Create NetBird project
+            {t("createNetBirdProject")}
           </p>
           <Steps>
             <Steps.Step step={1}>
               <p>
-                Create a new <Mark copy>NetBird</Mark> project in the{" "}
-                <InlineLink
-                  className={"inline"}
-                  target={"_blank"}
-                  href={"https://console.cloud.google.com/"}
-                >
-                  Google Cloud Console
-                </InlineLink>
+                {t.rich("googleCreateProjectStep1", {
+                  link: (chunks) => (
+                    <InlineLink
+                      className={"inline"}
+                      target={"_blank"}
+                      href={"https://console.cloud.google.com/"}
+                    >
+                      {chunks}
+                    </InlineLink>
+                  ),
+                  copy: (chunks) => <Mark copy>{chunks}</Mark>,
+                })}
               </p>
             </Steps.Step>
             <Steps.Step step={2} line={false}>
               <p className={"font-normal"}>
-                Enable the{" "}
-                <InlineLink
-                  className={"inline"}
-                  target={"_blank"}
-                  href={
-                    "https://console.cloud.google.com/apis/library/admin.googleapis.com"
-                  }
-                >
-                  Admin SDK API
-                </InlineLink>{" "}
-                for the
-                <Mark>NetBird</Mark> project
+                {t.rich("googleEnableAdminSdkStep", {
+                  link: (chunks) => (
+                    <InlineLink
+                      className={"inline"}
+                      target={"_blank"}
+                      href={
+                        "https://console.cloud.google.com/apis/library/admin.googleapis.com"
+                      }
+                    >
+                      {chunks}
+                    </InlineLink>
+                  ),
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
               </p>
             </Steps.Step>
           </Steps>
@@ -266,31 +269,36 @@ export function SetupContent({ onSuccess }: ModalProps) {
         <div className={"px-8 py-3 flex flex-col gap-0 mt-4"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <UserCircle size={20} />
-            Create a service account
+            {t("createServiceAccount")}
           </p>
           <Steps>
             <Steps.Step step={1}>
               <p>
-                Navigate to{"  "}
-                <InlineLink
-                  className={"inline"}
-                  target={"_blank"}
-                  href={"https://console.cloud.google.com/apis/credentials"}
-                >
-                  API Credentials
-                </InlineLink>
+                {t.rich("googleNavigateApiCredentials", {
+                  link: (chunks) => (
+                    <InlineLink
+                      className={"inline"}
+                      target={"_blank"}
+                      href={"https://console.cloud.google.com/apis/credentials"}
+                    >
+                      {chunks}
+                    </InlineLink>
+                  ),
+                })}
               </p>
             </Steps.Step>
             <Steps.Step step={2}>
               <p className={"font-normal"}>
-                Click <Mark>CREATE CREDENTIALS</Mark> at the top and select{" "}
-                <Mark>Service account</Mark>
+                {t.rich("googleCreateCredentialsStep", {
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
               </p>
             </Steps.Step>
             <Steps.Step step={3} line={false}>
               <p className={"font-normal"}>
-                Fill in the form with the following values and click{" "}
-                <Mark>DONE</Mark>
+                {t.rich("googleFillFormDoneStep", {
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
               </p>
             </Steps.Step>
           </Steps>
@@ -298,11 +306,11 @@ export function SetupContent({ onSuccess }: ModalProps) {
           <MinimalList
             data={[
               {
-                label: "Service account name",
+                label: t("serviceAccountNameLabel"),
                 value: "NetBird",
               },
               {
-                label: "Service account ID",
+                label: t("serviceAccountIdLabel"),
                 value: "netbird",
               },
             ]}
@@ -314,33 +322,37 @@ export function SetupContent({ onSuccess }: ModalProps) {
         <div className={"px-8 py-3 flex flex-col gap-0 mt-4"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <Mail size={20} />
-            Get your service account email
+            {t("getServiceAccountEmail")}
           </p>
           <Steps>
             <Steps.Step step={1}>
               <p>
-                Navigate to{"  "}
-                <InlineLink
-                  className={"inline"}
-                  target={"_blank"}
-                  href={
-                    "https://console.cloud.google.com/iam-admin/serviceaccounts"
-                  }
-                >
-                  Service Accounts
-                </InlineLink>
+                {t.rich("googleNavigateServiceAccounts", {
+                  link: (chunks) => (
+                    <InlineLink
+                      className={"inline"}
+                      target={"_blank"}
+                      href={
+                        "https://console.cloud.google.com/iam-admin/serviceaccounts"
+                      }
+                    >
+                      {chunks}
+                    </InlineLink>
+                  ),
+                })}
               </p>
             </Steps.Step>
             <Steps.Step step={1}>
               <p className={"font-normal"}>
-                Click <Mark>NetBird</Mark> to edit the service account. Copy the
-                service account email address.
+                {t.rich("googleEditServiceAccountStep", {
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
               </p>
               <Lightbox image={googleEditServiceAccount} />
             </Steps.Step>
             <Steps.Step step={2} line={false}>
               <p className={"font-normal"}>
-                Enter your service account email address
+                {t("googleEnterServiceAccountEmailStep")}
               </p>
             </Steps.Step>
           </Steps>
@@ -365,36 +377,37 @@ export function SetupContent({ onSuccess }: ModalProps) {
         <div className={"px-8 py-3 flex flex-col gap-0 mt-4"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <KeyRound size={20} />
-            Create service account key
+            {t("createServiceAccountKey")}
           </p>
           <Steps>
             <Steps.Step step={1}>
               <p className={"font-normal"}>
-                On the same page, now click the <Mark>Keys</Mark> tab, open the{" "}
-                <Mark>Add key</Mark> dropdown and select{" "}
-                <Mark>Create new key</Mark>
+                {t.rich("googleCreateKeyStep", {
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
               </p>
             </Steps.Step>
             <Steps.Step step={3}>
               <p className={"font-normal"}>
-                Select <Mark>JSON</Mark> as the key type and click{" "}
-                <Mark>Create</Mark>
+                {t.rich("googleSelectKeyTypeStep", {
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
               </p>
             </Steps.Step>
             <Steps.Step step={4} line={false}>
               <p className={"font-normal"}>
-                Most browsers immediately download the new key and save it in a
-                download folder on your computer. Read how to manage and secure
-                your service keys{" "}
-                <InlineLink
-                  href={
-                    "https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys#temp-locations"
-                  }
-                  target={"_blank"}
-                >
-                  here
-                </InlineLink>
-                .
+                {t.rich("googleDownloadKeyStep", {
+                  link: (chunks) => (
+                    <InlineLink
+                      href={
+                        "https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys#temp-locations"
+                      }
+                      target={"_blank"}
+                    >
+                      {chunks}
+                    </InlineLink>
+                  ),
+                })}
               </p>
             </Steps.Step>
           </Steps>
@@ -427,42 +440,47 @@ export function SetupContent({ onSuccess }: ModalProps) {
         <div className={"px-8 py-3 flex flex-col gap-0 mt-4"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <FolderCog2 size={20} />
-            Create admin role
+            {t("createAdminRole")}
           </p>
           <Steps>
             <Steps.Step step={1}>
               <p>
-                Navigate to{"  "}
-                <InlineLink
-                  className={"inline"}
-                  target={"_blank"}
-                  href={"https://admin.google.com/ac/home"}
-                >
-                  Admin Console
-                </InlineLink>
+                {t.rich("googleNavigateAdminConsole", {
+                  link: (chunks) => (
+                    <InlineLink
+                      className={"inline"}
+                      target={"_blank"}
+                      href={"https://admin.google.com/ac/home"}
+                    >
+                      {chunks}
+                    </InlineLink>
+                  ),
+                })}
               </p>
             </Steps.Step>
             <Steps.Step step={2}>
               <p className={"font-normal"}>
-                Select <Mark>Account</Mark> on the left menu and then click{" "}
-                <Mark>Admin Roles</Mark>
+                {t.rich("googleAdminRolesStep", {
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
               </p>
             </Steps.Step>
             <Steps.Step step={3} line={false}>
               <p className={"font-normal"}>
-                Click <Mark>Create new role</Mark> and fill in the form with the
-                following values
+                {t.rich("googleCreateNewRoleStep", {
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
               </p>
             </Steps.Step>
           </Steps>
           <MinimalList
             data={[
               {
-                label: "Name",
+                label: tCommon("name"),
                 value: "User and Group Management ReadOnly",
               },
               {
-                label: "Description",
+                label: t("descriptionLabel"),
                 value: "User and Group Management ReadOnly",
               },
             ]}
@@ -474,33 +492,34 @@ export function SetupContent({ onSuccess }: ModalProps) {
         <div className={"px-8 py-3 flex flex-col gap-0 mt-4"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <Shield size={20} />
-            Add role privileges
+            {t("addRolePrivileges")}
           </p>
           <Steps>
             <Steps.Step step={1}>
               <p className={"font-normal"}>
-                Scroll down to <Mark>Admin API privileges</Mark> and add the
-                following privileges to the role
+                {t.rich("googleAddPrivilegesStep", {
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
               </p>
               <MinimalList
                 className={"mt-2 mb-0"}
                 data={[
                   {
-                    label: "Users",
-                    value: "Read",
+                    label: tNav("users"),
+                    value: t("readValue"),
                   },
                   {
-                    label: "Groups",
-                    value: "Read",
+                    label: tCommon("groups"),
+                    value: t("readValue"),
                   },
                 ]}
               />
             </Steps.Step>
             <Steps.Step step={2} line={false}>
               <p className={"font-normal"}>
-                Verify preview of assigned Admin API privileges to ensure that
-                everything is properly configured, and then click{" "}
-                <Mark>CREATE ROLE</Mark>
+                {t.rich("googleVerifyPrivilegesStep", {
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
               </p>
               <Lightbox image={googlePrivilegesReview} />
             </Steps.Step>
@@ -512,23 +531,27 @@ export function SetupContent({ onSuccess }: ModalProps) {
         <div className={"px-8 py-3 flex flex-col gap-0 mt-4"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <MailPlus size={20} />
-            Assign service account
+            {t("assignServiceAccount")}
           </p>
           <Steps>
             <Steps.Step step={1}>
               <p className={"font-normal"}>
-                Click <Mark>Assign service accounts</Mark>
+                {t.rich("googleAssignServiceAccountsStep", {
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
               </p>
             </Steps.Step>
             <Steps.Step step={2}>
               <p className={"font-normal"}>
-                Enter your <Mark>E-Mail</Mark> and then click <Mark>ADD</Mark>
+                {t.rich("googleEnterEmailStep", {
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
               </p>
               <MinimalList
                 className={"mt-2 mb-0"}
                 data={[
                   {
-                    label: "E-Mail",
+                    label: t("eMailLabel"),
                     value: serviceAccountMail,
                   },
                 ]}
@@ -536,7 +559,9 @@ export function SetupContent({ onSuccess }: ModalProps) {
             </Steps.Step>
             <Steps.Step step={3} line={false}>
               <p className={"font-normal"}>
-                Click <Mark>ASSIGN ROLE</Mark>
+                {t.rich("googleAssignRoleStep", {
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
               </p>
               <Lightbox image={googleAssignServiceAccount} />
             </Steps.Step>
@@ -548,26 +573,31 @@ export function SetupContent({ onSuccess }: ModalProps) {
         <div className={"px-8 py-3 flex flex-col gap-0 mt-4"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <Box size={20} />
-            Enter Customer ID
+            {t("enterCustomerId")}
           </p>
           <Steps>
             <Steps.Step step={1}>
               <p className={"font-normal"}>
-                Navigate to{" "}
-                <InlineLink
-                  target={"_blank"}
-                  className={"inline"}
-                  href={
-                    "https://admin.google.com/ac/accountsettings/profile?hl=en_US"
-                  }
-                >
-                  Account Settings
-                </InlineLink>
+                {t.rich("googleNavigateAccountSettings", {
+                  link: (chunks) => (
+                    <InlineLink
+                      target={"_blank"}
+                      className={"inline"}
+                      href={
+                        "https://admin.google.com/ac/accountsettings/profile?hl=en_US"
+                      }
+                    >
+                      {chunks}
+                    </InlineLink>
+                  ),
+                })}
               </p>
             </Steps.Step>
             <Steps.Step step={2} line={false}>
               <p className={"font-normal"}>
-                Take note of the <Mark>Customer ID</Mark> and enter it below
+                {t.rich("googleNoteCustomerIdStep", {
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
               </p>
             </Steps.Step>
           </Steps>
@@ -578,7 +608,7 @@ export function SetupContent({ onSuccess }: ModalProps) {
               customPrefix={
                 <div className={"min-w-[165px] flex gap-2 items-center"}>
                   <Box size={16} />
-                  Customer ID
+                  {t("customerId")}
                 </div>
               }
               placeholder={"C03f4c3po"}
@@ -593,7 +623,7 @@ export function SetupContent({ onSuccess }: ModalProps) {
         <div className={"px-8 py-3 flex flex-col gap-0 mt-4"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <FolderGit2 size={20} />
-            Groups to be synchronized
+            {t("groupsToBeSynchronized")}
           </p>
 
           <div className={"mb-4 flex flex-col gap-1"}>
@@ -612,7 +642,7 @@ export function SetupContent({ onSuccess }: ModalProps) {
         <div className={"px-8 py-3 flex flex-col gap-0 mt-4"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <UserCircle size={18} />
-            Users to be synchronized
+            {t("usersToBeSynchronized")}
           </p>
 
           <div className={"mb-4 flex flex-col gap-1"}>
@@ -621,8 +651,8 @@ export function SetupContent({ onSuccess }: ModalProps) {
             </div>
 
             <GroupPrefixInput
-              addText={"Add user group filter"}
-              text={"User group starts with..."}
+              addText={t("addUserGroupFilter")}
+              text={t("userGroupStartsWith")}
               value={userGroupPrefixes}
               onChange={setUserGroupPrefixes}
             />
@@ -638,7 +668,7 @@ export function SetupContent({ onSuccess }: ModalProps) {
             onClick={() => setStep(step + 1)}
             disabled={!connectorId || connectorId === ""}
           >
-            Continue
+            {tCommon("continue")}
             <IconArrowRight size={16} />
           </Button>
         )}
@@ -649,7 +679,7 @@ export function SetupContent({ onSuccess }: ModalProps) {
             onClick={() => setStep(step - 1)}
           >
             <IconArrowLeft size={16} />
-            Back
+            {tCommon("back")}
           </Button>
         )}
         {step >= 0 && step < maxSteps && (
@@ -659,7 +689,7 @@ export function SetupContent({ onSuccess }: ModalProps) {
             disabled={isDisabled}
             onClick={() => setStep(step + 1)}
           >
-            {step == 0 ? "Get Started" : "Continue"}
+            {step == 0 ? t("getStarted") : tCommon("continue")}
             <IconArrowRight size={16} />
           </Button>
         )}
@@ -671,7 +701,7 @@ export function SetupContent({ onSuccess }: ModalProps) {
             onClick={connect}
           >
             <Repeat size={16} />
-            Connect
+            {t("connect")}
           </Button>
         )}
       </ModalFooter>
@@ -683,8 +713,11 @@ export function SetupContent({ onSuccess }: ModalProps) {
         >
           <Clock4 size={12} />
           <div>
-            Estimated setup time:
-            <span className={"font-medium"}> 10-20 Minutes</span>
+            {t("estimatedSetupTime")}
+            <span className={"font-medium"}>
+              {" "}
+              {t("setupDuration", { duration: "10-20" })}
+            </span>
           </div>
         </div>
       )}

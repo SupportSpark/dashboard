@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import { useTranslations } from "next-intl";
 import { ServiceTargetOptions } from "@/interfaces/ReverseProxy";
 import {
   headerEntriesToRecord,
@@ -8,25 +9,28 @@ import {
 // Go time.ParseDuration format: one or more {number}{unit} pairs
 const DURATION_RE = /^(\d+(\.\d+)?(ns|us|µs|ms|s|m|h))+$/;
 
-export function validateTimeout(timeout: string): string | undefined {
+export function validateTimeout(
+  timeout: string,
+  message: string,
+): string | undefined {
   if (!timeout) return undefined;
-  if (!DURATION_RE.test(timeout))
-    return 'Invalid duration, use e.g., "10s", "30s", "1m"';
+  if (!DURATION_RE.test(timeout)) return message;
   return undefined;
 }
 
 export function validateSessionIdleTimeout(
   timeout: string,
+  message: string,
 ): string | undefined {
   if (!timeout) return undefined;
-  if (!DURATION_RE.test(timeout))
-    return 'Invalid duration, use e.g., "30s", "2m", "5m"';
+  if (!DURATION_RE.test(timeout)) return message;
   return undefined;
 }
 
 export function useReverseProxyTargetOptions(
   initialOptions?: ServiceTargetOptions,
 ) {
+  const tr = useTranslations("reverseProxy");
   const [targetOptions, setTargetOptions] = useState<ServiceTargetOptions>(
     () => {
       const { custom_headers: _ch, ...rest } = initialOptions ?? {};
@@ -41,7 +45,7 @@ export function useReverseProxyTargetOptions(
     updateHeaderEntry,
     headerErrors,
     hasHeaderErrors,
-  } = useCustomHeaders(initialOptions?.custom_headers);
+  } = useCustomHeaders(initialOptions?.custom_headers, tr);
 
   const updateOption = useCallback(
     <K extends keyof ServiceTargetOptions>(
@@ -53,9 +57,13 @@ export function useReverseProxyTargetOptions(
     [],
   );
 
-  const timeoutError = validateTimeout(targetOptions.request_timeout ?? "");
+  const timeoutError = validateTimeout(
+    targetOptions.request_timeout ?? "",
+    tr("invalidTimeoutDuration"),
+  );
   const sessionIdleTimeoutError = validateSessionIdleTimeout(
     targetOptions.session_idle_timeout ?? "",
+    tr("invalidSessionTimeoutDuration"),
   );
   const hasOptionsErrors =
     !!timeoutError || !!sessionIdleTimeoutError || hasHeaderErrors;

@@ -1,4 +1,5 @@
 import Button from "@components/Button";
+import { useTranslations } from "next-intl";
 import { DatePickerWithRange } from "@components/DatePickerWithRange";
 import InlineLink from "@components/InlineLink";
 import SquareIcon from "@components/SquareIcon";
@@ -64,12 +65,15 @@ export const getTrafficEventTypeText = (
   }
 };
 
-export const TrafficEventsTableColumns: ColumnDef<TrafficEvent>[] = [
-  {
-    id: "timestamp",
-    header: ({ column }) => (
-      <DataTableHeader column={column}>Time</DataTableHeader>
-    ),
+export function TrafficEventsTableColumns(
+  tte: ReturnType<typeof useTranslations>,
+): ColumnDef<TrafficEvent>[] {
+  return [
+    {
+      id: "timestamp",
+      header: ({ column }) => (
+        <DataTableHeader column={column}>Time</DataTableHeader>
+      ),
     cell: ({ row }) => (
       <TrafficEventsTimeCell timestamp={row.original.events[0].timestamp} />
     ),
@@ -87,7 +91,7 @@ export const TrafficEventsTableColumns: ColumnDef<TrafficEvent>[] = [
     },
     filterFn: "arrIncludesSomeExact",
     header: ({ column }) => (
-      <DataTableHeader column={column}>Event</DataTableHeader>
+      <DataTableHeader column={column}>{tte("event")}</DataTableHeader>
     ),
     cell: ({ row }) => row.getValue("type"),
   },
@@ -101,7 +105,7 @@ export const TrafficEventsTableColumns: ColumnDef<TrafficEvent>[] = [
     },
     filterFn: "arrIncludesSomeExact",
     header: ({ column }) => (
-      <DataTableHeader column={column}>Event</DataTableHeader>
+      <DataTableHeader column={column}>{tte("event")}</DataTableHeader>
     ),
     cell: ({ row }) => <TrafficEventsTextCell event={row.original} />,
     enableGlobalFilter: false,
@@ -121,7 +125,7 @@ export const TrafficEventsTableColumns: ColumnDef<TrafficEvent>[] = [
     accessorFn: (row) => row.protocol,
     filterFn: "arrIncludesSomeExact",
     header: ({ column }) => (
-      <DataTableHeader column={column}>Protocol & Port</DataTableHeader>
+      <DataTableHeader column={column}>{tte("protocolAndPort")}</DataTableHeader>
     ),
     cell: ({ row }) => <TrafficEventsPortCell event={row.original} />,
   },
@@ -156,7 +160,7 @@ export const TrafficEventsTableColumns: ColumnDef<TrafficEvent>[] = [
     accessorKey: "tx_bytes",
     filterFn: "arrIncludesSomeExact",
     header: ({ column }) => (
-      <DataTableHeader column={column}>Traffic</DataTableHeader>
+      <DataTableHeader column={column}>{tte("traffic")}</DataTableHeader>
     ),
     cell: ({ row }) => {
       return <TrafficEventsBytesCell event={row.original} />;
@@ -168,7 +172,7 @@ export const TrafficEventsTableColumns: ColumnDef<TrafficEvent>[] = [
     accessorKey: "tx_bytes",
     filterFn: "arrIncludesSomeExact",
     header: ({ column }) => (
-      <DataTableHeader column={column}>Traffic</DataTableHeader>
+      <DataTableHeader column={column}>{tte("traffic")}</DataTableHeader>
     ),
     cell: ({ row }) => {
       return (
@@ -184,7 +188,7 @@ export const TrafficEventsTableColumns: ColumnDef<TrafficEvent>[] = [
     accessorKey: "tx_bytes",
     filterFn: "arrIncludesSomeExact",
     header: ({ column }) => (
-      <DataTableHeader column={column}>Traffic</DataTableHeader>
+      <DataTableHeader column={column}>{tte("traffic")}</DataTableHeader>
     ),
     cell: ({ row }) => {
       return (
@@ -199,7 +203,7 @@ export const TrafficEventsTableColumns: ColumnDef<TrafficEvent>[] = [
     id: "reporter",
     accessorKey: "reporter_id",
     header: ({ column }) => (
-      <DataTableHeader column={column}>Router</DataTableHeader>
+      <DataTableHeader column={column}>{tte("router")}</DataTableHeader>
     ),
     cell: ({ row }) => <TrafficEventsReporterCell event={row.original} />,
   },
@@ -211,7 +215,8 @@ export const TrafficEventsTableColumns: ColumnDef<TrafficEvent>[] = [
     id: "user",
     accessorKey: "user_email",
   },
-];
+  ];
+}
 
 type Props = {
   headingTarget?: HTMLHeadingElement | null;
@@ -222,6 +227,7 @@ export default function TrafficEventsTable({
   headingTarget,
   isSettingEnabled,
 }: Readonly<Props>) {
+  const t = useTranslations("trafficEvents");
   const router = useRouter();
   const { users } = useUsers();
   const { peers } = usePeers();
@@ -410,7 +416,7 @@ export default function TrafficEventsTable({
   // untouched (the peer tab reuses it).
   const columns = useMemo<ColumnDef<TrafficEvent>[]>(
     () => [
-      ...TrafficEventsTableColumns,
+      ...TrafficEventsTableColumns(t),
       {
         id: "source_id",
         accessorFn: (row) => row.source.id,
@@ -422,7 +428,7 @@ export default function TrafficEventsTable({
         enableGlobalFilter: false,
       },
     ],
-    [],
+    [t],
   );
 
   const getStartedCard = !isSettingEnabled ? (

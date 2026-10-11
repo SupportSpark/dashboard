@@ -15,9 +15,12 @@ import { useDraftMode } from "@/modules/control-center/draft/DraftModeContext";
 import { DraftStartPopover } from "@/modules/control-center/draft/DraftStartPopover";
 import { ReviewDeployModal } from "@/modules/control-center/draft/modals/ReviewDeployModal";
 import { useDiscardDraft } from "@/modules/control-center/draft/useDiscardDraft";
+import { useTranslations } from "next-intl";
 
 type Props = {};
 export const DraftModeSwitcher = ({}: Props) => {
+  const t = useTranslations("controlCenter");
+  const tCommon = useTranslations("common");
   const { isDraft, startBlankDraft, startCurrentDraft } = useDraftMode();
   const { changeCount } = useDraftChangeset();
   const { discardAndExit, exitAfterDeploy } = useDiscardDraft();
@@ -51,7 +54,7 @@ export const DraftModeSwitcher = ({}: Props) => {
           data-testid={"cc-mode-live"}
         >
           <CircleIcon active={true} size={8} className={"shrink-0"} />
-          Live
+          {t("live")}
         </SegmentedTabs.Trigger>
         <SegmentedTabs.Trigger
           value={"draft"}
@@ -63,7 +66,7 @@ export const DraftModeSwitcher = ({}: Props) => {
           data-testid={"cc-mode-draft"}
         >
           <PencilLineIcon size={12} />
-          Draft
+          {t("draft")}
           <SmallBadge
             text={"Beta"}
             variant={"sky"}
@@ -102,7 +105,7 @@ export const DraftModeSwitcher = ({}: Props) => {
               className={"h-[39px] px-4.5"}
               data-testid={"cc-draft-cancel"}
             >
-              Cancel
+              {tCommon("cancel")}
             </Button>
             <Button
               variant={"primary"}
@@ -115,7 +118,7 @@ export const DraftModeSwitcher = ({}: Props) => {
               data-testid={"cc-draft-review"}
             >
               <GitPullRequestArrowIcon size={14} />
-              Review & Deploy
+              {t("reviewAndDeploy")}
               {changeCount > 0 && (
                 <span
                   className={

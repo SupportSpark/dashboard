@@ -25,6 +25,7 @@ import {
   KeyRound,
   PencilIcon,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React, { useState } from "react";
 import { useSWRConfig } from "swr";
 import integrationImage from "@/assets/integrations/crowdstrike.png";
@@ -74,6 +75,8 @@ type ModalProps = {
 };
 
 export function ConfigurationContent({ onSuccess, config }: ModalProps) {
+  const t = useTranslations("integrations");
+  const tCommon = useTranslations("common");
   const { mutate } = useSWRConfig();
   const { confirm } = useDialog();
   const [tab, setTab] = useState<string>("peer-approval");
@@ -103,23 +106,23 @@ export function ConfigurationContent({ onSuccess, config }: ModalProps) {
 
   const deleteIntegration = async () => {
     const choice = await confirm({
-      title: `Delete integration?`,
-      description: "Are you sure you want to delete this integration?",
-      confirmText: "Delete",
-      cancelText: "Cancel",
+      title: t("deleteIntegrationQuestion"),
+      description: t("deleteIntegrationDescription"),
+      confirmText: tCommon("delete"),
+      cancelText: tCommon("cancel"),
       type: "danger",
     });
 
     if (!choice) return;
 
     notify({
-      title: "CrowdStrike Integration",
-      description: `CrowdStrike Integration was successfully deleted`,
+      title: t("integrationLinkText", { name: "CrowdStrike" }),
+      description: t("integrationWasDeleted", { name: "CrowdStrike" }),
       promise: crowdStrikeRequest.del().then(() => {
         mutate("/integrations/edr/falcon");
         onSuccess();
       }),
-      loadingMessage: "Deleting integration...",
+      loadingMessage: t("deletingIntegration"),
     });
   };
 
@@ -128,8 +131,8 @@ export function ConfigurationContent({ onSuccess, config }: ModalProps) {
     const score = parseInt(ztaScore);
 
     notify({
-      title: "CrowdStrike Integration",
-      description: `CrowdStrike Integration was successfully updated`,
+      title: t("integrationLinkText", { name: "CrowdStrike" }),
+      description: t("integrationWasUpdated", { name: "CrowdStrike" }),
       promise: crowdStrikeRequest
         .put({
           zta_score_threshold:
@@ -144,7 +147,7 @@ export function ConfigurationContent({ onSuccess, config }: ModalProps) {
           mutate("/integrations/edr/falcon");
           onSuccess();
         }),
-      loadingMessage: "Updating integration...",
+      loadingMessage: t("updatingIntegration"),
     });
   };
 
@@ -159,7 +162,7 @@ export function ConfigurationContent({ onSuccess, config }: ModalProps) {
 
   const ztaError =
     ztaEnabled && (parseInt(ztaScore) <= 0 || parseInt(ztaScore) > 100)
-      ? "Score should be between 1 and 100"
+      ? t("scoreRangeError")
       : undefined;
   const canSave = hasChanges && !ztaError;
 
@@ -175,9 +178,7 @@ export function ConfigurationContent({ onSuccess, config }: ModalProps) {
       <IntegrationModalHeader
         image={integrationImage}
         title={"CrowdStrike"}
-        description={
-          "Restrict network access only to devices managed by the company's IT department"
-        }
+        description={t("restrictItManaged")}
       />
 
       <Tabs
@@ -193,7 +194,7 @@ export function ConfigurationContent({ onSuccess, config }: ModalProps) {
                 "text-nb-gray-500 group-data-[state=active]/trigger:text-netbird transition-all"
               }
             />
-            Peer Approval
+            {t("peerApproval")}
           </TabsTrigger>
           <TabsTrigger value={"settings"}>
             <Cog
@@ -202,7 +203,7 @@ export function ConfigurationContent({ onSuccess, config }: ModalProps) {
                 "text-nb-gray-500 group-data-[state=active]/trigger:text-netbird transition-all"
               }
             />
-            Settings
+            {t("settings")}
           </TabsTrigger>
           <TabsTrigger value={"danger"}>
             <AlertOctagon
@@ -211,7 +212,7 @@ export function ConfigurationContent({ onSuccess, config }: ModalProps) {
                 "text-nb-gray-500 group-data-[state=active]/trigger:text-netbird transition-all"
               }
             />
-            Danger Zone
+            {t("dangerZone")}
           </TabsTrigger>
         </TabsList>
 
@@ -221,11 +222,11 @@ export function ConfigurationContent({ onSuccess, config }: ModalProps) {
               <Label>
                 <div className={"flex gap-2 items-center"}>
                   <FolderGit2 size={14} />
-                  Groups
+                  {t("groups")}
                 </div>
               </Label>
               <HelpText className={"max-w-lg mt-2"}>
-                Select groups you want to apply the CrowdStrike integration to
+                {t("selectGroupsHelp", { name: "CrowdStrike" })}
               </HelpText>
 
               <PeerGroupSelector values={groups} onChange={setGroups} />
@@ -251,7 +252,7 @@ export function ConfigurationContent({ onSuccess, config }: ModalProps) {
               <Label className={"mb-3"}>
                 <div className={"flex gap-2 items-center"}>
                   <GlobeIcon size={14} />
-                  Region
+                  {t("regionLabel")}
                 </div>
               </Label>
 
@@ -265,7 +266,7 @@ export function ConfigurationContent({ onSuccess, config }: ModalProps) {
               <Label className={"mb-3"}>
                 <div className={"flex gap-2 items-center"}>
                   <KeyRound size={14} />
-                  CrowdStrike Credentials
+                  {t("credentialsLabel", { name: "CrowdStrike" })}
                 </div>
               </Label>
               <div className={"flex flex-col gap-3"}>
@@ -276,7 +277,7 @@ export function ConfigurationContent({ onSuccess, config }: ModalProps) {
                   customPrefix={
                     <div className={"min-w-[85px] flex gap-2 items-center"}>
                       <PencilIcon size={16} />
-                      Client ID
+                      {t("clientIdLabel")}
                     </div>
                   }
                   placeholder={"9f6c80ac8a384e1d88a1fd1f279541d0"}
@@ -290,7 +291,7 @@ export function ConfigurationContent({ onSuccess, config }: ModalProps) {
                   customPrefix={
                     <div className={"min-w-[85px] flex gap-2 items-center"}>
                       <KeyRound size={16} />
-                      Secret
+                      {t("clientSecretLabel")}
                     </div>
                   }
                   placeholder={"qF41DKYkQJBS53w0XPVyO6v9AtZ8WMbHp72eIdml"}
@@ -307,13 +308,11 @@ export function ConfigurationContent({ onSuccess, config }: ModalProps) {
             <Label>
               <div className={"flex gap-2 items-center"}>
                 <AlertOctagon size={14} />
-                Delete Integration
+                {t("deleteIntegration")}
               </div>
             </Label>
             <HelpText className={"max-w-lg mt-2"}>
-              Deleting this integration will remove the current configuration.
-              If you delete the integration you will need to reconfigure it
-              again.
+              {t("crowdstrikeDeleteHelp")}
             </HelpText>
           </div>
           <Button
@@ -322,7 +321,7 @@ export function ConfigurationContent({ onSuccess, config }: ModalProps) {
             className={"mt-3"}
             onClick={deleteIntegration}
           >
-            Delete Integration
+            {t("deleteIntegration")}
           </Button>
         </TabsContent>
       </Tabs>
@@ -331,7 +330,7 @@ export function ConfigurationContent({ onSuccess, config }: ModalProps) {
       <ModalFooter className={"items-center gap-4"}>
         <ModalClose asChild={true}>
           <Button variant={"secondary"} className={"w-full"}>
-            Cancel
+            {tCommon("cancel")}
           </Button>
         </ModalClose>
 
@@ -341,7 +340,7 @@ export function ConfigurationContent({ onSuccess, config }: ModalProps) {
           disabled={!canSave}
           onClick={updateIntegration}
         >
-          Save Changes
+          {t("saveChanges")}
         </Button>
       </ModalFooter>
     </ModalContent>

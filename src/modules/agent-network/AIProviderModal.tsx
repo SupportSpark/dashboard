@@ -63,8 +63,9 @@ import {
 } from "@/modules/agent-network/data/mockData";
 import { useDiscoveredModels } from "@/modules/agent-network/useDiscoveredModels";
 import { useProviderCatalog } from "@/modules/agent-network/useProviderCatalog";
+import { useTranslations } from "next-intl";
 
-// EXTRA_HEADER_UI owns the dashboard copy for catalog-declared extra
+// extraHeaderUI owns the dashboard copy for catalog-declared extra
 // headers, keyed by ExtraHeader.name. Backend declares only the wire
 // header name; everything an operator reads (input label, helper
 // line, hover tooltip, placeholder) lives here so UI copy can be
@@ -76,29 +77,26 @@ type ExtraHeaderUI = {
   tooltip?: React.ReactNode;
   placeholder?: string;
 };
-const EXTRA_HEADER_UI: Record<string, ExtraHeaderUI> = {
+const extraHeaderUI = (t: (key: string) => string): Record<string, ExtraHeaderUI> => ({
   "x-portkey-config": {
-    label: "Portkey Config ID",
-    helpText: "Saved Portkey config (pc-...).",
-    tooltip:
-      "Encapsulates upstream provider + virtual key on Portkey's hosted side. Stamped on every request as x-portkey-config: <id>. Leave blank if your callers author @org/model in the request body instead.",
+    label: t("portkeyConfigId"),
+    helpText: t("portkeyConfigHelp"),
+    tooltip: t("portkeyConfigDescription"),
     placeholder: "pc-...",
   },
   "HTTP-Referer": {
-    label: "App URL",
-    helpText: "Your app's URL — OpenRouter's primary app identifier.",
-    tooltip:
-      "Stamped on every request as HTTP-Referer. OpenRouter creates a per-app page from this URL and uses it as the primary identifier in their public rankings and per-app analytics. Leave blank to skip; requests still flow but won't attribute to any app on OpenRouter's side.",
+    label: t("appUrl"),
+    helpText: t("appUrlHelp"),
+    tooltip: t("appUrlDescription"),
     placeholder: "https://your-app.example",
   },
   "X-OpenRouter-Title": {
-    label: "App display name",
-    helpText: "Human-readable app name shown in OpenRouter's rankings.",
-    tooltip:
-      "Stamped on every request as X-OpenRouter-Title. Sets the display name of your app in OpenRouter's public rankings and analytics. Requires HTTP-Referer to be set too — without it, X-OpenRouter-Title is ignored.",
-    placeholder: "Your App Name",
+    label: t("appDisplayName"),
+    helpText: t("appDisplayNameHelp"),
+    tooltip: t("appDisplayNameDescription"),
+    placeholder: t("appNamePlaceholder"),
   },
-};
+});
 // Fallback used when the catalog declares an extra header the
 // dashboard doesn't have copy for yet — keeps the input usable
 // instead of rendering an unlabeled box.
@@ -212,6 +210,9 @@ export default function AIProviderModal({
   onDraftSubmit,
   takenNames,
 }: Readonly<Props>) {
+  const t = useTranslations("agentNetwork");
+  const tCommon = useTranslations("common");
+  const tUsers = useTranslations("users");
   const {
     providers,
     addProvider,
@@ -568,11 +569,10 @@ export default function AIProviderModal({
           unpriced.length === 1
             ? "Save with 1 unpriced model?"
             : `Save with ${unpriced.length} unpriced models?`,
-        description:
-          "Models without rates are tracked at $0 and don’t count toward " +
+        description: t("modelsWithoutRatesNotice") +
           "budget limits. Set rates now or later.",
-        confirmText: "Save anyway",
-        cancelText: "Set rates first",
+        confirmText: t("saveAnyway"),
+        cancelText: t("setRatesFirst"),
         type: "warning",
       });
       if (!proceed) return;
@@ -790,11 +790,11 @@ export default function AIProviderModal({
       {isEdit ? "Saving changes…" : "Connecting provider…"}
     </>
   ) : isEdit ? (
-    "Save Changes"
+    t("submitLimit")
   ) : (
     <>
       <PlusCircle size={16} />
-      Connect Provider
+      {t("connectProvider")}
     </>
   );
 
@@ -870,7 +870,7 @@ export default function AIProviderModal({
   ) : !discoveryInFlight && discovered.models.length > 0 ? (
     <>
       {discovered.models.length} models loaded. Use the{" "}
-      <strong>Add More</strong> button to search and pick models.
+      <strong>{t("addMore")}</strong> button to search and pick models.
     </>
   ) : null;
 
@@ -890,7 +890,7 @@ export default function AIProviderModal({
       >
         <ModalHeader
           icon={<Sparkles size={18} className={"text-netbird"} />}
-          title={isEdit ? "Edit Provider" : "Connect Provider"}
+          title={isEdit ? "Edit Provider" : t("connectProvider")}
           description={
             isEdit
               ? "Update this provider's configuration."
@@ -903,7 +903,7 @@ export default function AIProviderModal({
           <TabsList justify={"start"} className={"px-8"}>
             <TabsTrigger value={"provider"}>
               <Sparkles size={14} />
-              Provider
+              {t("provider")}
             </TabsTrigger>
             <TabsTrigger
               value={"models"}
@@ -911,7 +911,7 @@ export default function AIProviderModal({
               data-testid={"agent-network-provider-models-tab"}
             >
               <Boxes size={14} />
-              Models
+              {t("models")}
             </TabsTrigger>
             {showMappings && (
               <TabsTrigger
@@ -920,7 +920,7 @@ export default function AIProviderModal({
                 data-testid={"agent-network-provider-mappings-tab"}
               >
                 <ArrowRightLeft size={14} />
-                Mappings
+                {t("mappings")}
               </TabsTrigger>
             )}
           </TabsList>
@@ -940,8 +940,7 @@ export default function AIProviderModal({
                 >
                   {canReadDomains && clustersLackPrivateCapability ? (
                     <>
-                      You need a reverse proxy cluster with private capabilities
-                      in order to enable agent networks. Connect one under
+                      {t("reverseProxyClusterRequired")}
                       <InlineLink
                         href={"/agent-network/configuration?tab=clusters"}
                       >
@@ -952,8 +951,7 @@ export default function AIProviderModal({
                     </>
                   ) : canReadDomains ? (
                     <>
-                      No active proxy clusters are available. Connect at least
-                      one proxy under
+                      {t("noActiveProxyClusters")}
                       <InlineLink
                         href={"/agent-network/configuration?tab=clusters"}
                       >
@@ -977,10 +975,10 @@ export default function AIProviderModal({
 
               <div className={"flex-col flex gap-2"}>
                 <FormRow
-                  label={"Provider"}
+                  label={t("provider")}
                   helpText={
                     <>
-                      AI provider and upstream URL to expose
+                      {t("providerUpstreamUrlDescription")}
                       <br />
                       through NetBird.
                     </>
@@ -1056,7 +1054,7 @@ export default function AIProviderModal({
                   label={
                     <>
                       <ShieldOffIcon size={15} />
-                      Skip TLS Verification
+                      {t("skipTlsVerification")}
                       <span onClick={(e) => e.stopPropagation()}>
                         <HelpTooltip
                           interactive
@@ -1073,7 +1071,7 @@ export default function AIProviderModal({
                                 }
                                 target={"_blank"}
                               >
-                                Learn more
+                                {tCommon("learnMore")}
                                 <ExternalLinkIcon size={12} />
                               </InlineLink>
                             </>
@@ -1090,7 +1088,7 @@ export default function AIProviderModal({
                 <FormRow
                   label={
                     <>
-                      Service account JSON key
+                      {t("serviceAccountJsonKey")}
                       <HelpTooltip
                         content={
                           <>
@@ -1183,7 +1181,7 @@ export default function AIProviderModal({
               )}
               {(catalog?.extra_headers ?? []).map((h) => {
                 const ui =
-                  EXTRA_HEADER_UI[h.name] ?? fallbackExtraHeaderUI(h.name);
+                  extraHeaderUI(t)[h.name] ?? fallbackExtraHeaderUI(h.name);
                 return (
                   <FormRow
                     key={h.name}
@@ -1240,7 +1238,7 @@ export default function AIProviderModal({
                   label={
                     <>
                       <ArrowRightLeft size={15} />
-                      Forward Identity Metadata
+                      {t("forwardIdentityMetadata")}
                     </>
                   }
                   helpText={
@@ -1249,7 +1247,7 @@ export default function AIProviderModal({
                 />
 
                 <div>
-                  <Label>Identity Mappings</Label>
+                  <Label>{t("identityMappings")}</Label>
                   <HelpText className={"mb-0"}>
                     Groups are written into{" "}
                     <code
@@ -1285,11 +1283,11 @@ export default function AIProviderModal({
                 <SettingCard>
                   <MappingRow
                     header={"x-litellm-end-user-id (header)"}
-                    sourceLabel={"User Email"}
+                    sourceLabel={tUsers("userEmail")}
                   />
                   <MappingRow
                     header={"metadata.tags (body)"}
-                    sourceLabel={"Groups"}
+                    sourceLabel={tCommon("groups")}
                   />
                 </SettingCard>
               </div>
@@ -1300,7 +1298,7 @@ export default function AIProviderModal({
             <TabsContent value={"mappings"} className={"pb-8"}>
               <div className={"px-8 flex-col flex gap-4"}>
                 <div>
-                  <Label>Identity Headers</Label>
+                  <Label>{t("identityHeaders")}</Label>
                   <HelpText className={"mb-0"}>
                     Pick which wire headers carry the caller&apos;s identity on
                     every upstream request. The proxy strips any client-supplied
@@ -1373,7 +1371,7 @@ export default function AIProviderModal({
             <TabsContent value={"mappings"} className={"pb-8"}>
               <div className={"px-8 flex-col flex gap-4"}>
                 <div>
-                  <Label>Identity Metadata</Label>
+                  <Label>{t("identityMetadata")}</Label>
                   <HelpText className={"mb-0"}>
                     NetBird stamps a JSON object onto the{" "}
                     <code
@@ -1435,7 +1433,7 @@ export default function AIProviderModal({
                   label={
                     <>
                       <ArrowRightLeft size={15} />
-                      Forward Identity Metadata
+                      {t("forwardIdentityMetadata")}
                     </>
                   }
                   helpText={
@@ -1444,7 +1442,7 @@ export default function AIProviderModal({
                 />
 
                 <div>
-                  <Label>Trusted Identity Headers</Label>
+                  <Label>{t("trustedIdentityHeaders")}</Label>
                   <HelpText className={"mb-0"}>
                     NetBird removes caller-supplied values before adding the
                     authenticated identity shown below. The upstream listener
@@ -1500,7 +1498,7 @@ export default function AIProviderModal({
             <TabsContent value={"mappings"} className={"pb-8"}>
               <div className={"px-8 flex-col flex gap-4"}>
                 <div>
-                  <Label>Identity Metadata</Label>
+                  <Label>{t("identityMetadata")}</Label>
                   <HelpText className={"mb-0"}>
                     NetBird stamps the{" "}
                     <code
@@ -1538,7 +1536,7 @@ export default function AIProviderModal({
                   label={
                     <>
                       <ArrowRightLeft size={15} />
-                      Forward Identity Metadata
+                      {t("forwardIdentityMetadata")}
                     </>
                   }
                   helpText={
@@ -1547,7 +1545,7 @@ export default function AIProviderModal({
                 />
 
                 <div>
-                  <Label>Identity Metadata</Label>
+                  <Label>{t("identityMetadata")}</Label>
                   <HelpText className={"mb-0"}>
                     NetBird stamps the caller&apos;s identity into the{" "}
                     <InlineLink
@@ -1561,7 +1559,7 @@ export default function AIProviderModal({
                           "text-xs font-mono bg-nb-gray-900/60 rounded px-1.5 py-0.5"
                         }
                       >
-                        X-Amzn-Bedrock-Request-Metadata
+                        {t("bedrockRequestMetadata")}
                       </code>
                     </InlineLink>{" "}
                     header, so you can break Bedrock spend down by user and
@@ -1581,7 +1579,7 @@ export default function AIProviderModal({
             <TabsContent value={"mappings"} className={"pb-8"}>
               <div className={"px-8 flex-col flex gap-4"}>
                 <div>
-                  <Label>Identity Headers</Label>
+                  <Label>{t("identityHeaders")}</Label>
                   <HelpText className={"mb-0"}>
                     NetBird stamps the user identity and group list onto{" "}
                     <code
@@ -1649,7 +1647,7 @@ export default function AIProviderModal({
             <TabsContent value={"mappings"} className={"pb-8"}>
               <div className={"px-8 flex-col flex gap-4"}>
                 <div>
-                  <Label>Identity Attribution</Label>
+                  <Label>{t("identityAttribution")}</Label>
                   <HelpText className={"mb-0"}>
                     NetBird stamps the caller&apos;s user identity onto the
                     request body&apos;s{" "}
@@ -1683,7 +1681,7 @@ export default function AIProviderModal({
                   OpenRouter&apos;s analytics.
                 </HelpText>
                 <HelpText className={"mb-0"}>
-                  <strong>App branding</strong> (HTTP-Referer +
+                  <strong>{t("appBranding")}</strong> (HTTP-Referer +
                   X-OpenRouter-Title) is set per-provider on the Provider tab,
                   not per-request. Operators who fill those in get their app
                   surfaced on OpenRouter&apos;s public rankings and per-app
@@ -1696,7 +1694,7 @@ export default function AIProviderModal({
           <TabsContent value={"models"} className={"pb-8"}>
             <div className={"px-8 flex-col flex gap-3"}>
               <div>
-                <Label>Models</Label>
+                <Label>{t("models")}</Label>
                 <div data-testid={"agent-network-provider-models-help"}>
                   <HelpText margin={false}>
                     Models exposed through this endpoint, with the per-1k
@@ -1806,7 +1804,7 @@ export default function AIProviderModal({
                 onClick={addModel}
               >
                 <PlusIcon size={14} />
-                Add More
+                {t("addMore")}
               </Button>
             </div>
           </TabsContent>
@@ -1815,12 +1813,12 @@ export default function AIProviderModal({
         <ModalFooter className={"items-center"}>
           <div className={"w-full"}>
             <Paragraph className={"text-sm mt-auto"}>
-              Learn more about
+              {tCommon("learnMoreAbout")}
               <InlineLink
                 href={"https://docs.netbird.io/agent-network/providers"}
                 target={"_blank"}
               >
-                Agent Network Providers
+                {t("agentNetworkProviders")}
                 <ExternalLinkIcon size={12} />
               </InlineLink>
             </Paragraph>
@@ -1834,7 +1832,7 @@ export default function AIProviderModal({
                     onClick={handleClose}
                     disabled={saveInFlight}
                   >
-                    Cancel
+                    {tCommon("cancel")}
                   </Button>
                 </ModalClose>
                 <Button
@@ -1843,7 +1841,7 @@ export default function AIProviderModal({
                   disabled={!canContinueFromProvider}
                   data-testid={"agent-network-provider-continue"}
                 >
-                  Continue
+                  {tCommon("continue")}
                 </Button>
               </>
             )}
@@ -1854,7 +1852,7 @@ export default function AIProviderModal({
                   onClick={() => setTab("provider")}
                   disabled={saveInFlight}
                 >
-                  Back
+                  {tCommon("back")}
                 </Button>
                 {showMappings ? (
                   <Button
@@ -1863,7 +1861,7 @@ export default function AIProviderModal({
                     disabled={!canContinueFromProvider}
                     data-testid={"agent-network-provider-continue"}
                   >
-                    Continue
+                    {tCommon("continue")}
                   </Button>
                 ) : (
                   <Button
@@ -1884,7 +1882,7 @@ export default function AIProviderModal({
                   onClick={() => setTab("models")}
                   disabled={saveInFlight}
                 >
-                  Back
+                  {tCommon("back")}
                 </Button>
                 <Button
                   variant={"primary"}
@@ -2045,6 +2043,7 @@ function ModelRowEditor({
   onChangeCacheCreation: (n: number | undefined) => void;
   onRemove: () => void;
 }) {
+  const t = useTranslations("agentNetwork");
   // Editable text for the price fields. We keep the raw string locally so the
   // operator can type intermediate values ("0.", "0,00") without the number
   // round-trip clobbering the cursor. The number is propagated to the parent
@@ -2103,7 +2102,7 @@ function ModelRowEditor({
       (m) => m.id === row.id || !usedIds.has(m.id),
     );
     const opts = visible.map((m) => ({ value: m.id, label: m.label }));
-    opts.push({ value: CUSTOM_MODEL_OPTION, label: "Custom model…" });
+    opts.push({ value: CUSTOM_MODEL_OPTION, label: t("customModel") });
     return opts;
   }, [catalogModels, usedIds, row.id]);
 
@@ -2129,7 +2128,7 @@ function ModelRowEditor({
     >
       <div className={"flex items-end gap-3"}>
         <div className={"flex-1 min-w-0"}>
-          <Label>Model</Label>
+          <Label>{t("model")}</Label>
           {hasCatalog && !customMode ? (
             <SelectDropdown
               value={row.id}
@@ -2175,7 +2174,7 @@ function ModelRowEditor({
           )}
         </div>
         <div className={"w-[120px] shrink-0"}>
-          <Label>Input $/1k</Label>
+          <Label>{t("inputRatePer1k")}</Label>
           <Input
             type={"text"}
             inputMode={"decimal"}
@@ -2187,7 +2186,7 @@ function ModelRowEditor({
           />
         </div>
         <div className={"w-[120px] shrink-0"}>
-          <Label>Output $/1k</Label>
+          <Label>{t("outputRatePer1k")}</Label>
           <Input
             type={"text"}
             inputMode={"decimal"}

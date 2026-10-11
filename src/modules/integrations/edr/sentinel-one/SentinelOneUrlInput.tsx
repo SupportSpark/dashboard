@@ -1,4 +1,5 @@
 import { Input, InputProps } from "@components/Input";
+import { useTranslations } from "next-intl";
 import React, { useMemo } from "react";
 import { isValidSentinelOneApiUrl } from "@/modules/integrations/edr/sentinel-one/SentinelOne";
 
@@ -12,6 +13,7 @@ export default function SentinelOneUrlInput({
   setValue,
   ...props
 }: Props) {
+  const t = useTranslations("integrations");
   const isValid = useMemo(() => {
     return isValidSentinelOneApiUrl(value);
   }, [value]);
@@ -19,8 +21,8 @@ export default function SentinelOneUrlInput({
   const error = useMemo(() => {
     if (value === "") return "";
     if (isValid) return "";
-    return "Please enter a valid SentinelOne url e.g., https://your-tenant.sentinelone.net";
-  }, [value, isValid]);
+    return t("sentineloneUrlError");
+  }, [value, isValid, t]);
 
   return (
     <Input

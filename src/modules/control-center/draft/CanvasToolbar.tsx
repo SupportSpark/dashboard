@@ -58,8 +58,11 @@ import { ToolbarButton } from "@/modules/control-center/toolbar/ToolbarButton";
 import { ToolbarContainer } from "@/modules/control-center/toolbar/ToolbarContainer";
 import { ToolbarDivider } from "@/modules/control-center/toolbar/ToolbarDivider";
 import { ToolbarGroup } from "@/modules/control-center/toolbar/ToolbarGroup";
+import { useTranslations } from "next-intl";
 
 export const CanvasToolbar = () => {
+  const t = useTranslations("controlCenter");
+  const tCommon = useTranslations("common");
   const {
     isDraft,
     activeTool,
@@ -169,7 +172,7 @@ export const CanvasToolbar = () => {
     <ToolbarContainer>
       <ToolbarGroup position="first" className="pl-2 py-1.5">
         <ToolbarButton
-          tooltip="Add Components"
+          tooltip={t("addComponents")}
           data-testid="cc-toolbar-add"
           shortcut="C"
           variant="primary"
@@ -184,7 +187,7 @@ export const CanvasToolbar = () => {
               "group-hover/add:rotate-90",
             )}
           />
-          Add
+          {tCommon("add")}
         </ToolbarButton>
       </ToolbarGroup>
 
@@ -192,7 +195,7 @@ export const CanvasToolbar = () => {
 
       <ToolbarGroup position="middle">
         <ToolbarButton
-          tooltip="Select Tool"
+          tooltip={t("selectTool")}
           shortcut="V"
           active={activeTool === CanvasTool.Select}
           onClick={() => setActiveTool(CanvasTool.Select)}
@@ -201,7 +204,7 @@ export const CanvasToolbar = () => {
           <MousePointer2Icon size={16} />
         </ToolbarButton>
         <ToolbarButton
-          tooltip="Hand Tool"
+          tooltip={t("handTool")}
           shortcut="H"
           active={activeTool === CanvasTool.Hand}
           onClick={() => setActiveTool(CanvasTool.Hand)}
@@ -216,7 +219,7 @@ export const CanvasToolbar = () => {
       <ToolbarGroup compact position="middle">
         <ToolbarButton
           disabled={!canUndo}
-          tooltip="Undo"
+          tooltip={t("undo")}
           data-testid="cc-toolbar-undo"
           shortcut={UndoShortcut}
           onClick={undo}
@@ -226,7 +229,7 @@ export const CanvasToolbar = () => {
         </ToolbarButton>
         <ToolbarButton
           disabled={!canRedo}
-          tooltip="Redo"
+          tooltip={t("redo")}
           data-testid="cc-toolbar-redo"
           shortcut={RedoShortcut}
           onClick={redo}
@@ -240,7 +243,7 @@ export const CanvasToolbar = () => {
 
       <ToolbarGroup compact position="last">
         <ToolbarButton
-          tooltip="Zoom In"
+          tooltip={t("zoomIn")}
           shortcut="+"
           onClick={handleZoomIn}
           className="w-8"
@@ -248,7 +251,7 @@ export const CanvasToolbar = () => {
           <PlusIcon size={14} />
         </ToolbarButton>
         <ToolbarButton
-          tooltip="Zoom Out"
+          tooltip={t("zoomOut")}
           shortcut="-"
           onClick={handleZoomOut}
           className="w-8"
@@ -256,7 +259,7 @@ export const CanvasToolbar = () => {
           <MinusIcon size={14} />
         </ToolbarButton>
         <ToolbarButton
-          tooltip="Fit to View"
+          tooltip={t("fitToView")}
           data-testid="cc-toolbar-fit"
           shortcut="1"
           onClick={handleFitView}
@@ -265,7 +268,7 @@ export const CanvasToolbar = () => {
           <FullscreenIcon size={14} />
         </ToolbarButton>
         <ToolbarButton
-          tooltip="Auto Arrange"
+          tooltip={t("autoArrange")}
           data-testid="cc-toolbar-arrange"
           shortcut="A"
           onClick={handleArrange}

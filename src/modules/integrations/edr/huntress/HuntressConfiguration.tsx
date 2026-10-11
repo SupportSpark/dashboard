@@ -26,6 +26,7 @@ import {
   RefreshCcw,
   ShieldCheckIcon,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React, { useReducer, useState } from "react";
 import { useSWRConfig } from "swr";
 import integrationImage from "@/assets/integrations/huntress.png";
@@ -82,6 +83,8 @@ export function ConfigurationContent({
   onSuccess,
   config,
 }: Readonly<ModalProps>) {
+  const t = useTranslations("integrations");
+  const tCommon = useTranslations("common");
   const { mutate } = useSWRConfig();
   const { confirm } = useDialog();
 
@@ -112,23 +115,23 @@ export function ConfigurationContent({
 
   const deleteIntegration = async () => {
     const choice = await confirm({
-      title: `Delete integration?`,
-      description: "Are you sure you want to delete this integration?",
-      confirmText: "Delete",
-      cancelText: "Cancel",
+      title: t("deleteIntegrationQuestion"),
+      description: t("deleteIntegrationDescription"),
+      confirmText: tCommon("delete"),
+      cancelText: tCommon("cancel"),
       type: "danger",
     });
 
     if (!choice) return;
 
     notify({
-      title: "Huntress Integration",
-      description: `Huntress was successfully deleted`,
+      title: t("integrationLinkText", { name: "Huntress" }),
+      description: t("integrationWasDeleted", { name: "Huntress" }),
       promise: integrationRequest.del({}).then(() => {
         mutate("/integrations/edr/huntress");
         onSuccess();
       }),
-      loadingMessage: "Deleting integration...",
+      loadingMessage: t("deletingIntegration"),
     });
   };
 
@@ -136,8 +139,8 @@ export function ConfigurationContent({
     const savedGroups = await saveGroups();
 
     notify({
-      title: "Huntress Integration",
-      description: `Huntress was successfully updated`,
+      title: t("integrationLinkText", { name: "Huntress" }),
+      description: t("integrationWasUpdated", { name: "Huntress" }),
       promise: integrationRequest
         .put({
           api_key: secretPlaceholder === apiKey ? undefined : apiKey,
@@ -151,7 +154,7 @@ export function ConfigurationContent({
           mutate("/integrations/edr/huntress");
           onSuccess();
         }),
-      loadingMessage: "Updating integration...",
+      loadingMessage: t("updatingIntegration"),
     });
   };
 
@@ -175,10 +178,8 @@ export function ConfigurationContent({
 
       <IntegrationModalHeader
         image={integrationImage}
-        title={"Huntress Configuration"}
-        description={
-          "Restrict network access to IT-managed devices marked Compliant in Huntress."
-        }
+        title={t("configurationTitle", { name: "Huntress" })}
+        description={t("huntressConfigurationHelp")}
       />
 
       <Tabs
@@ -194,7 +195,7 @@ export function ConfigurationContent({
                 "text-nb-gray-500 group-data-[state=active]/trigger:text-netbird transition-all"
               }
             />
-            Peer Approval
+            {t("peerApproval")}
           </TabsTrigger>
           <TabsTrigger value={"compliance"}>
             <ShieldCheckIcon
@@ -203,7 +204,7 @@ export function ConfigurationContent({
                 "text-nb-gray-500 group-data-[state=active]/trigger:text-netbird transition-all"
               }
             />
-            Compliance
+            {t("compliance")}
           </TabsTrigger>
           <TabsTrigger value={"settings"}>
             <Cog
@@ -212,7 +213,7 @@ export function ConfigurationContent({
                 "text-nb-gray-500 group-data-[state=active]/trigger:text-netbird transition-all"
               }
             />
-            Settings
+            {t("settings")}
           </TabsTrigger>
           <TabsTrigger value={"danger"}>
             <AlertOctagon
@@ -221,7 +222,7 @@ export function ConfigurationContent({
                 "text-nb-gray-500 group-data-[state=active]/trigger:text-netbird transition-all"
               }
             />
-            Danger Zone
+            {t("dangerZone")}
           </TabsTrigger>
         </TabsList>
 
@@ -230,11 +231,11 @@ export function ConfigurationContent({
             <Label>
               <div className={"flex gap-2 items-center"}>
                 <FolderGit2 size={14} />
-                Groups
+                {t("groups")}
               </div>
             </Label>
             <HelpText className={"mt-2"}>
-              Select groups you want to apply the Huntress integration to
+              {t("selectGroupsHelp", { name: "Huntress" })}
             </HelpText>
 
             <PeerGroupSelector values={groups} onChange={setGroups} />
@@ -244,21 +245,20 @@ export function ConfigurationContent({
         <TabsContent value={"compliance"} className={"px-8"}>
           <div className={""}>
             <Label>
-              <div className={"flex gap-2 items-center"}>Requirements</div>
+              <div className={"flex gap-2 items-center"}>{t("requirements")}</div>
             </Label>
             <HelpText className={"mt-2"}>
-              Set the specific requirements that devices must meet to be
-              considered compliant. Learn more in the{" "}
-              <InlineLink
-                href={
-                  HUNTRESS_DOCUMENTATION_URL
-                }
-                target={"_blank"}
-              >
-                Huntress Documentation
-                <ExternalLinkIcon size={12} />
-              </InlineLink>{" "}
-              about the different statuses.
+              {t.rich("huntressComplianceHelp", {
+                link: (chunks) => (
+                  <InlineLink
+                    href={HUNTRESS_DOCUMENTATION_URL}
+                    target={"_blank"}
+                  >
+                    {chunks}
+                    <ExternalLinkIcon size={12} />
+                  </InlineLink>
+                ),
+              })}
             </HelpText>
 
             <HuntressMatchSettings
@@ -274,23 +274,19 @@ export function ConfigurationContent({
               <Label>
                 <div className={"flex gap-2 items-center"}>
                   <RefreshCcw size={14} />
-                  Sync Window
+                  {t("syncWindow")}
                 </div>
               </Label>
               <FullTooltip
                 interactive={false}
                 content={
                   <div className={"max-w-xs text-xs"}>
-                    Example: This property is set to 24 hours. Jane&apos;s
-                    laptop hasn&apos;t synced with Huntress for 27 hours. Even
-                    though it&apos;s marked as Compliant in Huntress, it will
-                    still be blocked from network access
+                    {t("syncWindowExample", { name: "Huntress" })}
                   </div>
                 }
               >
                 <HelpText className={"max-w-sm mt-1"}>
-                  Devices not synced with Huntress in this time won&apos;t have
-                  network access.
+                  {t("syncWindowHelp", { name: "Huntress" })}
                   <IconInfoCircle
                     size={14}
                     className={"relative inline ml-1 -top-[1px]"}
@@ -307,7 +303,7 @@ export function ConfigurationContent({
               value={lastSyncedInterval}
               type={"number"}
               onChange={(e) => setLastSyncedInterval(e.target.value)}
-              customSuffix={"Hours"}
+              customSuffix={t("hoursSuffix")}
             />
           </div>
 
@@ -319,7 +315,7 @@ export function ConfigurationContent({
               customPrefix={
                 <div className={"min-w-[165px] flex gap-2 items-center"}>
                   <KeyRound size={16} />
-                  API Key
+                  {t("apiKeyLabel")}
                 </div>
               }
               placeholder={"hk_30813a372c41f72f1892"}
@@ -343,7 +339,7 @@ export function ConfigurationContent({
               customPrefix={
                 <div className={"min-w-[165px] flex gap-2 items-center"}>
                   <KeyRound size={16} />
-                  API Secret
+                  {t("apiSecretLabel")}
                 </div>
               }
               placeholder={"hs_3b80d8e463aeb037ac211fafb7fc59c1"}
@@ -368,15 +364,10 @@ export function ConfigurationContent({
             <Label>
               <div className={"flex gap-2 items-center"}>
                 <AlertOctagon size={14} />
-                Delete Integration
+                {t("deleteIntegration")}
               </div>
             </Label>
-            <HelpText className={"max-w-lg mt-2"}>
-              Deleting this integration will remove the ability to sync users
-              and groups from your IdP to NetBird. If you delete the integration
-              you will need to reconfigure it again to enable the
-              synchronization.
-            </HelpText>
+            <HelpText className={"max-w-lg mt-2"}>{t("intuneDeleteHelp")}</HelpText>
           </div>
           <Button
             variant={"danger"}
@@ -384,7 +375,7 @@ export function ConfigurationContent({
             className={"mt-3"}
             onClick={deleteIntegration}
           >
-            Delete Integration
+            {t("deleteIntegration")}
           </Button>
         </TabsContent>
       </Tabs>
@@ -393,12 +384,12 @@ export function ConfigurationContent({
       <ModalFooter className={"items-center gap-4"}>
         <div className={"w-full"}>
           <Paragraph className={"text-sm mt-auto"}>
-            Learn more about
+            {t("learnMoreAbout")}
             <InlineLink
               href={HUNTRESS_NETBIRD_DOCUMENTATION_URL}
               target={"_blank"}
             >
-              Huntress Integration
+              {t("integrationLinkText", { name: "Huntress" })}
               <ExternalLinkIcon size={12} />
             </InlineLink>
           </Paragraph>
@@ -406,7 +397,7 @@ export function ConfigurationContent({
         <div className={"flex gap-4"}>
           <ModalClose asChild={true}>
             <Button variant={"secondary"} className={"w-full"}>
-              Cancel
+              {tCommon("cancel")}
             </Button>
           </ModalClose>
 
@@ -416,7 +407,7 @@ export function ConfigurationContent({
             disabled={!canSave}
             onClick={updateIntegration}
           >
-            Save Changes
+            {t("saveChanges")}
           </Button>
         </div>
       </ModalFooter>

@@ -14,6 +14,7 @@ import {
 } from "@/modules/control-center/utils/helpers";
 import { AllHandles } from "@/modules/control-center/handles/AllHandles";
 import { ConnectHandle } from "@/modules/control-center/handles/ConnectHandle";
+import { useTranslations } from "next-intl";
 
 export const RESOURCE_TYPE_ICONS = {
   domain: GlobeIcon,
@@ -38,6 +39,7 @@ export const StandaloneResourceNode = ({
   // Drilled views already show the network in their header.
   hideNetwork?: boolean;
 }) => {
+  const t = useTranslations("controlCenter");
   const { showHandles = false } = data;
   const { isDraft, setResourceEditor, setResourceNetworkPicker } =
     useDraftMode();
@@ -86,7 +88,7 @@ export const StandaloneResourceNode = ({
             }}
           >
             <AlertTriangleIcon size={12} className={"text-yellow-400"} />
-            No Network
+            {t("noNetwork")}
           </Button>
         </div>
       )}

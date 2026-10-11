@@ -159,7 +159,7 @@ function SlackModalContent({ onSave }: Readonly<ModalContentProps>) {
             </Steps.Step>
             <Steps.Step step={3} line={false}>
               <p className={"font-normal"}>
-                {t("copyGenerated")} <Mark>Webhook URL</Mark> {t("andPasteBelow")}
+                {t("copyGenerated")} <Mark>{t("webhookUrlLabel")}</Mark> {t("andPasteBelow")}
               </p>
             </Steps.Step>
           </Steps>

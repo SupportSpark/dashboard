@@ -1,4 +1,5 @@
 import Button from "@components/Button";
+import { useTranslations } from "next-intl";
 import Code from "@components/Code";
 import InlineLink from "@components/InlineLink";
 import { Modal, ModalContent } from "@components/modal/Modal";
@@ -18,7 +19,9 @@ type Props = {
   onFinish?: () => void;
 };
 
-export const OnboardingSecondDevice = ({ secondDevice, onFinish }: Props) => {
+export const OnboardingSecondDevice = ({
+secondDevice, onFinish }: Props) => {
+  const tonb = useTranslations("onboarding");
   const setupKeyRequest = useApiCall<SetupKey>("/setup-keys", true);
   const [setupKey, setSetupKey] = useState<SetupKey>();
   const { confirm } = useDialog();
@@ -37,7 +40,7 @@ export const OnboardingSecondDevice = ({ secondDevice, onFinish }: Props) => {
     if (navigator.share) {
       navigator.share({
         title: "Install NetBird",
-        text: "Install NetBird on another device using this link.",
+        text: tonb("installOnAnotherDevice"),
         url: getInstallUrl(),
       });
     }
@@ -47,7 +50,7 @@ export const OnboardingSecondDevice = ({ secondDevice, onFinish }: Props) => {
     const choice = await confirm({
       title: `Create a Setup Key?`,
       description:
-        "If you continue, a one-off setup key will be automatically created and you will be able to install NetBird.",
+        tonb("continueCreatesSetupKey"),
       confirmText: "Continue",
       cancelText: "Cancel",
       type: "default",

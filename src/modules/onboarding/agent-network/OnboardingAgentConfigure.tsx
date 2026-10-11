@@ -1,4 +1,5 @@
 import Button from "@components/Button";
+import { useTranslations } from "next-intl";
 import { ArrowRightIcon } from "lucide-react";
 import * as React from "react";
 import {
@@ -16,7 +17,9 @@ type Props = {
 // step. The per-tool snippets (Claude Code, Codex, an SDK, cURL) are shown
 // inline via AgentConnectTabs, with the endpoint pre-filled and the SDK and
 // cURL requests in the connected provider's API shape.
-export const OnboardingAgentConfigure = ({ onBack, onNext }: Props) => {
+export const OnboardingAgentConfigure = ({
+onBack, onNext }: Props) => {
+  const tonb = useTranslations("onboarding");
   const { settings, providers } = useAIProviders();
 
   // Open the tab that matches the connected provider: Anthropic and Kimi
@@ -31,7 +34,7 @@ export const OnboardingAgentConfigure = ({ onBack, onNext }: Props) => {
   return (
     <div className={"relative flex flex-col h-full gap-4"}>
       <div>
-        <h1 className={"text-xl text-center"}>Configure your agent</h1>
+        <h1 className={"text-xl text-center"}>{tonb("configureYourAgent")}</h1>
         <div
           className={
             "text-sm text-nb-gray-300 font-light mt-2 block text-center sm:px-4"

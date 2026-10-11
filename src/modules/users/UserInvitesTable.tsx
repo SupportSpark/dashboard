@@ -537,9 +537,9 @@ export default function UserInvitesTable({
         ? [
             {
               value: "agent_network_admin",
-              label: "Agent Network Admin",
+              label: t("agentNetworkAdmin"),
             },
-            { value: "usage_viewer", label: "Usage Viewer" },
+            { value: "usage_viewer", label: t("usageViewer") },
           ]
         : []),
       { value: "billing_admin", label: t("billingAdmin") },

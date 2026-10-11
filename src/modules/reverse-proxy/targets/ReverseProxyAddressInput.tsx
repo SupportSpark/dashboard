@@ -6,6 +6,7 @@ import { useReverseProxies } from "@/contexts/ReverseProxiesProvider";
 import { cn } from "@utils/helpers";
 import { isHostInCIDR, isValidCIDR, isValidIP, parseCIDR } from "@utils/ip";
 import { HelpTooltip } from "@components/HelpTooltip";
+import { useTranslations } from "next-intl";
 
 export function useReverseProxyAddress(target: Target | undefined) {
   const { resources } = useReverseProxies();
@@ -58,10 +59,11 @@ export function useReverseProxyAddress(target: Target | undefined) {
 }
 
 export function CidrHelpText({ target }: { target: Target | undefined }) {
+  const t = useTranslations("reverseProxy");
   const { cidrInfo, resourceAddress } = useReverseProxyAddress(target);
   if (!cidrInfo) return null;
   return (
-    <HelpTooltip content={`Enter an IP address within ${resourceAddress}`} />
+    <HelpTooltip content={t("cidrHostHelp", { address: resourceAddress })} />
   );
 }
 
@@ -78,6 +80,7 @@ export default function ReverseProxyAddressInput({
   className,
   autoFocus,
 }: Readonly<Props>) {
+  const t = useTranslations("reverseProxy");
   const { isHostEditable } = useReverseProxyAddress(target);
 
   // Cluster targets accept hostnames or IPs; CIDR-mode targets are
@@ -88,8 +91,8 @@ export default function ReverseProxyAddressInput({
 
   const placeholder =
     target?.type === ReverseProxyTargetType.CLUSTER
-      ? "e.g., 127.0.0.1 or backend.lan"
-      : "e.g., 192.168.0.10";
+      ? t("hostPlaceholder")
+      : t("ipAddressPlaceholderOnly");
 
   return (
     <Input

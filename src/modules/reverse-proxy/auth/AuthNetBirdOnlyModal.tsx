@@ -28,6 +28,7 @@ export default function AuthNetBirdOnlyModal({
   onRemove,
 }: Readonly<Props>) {
   const t = useTranslations("common");
+  const tReverseProxy = useTranslations("reverseProxy");
   const { users } = useUsers();
   const [groups, setGroups] = useState<Group[]>(currentGroups);
   const isEditing = isEnabled;
@@ -47,8 +48,8 @@ export default function AuthNetBirdOnlyModal({
     <Modal open={open} onOpenChange={onOpenChange}>
       <ModalContent maxWidthClass="max-w-xl">
         <ModalHeader
-          title="NetBird-Only Access"
-          description="Reachable from peers in selected groups only."
+          title={tReverseProxy("netBirdOnlyAccess")}
+          description={tReverseProxy("netBirdOnlyDescription")}
         />
 
         <GradientFadedBackground />
@@ -61,9 +62,9 @@ export default function AuthNetBirdOnlyModal({
               <div className={"flex items-center gap-2"}>
                 <Badge className={"py-[3px]"} variant={"gray-ghost"}>
                   <CircleUser size={12} />
-                  Pick groups
+                  {tReverseProxy("pickGroups")}
                 </Badge>
-                Select access groups...
+                {tReverseProxy("selectAccessGroups")}
               </div>
             }
             users={users}
@@ -72,7 +73,7 @@ export default function AuthNetBirdOnlyModal({
             {isEditing ? (
               <>
                 <Button variant="danger-text" onClick={handleRemove}>
-                  Remove
+                  {tReverseProxy("removeBtn")}
                 </Button>
                 <div className="flex gap-3">
                   <ModalClose asChild>
@@ -83,7 +84,7 @@ export default function AuthNetBirdOnlyModal({
                     onClick={handleSave}
                     disabled={groups.length === 0}
                   >
-                    Save
+                    {t("save")}
                   </Button>
                 </div>
               </>
@@ -99,7 +100,7 @@ export default function AuthNetBirdOnlyModal({
                     onClick={handleSave}
                     disabled={groups.length === 0}
                   >
-                    Enable
+                    {tReverseProxy("enableBtn")}
                   </Button>
                 </div>
               </>

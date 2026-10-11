@@ -30,7 +30,8 @@ type Props = {
 };
 
 type Distro = {
-  label: string;
+  /** Catalog key in the `setupModal` namespace; the label is resolved at render. */
+  labelKey: string;
   value: string;
   /** Commands that register the NetBird package repository. */
   repository: string[];
@@ -62,7 +63,7 @@ const YUM_REPOSITORY = [
 // them explicitly. Distributions below that floor get the CLI only.
 const DISTROS: Distro[] = [
   {
-    label: "Debian / Ubuntu (APT)",
+    labelKey: "debianUbuntuApt",
     value: "apt",
     repository: [
       "sudo apt-get update",
@@ -78,7 +79,7 @@ const DISTROS: Distro[] = [
     note: "The desktop app needs Ubuntu 24.04 or Debian 13 and newer. On earlier releases install the CLI only.",
   },
   {
-    label: "Fedora (DNF)",
+    labelKey: "fedoraDnf",
     value: "fedora",
     repository: YUM_REPOSITORY,
     cli: "sudo dnf install netbird",
@@ -86,7 +87,7 @@ const DISTROS: Distro[] = [
     note: "The desktop app needs Fedora 43 and newer. On earlier releases install the CLI only.",
   },
   {
-    label: "RHEL / AlmaLinux / Rocky (DNF)",
+    labelKey: "rhelAlmalinuxRockyDnf",
     value: "rhel",
     repository: YUM_REPOSITORY,
     cli: "sudo dnf install netbird",
@@ -99,7 +100,7 @@ const DISTROS: Distro[] = [
     note: "The desktop app needs version 10 or newer with EPEL enabled, which provides WebKitGTK 6.0. On version 9 install the CLI only.",
   },
   {
-    label: "openSUSE (Zypper)",
+    labelKey: "openSuseZypper",
     value: "opensuse",
     // Zypper does not read gpgkey= from a .repo file, so the repository key is
     // imported by an explicit refresh instead of the YUM_REPOSITORY snippet.
@@ -114,7 +115,7 @@ const DISTROS: Distro[] = [
     note: "The desktop app needs Tumbleweed or Leap 15.6 and newer. On earlier releases install the CLI only.",
   },
   {
-    label: "Amazon Linux (YUM)",
+    labelKey: "amazonLinuxYum",
     value: "amazon",
     repository: YUM_REPOSITORY,
     cli: "sudo yum install netbird",
@@ -129,13 +130,14 @@ export default function LinuxTab({
   showSetupKeyInfo = false,
   hostname,
 }: Readonly<Props>) {
+  const t = useTranslations("setupModal");
   const [distroValue, setDistroValue] = useState(DISTROS[0].value);
   const distro =
     DISTROS.find((option) => option.value === distroValue) ?? DISTROS[0];
 
   const runStep = setupKeyContent ? 3 : 2;
   const usingSetupKey = !!setupKey || !!setupKeyPlaceholder;
-  const t = useTranslations("setupModal");
+
 
   const hasDesktopApp = !!distro.desktopApp?.length;
   const installLines = [
@@ -185,9 +187,9 @@ export default function LinuxTab({
                   value={distroValue}
                   className={"w-[280px]"}
                   onChange={setDistroValue}
-                  placeholder={"Select distribution"}
-                  options={DISTROS.map(({ label, value }) => ({
-                    label,
+                  placeholder={t("selectDistribution")}
+                  options={DISTROS.map(({ labelKey, value }) => ({
+                    label: t(labelKey),
                     value,
                   }))}
                   data-testid={"linux-distro-select"}

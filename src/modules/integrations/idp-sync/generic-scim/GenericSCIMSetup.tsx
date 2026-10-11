@@ -16,6 +16,7 @@ import {
   FolderGit2,
   UserCircle,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React, { useEffect, useState } from "react";
 import { useEmbeddedIdentityProviders } from "@/hooks/useEmbeddedIdentityProviders";
 import Skeleton from "react-loading-skeleton";
@@ -74,6 +75,9 @@ export function SetupContent({
   onClose,
   provider,
 }: ModalProps) {
+  const t = useTranslations("idpSync");
+  const tCommon = useTranslations("common");
+  const integrationName = name ?? "Generic SCIM";
   const { isEmbeddedIdPEnabled } = useEmbeddedIdentityProviders();
   const [step, setStep] = useState(isEmbeddedIdPEnabled ? -1 : 0);
   const [authToken, setAuthToken] = useState("");
@@ -102,8 +106,8 @@ export function SetupContent({
       return;
     }
     notify({
-      title: `${name} Integration`,
-      description: `${name} was successfully set up`,
+      title: t("integrationLinkText", { name: integrationName }),
+      description: t("integrationWasSetUp", { name: integrationName }),
       promise: integrationRequest
         .put(
           {
@@ -121,7 +125,7 @@ export function SetupContent({
           mutate("/integrations/scim-idp");
           onSuccess();
         }),
-      loadingMessage: "Setting up integration...",
+      loadingMessage: t("settingUpIntegration"),
     });
   };
 
@@ -194,8 +198,8 @@ export function SetupContent({
 
       <IntegrationModalHeader
         image={image || integrationImage}
-        title={`Connect NetBird with ${name}`}
-        description={`Start syncing your users and groups from ${name} to NetBird. Follow the steps below to get started.`}
+        title={t("connectNetBirdWith", { name: integrationName })}
+        description={t("startSyncingWithProvider", { name: integrationName })}
       />
 
       {step === -1 && (
@@ -213,46 +217,50 @@ export function SetupContent({
           }
         >
           <p className={"mt-2 !text-nb-gray-300"}>
-            SCIM configuration varies by identity provider. Please refer to our{" "}
-            <InlineLink
-              className={"inline"}
-              target={"_blank"}
-              href={
-                "https://docs.netbird.io/how-to/idp-sync#supported-identity-providers"
-              }
-            >
-              IdP Documentation
-              <ExternalLinkIcon size={12} />
-            </InlineLink>{" "}
-            for provider-specific setup guides.
+            {t.rich("scimSetupVariesHelp", {
+              link: (chunks) => (
+                <InlineLink
+                  className={"inline"}
+                  target={"_blank"}
+                  href={
+                    "https://docs.netbird.io/how-to/idp-sync#supported-identity-providers"
+                  }
+                >
+                  {chunks}
+                  <ExternalLinkIcon size={12} />
+                </InlineLink>
+              ),
+            })}
           </p>
 
           <p className={"mt-2 !text-nb-gray-300"}>
-            If your identity provider is not listed in our documentation contact
-            us at{" "}
-            <InlineLink
-              className={"inline"}
-              target={"_blank"}
-              href={
-                "mailto:support@netbird.io?subject=Request%20for%20Assistance%3A%20Custom%20Identity%20Provider"
-              }
-            >
-              support@netbird.io
-            </InlineLink>
+            {t.rich("idpNotListedHelp", {
+              link: (chunks) => (
+                <InlineLink
+                  className={"inline"}
+                  target={"_blank"}
+                  href={
+                    "mailto:support@netbird.io?subject=Request%20for%20Assistance%3A%20Custom%20Identity%20Provider"
+                  }
+                >
+                  {chunks}
+                </InlineLink>
+              ),
+            })}
           </p>
           {!genericConnection && !isSSOLoading && isAuth0() && (
             <Callout className={"max-w-xl mt-5 text-left"} variant={"warning"}>
-              <span>
-                Single-Sign-On needs to be enabled and active before you can
-                enable IdP sync.{" "}
-                <InlineLink
-                  href={"https://docs.netbird.io/how-to/single-sign-on"}
-                  target={"_blank"}
-                >
-                  How to enable SSO
-                  <ExternalLinkIcon size={12} />
-                </InlineLink>
-              </span>
+              {t.rich("ssoRequiredForIdpSync", {
+                link: (chunks) => (
+                  <InlineLink
+                    href={"https://docs.netbird.io/how-to/single-sign-on"}
+                    target={"_blank"}
+                  >
+                    {chunks}
+                    <ExternalLinkIcon size={12} />
+                  </InlineLink>
+                ),
+              })}
             </Callout>
           )}
         </div>
@@ -262,7 +270,7 @@ export function SetupContent({
         <div className={"px-8 py-3 flex flex-col gap-0 mt-4"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <FolderGit2 size={20} />
-            Groups to be synchronized
+            {t("groupsToBeSynchronized")}
           </p>
 
           <div className={"mb-4 flex flex-col gap-1"}>
@@ -281,7 +289,7 @@ export function SetupContent({
         <div className={"px-8 py-3 flex flex-col gap-0 mt-4"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <UserCircle size={18} />
-            Users to be synchronized
+            {t("usersToBeSynchronized")}
           </p>
 
           <div className={"mb-4 flex flex-col gap-1"}>
@@ -290,8 +298,8 @@ export function SetupContent({
             </div>
 
             <GroupPrefixInput
-              addText={"Add user group filter"}
-              text={"User group starts with..."}
+              addText={t("addUserGroupFilter")}
+              text={t("userGroupStartsWith")}
               value={userGroupPrefixes}
               onChange={setUserGroupPrefixes}
             />
@@ -303,30 +311,30 @@ export function SetupContent({
         <div className={"px-8 py-3 flex flex-col gap-2 mt-4"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <BoxIcon size={20} />
-            SCIM Credentials
+            {t("scimCredentialsTitle")}
           </p>
           <MinimalList
             data={[
               {
-                label: "Name",
+                label: tCommon("name"),
                 value: "NetBird",
               },
               {
-                label: "API Type",
+                label: t("apiTypeLabel"),
                 value: "SCIM API",
                 noCopy: true,
               },
               {
-                label: "SCIM Version",
+                label: t("scimVersionLabel"),
                 value: "SCIM 2.0",
                 noCopy: true,
               },
               {
-                label: "Base URL",
+                label: t("baseUrlLabel"),
                 value: "https://api.netbird.io/api/scim/v2",
               },
               {
-                label: "Token",
+                label: t("tokenLabel"),
                 value:
                   authToken === "" ? (
                     <Skeleton height={17} width={200} />
@@ -348,7 +356,7 @@ export function SetupContent({
             onClick={() => setStep(step + 1)}
             disabled={!connectorId || connectorId === ""}
           >
-            Continue
+            {tCommon("continue")}
             <IconArrowRight size={16} />
           </Button>
         )}
@@ -359,7 +367,7 @@ export function SetupContent({
             onClick={() => setStep(step - 1)}
           >
             <IconArrowLeft size={16} />
-            Back
+            {tCommon("back")}
           </Button>
         )}
         {step >= 0 && step < maxSteps && (
@@ -369,7 +377,7 @@ export function SetupContent({
             disabled={!genericConnection && isAuth0()}
             onClick={() => setStep(step + 1)}
           >
-            {step == 0 ? "Get Started" : "Continue"}
+            {step == 0 ? t("getStarted") : tCommon("continue")}
             <IconArrowRight size={16} />
           </Button>
         )}
@@ -380,7 +388,7 @@ export function SetupContent({
             onClick={finishSetup}
             disabled={integrationId === "" || authToken === ""}
           >
-            Finish Setup
+            {t("finishSetup")}
           </Button>
         )}
       </ModalFooter>

@@ -4,6 +4,7 @@ import { Input } from "@components/Input";
 import { Label } from "@components/Label";
 import { cn } from "@utils/helpers";
 import { Bug, FileWarning, HardDrive, ShieldAlert, Wifi } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useState } from "react";
 import { FleetDMMatchAttributes } from "@/interfaces/EDR";
@@ -16,6 +17,7 @@ export const FleetDMMatchSettings = ({
   value: matchAttributes,
   dispatch: dispatchMatchAttributes,
 }: Props) => {
+  const t = useTranslations("integrations");
   const [requiredPoliciesText, setRequiredPoliciesText] = useState(
     (matchAttributes.required_policies ?? []).join(", "),
   );
@@ -26,14 +28,12 @@ export const FleetDMMatchSettings = ({
         <div className={"w-full"}>
           <Label>
             <ShieldAlert size={14} />
-            Max Failing Policies
+            {t("maxFailingPolicies")}
           </Label>
-          <HelpText>
-            Maximum number of allowed failing policies on a device.
-          </HelpText>
+          <HelpText>{t("maxFailingPoliciesHelp")}</HelpText>
         </div>
         <Input
-          placeholder={"Not set"}
+          placeholder={t("notSet")}
           min={0}
           max={999}
           className={"w-full min-w-[160px]"}
@@ -46,7 +46,7 @@ export const FleetDMMatchSettings = ({
                 e.target.value === "" ? undefined : Number(e.target.value),
             })
           }
-          customSuffix={"Policies"}
+          customSuffix={t("policiesSuffix")}
         />
       </div>
 
@@ -54,14 +54,12 @@ export const FleetDMMatchSettings = ({
         <div className={"w-full"}>
           <Label>
             <Bug size={14} />
-            Max Vulnerable Software
+            {t("maxVulnerableSoftware")}
           </Label>
-          <HelpText>
-            Maximum number of allowed vulnerable software on a device.
-          </HelpText>
+          <HelpText>{t("maxVulnerableSoftwareHelp")}</HelpText>
         </div>
         <Input
-          placeholder={"Not set"}
+          placeholder={t("notSet")}
           min={0}
           max={999}
           className={"w-full min-w-[160px]"}
@@ -74,7 +72,7 @@ export const FleetDMMatchSettings = ({
                 e.target.value === "" ? undefined : Number(e.target.value),
             })
           }
-          customSuffix={"Software"}
+          customSuffix={t("softwareSuffix")}
         />
       </div>
 
@@ -82,14 +80,12 @@ export const FleetDMMatchSettings = ({
         <div className={"w-full"}>
           <Label>
             <FileWarning size={14} />
-            Required FleetDM Policy IDs
+            {t("requiredPolicyIds")}
           </Label>
-          <HelpText>
-            Comma-separated policy IDs that must pass on the device.
-          </HelpText>
+          <HelpText>{t("requiredPolicyIdsHelp")}</HelpText>
         </div>
         <Input
-          placeholder={"e.g. 1, 5, 12"}
+          placeholder={t("enterPolicyIds")}
           className={"w-full min-w-[160px]"}
           value={requiredPoliciesText}
           type={"text"}
@@ -116,12 +112,10 @@ export const FleetDMMatchSettings = ({
           label={
             <>
               <HardDrive size={14} />
-              Disk Encryption
+              {t("diskEncryption")}
             </>
           }
-          helpText={
-            "Devices must have disk encryption (FileVault/BitLocker) enabled."
-          }
+          helpText={t("diskEncryptionHelpFleet")}
           textWrapperClassName={"max-w-lg"}
         />
         <FancyToggleSwitch
@@ -136,10 +130,10 @@ export const FleetDMMatchSettings = ({
           label={
             <>
               <Wifi size={14} />
-              Online Status
+              {t("onlineStatus")}
             </>
           }
-          helpText={"Require the host to be online (recently seen by Fleet)."}
+          helpText={t("onlineStatusHelp")}
         />
       </div>
     </>

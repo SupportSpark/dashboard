@@ -39,6 +39,7 @@ export default function ReverseProxyAccessControlCell({
   reverseProxy,
 }: Readonly<Props>) {
   const t = useTranslations("common");
+  const tr = useTranslations("reverseProxy");
 
   const { permission } = usePermissions();
   const { openModal, domains } = useReverseProxies();
@@ -91,7 +92,9 @@ export default function ReverseProxyAccessControlCell({
     if (restrictions?.allowed_countries?.length) {
       entries.push({
         key: "allowed-countries",
-        label: "Allowed Countries",
+        label: tr("allowedCountries", {
+          count: restrictions.allowed_countries.length,
+        }),
         Icon: FlagIcon,
         value: restrictions.allowed_countries.map(getCountryName).join(", "),
       });
@@ -100,7 +103,9 @@ export default function ReverseProxyAccessControlCell({
     if (restrictions?.blocked_countries?.length) {
       entries.push({
         key: "blocked-countries",
-        label: "Blocked Countries",
+        label: tr("blockedCountries", {
+          count: restrictions.blocked_countries.length,
+        }),
         Icon: FlagIcon,
         value: restrictions.blocked_countries.map(getCountryName).join(", "),
         blocked: true,
@@ -119,7 +124,7 @@ export default function ReverseProxyAccessControlCell({
     if (allowedIps.length) {
       entries.push({
         key: "allowed-ips",
-        label: allowedIps.length === 1 ? "Allowed IP" : "Allowed IPs",
+        label: tr("allowedIps", { count: allowedIps.length }),
         Icon: WorkflowIcon,
         value: allowedIps.map((c) => c.replace(/\/32$/, "")).join(", "),
       });
@@ -128,7 +133,7 @@ export default function ReverseProxyAccessControlCell({
     if (allowedCidrs.length) {
       entries.push({
         key: "allowed-cidrs",
-        label: allowedCidrs.length === 1 ? "Allowed CIDR" : "Allowed CIDRs",
+        label: tr("allowedCidrs", { count: allowedCidrs.length }),
         Icon: NetworkIcon,
         value: allowedCidrs.join(", "),
       });
@@ -137,7 +142,7 @@ export default function ReverseProxyAccessControlCell({
     if (blockedIps.length) {
       entries.push({
         key: "blocked-ips",
-        label: blockedIps.length === 1 ? "Blocked IP" : "Blocked IPs",
+        label: tr("blockedIps", { count: blockedIps.length }),
         Icon: WorkflowIcon,
         value: blockedIps.map((c) => c.replace(/\/32$/, "")).join(", "),
         blocked: true,
@@ -147,7 +152,7 @@ export default function ReverseProxyAccessControlCell({
     if (blockedCidrs.length) {
       entries.push({
         key: "blocked-cidrs",
-        label: blockedCidrs.length === 1 ? "Blocked CIDR" : "Blocked CIDRs",
+        label: tr("blockedCidrs", { count: blockedCidrs.length }),
         Icon: NetworkIcon,
         value: blockedCidrs.join(", "),
         blocked: true,
@@ -157,17 +162,18 @@ export default function ReverseProxyAccessControlCell({
     if (hasCrowdSec) {
       entries.push({
         key: "crowdsec",
+        // CrowdSec is a product name and stays as-is in both locales.
         label: "CrowdSec",
         Icon: ShieldAlert,
         value:
           restrictions?.crowdsec_mode === CrowdSecMode.ENFORCE
-            ? "Enforce"
-            : "Observe",
+            ? tr("crowdSecModeEnforce")
+            : tr("crowdSecModeObserve"),
       });
     }
 
     return entries;
-  }, [restrictions, countries, hasCrowdSec]);
+  }, [restrictions, countries, hasCrowdSec, tr, t]);
 
   const showRulesHover = ruleGroups.length > 0;
 

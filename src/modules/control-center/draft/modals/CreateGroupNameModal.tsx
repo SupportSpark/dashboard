@@ -10,6 +10,7 @@ import {
 import ModalHeader from "@components/modal/ModalHeader";
 import { trim } from "lodash";
 import { Group } from "@/interfaces/Group";
+import { useTranslations } from "next-intl";
 
 type Props = {
   open: boolean;
@@ -24,6 +25,9 @@ export const CreateGroupNameModal = ({
   onSuccess,
   groups,
 }: Props) => {
+  const t = useTranslations("controlCenter");
+  const tCommon = useTranslations("common");
+  const tGroups = useTranslations("groups");
   const [name, setName] = useState("");
   const [error, setError] = useState("");
 
@@ -36,7 +40,7 @@ export const CreateGroupNameModal = ({
     const newName = e.target.value;
     const trimmed = trim(newName);
     // "All" is the system group; name-based checks would misidentify a copy.
-    if (trimmed === "All") {
+    if (trimmed === tCommon("all")) {
       setError('The name "All" is reserved. Please choose another name.');
     } else {
       const exists = groups?.some((g) => g.name === trimmed);
@@ -58,13 +62,13 @@ export const CreateGroupNameModal = ({
     <Modal open={open} onOpenChange={onOpenChange}>
       <ModalContent maxWidthClass={"max-w-md"}>
         <ModalHeader
-          title={"Create Group"}
-          description={"Set an easily identifiable name for your group."}
+          title={t("createGroup")}
+          description={t("renameGroupDescription")}
           color={"blue"}
         />
         <div className={"p-default flex flex-col gap-4"}>
           <Input
-            placeholder={"e.g., Developers"}
+            placeholder={tGroups("namePlaceholder")}
             value={name}
             onChange={handleNameChange}
             error={error}
@@ -75,7 +79,7 @@ export const CreateGroupNameModal = ({
           <div className={"flex gap-3 w-full justify-end"}>
             <ModalClose asChild={true}>
               <Button variant={"secondary"} className={"w-full"}>
-                Cancel
+                {tCommon("cancel")}
               </Button>
             </ModalClose>
             <Button
@@ -85,7 +89,7 @@ export const CreateGroupNameModal = ({
               disabled={isDisabled}
               type={"submit"}
             >
-              Save
+              {tCommon("save")}
             </Button>
           </div>
         </ModalFooter>

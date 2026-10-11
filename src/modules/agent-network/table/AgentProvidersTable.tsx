@@ -22,6 +22,7 @@ import { useAIProviders } from "@/modules/agent-network/AIProvidersProvider";
 import { AIProvider } from "@/modules/agent-network/data/mockData";
 import AgentProviderActionCell from "@/modules/agent-network/table/AgentProviderActionCell";
 import { useProviderCatalog } from "@/modules/agent-network/useProviderCatalog";
+import { useTranslations } from "next-intl";
 
 function NameCell({ provider }: { provider: AIProvider }) {
   const { getById } = useProviderCatalog();
@@ -123,6 +124,8 @@ type Props = {
 export default function AgentProvidersTable({
   headingTarget,
 }: Readonly<Props>) {
+  const t = useTranslations("agentNetwork");
+  const tCommon = useTranslations("common");
   const path = usePathname();
   const {
     providers,
@@ -156,7 +159,7 @@ export default function AgentProvidersTable({
       <DataTable
         headingTarget={headingTarget}
         isLoading={isLoading}
-        text={"Providers"}
+        text={t("providers")}
         sorting={sorting}
         setSorting={setSorting}
         columns={columns}
@@ -174,7 +177,7 @@ export default function AgentProvidersTable({
                 size={"large"}
               />
             }
-            title={"Connect a provider"}
+            title={t("connectProvider")}
             description={
               "Route OpenAI, Anthropic, and other LLM APIs through NetBird to enforce access control, track token spend, and capture prompts."
             }
@@ -185,12 +188,12 @@ export default function AgentProvidersTable({
             }
             learnMore={
               <>
-                Learn more about
+                {tCommon("learnMoreAbout")}
                 <InlineLink
                   href={"https://docs.netbird.io/agent-network/providers"}
                   target={"_blank"}
                 >
-                  Agent Network Providers
+                  {t("agentNetworkProviders")}
                   <ExternalLinkIcon size={12} />
                 </InlineLink>
               </>
@@ -211,6 +214,7 @@ export default function AgentProvidersTable({
 }
 
 const AddProviderButton = () => {
+  const t = useTranslations("agentNetwork");
   const { openWizard } = useAIProviders();
   const { permission } = usePermissions();
   // Connecting a provider needs the create grant; read-only viewers get no
@@ -223,7 +227,7 @@ const AddProviderButton = () => {
       data-testid={"connect-agent-network-provider"}
     >
       <PlusCircle size={16} />
-      Connect Provider
+      {t("connectProvider")}
     </Button>
   );
 };

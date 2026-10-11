@@ -21,6 +21,7 @@ import {
 } from "@/modules/control-center/draft/DraftModeContext";
 import { useControlCenterData } from "@/modules/control-center/hooks/useControlCenterData";
 import { getDraftResource } from "@/modules/control-center/utils/helpers";
+import { useTranslations } from "next-intl";
 
 // Destination picker for a POLICY connected with a network frame: the policy
 // modal's destination selector, limited to that network's resources and groups.
@@ -49,6 +50,9 @@ const PickerContent = ({
   state: NetworkDestinationPickerState;
   onClose: () => void;
 }) => {
+  const t = useTranslations("controlCenter");
+  const tCommon = useTranslations("common");
+  const tPolicies = useTranslations("policies");
   const { networkNodeId, policyNodeId } = state;
   const { nodes } = useCanvasState();
   const { groups: apiGroups, networkResources } = useControlCenterData();
@@ -159,7 +163,7 @@ const PickerContent = ({
             <PeerGroupSelector
               data-testid={"network-destination-selector"}
               popoverWidth={480}
-              placeholder={"Select destination(s)..."}
+              placeholder={tPolicies("selectDestination")}
               showResources={true}
               showResourceCounter={true}
               // Land on the tab that has content.
@@ -189,7 +193,7 @@ const PickerContent = ({
         <div className={"flex gap-3 w-full justify-end"}>
           <ModalClose asChild={true}>
             <Button variant={"secondary"} className={"w-full"}>
-              Cancel
+              {tCommon("cancel")}
             </Button>
           </ModalClose>
           <Button
@@ -198,7 +202,7 @@ const PickerContent = ({
             onClick={onConnect}
             disabled={!hasPick || !!blockedReason}
           >
-            Connect
+            {t("connect")}
           </Button>
         </div>
       </ModalFooter>

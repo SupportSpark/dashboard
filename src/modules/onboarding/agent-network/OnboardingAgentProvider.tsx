@@ -1,4 +1,5 @@
 import Button from "@components/Button";
+import { useTranslations } from "next-intl";
 import { ArrowRightIcon, CheckCircle2Icon, PlusIcon } from "lucide-react";
 import * as React from "react";
 import { useEffect, useRef } from "react";
@@ -18,10 +19,12 @@ type Props = {
 // OnboardingAgentProvider covers the quickstart's "Connect a Provider" step.
 // "Done" needs the settings, which the gateway step creates, and a provider.
 export const OnboardingAgentProvider = ({
+
   createsPolicy,
   onBack,
   onNext,
 }: Props) => {
+  const tonb = useTranslations("onboarding");
   const { settings, providers, openWizard, closeWizard, isWizardOpen } =
     useAIProviders();
   const connected = !!settings && providers.length > 0;
@@ -30,7 +33,7 @@ export const OnboardingAgentProvider = ({
   return (
     <div className={"relative flex flex-col h-full gap-4"}>
       <div>
-        <h1 className={"text-xl text-center"}>Connect a provider</h1>
+        <h1 className={"text-xl text-center"}>{tonb("connectAProvider")}</h1>
         <div
           className={
             "text-sm text-nb-gray-300 font-light mt-2 block text-center sm:px-4"

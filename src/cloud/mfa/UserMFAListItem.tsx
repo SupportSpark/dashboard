@@ -1,4 +1,5 @@
 import Button from "@components/Button";
+import { useTranslations } from "next-intl";
 import Card from "@components/Card";
 import FullTooltip from "@components/FullTooltip";
 import InlineLink from "@components/InlineLink";
@@ -29,7 +30,9 @@ type Props = {
   userId: string;
 };
 
-export const UserMfaListItem = ({ userId }: Props) => {
+export const UserMfaListItem = ({
+  userId,
+}: Props) => {
   const { permission } = usePermissions();
   return permission.settings.update && isNetBirdCloud() ? (
     <ListItem userId={userId} />
@@ -158,6 +161,7 @@ const MFAStatus = ({
 };
 
 const ResetMFAButton = ({ userId }: Props) => {
+  const tmfa = useTranslations("cloudMfa");
   const mfaDeleteRequest = useApiCall(`/service/mfa/${userId}`, true, {
     origin: config.authServiceUrl,
   }).del;
@@ -169,7 +173,7 @@ const ResetMFAButton = ({ userId }: Props) => {
     const choice = await confirm({
       title: `Reset Multi-factor Authentication?`,
       description:
-        "Are you sure you want to reset the current MFA methods for this user? The user will be prompted to set up MFA again on their next login.",
+        tmfa("resetMfaDescription"),
       confirmText: "Confirm",
       cancelText: "Cancel",
       type: "warning",
@@ -178,9 +182,9 @@ const ResetMFAButton = ({ userId }: Props) => {
 
     setIsLoading(true);
     notify({
-      title: "Multi-factor authentication (MFA)",
-      description: "MFA settings have been reset",
-      loadingMessage: "Resetting MFA for user...",
+      title: tmfa("lowerTitle"),
+      description: tmfa("mfaReset"),
+      loadingMessage: tmfa("resettingMfa"),
       promise: mfaDeleteRequest({}).finally(() =>
         mutate(`/service/mfa/${userId}`).then(() => setIsLoading(false)),
       ),

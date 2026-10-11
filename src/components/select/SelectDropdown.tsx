@@ -10,6 +10,7 @@ import { cn } from "@utils/helpers";
 import { Command, CommandGroup, CommandList } from "cmdk";
 import { isEmpty } from "lodash";
 import { ChevronsUpDown } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import Skeleton from "react-loading-skeleton";
@@ -74,8 +75,8 @@ export function SelectDropdown({
   options,
   showSearch = false,
   showValues = false,
-  placeholder = "Select...",
-  searchPlaceholder = "Search...",
+  placeholder,
+  searchPlaceholder,
   isLoading = false,
   variant = "input",
   className,
@@ -92,6 +93,10 @@ export function SelectDropdown({
   deferChange = false,
   "data-testid": dataTestId,
 }: Readonly<SelectDropdownProps>) {
+  const t = useTranslations("common");
+  const tTable = useTranslations("table");
+  const resolvedPlaceholder = placeholder ?? t("selectPlaceholder");
+  const resolvedSearchPlaceholder = searchPlaceholder ?? tTable("search");
   const [inputRef, { width }] = useElementSize<HTMLButtonElement>();
 
   const toggle = (selectedValue: string) => {
@@ -184,7 +189,7 @@ export function SelectDropdown({
             size === "xs" && "text-xs",
           )}
         >
-          <span className={"text-nb-gray-200"}>{placeholder}</span>
+          <span className={"text-nb-gray-200"}>{resolvedPlaceholder}</span>
         </div>
       </div>
     );
@@ -258,7 +263,7 @@ export function SelectDropdown({
                 search={search}
                 setSearch={setSearch}
                 ref={searchRef}
-                placeholder={searchPlaceholder}
+                placeholder={resolvedSearchPlaceholder}
               />
             )}
 

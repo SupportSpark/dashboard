@@ -141,23 +141,23 @@ export default function IdentityProviderModal({
 
 		if (isEditing) {
 			notify({
-				title: "Update Identity Provider",
-				description: "Identity provider was updated successfully.",
+				title: t("updateIdentityProvider"),
+				description: t("identityProviderUpdated"),
 				promise: updateRequest.put(payload).then(() => {
 					mutate("/identity-providers");
 					onClose();
 				}),
-				loadingMessage: "Updating identity provider...",
+				loadingMessage: t("updatingIdentityProvider"),
 			});
 		} else {
 			notify({
-				title: "Create Identity Provider",
-				description: "Identity provider was created successfully.",
+				title: t("createIdentityProvider"),
+				description: t("identityProviderCreated"),
 				promise: createRequest.post(payload).then(() => {
 					mutate("/identity-providers");
 					onClose();
 				}),
-				loadingMessage: "Creating identity provider...",
+				loadingMessage: t("creatingIdentityProvider"),
 			});
 		}
 	};
@@ -245,7 +245,7 @@ export default function IdentityProviderModal({
 
 						<div>
 							<Label>{t("idpClientId")}</Label>
-							<HelpText>The OAuth2 confidential client ID</HelpText>
+							<HelpText>{t("oauth2ConfidentialClientId")}</HelpText>
 							<Input
 								placeholder={"Enter client ID"}
 								value={clientId}

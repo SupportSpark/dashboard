@@ -1,4 +1,5 @@
 import { Checkbox } from "@components/Checkbox";
+import { useTranslations } from "next-intl";
 import FancyToggleSwitch from "@components/FancyToggleSwitch";
 import { notify } from "@components/Notification";
 import useFetchApi, { useApiCall } from "@utils/api";
@@ -20,6 +21,7 @@ export interface AccountMFA {
 }
 
 export const AccountMFASettings = () => {
+  const tmfa = useTranslations("cloudMfa");
   const { permission } = usePermissions();
   const {
     data: accountMfa,
@@ -83,7 +85,7 @@ export const AccountMFASettings = () => {
     } for your account`;
 
     notify({
-      title: "Multi-Factor Authentication (MFA)",
+      title: tmfa("title"),
       description:
         rememberBrowser != undefined
           ? rememberBrowserDescription
@@ -109,7 +111,7 @@ export const AccountMFASettings = () => {
           setIsLoading(false);
           clearTimeout(timer);
         }),
-      loadingMessage: "Updating MFA settings...",
+      loadingMessage: tmfa("updatingMfaSettings"),
     });
   };
   const handleModalConfirm = () => {

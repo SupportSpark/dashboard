@@ -1,6 +1,7 @@
 import { notify } from "@components/Notification";
 import { cn } from "@utils/helpers";
 import { FileJson2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useState } from "react";
 
@@ -10,6 +11,7 @@ type Props = {
 };
 
 export const JSONFileUpload = ({ onChange }: Props) => {
+  const t = useTranslations("common");
   const [dragActive, setDragActive] = React.useState(false);
   const [, setFileName] = useState("");
 
@@ -19,8 +21,8 @@ export const JSONFileUpload = ({ onChange }: Props) => {
     // check if file is json
     if (files[0].type !== "application/json") {
       notify({
-        title: "You uploaded the wrong file type",
-        description: "Please upload a JSON file",
+        title: t("wrongFileType"),
+        description: t("pleaseUploadJson"),
         icon: <FileJson2 size={20} />,
         backgroundColor: "bg-red-500",
       });
@@ -36,7 +38,7 @@ export const JSONFileUpload = ({ onChange }: Props) => {
       onChange(e.target.result as string);
       notify({
         title: "Google Workspace",
-        description: "You successfully uploaded your service account key",
+        description: t("serviceAccountKeyUploaded"),
         icon: <FileJson2 size={16} />,
       });
     };
@@ -102,7 +104,7 @@ export const JSONFileUpload = ({ onChange }: Props) => {
 
       <div>
         <p className={"text-[14px] font-medium text-nb-gray-100 "}>
-          Upload your service account key (.json)
+          {t("uploadServiceAccountKey")}
         </p>
         <p className={"text-xs !text-nb-gray-300 mt-1"}>
           <span
@@ -110,9 +112,9 @@ export const JSONFileUpload = ({ onChange }: Props) => {
               "underline underline-offset-4 group-hover/upload:text-nb-gray-200 transition-all"
             }
           >
-            Click to upload
+            {t("clickToUpload")}
           </span>{" "}
-          or drag and drop your file here
+          {t("orDragAndDrop")}
         </p>
       </div>
     </div>

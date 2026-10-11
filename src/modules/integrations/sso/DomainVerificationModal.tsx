@@ -15,6 +15,7 @@ import { GradientFadedBackground } from "@components/ui/GradientFadedBackground"
 import { Mark } from "@components/ui/Mark";
 import { cn } from "@utils/helpers";
 import { ExternalLinkIcon, GlobeIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 
 type Props = {
@@ -31,14 +32,15 @@ export const DomainVerificationModal = ({
   token,
   onVerify,
 }: Props) => {
+  const t = useTranslations("idpSync");
   const startVerification = async () => {
     notify({
-      title: "Domain Verification",
-      description: `Verification for ${domain} has started`,
+      title: t("domainVerificationTitle"),
+      description: t("verificationStarted", { domain }),
       promise: onVerify().then(() => {
         onOpenChange(false);
       }),
-      loadingMessage: "Starting domain verification...",
+      loadingMessage: t("startingDomainVerification"),
     });
   };
 
@@ -55,7 +57,7 @@ export const DomainVerificationModal = ({
         <GradientFadedBackground />
         <ModalHeader
           icon={<GlobeIcon size={20} />}
-          title={"Verify Domain Ownership"}
+          title={t("verifyDomainOwnershipTitle")}
           description={domain}
           color={"netbird"}
         />
@@ -63,14 +65,15 @@ export const DomainVerificationModal = ({
           <Steps className={"pt-0"}>
             <Steps.Step step={1}>
               <p className={"font-normal"}>
-                Sign in to your domain name provider (e.g. cloudflare.com or
-                godaddy.com)
+                {t("verifyDomainOwnershipStep1")}
               </p>
             </Steps.Step>
             <Steps.Step step={2} line={false}>
               <p className={"font-normal"}>
-                Copy the <Mark>TXT record</Mark> below and add it to your DNS
-                configuration for <Mark>{domain}</Mark>
+                {t.rich("verifyDomainOwnershipStep2", {
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                  domain,
+                })}
               </p>
             </Steps.Step>
           </Steps>
@@ -78,23 +81,21 @@ export const DomainVerificationModal = ({
             <Card.List>
               <Card.ListItem
                 copy
-                copyText={"TXT Host"}
-                label={"Host"}
+                copyText={t("txtHostCopyLabel")}
+                label={t("txtHostLabel")}
                 value={domain}
               />
               <Card.ListItem
                 copy
-                copyText={"TXT Value"}
-                label={"Value"}
+                copyText={t("txtValueCopyLabel")}
+                label={t("txtValueLabel")}
                 value={`nb-verification=${token}`}
               />
             </Card.List>
           </Card>
 
           <Paragraph className={"text-sm mt-4"}>
-            {
-              "Note: DNS changes may take some time to apply. If NetBird doesn't find the record immediately, please wait a day and try again."
-            }
+            {t("verifyDomainDnsNote")}
           </Paragraph>
 
           <div
@@ -102,35 +103,38 @@ export const DomainVerificationModal = ({
               "bg-nb-gray-900/70 px-4 py-3 rounded-md border border-nb-gray-800/70 my-6 !text-nb-gray-300 text-sm"
             }
           >
-            If you do not have access to your DNS configuration, you can also
-            verify your domain by sending us an email to{" "}
-            <InlineLink
-              href={"mailto:support@netbird.io"}
-              className={"inline font-medium"}
-            >
-              {" "}
-              support@netbird.io
-            </InlineLink>
-            . The email should be sent from the domain you are trying to verify.
+            {t.rich("verifyDomainEmailFallback", {
+              link: (chunks) => (
+                <InlineLink
+                  href={"mailto:support@netbird.io"}
+                  className={"inline font-medium"}
+                >
+                  {chunks}
+                </InlineLink>
+              ),
+            })}
           </div>
         </div>
         <ModalFooter className={"items-center"}>
           <div className={"w-full"}>
             <Paragraph className={"text-sm mt-auto"}>
-              Learn more about
-              <InlineLink href={"#"} target={"_blank"}>
-                Domain Verification
-                <ExternalLinkIcon size={12} />
-              </InlineLink>
+              {t.rich("verifyDomainLearnMore", {
+                link: (chunks) => (
+                  <InlineLink href={"#"} target={"_blank"}>
+                    {chunks}
+                    <ExternalLinkIcon size={12} />
+                  </InlineLink>
+                ),
+              })}
             </Paragraph>
           </div>
           <div className={"flex gap-3 w-full justify-end"}>
             <ModalClose asChild={true}>
-              <Button variant={"secondary"}>Verify Later</Button>
+              <Button variant={"secondary"}>{t("verifyLater")}</Button>
             </ModalClose>
 
             <Button variant={"primary"} onClick={startVerification}>
-              Start Verification
+              {t("startVerification")}
             </Button>
           </div>
         </ModalFooter>

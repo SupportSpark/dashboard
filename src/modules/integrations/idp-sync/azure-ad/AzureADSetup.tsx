@@ -24,6 +24,7 @@ import {
   Shield,
   UserCircle,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React, { useState } from "react";
 import { useEmbeddedIdentityProviders } from "@/hooks/useEmbeddedIdentityProviders";
 import { useSWRConfig } from "swr";
@@ -61,6 +62,8 @@ type ModalProps = {
 };
 
 export function SetupContent({ onSuccess }: ModalProps) {
+  const t = useTranslations("idpSync");
+  const tCommon = useTranslations("common");
   const { mutate } = useSWRConfig();
   const azureRequest = useApiCall<AzureADIntegration>(
     "/integrations/azure-idp",
@@ -91,8 +94,8 @@ export function SetupContent({ onSuccess }: ModalProps) {
 
   const connect = async () => {
     notify({
-      title: "Entra ID Integration",
-      description: `Entra ID was successfully connected to NetBird.`,
+      title: t("entraIdIntegrationTitle"),
+      description: t("entraIdWasConnected"),
       promise: azureRequest
         .post({
           client_secret: btoa(clientSecret), // Encode client secret to base64
@@ -110,7 +113,7 @@ export function SetupContent({ onSuccess }: ModalProps) {
           mutate("/integrations/azure-idp");
           onSuccess();
         }),
-      loadingMessage: "Setting up integration...",
+      loadingMessage: t("settingUpIntegration"),
     });
   };
 
@@ -145,10 +148,8 @@ export function SetupContent({ onSuccess }: ModalProps) {
 
       <IntegrationModalHeader
         image={integrationImage}
-        title={"Connect NetBird with Entra ID (API)"}
-        description={
-          "Start syncing your users and groups from Entra ID to NetBird. Follow the steps below to get started."
-        }
+        title={t("connectNetBirdWith", { name: "Entra ID (API)" })}
+        description={t("entraIdStartSyncDescription")}
       />
 
       {step === -1 && (
@@ -172,21 +173,16 @@ export function SetupContent({ onSuccess }: ModalProps) {
             }
           >
             <Shield size={16} />
-            Required Permissions
+            {t("requiredPermissions")}
           </div>
           <p className={"mt-2 !text-nb-gray-300 !leading-[1.5]"}>
-            Ensure that you have an{" "}
-            <span className={"text-nb-gray-100 font-semibold"}>
-              Azure AD user account
-            </span>{" "}
-            with the following{" "}
-            <span className={"text-nb-gray-100 font-semibold"}>
-              permissions
-            </span>
-            .{" "}
-            {
-              "If you don't have the required permissions, ask your Azure AD administrator to grant them to you."
-            }
+            {t.rich("entraIdPermissionsIntro", {
+              accent: (chunks) => (
+                <span className={"text-nb-gray-100 font-semibold"}>
+                  {chunks}
+                </span>
+              ),
+            })}
           </p>
           <div
             className={
@@ -199,7 +195,7 @@ export function SetupContent({ onSuccess }: ModalProps) {
               }
             >
               <PlusCircle size={14} className={"text-sky-500"} />
-              Create Azure AD applications
+              {t("createAzureAdApplications")}
             </div>
             <div
               className={
@@ -207,7 +203,7 @@ export function SetupContent({ onSuccess }: ModalProps) {
               }
             >
               <Settings2 size={14} className={"text-sky-500"} />
-              Manage Azure AD applications
+              {t("manageAzureAdApplications")}
             </div>
           </div>
         </div>
@@ -217,34 +213,38 @@ export function SetupContent({ onSuccess }: ModalProps) {
         <div className={"px-8 py-3 flex flex-col gap-0 mt-4"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <Box size={20} />
-            Create and configure Azure AD application
+            {t("entraIdCreateAppTitle")}
           </p>
           <Steps>
             <Steps.Step step={1}>
               <p>
-                Navigate to{"  "}
-                <InlineLink
-                  className={"inline"}
-                  target={"_blank"}
-                  href={
-                    "https://portal.azure.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/Overview"
-                  }
-                >
-                  Azure Active Directory
-                </InlineLink>
+                {t.rich("entraIdNavigateToAzureAd", {
+                  link: (chunks) => (
+                    <InlineLink
+                      className={"inline"}
+                      target={"_blank"}
+                      href={
+                        "https://portal.azure.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/Overview"
+                      }
+                    >
+                      {chunks}
+                    </InlineLink>
+                  ),
+                })}
               </p>
             </Steps.Step>
             <Steps.Step step={2}>
               <p className={"font-normal"}>
-                Click <Mark>App Registrations</Mark> in the left menu then click
-                on the <Mark>+ New registration</Mark> button to create a new
-                application.
+                {t.rich("entraIdAppRegistrationsStep", {
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
               </p>
             </Steps.Step>
             <Steps.Step step={3} line={false}>
               <p className={"font-normal"}>
-                Fill in the form with the following values and click{" "}
-                <Mark>Register</Mark>
+                {t.rich("entraIdFillFormStep", {
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
               </p>
             </Steps.Step>
           </Steps>
@@ -252,20 +252,19 @@ export function SetupContent({ onSuccess }: ModalProps) {
           <MinimalList
             data={[
               {
-                label: "Name",
+                label: tCommon("name"),
                 value: "NetBird",
               },
               {
-                label: "Account Types",
-                value:
-                  "Accounts in this organizational directory only (Default Directory only - Single tenant)",
+                label: t("accountTypesLabel"),
+                value: t("entraIdFormAccountTypesValue"),
               },
               {
-                label: "Redirect Type",
-                value: "Single-page application (SPA)",
+                label: t("redirectTypeLabel"),
+                value: t("singlePageApplicationSpa"),
               },
               {
-                label: "Redirect URI",
+                label: t("redirectUriLabel"),
                 value: "https://app.netbird.io/silent-auth",
               },
             ]}
@@ -277,32 +276,35 @@ export function SetupContent({ onSuccess }: ModalProps) {
         <div className={"px-8 py-3 flex flex-col gap-0 mt-4"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <Shield size={20} />
-            Add API permissions
+            {t("entraIdAddPermissionsTitle")}
           </p>
           <Steps>
             <Steps.Step step={1}>
               <p className={"font-normal"}>
-                Click <Mark>API permissions</Mark> on the left side menu
+                {t.rich("entraIdApiPermissionsStep", {
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
               </p>
             </Steps.Step>
             <Steps.Step step={2}>
               <p className={"font-normal"}>
-                Click <Mark>Add a permission</Mark> then{" "}
-                <Mark>Microsoft Graph</Mark> and then on the{" "}
-                <Mark>Application permissions</Mark> tab.
+                {t.rich("entraIdAddPermissionStep", {
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
               </p>
             </Steps.Step>
             <Steps.Step step={3}>
               <p className={"font-normal"}>
-                In <Mark>Select permissions</Mark> select{" "}
-                <Mark>User.Read.All</Mark> and <Mark>Group.Read.All</Mark> and
-                click <Mark>Add permissions</Mark>
+                {t.rich("entraIdSelectPermissionsStep", {
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
               </p>
             </Steps.Step>
             <Steps.Step step={4} line={false}>
               <p className={"font-normal"}>
-                Click <Mark>Grant admin consent for Default Directory</Mark> and
-                click <Mark>Yes</Mark>
+                {t.rich("entraIdGrantConsentStep", {
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
               </p>
               <Lightbox image={azureGrantAdmin} />
             </Steps.Step>
@@ -314,29 +316,36 @@ export function SetupContent({ onSuccess }: ModalProps) {
         <div className={"px-8 py-3 flex flex-col gap-0 mt-4"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <KeyRound size={20} />
-            Generate client secret
+            {t("entraIdGenerateSecretTitle")}
           </p>
           <Steps>
             <Steps.Step step={1}>
               <p className={"font-normal"}>
-                Navigate to <Mark>Certificates & secrets</Mark> on left side
-                menu
+                {t.rich("entraIdCertificatesStep", {
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
               </p>
             </Steps.Step>
             <Steps.Step step={2}>
               <p className={"font-normal"}>
-                Click on <Mark>+ New client secret</Mark>
+                {t.rich("entraIdNewSecretStep", {
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
               </p>
             </Steps.Step>
             <Steps.Step step={3}>
               <p className={"font-normal"}>
-                Add <Mark copy>NetBird</Mark> as the description and click{" "}
-                <Mark>Add</Mark>
+                {t.rich("entraIdAddDescriptionStep", {
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                  copy: (chunks) => <Mark copy>{chunks}</Mark>,
+                })}
               </p>
             </Steps.Step>
             <Steps.Step step={4} line={false}>
               <p className={"font-normal"}>
-                Copy the <Mark>Value</Mark> and paste it here
+                {t.rich("entraIdCopyValueStep", {
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
               </p>
             </Steps.Step>
           </Steps>
@@ -361,28 +370,31 @@ export function SetupContent({ onSuccess }: ModalProps) {
         <div className={"px-8 py-3 flex flex-col gap-0 mt-4"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <Box size={20} />
-            Enter Application ID and Directory ID
+            {t("entraIdEnterIdsTitle")}
           </p>
           <Steps>
             <Steps.Step step={1}>
               <p className={"font-normal"}>
-                Navigate to{" "}
-                <InlineLink
-                  target={"_blank"}
-                  className={"inline"}
-                  href={
-                    "https://portal.azure.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/RegisteredApps"
-                  }
-                >
-                  All applications
-                </InlineLink>
+                {t.rich("entraIdAllApplicationsStep", {
+                  link: (chunks) => (
+                    <InlineLink
+                      target={"_blank"}
+                      className={"inline"}
+                      href={
+                        "https://portal.azure.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/RegisteredApps"
+                      }
+                    >
+                      {chunks}
+                    </InlineLink>
+                  ),
+                })}
               </p>
             </Steps.Step>
             <Steps.Step step={2} line={false}>
               <p className={"font-normal"}>
-                Select <Mark>NetBird</Mark> application in overview page and
-                enter your <Mark>Application (client) ID</Mark> and{" "}
-                <Mark>Directory (tenant) ID</Mark>
+                {t.rich("entraIdSelectAppStep", {
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
               </p>
             </Steps.Step>
           </Steps>
@@ -393,7 +405,7 @@ export function SetupContent({ onSuccess }: ModalProps) {
               customPrefix={
                 <div className={"min-w-[165px] flex gap-2 items-center"}>
                   <Box size={16} />
-                  Application (client) ID
+                  {t("applicationClientIdLabel")}
                 </div>
               }
               placeholder={"62d3a656-c87d-4f30-a242-5b6347e29e9f"}
@@ -406,7 +418,7 @@ export function SetupContent({ onSuccess }: ModalProps) {
               customPrefix={
                 <div className={"min-w-[165px] flex gap-2 items-center"}>
                   <Folder size={16} />
-                  Directory (tenant) ID
+                  {t("directoryTenantIdLabel")}
                 </div>
               }
               placeholder={"5d60468a-65b7-45eb-a61a-53ecfbcd1ea3"}
@@ -421,7 +433,7 @@ export function SetupContent({ onSuccess }: ModalProps) {
         <div className={"px-8 py-3 flex flex-col gap-0 mt-4"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <FolderGit2 size={20} />
-            Groups to be synchronized
+            {t("groupsToBeSynchronized")}
           </p>
 
           <div className={"mb-4 flex flex-col gap-1"}>
@@ -440,7 +452,7 @@ export function SetupContent({ onSuccess }: ModalProps) {
         <div className={"px-8 py-3 flex flex-col gap-0 mt-4"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <UserCircle size={18} />
-            Users to be synchronized
+            {t("usersToBeSynchronized")}
           </p>
 
           <div className={"mb-4 flex flex-col gap-1"}>
@@ -449,8 +461,8 @@ export function SetupContent({ onSuccess }: ModalProps) {
             </div>
 
             <GroupPrefixInput
-              addText={"Add user group filter"}
-              text={"User group starts with..."}
+              addText={t("addUserGroupFilter")}
+              text={t("userGroupStartsWith")}
               value={userGroupPrefixes}
               onChange={setUserGroupPrefixes}
             />
@@ -466,7 +478,7 @@ export function SetupContent({ onSuccess }: ModalProps) {
             onClick={() => setStep(step + 1)}
             disabled={!connectorId || connectorId === ""}
           >
-            Continue
+            {tCommon("continue")}
             <IconArrowRight size={16} />
           </Button>
         )}
@@ -477,7 +489,7 @@ export function SetupContent({ onSuccess }: ModalProps) {
             onClick={() => setStep(step - 1)}
           >
             <IconArrowLeft size={16} />
-            Back
+            {tCommon("back")}
           </Button>
         )}
         {step >= 0 && step < maxSteps && (
@@ -487,7 +499,7 @@ export function SetupContent({ onSuccess }: ModalProps) {
             disabled={isDisabled}
             onClick={() => setStep(step + 1)}
           >
-            {step == 0 ? "Get Started" : "Continue"}
+            {step == 0 ? t("getStarted") : tCommon("continue")}
             <IconArrowRight size={16} />
           </Button>
         )}
@@ -499,7 +511,7 @@ export function SetupContent({ onSuccess }: ModalProps) {
             onClick={connect}
           >
             <Repeat size={16} />
-            Connect
+            {t("connect")}
           </Button>
         )}
       </ModalFooter>
@@ -511,8 +523,11 @@ export function SetupContent({ onSuccess }: ModalProps) {
         >
           <Clock4 size={12} />
           <div>
-            Estimated setup time:
-            <span className={"font-medium"}> 10-20 Minutes</span>
+            {t("estimatedSetupTime")}
+            <span className={"font-medium"}>
+              {" "}
+              {t("setupDuration", { duration: "10-20" })}
+            </span>
           </div>
         </div>
       )}

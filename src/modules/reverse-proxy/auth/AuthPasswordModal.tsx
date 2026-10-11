@@ -24,6 +24,7 @@ export default function AuthPasswordModal({
   onRemove,
 }: Readonly<Props>) {
   const t = useTranslations("common");
+  const tr = useTranslations("reverseProxy");
   const [password, setPassword] = useState(currentPassword);
   const [isMasked, setIsMasked] = useState(isEnabled && currentPassword === "");
   const isEditing = isEnabled;
@@ -45,8 +46,8 @@ export default function AuthPasswordModal({
     <Modal open={open} onOpenChange={onOpenChange}>
       <ModalContent maxWidthClass="max-w-md">
         <ModalHeader
-          title="Password"
-          description="Require a password to access this service."
+          title={tr("fieldPasswordLabel")}
+          description={tr("passwordDescription")}
         />
 
         <GradientFadedBackground />
@@ -66,7 +67,7 @@ export default function AuthPasswordModal({
                 setPassword(e.target.value);
               }
             }}
-            placeholder="Enter password..."
+            placeholder={tr("enterPasswordPlaceholder")}
             autoComplete="off"
             data-1p-ignore
             data-lpignore="true"
@@ -81,7 +82,7 @@ export default function AuthPasswordModal({
             {isEditing ? (
               <>
                 <Button variant="danger-text" data-testid="remove-password" onClick={handleRemove}>
-                  Remove
+                  {tr("removeBtn")}
                 </Button>
                 <div className="flex gap-3">
                   <ModalClose asChild>
@@ -92,7 +93,7 @@ export default function AuthPasswordModal({
                     onClick={handleSave}
                     disabled={!password.trim()}
                   >
-                    Save
+                    {t("save")}
                   </Button>
                 </div>
               </>
@@ -109,7 +110,7 @@ export default function AuthPasswordModal({
                     disabled={!password.trim()}
                     data-testid="submit-password"
                   >
-                    Add Password
+                    {tr("addPasswordBtn")}
                   </Button>
                 </div>
               </>

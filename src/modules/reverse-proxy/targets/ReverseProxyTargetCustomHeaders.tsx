@@ -44,29 +44,39 @@ export function headerEntriesToRecord(
 	return Object.keys(record).length > 0 ? record : undefined;
 }
 
+/** Validation messages; the translator is passed in so the hook stays pure. */
+type HeaderTranslator = ReturnType<typeof useTranslations<"reverseProxy">>;
+
 function validateHeaderName(
 	name: string,
 	allNames: string[],
+	tr: HeaderTranslator,
 ): string | undefined {
 	if (!name) return undefined;
 	if (!HEADER_NAME_RE.test(name))
-		return "Invalid characters in header name. Please use another one.";
+		return tr("invalidHeaderNameChars");
 	if (BLOCKED_HEADERS.has(name.toLowerCase()))
-		return `"${name}" is a reserved header. Please use another one.`;
+		return tr("reservedHeaderName", { name });
 	const dupeCount = allNames.filter(
 		(n) => n.toLowerCase() === name.toLowerCase(),
 	).length;
-	if (dupeCount > 1) return "Duplicate header name. Please use another one.";
+	if (dupeCount > 1) return tr("duplicateHeaderName");
 	return undefined;
 }
 
-function validateHeaderValue(value: string): string | undefined {
+function validateHeaderValue(
+	value: string,
+	tr: HeaderTranslator,
+): string | undefined {
 	if (value.includes("\r") || value.includes("\n"))
-		return "Value must not contain line breaks";
+		return tr("headerValueLineBreaks");
 	return undefined;
 }
 
-export function useCustomHeaders(initialHeaders?: Record<string, string>) {
+export function useCustomHeaders(
+	initialHeaders: Record<string, string> | undefined,
+	tr: HeaderTranslator,
+) {
 	const [nextId] = useState(() => {
 		let id = 0;
 		return () => ++id;
@@ -98,8 +108,8 @@ export function useCustomHeaders(initialHeaders?: Record<string, string>) {
 
 	const allHeaderNames = headerEntries.map((h) => h.name);
 	const headerErrors = headerEntries.map((entry) => ({
-		name: validateHeaderName(entry.name, allHeaderNames),
-		value: validateHeaderValue(entry.value),
+		name: validateHeaderName(entry.name, allHeaderNames, tr),
+		value: validateHeaderValue(entry.value, tr),
 	}));
 
 	const hasHeaderErrors = headerErrors.some((e) => e.name || e.value);
@@ -132,6 +142,7 @@ export default function ReverseProxyTargetCustomHeaders({
 	headerErrors,
 }: CustomHeadersProps) {
 	const t = useTranslations("common");
+	const tr = useTranslations("reverseProxy");
 	return (
 		<div>
 			<Label>{t("customHeaders")}</Label>
@@ -141,7 +152,7 @@ export default function ReverseProxyTargetCustomHeaders({
 					{headerEntries.map((entry, index) => (
 						<div key={entry.id} className="flex items-center gap-2">
 							<Input
-								placeholder="Header, e.g., Authorization"
+								placeholder={tr("headerPlaceholder")}
 								aria-label={`Header name for entry ${entry.id}`}
 								value={entry.name}
 								onChange={(e) =>
@@ -153,7 +164,7 @@ export default function ReverseProxyTargetCustomHeaders({
 								data-testid={`custom-header-name-${index}`}
 							/>
 							<Input
-								placeholder="Value, e.g., Bearer eyJhbGci..."
+								placeholder={tr("headerValuePlaceholder")}
 								aria-label={`Header value for entry ${entry.id}`}
 								value={entry.value}
 								onChange={(e) =>
@@ -184,7 +195,7 @@ export default function ReverseProxyTargetCustomHeaders({
 				data-testid={"add-custom-header"}
 			>
 				<PlusIcon size={14} />
-				Add Header
+				{tr("addHeaderBtn")}
 			</Button>
 		</div>
 	);

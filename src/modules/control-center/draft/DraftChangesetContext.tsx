@@ -605,15 +605,19 @@ export type ChangeIssue = {
 
 // `changes` is not optional: several issues are about how this change sits
 // against the REST of the changeset.
+// `t`, when given, localizes the badge label. It is optional so the pure logic
+// stays usable without a React context (tests call it directly).
 export const getChangeIssue = (
   change: DraftChange,
   changes: DraftChange[],
+  t?: (key: string) => string,
 ): ChangeIssue | undefined => {
+  const label = (key: string, fallback: string) => (t ? t(key) : fallback);
   // Stripped bare by a group deletion; blocked here so the deploy never
   // refuses it mid-run.
   if (change.type === "create-policy" && isEmptiedPolicy(change.policy)) {
     return {
-      label: "Incomplete",
+      label: label("incomplete", "Incomplete"),
       message: `Policy “${change.name}” lost a side to a group deletion. Give it a source and a destination, or remove it.`,
       resolvable: true,
     };
@@ -621,7 +625,7 @@ export const getChangeIssue = (
   // A canvas removal can leave a pending edit's policy one-sided.
   if (change.type === "update-policy" && isEmptiedPolicy(change.policy)) {
     return {
-      label: "Incomplete",
+      label: label("incomplete", "Incomplete"),
       message: `Policy “${change.name}” is missing a source or a destination. Give it both, or remove this change to revert to the live policy.`,
       resolvable: true,
     };
@@ -632,7 +636,7 @@ export const getChangeIssue = (
     !change.networkClientId
   ) {
     return {
-      label: "No Network",
+      label: label("noNetwork", "No Network"),
       message: `Resource “${change.name}” has no network assigned. Assign it to a network before deploying.`,
       resolvable: true,
     };
@@ -657,7 +661,7 @@ export const getChangeIssue = (
         ? `Agent policy “${change.name}”`
         : "This change";
     return {
-      label: "Group deleted",
+      label: label("groupDeleted", "Group deleted"),
       message: `${subject} references ${
         deletedGroups.length === 1 ? "group" : "groups"
       } ${list}, marked for deletion in this draft. The deletion is refused while anything references ${
@@ -676,7 +680,7 @@ export const getChangeIssue = (
       (providers !== undefined && providers.length === 0)
     ) {
       return {
-        label: "Incomplete",
+        label: label("incomplete", "Incomplete"),
         message: `Agent policy “${change.name}” needs at least one source group and one provider.`,
         resolvable: true,
       };
@@ -690,7 +694,7 @@ export const getChangeIssue = (
     if (named.length > 0) {
       const list = named.map((id) => `“${doomedProviders.get(id)}”`).join(", ");
       return {
-        label: "Provider deleted",
+        label: label("providerDeleted", "Provider deleted"),
         message: `Agent policy “${change.name}” references ${
           named.length === 1 ? "provider" : "providers"
         } ${list}, marked for deletion in this draft. Take ${
@@ -708,7 +712,7 @@ export const getChangeIssue = (
     );
     if (orphaned.length > 0) {
       return {
-        label: "Provider missing",
+        label: label("providerMissing", "Provider missing"),
         message: `Agent policy “${change.name}” references a provider that is no longer in this draft. Pick another provider for it.`,
       };
     }
@@ -718,14 +722,14 @@ export const getChangeIssue = (
     // A peer waiting to register still blocks deploy until it upgrades.
     if (change.setupKeyId) {
       return {
-        label: "Waiting",
+        label: label("waiting", "Waiting"),
         waiting: true,
         message: `Waiting for “${change.name}” to register after install.`,
         resolvable: true,
       };
     }
     return {
-      label: "Install",
+      label: label("install", "Install"),
       message:
         change.kind === "user-device"
           ? `Peer “${change.name}” must be installed or selected before deploying.`

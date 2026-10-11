@@ -51,6 +51,7 @@ import {
 } from "@/modules/agent-network/data/mockData";
 import useGroupHelper from "@/modules/groups/useGroupHelper";
 import { SmallUserAvatar } from "@/modules/users/SmallUserAvatar";
+import { useTranslations } from "next-intl";
 
 type Props = {
   open: boolean;
@@ -87,6 +88,8 @@ function AgentBudgetRuleModalContent({
   initialTab?: string;
   onSuccess: () => void;
 }) {
+  const t = useTranslations("agentNetwork");
+  const tCommon = useTranslations("common");
   const { addBudgetRule, updateBudgetRule } = useAIProviders();
   const { mutate } = useSWRConfig();
   const { users: allUsers } = useUsers();
@@ -170,18 +173,18 @@ function AgentBudgetRuleModalContent({
         <TabsList justify={"start"} className={"px-8"}>
           <TabsTrigger value={"rule"}>
             <SlidersHorizontal size={16} />
-            Rule
+            {t("rule")}
           </TabsTrigger>
           <TabsTrigger value={"limits"}>
             <Gauge size={16} />
-            Limits
+            {t("limits")}
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value={"rule"} className={"pb-8"}>
           <div className={"px-8 flex-col flex gap-6 pt-2"}>
             <div>
-              <Label>Name of the Global Limit</Label>
+              <Label>{t("nameOfGlobalLimit")}</Label>
               <HelpText>
                 Set an easily identifiable name for this limit.
               </HelpText>
@@ -197,7 +200,7 @@ function AgentBudgetRuleModalContent({
               <div className={"w-full self-start"}>
                 <Label className={"mb-2"}>
                   <Users2 size={15} />
-                  Target Groups
+                  {t("targetGroups")}
                   <HelpTooltip
                     content={
                       <>
@@ -213,7 +216,7 @@ function AgentBudgetRuleModalContent({
                     <div className={"flex items-center gap-2"}>
                       <Badge className={"py-[3px]"} variant={"gray-ghost"}>
                         <CircleUser size={12} />
-                        All
+                        {tCommon("all")}
                       </Badge>
                       Select target group(s)...
                     </div>
@@ -227,7 +230,7 @@ function AgentBudgetRuleModalContent({
               <div className={"w-full self-start"}>
                 <Label className={"mb-2"}>
                   <CircleUser size={15} />
-                  Target Users
+                  {t("targetUsers")}
                   <HelpTooltip
                     content={
                       <>
@@ -261,12 +264,12 @@ function AgentBudgetRuleModalContent({
       <ModalFooter className={"items-center"}>
         <div className={"w-full"}>
           <Paragraph className={"text-sm mt-auto"}>
-            Learn more about
+            {tCommon("learnMoreAbout")}
             <InlineLink
               href={"https://docs.netbird.io/agent-network"}
               target={"_blank"}
             >
-              Agent Network
+              {t("brand")}
               <ExternalLinkIcon size={12} />
             </InlineLink>
           </Paragraph>
@@ -277,21 +280,21 @@ function AgentBudgetRuleModalContent({
               {tab === "rule" && (
                 <>
                   <ModalClose asChild>
-                    <Button variant={"secondary"}>Cancel</Button>
+                    <Button variant={"secondary"}>{tCommon("cancel")}</Button>
                   </ModalClose>
                   <Button
                     variant={"primary"}
                     onClick={() => setTab("limits")}
                     disabled={name.trim().length === 0}
                   >
-                    Continue
+                    {tCommon("continue")}
                   </Button>
                 </>
               )}
               {tab === "limits" && (
                 <>
                   <Button variant={"secondary"} onClick={() => setTab("rule")}>
-                    Back
+                    {tCommon("back")}
                   </Button>
                   <Button
                     variant={"primary"}
@@ -299,7 +302,7 @@ function AgentBudgetRuleModalContent({
                     disabled={submitDisabled}
                   >
                     <PlusCircle size={16} />
-                    {rule ? "Save Global Limit" : "Add Global Limit"}
+                    {rule ? "Save Global Limit" : t("addGlobalLimit")}
                   </Button>
                 </>
               )}
@@ -307,14 +310,14 @@ function AgentBudgetRuleModalContent({
           ) : (
             <>
               <ModalClose asChild>
-                <Button variant={"secondary"}>Cancel</Button>
+                <Button variant={"secondary"}>{tCommon("cancel")}</Button>
               </ModalClose>
               <Button
                 variant={"primary"}
                 onClick={handleSubmit}
                 disabled={submitDisabled}
               >
-                Save Changes
+                {t("submitLimit")}
               </Button>
             </>
           )}

@@ -84,6 +84,7 @@ import AgentAccessLogExpandedRow from "@/modules/agent-network/AgentAccessLogExp
 import EmptyRow from "@/modules/common-table-rows/EmptyRow";
 import TextWithTooltip from "@components/ui/TextWithTooltip";
 import { generateColorFromUser } from "@utils/helpers";
+import { useTranslations } from "next-intl";
 
 type Props = {
   headingTarget?: HTMLHeadingElement | null;
@@ -110,6 +111,8 @@ export default function AgentAccessLogTable({
   onGroupedChange,
   selfScoped = false,
 }: Readonly<Props>) {
+  const t = useTranslations("agentNetwork");
+  const tCommon = useTranslations("common");
   const { providers } = useAIProviders();
   const { catalog } = useProviderCatalog();
   const { users } = useUsers();
@@ -217,7 +220,7 @@ export default function AgentAccessLogTable({
         accessorFn: (row) => row.timestamp,
         header: ({ column }) => (
           <DataTableHeader column={column} name="timestamp">
-            Time
+            {t("time")}
           </DataTableHeader>
         ),
         cell: ({ row }) => <TimeCell timestamp={row.original.timestamp} />,
@@ -230,7 +233,7 @@ export default function AgentAccessLogTable({
           `${row.user} ${principalSearchById.get(row.userId) ?? ""}`.trim(),
         header: ({ column }) => (
           <DataTableHeader column={column} name="user">
-            User / Agent
+            {t("userOrAgent")}
           </DataTableHeader>
         ),
         cell: ({ row }) => <UserCell entry={row.original} />,
@@ -240,7 +243,7 @@ export default function AgentAccessLogTable({
         accessorFn: (row) => (row.userGroups ?? []).join(" "),
         header: ({ column }) => (
           <DataTableHeader column={column} name="group">
-            Auth Group
+            {t("authGroup")}
           </DataTableHeader>
         ),
         cell: ({ row }) => (
@@ -258,7 +261,7 @@ export default function AgentAccessLogTable({
           }`.trim(),
         header: ({ column }) => (
           <DataTableHeader column={column} name="provider" sorting={false}>
-            Provider
+            {t("provider")}
           </DataTableHeader>
         ),
         cell: ({ row }) => (
@@ -273,7 +276,7 @@ export default function AgentAccessLogTable({
         accessorFn: (row) => row.inputTokens + row.outputTokens,
         header: ({ column }) => (
           <DataTableHeader column={column} sorting={false}>
-            Tokens
+            {t("tokens")}
           </DataTableHeader>
         ),
         cell: ({ row }) => <TokensCell entry={row.original} />,
@@ -283,7 +286,7 @@ export default function AgentAccessLogTable({
         accessorKey: "costUsd",
         header: ({ column }) => (
           <DataTableHeader column={column} name="cost">
-            Cost
+            {t("cost")}
           </DataTableHeader>
         ),
         cell: ({ row }) => (
@@ -302,7 +305,7 @@ export default function AgentAccessLogTable({
         accessorKey: "status",
         header: ({ column }) => (
           <DataTableHeader column={column} name="status">
-            Status
+            {tCommon("status")}
           </DataTableHeader>
         ),
         cell: ({ row }) => (
@@ -321,7 +324,7 @@ export default function AgentAccessLogTable({
         accessorKey: "denyReason",
         header: ({ column }) => (
           <DataTableHeader column={column} name="reason">
-            Reason
+            {t("reason")}
           </DataTableHeader>
         ),
         cell: ({ row }) => <ReasonCell entry={row.original} />,
@@ -355,7 +358,7 @@ export default function AgentAccessLogTable({
         accessorFn: (row) => row.endedAt,
         header: ({ column }) => (
           <DataTableHeader column={column} name="timestamp">
-            Activity
+            {t("activity")}
           </DataTableHeader>
         ),
         cell: ({ row }) => <SessionActivityCell session={row.original} />,
@@ -367,7 +370,7 @@ export default function AgentAccessLogTable({
           `${row.user} ${principalSearchById.get(row.userId) ?? ""}`.trim(),
         header: ({ column }) => (
           <DataTableHeader column={column} name="user_id">
-            User / Agent
+            {t("userOrAgent")}
           </DataTableHeader>
         ),
         cell: ({ row }) => (
@@ -386,7 +389,7 @@ export default function AgentAccessLogTable({
         accessorFn: (row) => (row.userGroups ?? []).join(" "),
         header: ({ column }) => (
           <DataTableHeader column={column} name="group" sorting={false}>
-            Auth Group
+            {t("authGroup")}
           </DataTableHeader>
         ),
         cell: ({ row }) => (
@@ -402,7 +405,7 @@ export default function AgentAccessLogTable({
           ].join(" "),
         header: ({ column }) => (
           <DataTableHeader column={column} sorting={false}>
-            Provider
+            {t("provider")}
           </DataTableHeader>
         ),
         cell: ({ row }) => (
@@ -417,7 +420,7 @@ export default function AgentAccessLogTable({
         accessorFn: (row) => row.requestCount,
         header: ({ column }) => (
           <DataTableHeader column={column} name="request_count">
-            Requests
+            {t("requests")}
           </DataTableHeader>
         ),
         cell: ({ row }) => <SessionRequestsCell session={row.original} />,
@@ -427,7 +430,7 @@ export default function AgentAccessLogTable({
         accessorFn: (row) => row.totalTokens,
         header: ({ column }) => (
           <DataTableHeader column={column} name="total_tokens">
-            Tokens
+            {t("tokens")}
           </DataTableHeader>
         ),
         // Reuse the flat per-request Tokens cell (input/output arrows) so the
@@ -450,7 +453,7 @@ export default function AgentAccessLogTable({
         accessorKey: "costUsd",
         header: ({ column }) => (
           <DataTableHeader column={column} name="cost_usd">
-            Cost
+            {t("cost")}
           </DataTableHeader>
         ),
         cell: ({ row }) => (
@@ -469,7 +472,7 @@ export default function AgentAccessLogTable({
         accessorKey: "decision",
         header: ({ column }) => (
           <DataTableHeader column={column} name="decision">
-            Reason
+            {t("reason")}
           </DataTableHeader>
         ),
         // Same Reason cell as the flat view (deny reason, or the authorising
@@ -543,7 +546,7 @@ export default function AgentAccessLogTable({
         // Backed by the real "timestamp" column so the shared filter adapter can
         // read/write its value; maps to the start_date/end_date query params.
         id: "timestamp",
-        label: "Date",
+        label: t("date"),
         renderPicker: (p) => (
           <div className={"p-1"}>
             <DatePickerWithRange
@@ -570,7 +573,7 @@ export default function AgentAccessLogTable({
       },
       {
         id: "user",
-        label: "User",
+        label: t("user"),
         renderPicker: (p) => (
           <UsersPicker
             value={p.value as string | undefined}
@@ -592,7 +595,7 @@ export default function AgentAccessLogTable({
       },
       {
         id: "group",
-        label: "Group",
+        label: t("groupSingular"),
         renderPicker: (p) => (
           <GroupsPicker
             value={p.value as string[] | undefined}
@@ -611,7 +614,7 @@ export default function AgentAccessLogTable({
       },
       {
         id: "provider",
-        label: "Provider",
+        label: t("provider"),
         renderPicker: (p) => (
           <CheckboxListPicker
             value={p.value as string[] | undefined}
@@ -632,7 +635,7 @@ export default function AgentAccessLogTable({
       },
       {
         id: "model",
-        label: "Model",
+        label: t("model"),
         renderPicker: (p) => (
           <CheckboxListPicker
             value={p.value as string[] | undefined}
@@ -649,7 +652,7 @@ export default function AgentAccessLogTable({
       },
       {
         id: "path",
-        label: "Path",
+        label: t("path"),
         renderPicker: (p) => (
           <TextInputPicker
             value={p.value as string | undefined}
@@ -752,7 +755,7 @@ export default function AgentAccessLogTable({
         )
       }
       searchPlaceholder={"Search by user, agent, model, prompt…"}
-      text={grouped ? "Sessions" : "Requests"}
+      text={grouped ? t("sessions") : t("requests")}
       uniqueKey={
         grouped
           ? "agent-network-access-log-sessions"
@@ -775,12 +778,12 @@ export default function AgentAccessLogTable({
           }
           learnMore={
             <>
-              Learn more about
+              {tCommon("learnMoreAbout")}
               <InlineLink
                 href={"https://docs.netbird.io/agent-network"}
                 target={"_blank"}
               >
-                Agent Network
+                {t("brand")}
                 <ExternalLinkIcon size={12} />
               </InlineLink>
             </>
@@ -801,7 +804,7 @@ export default function AgentAccessLogTable({
               variant={grouped ? "secondary" : "tertiary"}
               onClick={() => onGroupedChange?.(false)}
             >
-              Requests
+              {t("requests")}
             </ButtonGroup.Button>
             <ButtonGroup.Button
               // Drop the left border so it doesn't stack with the first
@@ -810,7 +813,7 @@ export default function AgentAccessLogTable({
               variant={grouped ? "tertiary" : "secondary"}
               onClick={() => onGroupedChange?.(true)}
             >
-              Sessions
+              {t("sessions")}
             </ButtonGroup.Button>
           </ButtonGroup>
           <DataTableRefreshButton

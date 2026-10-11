@@ -24,6 +24,7 @@ import { Network } from "@/interfaces/Network";
 import { ReverseProxyTarget } from "@/interfaces/ReverseProxy";
 import { useReverseProxies } from "@/contexts/ReverseProxiesProvider";
 import { cn } from "@utils/helpers";
+import { useTranslations } from "next-intl";
 
 type Props = {
   targets: ReverseProxyTarget[];
@@ -44,13 +45,11 @@ export default function ReverseProxyHTTPTargets({
   initialNetwork,
   onNavigateToResources,
 }: Readonly<Props>) {
+  const t = useTranslations("reverseProxy");
   return (
     <div>
-      <Label>HTTPS Targets</Label>
-      <HelpText>
-        Add one or more devices running your service or resources to make it
-        publicly accessible.
-      </HelpText>
+      <Label>{t("httpsTargetsTitle")}</Label>
+      <HelpText>{t("httpsTargetsHelp")}</HelpText>
 
       {targets.length > 0 && (
         <div
@@ -107,7 +106,7 @@ export default function ReverseProxyHTTPTargets({
                           >
                             <div className="flex gap-3 items-center">
                               <Edit size={14} className="shrink-0" />
-                              Edit Target
+                              {t("editTargetBtn")}
                             </div>
                           </DropdownMenuItem>
                           <DropdownMenuItem
@@ -117,7 +116,7 @@ export default function ReverseProxyHTTPTargets({
                           >
                             <div className="flex gap-3 items-center">
                               <MinusCircleIcon size={14} className="shrink-0" />
-                              Remove Target
+                              {t("removeTargetBtn")}
                             </div>
                           </DropdownMenuItem>
                         </DropdownMenuContent>
@@ -140,7 +139,7 @@ export default function ReverseProxyHTTPTargets({
         disabled={!!(initialNetwork && !initialNetwork.resources?.length)}
       >
         <PlusIcon size={14} />
-        Add Target
+        {t("addTargetBtn")}
       </Button>
 
       {initialNetwork && !initialNetwork.resources?.length && (
@@ -151,13 +150,16 @@ export default function ReverseProxyHTTPTargets({
             <AlertTriangle size={14} className="shrink-0 relative top-[3px]" />
           }
         >
-          There are currently no resources in your network{" "}
-          <span className={"text-netbird-100 font-medium"}>
-            {initialNetwork?.name}
-          </span>
-          . Add resources to your network before exposing it as a service.{" "}
+          {t.rich("noResourcesCallout", {
+            name: initialNetwork?.name,
+            // The network name is injected inside a rich tag so the
+            // highlighted span keeps its styling in both locales.
+            net: (chunks) => (
+              <span className={"text-netbird-100 font-medium"}>{chunks}</span>
+            ),
+          })}{" "}
           <InlineButtonLink variant={"default"} onClick={onNavigateToResources}>
-            Go to Resources
+            {t("goToResourcesBtn")}
             <ArrowUpRight size={14} />
           </InlineButtonLink>
         </Callout>

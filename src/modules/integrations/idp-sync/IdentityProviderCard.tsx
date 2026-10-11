@@ -2,6 +2,7 @@ import FeatureCard, { FeatureCardStatus } from "@components/FeatureCard";
 import { FingerprintIcon } from "lucide-react";
 import Image, { StaticImageData } from "next/image";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useMemo } from "react";
 import azureEntraLogo from "@/assets/integrations/entra-id.png";
@@ -22,6 +23,7 @@ const idpImages: { [key in IDP]?: StaticImageData } = {
 };
 
 export const IdentityProviderCard = () => {
+  const t = useTranslations("idpSync");
   const {
     isAnyIntegrationEnabled,
     isAzureEnabled,
@@ -58,16 +60,16 @@ export const IdentityProviderCard = () => {
         enabled && idpLogo ? (
           <Image
             src={idpLogo as StaticImageData}
-            alt={"Identity Provider"}
+            alt={t("identityProviderLabel")}
             className={"rounded-[4px]"}
           />
         ) : (
           <FingerprintIcon size={16} />
         )
       }
-      title={"Identity Provider Sync"}
+      title={t("idpSyncTitle")}
       action={<FeatureCardStatus enabled={enabled} />}
-      description={"Sync users and groups from Okta, Microsoft or Google IdP"}
+      description={t("idpSyncCardDescription")}
     />
   );
 };

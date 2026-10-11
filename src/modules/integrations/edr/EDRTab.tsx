@@ -3,6 +3,7 @@ import InlineLink from "@components/InlineLink";
 import Paragraph from "@components/Paragraph";
 import * as Tabs from "@radix-ui/react-tabs";
 import { ExternalLinkIcon, ShieldCheck } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React from "react";
 import IntegrationIcon from "@/assets/icons/IntegrationIcon";
 import { Account } from "@/interfaces/Account";
@@ -19,6 +20,9 @@ type Props = {
   account: Account;
 };
 export default function EDRTab({ account }: Props) {
+  const t = useTranslations("integrations");
+  const tNavigation = useTranslations("navigation");
+  const tCommon = useTranslations("common");
   useIntegrations();
 
   return (
@@ -27,22 +31,18 @@ export default function EDRTab({ account }: Props) {
         <Breadcrumbs>
           <Breadcrumbs.Item
             href={"/integrations"}
-            label={"Integrations"}
+            label={tNavigation("integrations")}
             icon={<IntegrationIcon size={13} />}
           />
           <Breadcrumbs.Item
             href={"/integrations?tab=edr"}
-            label={"MDM & EDR"}
+            label={t("edrTabTitle")}
             icon={<ShieldCheck size={15} />}
             active
           />
         </Breadcrumbs>
-        <h1>MDM & EDR</h1>
-        <Paragraph className={"max-w-3xl"}>
-          Endpoint Detection and Response (EDR) and Mobile Device Management
-          (MDM) integrations allow you to restrict network access only to
-          devices managed by the IT department.
-        </Paragraph>
+        <h1>{t("edrTabTitle")}</h1>
+        <Paragraph className={"max-w-3xl"}>{t("edrTabDescription")}</Paragraph>
         <Paragraph>
           <InlineLink
             href={
@@ -50,12 +50,12 @@ export default function EDRTab({ account }: Props) {
             }
             target={"_blank"}
           >
-            Learn more
+            {tCommon("learnMore")}
             <ExternalLinkIcon size={12} />
           </InlineLink>
         </Paragraph>
 
-        <LockedFeatureInfoCard feature={"EDR"} featureText={"MDM & EDR"} />
+        <LockedFeatureInfoCard feature={"EDR"} featureText={t("edrTabTitle")} />
         <LockedFeatureOverlay feature={"EDR"} opacity={100}>
           <div
             className={

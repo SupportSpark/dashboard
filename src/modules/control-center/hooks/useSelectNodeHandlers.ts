@@ -24,6 +24,7 @@ import {
   EMPTY_STATE_ZOOM,
   nodeYNudge,
 } from "@/modules/control-center/utils/layouts";
+import { useTranslations } from "next-intl";
 
 interface UseSelectNodeHandlersParams {
   views: {
@@ -57,6 +58,8 @@ const FIT_ANIMATION_MS = 800;
 const fitEase = (t: number) => t * (2 - t);
 
 export function useSelectNodeHandlers(params: UseSelectNodeHandlersParams) {
+  const t = useTranslations("controlCenter");
+  const tCommon = useTranslations("common");
   const reactFlow = useReactFlow();
 
   const {
@@ -492,10 +495,9 @@ export function useSelectNodeHandlers(params: UseSelectNodeHandlersParams) {
           void (async () => {
             const choice = await confirm({
               title: `Edit resource “${resource.name ?? "Resource"}”?`,
-              description:
-                "You are in live mode. Saving your changes will apply them to your account immediately.",
-              confirmText: "Edit",
-              cancelText: "Cancel",
+              description: t("liveModeSaveNotice"),
+              confirmText: tCommon("edit"),
+              cancelText: tCommon("cancel"),
               type: "warning",
               dismissOnOutsideClick: true,
             });

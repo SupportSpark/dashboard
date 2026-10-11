@@ -1,4 +1,5 @@
 import InlineLink from "@components/InlineLink";
+import { useTranslations } from "next-intl";
 import { Modal, ModalPortal } from "@components/modal/Modal";
 import { NetBirdLogo } from "@components/NetBirdLogo";
 import { notify } from "@components/Notification";
@@ -94,6 +95,7 @@ type Props = {
 };
 
 export const Onboarding = ({
+
   initial,
   setLocalOnboarding,
   peers,
@@ -105,6 +107,7 @@ export const Onboarding = ({
   isOnboardingPending,
   domainCategory,
 }: Props) => {
+  const tonb = useTranslations("onboarding");
   const { data: networks } = useFetchApi<Network[]>("/networks", true, false);
   const { data: policies } = useFetchApi<Policy[]>("/policies", true);
   const router = useRouter();
@@ -216,7 +219,7 @@ export const Onboarding = ({
         description: `Policy was successfully ${
           !enabled ? "enabled" : "disabled"
         }`,
-        loadingMessage: "Updating policy...",
+        loadingMessage: tonb("updatingPolicy"),
         promise: request.then(() => mutate("/policies")),
         duration: 800,
       });
@@ -312,7 +315,7 @@ export const Onboarding = ({
         >
           <div data-testid={"regular-onboarding"}>
             <VisuallyHidden asChild>
-              <DialogTitle>Onboarding</DialogTitle>
+              <DialogTitle>{tonb("titleLabel")}</DialogTitle>
             </VisuallyHidden>
             <div
               className={cn(

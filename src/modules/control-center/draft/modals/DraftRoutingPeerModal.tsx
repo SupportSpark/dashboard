@@ -15,10 +15,12 @@ import { useDraftChangeset } from "@/modules/control-center/draft/DraftChangeset
 import { useDraftMode } from "@/modules/control-center/draft/DraftModeContext";
 import { useDraftNetworkActions } from "@/modules/control-center/hooks/useDraftNetworkActions";
 import { RoutingPeerModalContent } from "@/modules/networks/routing-peers/NetworkRoutingPeerModal";
+import { useTranslations } from "next-intl";
 
 // The networks page's routing-peer modal, run in pure-data mode for draft
 // targets: the result lands in the changeset instead of a live PUT.
 export const DraftRoutingPeerModal = () => {
+  const t = useTranslations("controlCenter");
   const { isDraft, routingPeerModal, setRoutingPeerModal } = useDraftMode();
   const { addRouterFromSelection, updateRouterFromSelection } =
     useDraftNetworkActions();
@@ -96,7 +98,7 @@ export const DraftRoutingPeerModal = () => {
             <ModalFooter>
               <ModalClose asChild={true}>
                 <Button variant={"primary"} className={"w-full"}>
-                  Got it
+                  {t("gotIt")}
                 </Button>
               </ModalClose>
             </ModalFooter>

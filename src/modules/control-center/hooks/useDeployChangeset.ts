@@ -36,6 +36,7 @@ import {
   routerUpdateBody,
 } from "@/modules/control-center/utils/changeset-request";
 import { isDeployablePolicy } from "@/modules/control-center/utils/helpers";
+import { useTranslations } from "next-intl";
 
 // Executes the draft changeset in CHANGE_DEPLOY_ORDER, stopping on the first failure.
 export type DeployStatus = "deploying" | "done" | "error";
@@ -59,6 +60,7 @@ const parseSignature = <T extends DraftChange>(sig?: string): T | undefined => {
 };
 
 export function useDeployChangeset() {
+  const t = useTranslations("controlCenter");
   const { changes } = useDraftChangeset();
   const { permission } = usePermissions();
   const { groups, networks, networkResources, users } = useControlCenterData();
@@ -550,7 +552,7 @@ export function useDeployChangeset() {
       setIsDeploying(false);
       deployInFlight.current = false;
       notify({
-        title: "Deploy failed",
+        title: t("deployFailed"),
         description: `You don't have permission to ${forbidden
           .map((c) => getChangeApiCall(c))
           .join(", ")}. Remove ${
@@ -574,7 +576,7 @@ export function useDeployChangeset() {
       setIsDeploying(false);
       deployInFlight.current = false;
       notify({
-        title: "Deploy failed",
+        title: t("deployFailed"),
         description: `Policy “${
           (contradicted as { name?: string }).name ?? "Policy"
         }” is marked both for update and for deletion. Remove one of the two changes and try again.`,
@@ -617,9 +619,9 @@ export function useDeployChangeset() {
       const rejected = Promise.reject(err);
       void rejected.catch(() => {});
       notify({
-        title: "Deploy failed",
+        title: t("deployFailed"),
         // Only reached on rejection, where the toast renders the error instead.
-        description: "The deploy stopped on a failed change.",
+        description: t("deployStoppedOnFailure"),
         promise: rejected,
       });
       return false;

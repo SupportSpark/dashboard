@@ -41,20 +41,23 @@ type Props = {
 	account: Account;
 };
 
-const latestOrCustomVersion = [
-	{
-		label: "Disabled",
-		value: "disabled",
-	},
-	{
-		label: "Latest Version",
-		value: "latest",
-	},
-	{
-		label: "Custom Version",
-		value: "custom",
-	},
-] as SelectOption[];
+const getLatestOrCustomVersion = (
+	t: ReturnType<typeof useTranslations>,
+) =>
+	[
+		{
+			label: "Disabled",
+			value: "disabled",
+		},
+		{
+			label: t("latestVersion"),
+			value: "latest",
+		},
+		{
+			label: t("customVersion"),
+			value: "custom",
+		},
+	] as SelectOption[];
 
 export default function ClientSettingsTab({ account }: Readonly<Props>) {
 	const { isLoading: isGroupsLoading } = useGroups();
@@ -162,7 +165,7 @@ function ClientSettingsTabContent({ account }: Readonly<Props>) {
 			.filter(Boolean) as string[];
 
 		notify({
-			title: "Client Settings",
+			title: t("clientSettings"),
 			description: `Client settings successfully updated.`,
 			promise: saveRequest
 				.put({
@@ -185,7 +188,7 @@ function ClientSettingsTabContent({ account }: Readonly<Props>) {
 						peerExposeGroupNames,
 					]);
 				}),
-			loadingMessage: "Updating client settings...",
+			loadingMessage: t("updatingClientSettings"),
 		});
 	};
 
@@ -207,13 +210,13 @@ function ClientSettingsTabContent({ account }: Readonly<Props>) {
 					setLazyConnection(toggle);
 					mutate("/accounts");
 				}),
-			loadingMessage: "Updating Lazy Connections setting...",
+			loadingMessage: t("updatingLazyConnections"),
 		});
 	};
 
 	const toggleAgentNetworkOnly = async (toggle: boolean) => {
 		notify({
-			title: "Agent Network Focused View",
+			title: t("agentNetworkFocusedView"),
 			description: `Agent Network focused view successfully ${
 				toggle ? "enabled" : "disabled"
 			}.`,
@@ -229,7 +232,7 @@ function ClientSettingsTabContent({ account }: Readonly<Props>) {
 					setAgentNetworkOnly(toggle);
 					mutate("/accounts");
 				}),
-			loadingMessage: "Updating Agent Network focused view setting...",
+			loadingMessage: t("updatingAgentNetworkFocusedView"),
 		});
 	};
 
@@ -287,7 +290,7 @@ function ClientSettingsTabContent({ account }: Readonly<Props>) {
 							<SelectDropdown
 								value={autoUpdateMethod}
 								onChange={handleUpdateMethodChange}
-								options={latestOrCustomVersion}
+								options={getLatestOrCustomVersion(t)}
 								data-testid="auto-update-method"
 							/>
 							<Input

@@ -14,6 +14,7 @@ import { ShieldHalf } from "lucide-react";
 import React, { useState } from "react";
 import { AgentGuardrail } from "@/modules/agent-network/data/mockData";
 import { useAIProviders } from "@/modules/agent-network/AIProvidersProvider";
+import { useTranslations } from "next-intl";
 
 type Props = {
   open: boolean;
@@ -28,6 +29,8 @@ export default function AgentGuardrailBrowseModal({
   alreadyAttached,
   onSuccess,
 }: Readonly<Props>) {
+  const t = useTranslations("agentNetwork");
+  const tCommon = useTranslations("common");
   const { guardrails } = useAIProviders();
   const [selected, setSelected] = useState<string[]>([]);
 
@@ -47,7 +50,7 @@ export default function AgentGuardrailBrowseModal({
       <ModalContent maxWidthClass={"max-w-xl"}>
         <ModalHeader
           icon={<ShieldHalf size={19} />}
-          title={"Browse Guardrails"}
+          title={t("browseGuardrails")}
           description={"Pick one or more existing guardrails to attach."}
           color={"netbird"}
         />
@@ -73,7 +76,7 @@ export default function AgentGuardrailBrowseModal({
         <ModalFooter className={"items-center"}>
           <div className={"flex gap-3 w-full justify-end"}>
             <ModalClose asChild>
-              <Button variant={"secondary"}>Cancel</Button>
+              <Button variant={"secondary"}>{tCommon("cancel")}</Button>
             </ModalClose>
             <Button
               variant={"primary"}
@@ -83,7 +86,7 @@ export default function AgentGuardrailBrowseModal({
               Attach{" "}
               {selected.length > 0
                 ? `${selected.length} Guardrail${selected.length === 1 ? "" : "s"}`
-                : "Guardrails"}
+                : t("guardrails")}
             </Button>
           </div>
         </ModalFooter>

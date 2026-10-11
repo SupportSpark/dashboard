@@ -3,6 +3,7 @@ import useFetchApi from "@utils/api";
 import { FileText } from "lucide-react";
 import Image, { StaticImageData } from "next/image";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import datadogLogo from "@/assets/integrations/datadog.png";
 import firehoseLogo from "@/assets/integrations/firehose.png";
@@ -21,6 +22,7 @@ const platformImages: { [key in Platform]?: StaticImageData } = {
 };
 
 export const EventStreamingCard = () => {
+  const t = useTranslations("integrations");
   const { permission } = usePermissions();
   // Event Streaming is a licensed feature; the endpoint is not served on
   // open-source deployments, so skip the call there entirely.
@@ -59,9 +61,9 @@ export const EventStreamingCard = () => {
             <FileText size={16} />
           )
         }
-        title={"Event Streaming"}
+        title={t("eventStreamingTabTitle")}
         action={<FeatureCardStatus enabled={enabled} />}
-        description={"Stream your activity events to third-party services."}
+        description={t("eventStreamingCardDescription")}
       />
     </div>
   );

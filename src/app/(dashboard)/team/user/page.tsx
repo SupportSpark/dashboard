@@ -26,10 +26,10 @@ import {
 	MonitorSmartphoneIcon,
 	User2,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useMemo, useState } from "react";
 import { useSWRConfig } from "swr";
-import { useTranslations } from "next-intl";
 import TeamIcon from "@/assets/icons/TeamIcon";
 import { UserMfaListItem } from "@/cloud/mfa/UserMFAListItem";
 import { usePermissions } from "@/contexts/PermissionsProvider";
@@ -121,7 +121,7 @@ function UserOverview({ user, initialGroups }: Readonly<Props>) {
 
 		notify({
 			title: user.name,
-			description: "Changes successfully saved.",
+			description: t("changesSaved"),
 			promise: userRequest
 				.put(
 					{
@@ -136,9 +136,8 @@ function UserOverview({ user, initialGroups }: Readonly<Props>) {
 					mutate(`/integrations/msp/switcher`);
 					updateChangesRef([role, selectedGroups]);
 				}),
-			loadingMessage: "Saving changes...",
-		});
-	};
+			loadingMessage: t("savingChanges"),
+		});	};
 
 	const isProfilePage = !!user?.is_current && !isServiceUser;
 	const canViewTokens = permission?.pats?.read;
@@ -244,10 +243,8 @@ function UserOverview({ user, initialGroups }: Readonly<Props>) {
 					<div className={"flex flex-col gap-8 w-1/2 "}>
 						{!isServiceUser && isOwnerOrAdmin && (
 							<div>
-								<Label>Auto-assigned groups</Label>
-								<HelpText>
-									Groups will be assigned to peers added by this user.
-								</HelpText>
+								<Label>{t("autoAssignedGroups")}</Label>
+								<HelpText>{t("autoAssignedGroupsHelp")}</HelpText>
 								<PeerGroupSelector
 									disabled={isUser}
 									onChange={setSelectedGroups}
@@ -261,7 +258,7 @@ function UserOverview({ user, initialGroups }: Readonly<Props>) {
 							<Label>{t("userRole")}</Label>
 							<HelpText>
 								{cannotChangeOwnerRole
-									? "Only the account owner can change the owner's role."
+									? t("onlyOwnerCanChangeRole")
 									: t("userRoleHelp")}
 							</HelpText>
 							{/* 320px: enough for the longest role name and for the tab row

@@ -33,23 +33,31 @@ interface HeaderAuthItem {
 	existingSecret: boolean;
 }
 
-const HEADER_TYPE_OPTIONS: SelectOption[] = [
-	{
-		value: "basic" satisfies HeaderType,
-		label: "Basic Auth",
-		icon: () => <CircleUserIcon size={14} />,
-	},
-	{
-		value: "bearer" satisfies HeaderType,
-		label: "Bearer Token",
-		icon: () => <KeyRoundIcon size={14} />,
-	},
-	{
-		value: "custom" satisfies HeaderType,
-		label: "Custom Header",
-		icon: () => <BracesIcon size={14} />,
-	},
-];
+/** Header type options; the labels live in the reverseProxy catalog. */
+function useHeaderTypeOptions(
+	tr: ReturnType<typeof useTranslations<"reverseProxy">>,
+): SelectOption[] {
+	return useMemo(
+		() => [
+			{
+				value: "basic" satisfies HeaderType,
+				label: tr("basicAuth"),
+				icon: () => <CircleUserIcon size={14} />,
+			},
+			{
+				value: "bearer" satisfies HeaderType,
+				label: tr("bearerToken"),
+				icon: () => <KeyRoundIcon size={14} />,
+			},
+			{
+				value: "custom" satisfies HeaderType,
+				label: tr("customHeader"),
+				icon: () => <BracesIcon size={14} />,
+			},
+		],
+		[tr],
+	);
+}
 
 const MASKED_VALUE = "••••••••";
 
@@ -203,6 +211,8 @@ export default function AuthHeaderModal({
 	onRemove,
 }: Readonly<Props>) {
 	const t = useTranslations("common");
+	const tr = useTranslations("reverseProxy");
+	const headerTypeOptions = useHeaderTypeOptions(tr);
 	const [items, dispatch] = useReducer(
 		headersReducer,
 		currentHeaders,
@@ -236,8 +246,8 @@ export default function AuthHeaderModal({
 				}}
 			>
 				<ModalHeader
-					title="HTTP Headers"
-					description="Require specific HTTP headers to access this service."
+					title={tr("httpHeaders")}
+					description={tr("httpHeadersDescription")}
 				/>
 
 				<div className="px-8">
@@ -263,14 +273,14 @@ export default function AuthHeaderModal({
 						onClick={() => dispatch({ type: "add" })}
 					>
 						<PlusIcon size={14} />
-						Add Header
+						{tr("addHeaderBtn")}
 					</Button>
 
 					{items.length > 1 && (
 						<Callout className="mt-4" variant="info">
-							Any request matching one of these headers will grant access.
-							<br />
-							Matched headers are stripped before reaching your backend.
+							{tr.rich("matchedHeadersCallout", {
+								br: () => <br />,
+							})}
 						</Callout>
 					)}
 
@@ -282,7 +292,7 @@ export default function AuthHeaderModal({
 									data-testid="remove-headers"
 									onClick={handleRemoveAll}
 								>
-									Remove All
+									{tr("removeAllBtn")}
 								</Button>
 								<div className="flex gap-3">
 									<ModalClose asChild>
@@ -294,7 +304,7 @@ export default function AuthHeaderModal({
 										disabled={!canSave || !hasChanges}
 										data-testid="submit-headers"
 									>
-										Save
+										{t("save")}
 									</Button>
 								</div>
 							</>
@@ -310,7 +320,7 @@ export default function AuthHeaderModal({
 										onClick={handleSave}
 										disabled={!canSave}
 									>
-										Add Headers
+										{tr("addHeadersBtn")}
 									</Button>
 								</div>
 							</>
@@ -337,6 +347,9 @@ function HeaderItemRow({
 	onRemove,
 	showRemove,
 }: Readonly<HeaderItemRowProps>) {
+	const t = useTranslations("common");
+	const tr = useTranslations("reverseProxy");
+	const headerTypeOptions = useHeaderTypeOptions(tr);
 	const isMaskedRef = useRef(item.existingSecret);
 
 	const handleHeaderTypeChange = (value: string) => {
@@ -357,24 +370,29 @@ function HeaderItemRow({
 					<span className="text-xs font-normal text-nb-gray-200 flex items-center gap-2">
 						<FileCode2Icon size={14} />
 						{item.existingSecret
-							? `Header ${index + 1} - ${item.header}`
-							: `Header ${index + 1}`}
+							? tr("headerIndexNamed", {
+									index: index + 1,
+									header: item.header,
+								})
+							: tr("headerIndexLabel", { index: index + 1 })}
 					</span>
 					{showRemove && (
 						<Button variant="danger-text" size="xs" onClick={onRemove}>
 							<MinusCircleIcon size={12} />
-							Remove
+							{tr("removeBtn")}
 						</Button>
 					)}
 				</div>
 				{item.existingSecret ? (
 					<div>
 						<Input
-							customPrefix={<span className="min-w-[38px]">Value</span>}
+							customPrefix={
+								<span className="min-w-[38px]">{tr("fieldValue")}</span>
+							}
 							type="password"
 							showPasswordToggle={!isMaskedRef.current}
 							value={isMaskedRef.current ? MASKED_VALUE : item.value}
-							placeholder="e.g., AIiaSyDaGmWKa4JsXZ-HjGw7ISLn_3namBGewQe"
+							placeholder={tr("secretValuePlaceholder")}
 							{...INPUT_PROPS}
 							onChange={(e) => {
 								if (isMaskedRef.current) {
@@ -393,7 +411,7 @@ function HeaderItemRow({
 							<SelectDropdown
 								value={item.type}
 								onChange={handleHeaderTypeChange}
-								options={HEADER_TYPE_OPTIONS}
+								options={headerTypeOptions}
 							/>
 						</div>
 
@@ -401,7 +419,7 @@ function HeaderItemRow({
 							<div className="flex flex-col gap-2">
 								<Input
 									customPrefix={<UserIcon size={16} />}
-									placeholder="Username"
+									placeholder={tr("fieldUsername")}
 									maxWidthClass="w-full"
 									value={item.username}
 									onChange={(e) => onChange({ username: e.target.value })}
@@ -410,7 +428,7 @@ function HeaderItemRow({
 								/>
 								<Input
 									customPrefix={<KeyRoundIcon size={16} />}
-									placeholder="Password"
+									placeholder={tr("fieldPasswordLabel")}
 									maxWidthClass="w-full"
 									value={item.password}
 									onChange={(e) => onChange({ password: e.target.value })}
@@ -425,7 +443,7 @@ function HeaderItemRow({
 						{item.type === "bearer" && (
 							<Input
 								customPrefix={"Bearer"}
-								placeholder="e.g. eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9..."
+								placeholder={tr("bearerValuePlaceholder")}
 								maxWidthClass="w-full"
 								value={item.value}
 								onChange={(e) => onChange({ value: e.target.value })}
@@ -438,16 +456,20 @@ function HeaderItemRow({
 						{item.type === "custom" && (
 							<div className="flex flex-col gap-2">
 								<Input
-									customPrefix={<span className="min-w-[38px]">Name</span>}
-									placeholder="e.g., X-API-Key"
+									customPrefix={
+										<span className="min-w-[38px]">{t("name")}</span>
+									}
+									placeholder={tr("headerNamePlaceholder")}
 									maxWidthClass="w-full"
 									value={item.header}
 									onChange={(e) => onChange({ header: e.target.value })}
 									{...INPUT_PROPS}
 								/>
 								<Input
-									customPrefix={<span className="min-w-[38px]">Value</span>}
-									placeholder="e.g., AIiaSyDaGmWKa4JsXZ-HjGw7ISLn_3namBGewQe"
+									customPrefix={
+										<span className="min-w-[38px]">{tr("fieldValue")}</span>
+									}
+									placeholder={tr("secretValuePlaceholder")}
 									maxWidthClass="w-full"
 									value={item.value}
 									onChange={(e) => onChange({ value: e.target.value })}

@@ -30,6 +30,7 @@ import {
   Shield,
   ShieldCheckIcon
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React, { useMemo, useReducer, useState } from "react";
 import { useSWRConfig } from "swr";
 import integrationImage from "@/assets/integrations/sentinelone.png";
@@ -75,6 +76,8 @@ type ModalProps = {
 };
 
 export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
+  const t = useTranslations("integrations");
+  const tCommon = useTranslations("common");
   const { mutate } = useSWRConfig();
   const sentinelOneRequest = useApiCall<SentinelOneIntegration>(
     "/integrations/edr/sentinelone",
@@ -129,8 +132,8 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
     const savedGroups = await saveGroups();
 
     notify({
-      title: "SentinelOne Integration",
-      description: `SentinelOne was successfully connected to NetBird.`,
+      title: t("integrationLinkText", { name: "SentinelOne" }),
+      description: t("integrationWasConnectedToNetBird", { name: "SentinelOne" }),
       promise: sentinelOneRequest
         .post({
           api_token: apiToken,
@@ -144,7 +147,7 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
           mutate("/integrations/edr/sentinelone");
           onSuccess();
         }),
-      loadingMessage: "Setting up integration...",
+      loadingMessage: t("settingUpIntegration"),
     });
   };
 
@@ -204,10 +207,8 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
 
       <IntegrationModalHeader
         image={integrationImage}
-        title={"Connect NetBird with SentinelOne"}
-        description={
-          "Restrict network access to devices managed by SentinelOne based on their security posture."
-        }
+        title={t("connectNetBirdWith", { name: "SentinelOne" })}
+        description={t("sentineloneSetupDescription")}
       />
 
       {step == 0 && (
@@ -222,21 +223,16 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
             }
           >
             <Shield size={16} />
-            Required Permissions
+            {t("requiredPermissions")}
           </div>
           <p className={"mt-2 !text-nb-gray-300 !leading-[1.5]"}>
-            Ensure that you have an{" "}
-            <span className={"text-nb-gray-100 font-semibold"}>
-              SentinelOne account
-            </span>{" "}
-            with the following{" "}
-            <span className={"text-nb-gray-100 font-semibold"}>
-              permissions
-            </span>
-            .{" "}
-            {
-              "If you don't have the required permissions, ask your administrator to grant them to you."
-            }
+            {t.rich("sentinelonePermissionsIntro", {
+              accent: (chunks) => (
+                <span className={"text-nb-gray-100 font-semibold"}>
+                  {chunks}
+                </span>
+              ),
+            })}
           </p>
           <div
             className={
@@ -249,7 +245,7 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
               }
             >
               <PlusCircle size={14} className={"text-sky-500"} />
-              Create API Tokens
+              {t("sentinelonePermissionsLine1")}
             </div>
             <div
               className={
@@ -257,7 +253,7 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
               }
             >
               <Settings2 size={14} className={"text-sky-500"} />
-              Manage API Tokens
+              {t("sentinelonePermissionsLine2")}
             </div>
           </div>
         </div>
@@ -267,19 +263,16 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
         <div className={"px-8 py-3 flex flex-col gap-0 mt-4"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <GlobeIcon size={18} />
-            Get your SentinelOne Console URL
+            {t("sentineloneConsoleUrlTitle")}
           </p>
 
           <Steps>
             <Steps.Step step={1}>
-              <p>Navigate to your SentinelOne Management Console.</p>
+              <p>{t("sentineloneNavigateConsole")}</p>
             </Steps.Step>
 
             <Steps.Step step={2} line={false}>
-              <p>
-                Copy your SentinelOne console URL from the browser&apos;s
-                address bar and enter it here.
-              </p>
+              <p>{t("sentineloneCopyUrlStep")}</p>
             </Steps.Step>
           </Steps>
 
@@ -293,42 +286,49 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
         <div className={"px-8 py-3 flex flex-col gap-0 mt-4"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <Box size={20} />
-            Create a SentinelOne API Token
+            {t("sentineloneCreateTokenTitle")}
           </p>
           <Steps>
             <Steps.Step step={1}>
               <p className={"font-normal"}>
-                Navigate to{" "}
                 {sentinelOneServiceUsersUrl ? (
-                  <InlineLink
-                    href={sentinelOneServiceUsersUrl}
-                    target={"_blank"}
-                  >
-                    Settings » Users » Service Users
-                    <ExternalLinkIcon size={14} className={"ml-1"} />
-                  </InlineLink>
+                  t.rich("sentineloneServiceUsersStep", {
+                    link: (chunks) => (
+                      <InlineLink
+                        href={sentinelOneServiceUsersUrl}
+                        target={"_blank"}
+                      >
+                        {chunks}
+                        <ExternalLinkIcon size={14} className={"ml-1"} />
+                      </InlineLink>
+                    ),
+                  })
                 ) : (
-                  <Mark>Settings » Users » Service Users</Mark>
+                  <Mark>{t("sentineloneServiceUsersPath")}</Mark>
                 )}
               </p>
             </Steps.Step>
             <Steps.Step step={1}>
               <p className={"font-normal"}>
-                Click <Mark>Create Service User</Mark>
+                {t.rich("sentineloneCreateServiceUserStep", {
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
               </p>
             </Steps.Step>
             <Steps.Step step={3}>
               <p className={"font-normal"}>
-                Enter <Mark copy>NetBird Integration</Mark> as the name, a
-                optional description and select your preferred expiration date.
-                Click <Mark>Next</Mark>
+                {t.rich("sentineloneNameStep", {
+                  copy: (chunks) => <Mark copy>{chunks}</Mark>,
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
               </p>
             </Steps.Step>
             <Steps.Step step={4} line={false}>
               <p className={"font-normal"}>
-                Select your Site and set the Scope to <Mark>Viewer</Mark>
-                <br /> Click <Mark>Create User</Mark>, copy your API Token and
-                enter it below.
+                {t.rich("sentineloneScopeStep", {
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                  br: () => <br />,
+                })}
               </p>
             </Steps.Step>
           </Steps>
@@ -468,8 +468,11 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
         >
           <Clock4 size={12} />
           <div>
-            Estimated setup time:
-            <span className={"font-medium"}> 10-20 Minutes</span>
+            {t("estimatedSetupTime")}
+            <span className={"font-medium"}>
+              {" "}
+              {t("setupDuration", { duration: "10-20" })}
+            </span>
           </div>
         </div>
       )}

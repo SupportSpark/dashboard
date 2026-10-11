@@ -1,6 +1,7 @@
 import { notify } from "@components/Notification";
 import SkeletonPeerDetail from "@components/skeletons/SkeletonPeerDetail";
 import { useApiCall } from "@utils/api";
+import { useTranslations } from "next-intl";
 import React, { useMemo, useState } from "react";
 import { useSWRConfig } from "swr";
 import { useDialog } from "@/contexts/DialogProvider";
@@ -44,6 +45,8 @@ export default function PeerProvider({
   peer,
   isPeerDetailPage = false,
 }: Props) {
+  const t = useTranslations("peers");
+  const tCommon = useTranslations("common");
   const { user, isLoading: isUserLoading } = usePeerUser(peer);
   const { peerGroups, isLoading: isGroupsLoading } = usePeerGroups(peer);
   const isLoading =
@@ -56,22 +59,21 @@ export default function PeerProvider({
 
   const deletePeer = async () => {
     const choice = await confirm({
-      title: `Delete '${peer.name}'?`,
-      description:
-        "Are you sure you want to delete this peer? This action cannot be undone.",
-      confirmText: "Delete",
-      cancelText: "Cancel",
+      title: t("confirmDeletePeerTitle", { name: peer.name }),
+      description: t("deletePeerConfirmDescription"),
+      confirmText: tCommon("delete"),
+      cancelText: tCommon("cancel"),
       type: "danger",
     });
     if (choice) {
       notify({
         title: peer.name,
-        description: "Peer was successfully deleted",
+        description: t("peerDeletedDescription"),
         promise: peerRequest.del({}, `/${peer.id}`).then(() => {
           mutate("/peers");
           mutate("/groups");
         }),
-        loadingMessage: "Deleting peer...",
+        loadingMessage: t("deletingPeer"),
       });
     }
   };

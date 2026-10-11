@@ -14,6 +14,7 @@ import { usePermissions } from "@/contexts/PermissionsProvider";
 import { useReverseProxies } from "@/contexts/ReverseProxiesProvider";
 import { isL4Mode, ReverseProxy } from "@/interfaces/ReverseProxy";
 import { ReverseProxyTargetDevice } from "@/modules/reverse-proxy/targets/ReverseProxyTargetDevice";
+import { useTranslations } from "next-intl";
 
 type Props = {
   reverseProxy: ReverseProxy;
@@ -22,6 +23,8 @@ type Props = {
 export default function ReverseProxyTargetsCell({
   reverseProxy,
 }: Readonly<Props>) {
+  const t = useTranslations("common");
+  const tProxy = useTranslations("reverseProxy");
   const { permission } = usePermissions();
   const { openTargetModal } = useReverseProxies();
 
@@ -41,7 +44,7 @@ export default function ReverseProxyTargetsCell({
       disabled={isL4 || !permission?.services?.create}
     >
       <PlusCircle size={12} />
-      Add
+      {t("add")}
     </Button>
   );
 
@@ -90,7 +93,7 @@ export default function ReverseProxyTargetsCell({
           interactive={false}
           content={
             <span className={"text-xs text-nb-gray-100 max-w-[200px]"}>
-              L4 services (TCP / UDP / TLS) only support a single target.
+              {tProxy("l4SingleTargetNotice")}
             </span>
           }
         >

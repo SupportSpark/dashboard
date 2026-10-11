@@ -1,6 +1,7 @@
 import { notify } from "@components/Notification";
 import { SkeletonIntegration } from "@components/skeletons/SkeletonIntegration";
 import useFetchApi, { useApiCall } from "@utils/api";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useState } from "react";
 import { useSWRConfig } from "swr";
@@ -13,6 +14,9 @@ import FirehoseSetup from "@/modules/integrations/event-streaming/amazon/firehos
 import { IntegrationCard } from "@/modules/integrations/IntegrationCard";
 
 export default function Firehose() {
+  const t = useTranslations("integrations");
+  const tCommon = useTranslations("common");
+  const tPeers = useTranslations("peers");
   const { permission } = usePermissions();
   // Event Streaming is a licensed feature; skip the call on open-source.
   const { isLicensed } = useIsLicensed();
@@ -46,24 +50,25 @@ export default function Firehose() {
     if (!firehoseSettings) return setSetupModal(true);
 
     const choice = await confirm({
-      title: `Disconnect Amazon Data Firehose?`,
-      description:
-        "Disconnecting deletes the current configuration. You will need to start the setup process again.",
-      confirmText: "Disconnect",
-      cancelText: "Cancel",
+      title: t("disconnectIntegrationTitle", { name: "Amazon Data Firehose" }),
+      description: t("disconnectConfirmDescription"),
+      confirmText: tPeers("disconnect"),
+      cancelText: tCommon("cancel"),
       type: "warning",
     });
     if (!choice) return;
 
     notify({
-      title: "Amazon Data Firehose Integration",
-      description: `Amazon Data Firehose was successfully disconnected`,
+      title: t("integrationLinkText", { name: "Amazon Data Firehose" }),
+      description: t("integrationWasDisconnected", {
+        name: "Amazon Data Firehose",
+      }),
       promise: integrationRequest
         .del({}, "/" + firehoseSettings.id)
         .then(() => {
           mutate("/integrations/event-streaming");
         }),
-      loadingMessage: "Disconnecting integration...",
+      loadingMessage: t("disconnectingIntegration"),
     });
   };
 
@@ -73,7 +78,7 @@ export default function Firehose() {
     <>
       <IntegrationCard
         name="Amazon Data Firehose"
-        description="Firehose delivers real-time data streaming to destinations such as Amazon S3, Amazon Redshift & more."
+        description={t("firehoseDescription")}
         url={{
           title: "aws.amazon.com/firehose",
           href: "https://aws.amazon.com/firehose",

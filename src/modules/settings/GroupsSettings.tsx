@@ -107,8 +107,8 @@ export default function GroupsSettings({ account }: Props) {
 		if (!choice) return;
 
 		notify({
-			title: "Group Settings",
-			description: "Group settings were updated successfully.",
+			title: t("groupSettings"),
+			description: t("groupSettingsUpdated"),
 			promise: saveRequest
 				.put({
 					id: account.id,
@@ -131,7 +131,7 @@ export default function GroupsSettings({ account }: Props) {
 						jwtGroupSync,
 					]);
 				}),
-			loadingMessage: "Updating group settings...",
+			loadingMessage: t("updatingGroupSettings"),
 		});
 	};
 

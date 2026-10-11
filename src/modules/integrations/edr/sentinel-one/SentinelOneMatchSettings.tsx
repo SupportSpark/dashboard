@@ -12,6 +12,7 @@ import {
   RefreshCcw,
   TriangleAlert,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { SentinelOneMatchAttributes } from "@/interfaces/EDR";
 
@@ -23,17 +24,16 @@ export const SentinelOneMatchSettings = ({
   value: matchAttributes,
   dispatch: dispatchMatchAttributes,
 }: Props) => {
+  const t = useTranslations("integrations");
   return (
     <>
       <div className={cn("flex justify-between mt-6 gap-5")}>
         <div className={"w-full"}>
           <Label>
             <TriangleAlert size={14} />
-            Allowed Active Threats
+            {t("allowedActiveThreats")}
           </Label>
-          <HelpText>
-            Maximum allowed number of active threats on a device.
-          </HelpText>
+          <HelpText>{t("allowedActiveThreatsHelp")}</HelpText>
         </div>
         <Input
           placeholder={"0"}
@@ -48,7 +48,7 @@ export const SentinelOneMatchSettings = ({
               payload: Number(e.target.value),
             })
           }
-          customSuffix={"Threats"}
+          customSuffix={t("threatsSuffix")}
         />
       </div>
       <div className={"mt-5 grid grid-cols-1 gap-6 mb-3"}>
@@ -64,10 +64,10 @@ export const SentinelOneMatchSettings = ({
           label={
             <>
               <HardDrive size={14} />
-              Disk Encryption
+              {t("diskEncryption")}
             </>
           }
-          helpText={"Devices must have disk encryption enabled."}
+          helpText={t("diskEncryptionHelpSimple")}
         />
         <FancyToggleSwitch
           value={matchAttributes.firewall_enabled ?? false}
@@ -81,10 +81,10 @@ export const SentinelOneMatchSettings = ({
           label={
             <>
               <BrickWallShieldIcon size={14} />
-              Firewall
+              {t("firewall")}
             </>
           }
-          helpText={"Devices must have their firewall enabled."}
+          helpText={t("firewallHelpSentinel")}
         />
         <FancyToggleSwitch
           value={matchAttributes.infected === false}
@@ -98,10 +98,10 @@ export const SentinelOneMatchSettings = ({
           label={
             <>
               <BugOffIcon size={14} />
-              Block Infected Devices
+              {t("blockInfectedDevices")}
             </>
           }
-          helpText={"Prevent access for devices with active infections."}
+          helpText={t("blockInfectedDevicesHelp")}
         />
         <FancyToggleSwitch
           value={matchAttributes.network_status === "connected"}
@@ -115,10 +115,10 @@ export const SentinelOneMatchSettings = ({
           label={
             <>
               <ChevronsLeftRightEllipsis size={14} />
-              Network Connectivity
+              {t("networkConnectivity")}
             </>
           }
-          helpText={"Require active network connection to SentinelOne."}
+          helpText={t("networkConnectivityHelp")}
         />
         <FancyToggleSwitch
           value={matchAttributes.is_active ?? false}
@@ -132,10 +132,10 @@ export const SentinelOneMatchSettings = ({
           label={
             <>
               <PowerIcon size={14} />
-              Active Status
+              {t("activeStatusLabel")}
             </>
           }
-          helpText={"SentinelOne agent must be active and reporting."}
+          helpText={t("activeStatusHelp")}
         />
         <FancyToggleSwitch
           value={matchAttributes.is_up_to_date ?? false}
@@ -149,12 +149,10 @@ export const SentinelOneMatchSettings = ({
           label={
             <>
               <RefreshCcw size={14} />
-              Latest Agent Version
+              {t("latestAgentVersion")}
             </>
           }
-          helpText={
-            "SentinelOne agent should be running on the latest version."
-          }
+          helpText={t("latestAgentVersionHelp")}
         />
       </div>
     </>

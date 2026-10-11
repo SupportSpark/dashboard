@@ -74,6 +74,7 @@ import {
   useStructuralNodes,
 } from "@/modules/control-center/utils/helpers";
 import { NodeType } from "@/modules/control-center/utils/nodes";
+import { useTranslations } from "next-intl";
 
 type BlankKind = "group" | "network" | "resource";
 
@@ -84,43 +85,46 @@ type PeerTemplate = {
   icon: LucideIcon;
 };
 
-const PEER_TEMPLATES: PeerTemplate[] = [
+const peerTemplates = (t: (key: string) => string): PeerTemplate[] => [
   {
     key: "server",
-    label: "Server",
-    description: "Install on a server or VM",
+    label: t("server"),
+    description: t("installOnServerDescription"),
     icon: ServerIcon,
   },
   {
     key: "agent",
-    label: "Agent",
-    description: "Add an automated or headless peer",
+    label: t("agent"),
+    description: t("addAgentDescription"),
     icon: BotIcon,
   },
 ];
 
-const BLANK_TEMPLATES: {
+const blankTemplates = (
+  t: (key: string) => string,
+  tCommon: (key: string) => string,
+): {
   kind: BlankKind;
   label: string;
   description: string;
   icon: LucideIcon;
-}[] = [
+}[] => [
   {
     kind: "group",
-    label: "Group",
-    description: "Group peers and resources together",
+    label: t("groupSingular"),
+    description: t("addGroupDescription"),
     icon: FolderGit2,
   },
   {
     kind: "network",
-    label: "Network",
-    description: "Give access to a private network",
+    label: tCommon("network"),
+    description: t("addNetworkDescription"),
     icon: NetworkIcon,
   },
   {
     kind: "resource",
-    label: "Resource",
-    description: "A host subnet or domain in a network",
+    label: t("resourceSingular"),
+    description: t("addResourceDescription"),
     icon: WorkflowIcon,
   },
 ];
@@ -151,19 +155,24 @@ type PanelCategory =
   | "resources"
   | "agent-network";
 
-const CATEGORIES: {
+const categoryDefs = (
+  t: (key: string) => string,
+  tCommon: (key: string) => string,
+): {
   id: PanelCategory;
   label: string;
   icon: React.ComponentType<{ size?: number; className?: string }>;
-}[] = [
-  { id: "peers", label: "Peers", icon: MonitorSmartphoneIcon },
-  { id: "policies", label: "Policies", icon: ShieldIcon },
-  { id: "groups", label: "Groups", icon: FolderGit2 },
-  { id: "resources", label: "Networks & Resources", icon: NetworkIcon },
-  { id: "agent-network", label: "Agent Network", icon: AgentNetworkIcon },
+}[] => [
+  { id: "peers", label: tCommon("peers"), icon: MonitorSmartphoneIcon },
+  { id: "policies", label: tCommon("policies"), icon: ShieldIcon },
+  { id: "groups", label: tCommon("groups"), icon: FolderGit2 },
+  { id: "resources", label: t("networksAndResources"), icon: NetworkIcon },
+  { id: "agent-network", label: t("agentNetworkBrand"), icon: AgentNetworkIcon },
 ];
 
 export const ControlCenterComponentsPanel = () => {
+  const t = useTranslations("controlCenter");
+  const tCommon = useTranslations("common");
   const {
     isDraft,
     componentsPanelOpen,
@@ -201,16 +210,18 @@ const PanelContent = React.memo(
     setResourceEditor: ReturnType<typeof useDraftMode>["setResourceEditor"];
     drillDownNetworkNodeId: string | null;
   }) => {
+    const t = useTranslations("controlCenter");
+    const tCommon = useTranslations("common");
     const drilled = !!drillDownNetworkNodeId;
     const [search, setSearch] = useState("");
     const [category, setCategory] = useState<PanelCategory>("peers");
     const { enabled: agentNetworkEnabled } = useAgentNetworkMode();
     const categories = useMemo(
       () =>
-        CATEGORIES.filter(
+        categoryDefs(t, tCommon).filter(
           (c) => c.id !== "agent-network" || agentNetworkEnabled,
         ),
-      [agentNetworkEnabled],
+      [agentNetworkEnabled, t, tCommon],
     );
     // Filters compare the trimmed term so a whitespace-only search is a no-op.
     const query = search.trim();
@@ -833,32 +844,35 @@ const PanelContent = React.memo(
     );
     const filteredPeerTemplates = useMemo(
       () =>
-        PEER_TEMPLATES.filter((t) => peersCategory || matchesSearch(t.label)),
-      [matchesSearch, peersCategory],
+        peerTemplates(t).filter(
+          (tmpl) => peersCategory || matchesSearch(tmpl.label),
+        ),
+      [matchesSearch, peersCategory, t],
     );
     const groupTemplates = useMemo(
       () =>
-        BLANK_TEMPLATES.filter(
-          (t) =>
-            t.kind === "group" && (groupsCategory || matchesSearch(t.label)),
+        blankTemplates(t, tCommon).filter(
+          (tmpl) =>
+            tmpl.kind === "group" &&
+            (groupsCategory || matchesSearch(tmpl.label)),
         ),
-      [matchesSearch, groupsCategory],
+      [matchesSearch, groupsCategory, t, tCommon],
     );
     const resourceTemplates = useMemo(
       () =>
-        BLANK_TEMPLATES.filter(
-          (t) =>
-            (t.kind === "resource" &&
-              (resourcesCategory || matchesSearch(t.label))) ||
+        blankTemplates(t, tCommon).filter(
+          (tmpl) =>
+            (tmpl.kind === "resource" &&
+              (resourcesCategory || matchesSearch(tmpl.label))) ||
             (!drilled &&
-              t.kind === "network" &&
-              (networksCategory || matchesSearch(t.label))),
+              tmpl.kind === "network" &&
+              (networksCategory || matchesSearch(tmpl.label))),
         ),
-      [matchesSearch, resourcesCategory, networksCategory, drilled],
+      [matchesSearch, resourcesCategory, networksCategory, drilled, t, tCommon],
     );
-    const showPolicyTemplate = policiesCategory || matchesSearch("Policy");
+    const showPolicyTemplate = policiesCategory || matchesSearch(t("policy"));
     const showAgentProviderTemplate =
-      agentNetworkCategory || matchesSearch("Provider");
+      agentNetworkCategory || matchesSearch(t("provider"));
     const showAgentPolicyTemplate =
       agentNetworkCategory || matchesSearch("Agent Policy");
 
@@ -1005,7 +1019,7 @@ const PanelContent = React.memo(
               </span>
               <span className={"text-[0.72rem] text-nb-gray-400 truncate"}>
                 {resourceCount
-                  ? singularize("Resources", resourceCount)
+                  ? singularize(tCommon("resources"), resourceCount)
                   : "No Resources"}
               </span>
             </div>
@@ -1363,7 +1377,7 @@ const PanelContent = React.memo(
       : (isSearching
           ? [
               {
-                title: "Add New",
+                title: t("addNew"),
                 rows: [
                   ...buildPeerTemplateRows(),
                   ...buildPolicyTemplateRows(),
@@ -1373,19 +1387,19 @@ const PanelContent = React.memo(
                 ],
               },
               {
-                title: "Peers",
+                title: tCommon("peers"),
                 rows: [...buildDraftPeerRows(), ...buildPeerRows()],
               },
               {
-                title: "Policies",
+                title: tCommon("policies"),
                 rows: [...buildDraftPolicyRows(), ...buildPolicyRows()],
               },
               {
-                title: "Groups",
+                title: tCommon("groups"),
                 rows: [...buildDraftGroupRows(), ...buildGroupRows()],
               },
               {
-                title: "Networks",
+                title: t("networks"),
                 rows: [...buildDraftNetworkRows(), ...buildNetworkRows()],
               },
               {
@@ -1396,52 +1410,52 @@ const PanelContent = React.memo(
               // have to be offered here or a provider can't be searched for.
               ...(agentNetworkEnabled
                 ? [
-                    { title: "Providers", rows: buildProviderRows() },
-                    { title: "Agent Policies", rows: buildAgentPolicyRows() },
+                    { title: t("providers"), rows: buildProviderRows() },
+                    { title: t("agentPolicies"), rows: buildAgentPolicyRows() },
                   ]
                 : []),
             ]
           : category === "peers"
           ? [
-              { title: "Add New", rows: buildPeerTemplateRows() },
+              { title: t("addNew"), rows: buildPeerTemplateRows() },
               {
-                title: "Existing Peers",
+                title: t("existingPeers"),
                 rows: [...buildDraftPeerRows(), ...buildPeerRows()],
               },
             ]
           : category === "policies"
           ? [
-              { title: "Add New", rows: buildPolicyTemplateRows() },
+              { title: t("addNew"), rows: buildPolicyTemplateRows() },
               {
-                title: "Existing Policies",
+                title: t("existingPolicies"),
                 rows: [...buildDraftPolicyRows(), ...buildPolicyRows()],
               },
             ]
           : category === "agent-network" && agentNetworkEnabled
           ? [
-              { title: "Add New", rows: buildAgentTemplateRows() },
-              { title: "Existing Providers", rows: buildProviderRows() },
+              { title: t("addNew"), rows: buildAgentTemplateRows() },
+              { title: t("existingProviders"), rows: buildProviderRows() },
               {
-                title: "Existing Agent Policies",
+                title: t("existingAgentPolicies"),
                 rows: buildAgentPolicyRows(),
               },
             ]
           : category === "groups"
           ? [
-              { title: "Add New", rows: buildGroupTemplateRows() },
+              { title: t("addNew"), rows: buildGroupTemplateRows() },
               {
-                title: "Existing Groups",
+                title: t("existingGroups"),
                 rows: [...buildDraftGroupRows(), ...buildGroupRows()],
               },
             ]
           : [
-              { title: "Add New", rows: buildResourceTemplateRows() },
+              { title: t("addNew"), rows: buildResourceTemplateRows() },
               {
-                title: "Existing Networks",
+                title: t("existingNetworks"),
                 rows: [...buildDraftNetworkRows(), ...buildNetworkRows()],
               },
               {
-                title: "Existing Resources",
+                title: t("existingResources"),
                 rows: [...buildDraftResourceRows(), ...buildResourceRows()],
               },
             ]
@@ -1608,7 +1622,7 @@ const PanelContent = React.memo(
                     </div>
                   </div>
                   <div className={"text-nb-gray-100 mb-1"}>
-                    Could not find any results
+                    {t("couldNotFindResults")}
                   </div>
                   <div
                     className={
@@ -1629,15 +1643,18 @@ const PanelContent = React.memo(
 
 PanelContent.displayName = "PanelContent";
 
-const DeletedBadge = () => (
-  <span
-    className={
-      "text-[0.55rem] leading-none px-1 py-[0.3rem] rounded-[3px] bg-red-900/40 border border-red-500/20 text-red-400"
-    }
-  >
-    DELETED
-  </span>
-);
+const DeletedBadge = () => {
+  const t = useTranslations("controlCenter");
+  return (
+    <span
+      className={
+        "text-[0.55rem] leading-none px-1 py-[0.3rem] rounded-[3px] bg-red-900/40 border border-red-500/20 text-red-400"
+      }
+    >
+      {t("deletedBadge")}
+    </span>
+  );
+};
 
 const TemplateItem = React.memo(
   ({
@@ -1700,6 +1717,7 @@ const PanelListItem = React.memo(
     onCanvas?: boolean;
     "data-testid"?: string;
   }>) => {
+    const t = useTranslations("controlCenter");
     return (
       <div
         onPointerDown={disabled ? undefined : onPointerDown}
@@ -1726,7 +1744,7 @@ const PanelListItem = React.memo(
               "shrink-0 ml-auto mr-3 text-[0.50rem] leading-none px-1 py-[0.3rem] rounded-[3px] bg-nb-gray-910 border border-nb-gray-800/30 text-nb-gray-350 opacity-70"
             }
           >
-            ON CANVAS
+            {t("onCanvasBadge")}
           </span>
         ) : (
           !disabled && (

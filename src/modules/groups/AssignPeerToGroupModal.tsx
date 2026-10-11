@@ -90,10 +90,12 @@ export const AssignGroupToPeerModalContent = ({
   excludedPeers,
   showHeader = true,
   showClose = true,
-  buttonText = "Confirm Changes",
+  buttonText,
   selectInitialPeers = true,
 }: ContentProps) => {
   const t = useTranslations("common");
+  const tassign = useTranslations("common");
+  const resolvedButtonText = buttonText ?? tassign("confirmChanges");
   const { data: peers, isLoading } = useFetchApi<Peer[]>("/peers");
   const { users } = useUsers();
   const { mutate } = useSWRConfig();
@@ -183,7 +185,7 @@ export const AssignGroupToPeerModalContent = ({
         });
     }
     notify({
-      title: "Saving changes",
+      title: tassign("savingChanges"),
       description: `${group?.name || "Group"} was successfully saved.`,
       promise: request()
         .then((g: Group) => {
@@ -328,7 +330,7 @@ export const AssignGroupToPeerModalContent = ({
                     handleOnSave(selectedPeers).then();
                   }}
                 >
-                  {buttonText}
+                  {resolvedButtonText}
                 </Button>
               )}
             </div>

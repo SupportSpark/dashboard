@@ -150,7 +150,7 @@ export function AccessTokenModalContent({
 	const submit = () => {
 		const expiration = parseInt(expiresIn);
 		notify({
-			title: "Creating access token",
+			title: tCommon("creatingAccessToken"),
 			description: name + " was created successfully",
 			promise: tokenRequest
 				.post({
@@ -161,7 +161,7 @@ export function AccessTokenModalContent({
 					onSuccess && onSuccess(res.plain_token as string);
 					mutate(`/users/${user.id}/tokens`);
 				}),
-			loadingMessage: "Creating access token...",
+			loadingMessage: tCommon("creatingAccessTokenLoading"),
 		});
 	};
 

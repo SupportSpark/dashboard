@@ -19,6 +19,7 @@ import { Callout } from "@components/Callout";
 import Paragraph from "@components/Paragraph";
 import { InlineButtonLink } from "@components/InlineLink";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 type Props = {
   value: string;
@@ -35,6 +36,7 @@ export function EmbeddedIdentityProviderSelect({
 }: Props) {
   const { providers, isEmbeddedIdPEnabled } = useEmbeddedIdentityProviders();
   const router = useRouter();
+  const t = useTranslations("idpSync");
   const filteredProviders = filterByType?.length
     ? providers?.filter((p) => filterByType.includes(p.type)) ?? []
     : providers ?? [];
@@ -44,10 +46,8 @@ export function EmbeddedIdentityProviderSelect({
   if (location === "settings") {
     return (
       <div className="mt-3 w-full">
-        <Label>Identity Provider</Label>
-        <HelpText>
-          Select your identity provider connector for this integration.
-        </HelpText>
+        <Label>{t("identityProviderLabel")}</Label>
+        <HelpText>{t("idpConnectorSelectHelp")}</HelpText>
         <ProviderSelect
           providers={filteredProviders}
           value={value}
@@ -55,10 +55,9 @@ export function EmbeddedIdentityProviderSelect({
           disabled
         />
         <Callout className={"mt-3"} variant={"info"}>
-          The identity provider connector cannot be changed afterwards.
-          <br />
-          If you want to change the connector, please delete this integration
-          and set it up again with a different connector.
+          {t.rich("idpConnectorLockedHelp", {
+            br: () => <br />,
+          })}
         </Callout>
       </div>
     );
@@ -72,7 +71,7 @@ export function EmbeddedIdentityProviderSelect({
     >
       <div className="w-full">
         <Paragraph className="text-sm text-center px-4 inline-block mb-3">
-          Select your identity provider connector for this integration.
+          {t("idpConnectorSelectHelp")}
         </Paragraph>
         <div className="max-w-sm w-full mx-auto mb-2">
           <ProviderSelect
@@ -86,14 +85,16 @@ export function EmbeddedIdentityProviderSelect({
   ) : (
     <div className={"px-8 mb-6"}>
       <Callout variant={"info"} className={"mt-6"}>
-        No compatible identity providers found. Please go to{" "}
-        <InlineButtonLink
-          onClick={() => router.push("/settings?tab=identity-providers")}
-          variant={"dashed"}
-        >
-          {`Settings › Identity Providers`}
-        </InlineButtonLink>{" "}
-        to set one up.
+        {t.rich("noCompatibleIdp", {
+          link: (chunks) => (
+            <InlineButtonLink
+              onClick={() => router.push("/settings?tab=identity-providers")}
+              variant={"dashed"}
+            >
+              {chunks}
+            </InlineButtonLink>
+          ),
+        })}
       </Callout>
     </div>
   );
@@ -110,10 +111,11 @@ function ProviderSelect({
   onChange: (value: string) => void;
   disabled?: boolean;
 }) {
+  const t = useTranslations("idpSync");
   return (
     <Select value={value} onValueChange={onChange} disabled={disabled}>
       <SelectTrigger className="w-full">
-        <SelectValue placeholder="Select your identity provider..." />
+        <SelectValue placeholder={t("selectIdpPlaceholder")} />
       </SelectTrigger>
       <SelectContent>
         {providers?.map((provider) => (

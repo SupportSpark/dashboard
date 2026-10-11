@@ -28,6 +28,7 @@ import { useAIProviders } from "@/modules/agent-network/AIProvidersProvider";
 import AgentGuardrailModal from "@/modules/agent-network/AgentGuardrailModal";
 import AgentGuardrailBrowseModal from "@/modules/agent-network/AgentGuardrailBrowseModal";
 import AgentGuardrailChecksCell from "@/modules/agent-network/AgentGuardrailChecksCell";
+import { useTranslations } from "next-intl";
 
 type Props = {
   guardrailIds: string[];
@@ -43,6 +44,7 @@ export default function AgentPolicyGuardrailsTab({
   setGuardrailIds,
   destinationProviderIds,
 }: Readonly<Props>) {
+  const t = useTranslations("agentNetwork");
   const { guardrails } = useAIProviders();
 
   const [createOpen, setCreateOpen] = useState(false);
@@ -96,7 +98,7 @@ export default function AgentPolicyGuardrailsTab({
             <div>
               <Label>
                 {attached.length}{" "}
-                {attached.length === 1 ? "Guardrail" : "Guardrails"}
+                {attached.length === 1 ? "Guardrail" : t("guardrails")}
               </Label>
               <HelpText className={"mb-0"}>
                 Guardrails enforce model allowlists and prompt capture per
@@ -110,7 +112,7 @@ export default function AgentPolicyGuardrailsTab({
                 onClick={() => setBrowseOpen(true)}
               >
                 <FolderSearch size={14} />
-                Browse Guardrails
+                {t("browseGuardrails")}
               </Button>
               <Button
                 variant={"primary"}
@@ -121,7 +123,7 @@ export default function AgentPolicyGuardrailsTab({
                 }}
               >
                 <PlusCircle size={14} />
-                New Guardrail
+                {t("newGuardrail")}
               </Button>
             </div>
           </div>
@@ -169,13 +171,13 @@ export default function AgentPolicyGuardrailsTab({
                       >
                         <div className={"flex gap-3 items-center"}>
                           <Edit size={14} className={"shrink-0"} />
-                          Edit Guardrail
+                          {t("editGuardrail")}
                         </div>
                       </DropdownMenuItem>
                       <DropdownMenuItem onClick={() => removeAttached(g.id)}>
                         <div className={"flex gap-3 items-center"}>
                           <MinusCircleIcon size={14} className={"shrink-0"} />
-                          Detach
+                          {t("detach")}
                         </div>
                       </DropdownMenuItem>
                     </DropdownMenuContent>
@@ -225,6 +227,7 @@ function NoGuardrailsInfo({
   onAddClick: () => void;
   onBrowseClick: () => void;
 }) {
+  const t = useTranslations("agentNetwork");
   return (
     <div>
       <div
@@ -248,11 +251,11 @@ function NoGuardrailsInfo({
           onClick={onBrowseClick}
         >
           <FolderSearch size={14} />
-          Browse Guardrails
+          {t("browseGuardrails")}
         </Button>
         <Button variant={"primary"} size={"xs"} onClick={onAddClick}>
           <IconCirclePlus size={14} />
-          New Guardrail
+          {t("newGuardrail")}
         </Button>
       </div>
     </div>

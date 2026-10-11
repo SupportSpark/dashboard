@@ -53,7 +53,7 @@ type IconComponent = React.ComponentType<{
   className?: string;
 }>;
 
-export const UserRoleCategories: {
+export const userRoleCategoryValues: {
   value: UserRoleCategory;
   name: string;
   icon: IconComponent;
@@ -62,7 +62,9 @@ export const UserRoleCategories: {
   { value: "agent-network", name: "Agent Network", icon: AgentNetworkIcon },
 ];
 
-export const UserRoles: {
+export const getUserRoles: (
+  t: ReturnType<typeof useTranslations>,
+) => {
   name: string;
   // Label used inside the role's own tab, where the category is already in the
   // tab title — "Agent Network Admin" reads as just "Admin" under Agent Network.
@@ -71,48 +73,48 @@ export const UserRoles: {
   icon: IconComponent;
   category: UserRoleCategory;
   description: string;
-}[] = [
+}[] = (t) => [
   {
     name: "Owner",
     value: Role.Owner,
     icon: NetBirdIcon,
     category: "general",
-    description: "Full access, including transferring ownership.",
+    description: t("roleOwnerDescription"),
   },
   {
     name: "Admin",
     value: Role.Admin,
     icon: Cog,
     category: "general",
-    description: "Manages users, peers, networks and account settings.",
+    description: t("roleAdminDescription"),
   },
   {
     name: "Network Admin",
     value: Role.NetworkAdmin,
     icon: NetworkIcon,
     category: "general",
-    description: "Manages peers, networks and access control.",
+    description: t("roleNetworkAdminDescription"),
   },
   {
     name: "Billing Admin",
     value: Role.BillingAdmin,
     icon: CreditCard,
     category: "general",
-    description: "Manages the subscription and billing details.",
+    description: t("roleBillingAdminDescription"),
   },
   {
     name: "Auditor",
     value: Role.Auditor,
     icon: EyeIcon,
     category: "general",
-    description: "Read-only access to the configuration and audit events.",
+    description: t("roleAuditorDescription"),
   },
   {
     name: "User",
     value: Role.User,
     icon: User2,
     category: "general",
-    description: "Access to their own peers only.",
+    description: t("roleUserDescription"),
   },
   {
     name: "Agent Network Admin",
@@ -120,14 +122,14 @@ export const UserRoles: {
     value: Role.AgentNetworkAdmin,
     icon: AgentNetworkIcon,
     category: "agent-network",
-    description: "Manages AI providers, agent policies and guardrails.",
+    description: t("roleAgentNetworkAdminDescription"),
   },
   {
     name: "Usage Viewer",
     value: Role.UsageViewer,
     icon: GaugeIcon,
     category: "agent-network",
-    description: "Read-only access to usage and logs.",
+    description: t("roleUsageViewerDescription"),
   },
 ];
 
@@ -137,7 +139,7 @@ const RoleList = ({
   useShortNames = false,
   fixedHeight = false,
 }: {
-  roles: typeof UserRoles;
+  roles: ReturnType<typeof getUserRoles>;
   onSelect: (role: Role) => void;
   useShortNames?: boolean;
   // Reserve the same height for every tab. Tabs hold different numbers of
@@ -256,7 +258,7 @@ export function UserRoleSelector({
 
   const [open, setOpen] = useState(false);
 
-  const selectedRole = UserRoles.find((role) => role.value === value);
+  const selectedRole = getUserRoles(t).find((role) => role.value === value);
 
   // Cloud only
   const { isAccountWithMSPParent } = useMSP();
@@ -277,9 +279,9 @@ export function UserRoleSelector({
       return true;
     };
 
-    return UserRoleCategories.map((category) => ({
+    return userRoleCategoryValues.map((category) => ({
       ...category,
-      roles: UserRoles.filter(
+      roles: getUserRoles(t).filter(
         (role) => role.category === category.value && isVisible(role.value),
       ),
     })).filter((category) => {
@@ -299,13 +301,13 @@ export function UserRoleSelector({
   // A single group is just a list — the tab row would only add noise.
   const showTabs = categories.length > 1;
   const [tab, setTab] = useState<string>(
-    selectedRole?.category ?? UserRoleCategories[0].value,
+    selectedRole?.category ?? userRoleCategoryValues[0].value,
   );
   // Fall back to the first group when the remembered tab is not available, e.g.
   // when the role was cleared or a group got filtered out.
   const activeTab = categories.some((category) => category.value === tab)
     ? tab
-    : (categories[0]?.value ?? UserRoleCategories[0].value);
+    : (categories[0]?.value ?? userRoleCategoryValues[0].value);
 
   return (
     <Popover

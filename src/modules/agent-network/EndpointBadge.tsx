@@ -5,6 +5,7 @@ import { HelpTooltip } from "@components/HelpTooltip";
 import useCopyToClipboard from "@hooks/useCopyToClipboard";
 import { CheckIcon, CopyIcon, GlobeIcon } from "lucide-react";
 import React from "react";
+import { useTranslations } from "next-intl";
 
 // The tooltip is shared with the providers page's empty state, which shows the
 // same card before an endpoint exists.
@@ -33,6 +34,7 @@ export default function EndpointBadge({
   // shape the Connect Agent page wants, where the URL is the whole point.
   variant?: "default" | "plain";
 }) {
+  const t = useTranslations("agentNetwork");
   const [, copy, copied] = useCopyToClipboard(`https://${endpoint}`);
 
   return (
@@ -44,7 +46,7 @@ export default function EndpointBadge({
       icon={<GlobeIcon size={16} />}
       title={
         <>
-          API Base URL
+          {t("apiBaseUrl")}
           <HelpTooltip iconSize={11} content={ENDPOINT_HELP_TEXT} />
         </>
       }

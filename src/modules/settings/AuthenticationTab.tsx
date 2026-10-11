@@ -140,8 +140,8 @@ export default function AuthenticationTab({ account }: Readonly<Props>) {
 		const expiration = convertToSeconds(expiresIn, expireInterval);
 
 		notify({
-			title: "Save Authentication Settings",
-			description: "Authentication settings successfully saved.",
+			title: t("saveAuthenticationSettings"),
+			description: t("authenticationSettingsSaved"),
 			promise: saveRequest
 				.put({
 					id: account.id,
@@ -177,7 +177,7 @@ export default function AuthenticationTab({ account }: Readonly<Props>) {
 						isLocalMFAEnabled,
 					]);
 				}),
-			loadingMessage: "Saving the authentication settings...",
+			loadingMessage: t("savingAuthenticationSettings"),
 		});
 	};
 

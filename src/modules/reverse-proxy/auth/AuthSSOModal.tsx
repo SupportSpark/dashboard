@@ -28,6 +28,7 @@ export default function AuthSSOModal({
   onRemove,
 }: Readonly<Props>) {
   const t = useTranslations("common");
+  const tr = useTranslations("reverseProxy");
   const { users } = useUsers();
   const [groups, setGroups] = useState<Group[]>(currentGroups);
   const isEditing = isEnabled;
@@ -47,8 +48,8 @@ export default function AuthSSOModal({
     <Modal open={open} onOpenChange={onOpenChange}>
       <ModalContent maxWidthClass="max-w-xl">
         <ModalHeader
-          title="SSO (Single Sign-On)"
-          description="Require users to authenticate via SSO to access this service."
+          title={tr("sso")}
+          description={tr("ssoDescription")}
         />
 
         <GradientFadedBackground />
@@ -61,9 +62,9 @@ export default function AuthSSOModal({
               <div className={"flex items-center gap-2"}>
                 <Badge className={"py-[3px]"} variant={"gray-ghost"}>
                   <CircleUser size={12} />
-                  All Users
+                  {tr("allUsers")}
                 </Badge>
-                Select user groups...
+                {tr("selectUserGroups")}
               </div>
             }
             users={users}
@@ -73,14 +74,14 @@ export default function AuthSSOModal({
             {isEditing ? (
               <>
                 <Button variant="danger-text" data-testid="remove-sso" onClick={handleRemove}>
-                  Remove
+                  {tr("removeBtn")}
                 </Button>
                 <div className="flex gap-3">
                   <ModalClose asChild>
                     <Button variant="secondary">{t("cancel")}</Button>
                   </ModalClose>
                   <Button variant="primary" onClick={handleSave}>
-                    Save
+                    {t("save")}
                   </Button>
                 </div>
               </>
@@ -96,7 +97,7 @@ export default function AuthSSOModal({
                     onClick={handleSave}
                     data-testid="submit-sso"
                   >
-                    Add SSO
+                    {tr("addSsoBtn")}
                   </Button>
                 </div>
               </>

@@ -106,7 +106,7 @@ export const PeerSSHInstructions = ({
                   If you are using NetBird via the Desktop Client, click on the
                   NetBird tray icon, go to <Mark>Settings</Mark> and click{" "}
                   <Mark>Allow SSH</Mark>. If you want to enable Root Login go to{" "}
-                  <Mark>Settings &gt; Advanced Settings</Mark> and enable SSH
+                  <Mark>{t("settingsAdvancedSettings")}</Mark> and enable SSH
                   Root Login under the SSH tab.
                 </p>
                 <Lightbox image={sshImage} />

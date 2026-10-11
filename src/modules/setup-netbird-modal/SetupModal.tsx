@@ -444,20 +444,25 @@ type ManagementUrlStepProps = {
 };
 
 export const ManagementUrlStep = ({ trayName }: ManagementUrlStepProps) => {
+  const t = useTranslations("setupModal");
+  const tCommon = useTranslations("common");
+  const tSettings = useTranslations("settings");
   return (
     <>
       <p>
-        On first launch, NetBird asks where to connect. Select{" "}
-        <Mark>Self-hosted</Mark> and enter the following{" "}
-        <Mark>Management server URL</Mark>
+        {t("firstLaunchHintBefore")}{" "}
+        <Mark>{t("selfHosted")}</Mark> {t("firstLaunchHintMiddle")}{" "}
+        <Mark>{t("managementServerUrl")}</Mark>
       </p>
       <Code>
         <Code.Line>{GRPC_API_ORIGIN}</Code.Line>
       </Code>
       <p className={"mt-2 text-xs text-nb-gray-300 font-normal"}>
-        Already past that screen? Click the NetBird icon in your {trayName},
-        open <Mark>Settings</Mark> and set <Mark>Management Server</Mark> to{" "}
-        <Mark>Self-hosted</Mark> under <Mark>General</Mark>.
+        {t("alreadyPastScreen", { trayName })}{" "}
+        <Mark>{tCommon("settings")}</Mark> {t("andSet")}{" "}
+        <Mark>{t("managementServer")}</Mark> {t("to")}{" "}
+        <Mark>{t("selfHosted")}</Mark> {t("under")}{" "}
+        <Mark>{tSettings("general")}</Mark>.
       </p>
     </>
   );

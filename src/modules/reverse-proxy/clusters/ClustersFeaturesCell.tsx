@@ -3,6 +3,7 @@ import FullTooltip from "@components/FullTooltip";
 import { Lock, ShieldAlert, SlidersHorizontal, Globe } from "lucide-react";
 import { ReverseProxyCluster } from "@/interfaces/ReverseProxy";
 import EmptyRow from "@/modules/common-table-rows/EmptyRow";
+import { useTranslations } from "next-intl";
 
 type Props = {
   cluster: ReverseProxyCluster;
@@ -20,47 +21,45 @@ type Feature = {
 // backend distinguishes "unsupported" from "not yet reported" via
 // nullable booleans, but visually both mean "not available here").
 export default function ClustersFeaturesCell({ cluster }: Readonly<Props>) {
+  const t = useTranslations("reverseProxy");
   const features: Feature[] = [];
   if (cluster.supports_custom_ports) {
     features.push({
       key: "custom-ports",
-      label: "Custom Ports",
-      description: "Cluster can bind arbitrary TCP/UDP ports for services.",
+      label: t("featureCustomPorts"),
+      description: t("featureCustomPortsDescription"),
       icon: <SlidersHorizontal size={14} className={"text-netbird"} />,
     });
   }
   if (cluster.require_subdomain) {
     features.push({
       key: "subdomain",
-      label: "Subdomain Required",
-      description:
-        "Services on this cluster must use a subdomain — the bare cluster domain is not addressable.",
+      label: t("featureSubdomainRequired"),
+      description: t("featureSubdomainRequiredDescription"),
       icon: <Globe size={14} className={"text-nb-gray-300"} />,
     });
   }
   if (cluster.supports_crowdsec) {
     features.push({
       key: "crowdsec",
+      // CrowdSec is a product name and stays as-is in both locales.
       label: "CrowdSec",
-      description:
-        "Cluster has CrowdSec IP reputation configured across all active proxies.",
+      description: t("featureCrowdSecDescription"),
       icon: <ShieldAlert size={14} className={"text-green-500"} />,
     });
   }
   if (cluster.private) {
     features.push({
       key: "private",
-      label: "Private",
-      description: (
-        <>
-          Lets you publish services that are only reachable from peers in your
-          NetBird network. Required for{" "}
-          <span className={"font-medium text-white"}>NetBird-Only Access</span>{" "}
-          and{" "}
-          <span className={"font-medium text-white"}>Proxy Cluster</span>{" "}
-          target types.
-        </>
-      ),
+      label: t("featurePrivate"),
+      description: t.rich("featurePrivateDescription", {
+        nbOnly: (chunks) => (
+          <span className={"font-medium text-white"}>{chunks}</span>
+        ),
+        cluster: (chunks) => (
+          <span className={"font-medium text-white"}>{chunks}</span>
+        ),
+      }),
       icon: <Lock size={14} className={"text-netbird"} />,
     });
   }

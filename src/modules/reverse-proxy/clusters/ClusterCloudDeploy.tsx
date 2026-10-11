@@ -17,6 +17,7 @@ import {
   RocketIcon,
 } from "lucide-react";
 import React, { useEffect, useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { isClusterConnected } from "@/interfaces/ReverseProxy";
 import { useProxyCluster } from "@/modules/reverse-proxy/clusters/useProxyCluster";
 
@@ -27,35 +28,66 @@ const CFN_TEMPLATE_URL =
 
 const DEFAULT_WIREGUARD_PORT = 51820;
 
-const DIGITALOCEAN_REGIONS = [
-  { value: "fra1", label: "Frankfurt, Germany (fra1)" },
-  { value: "ams3", label: "Amsterdam, Netherlands (ams3)" },
-  { value: "lon1", label: "London, UK (lon1)" },
-  { value: "nyc3", label: "New York, USA (nyc3)" },
-  { value: "sfo3", label: "San Francisco, USA (sfo3)" },
-  { value: "tor1", label: "Toronto, Canada (tor1)" },
-  { value: "sgp1", label: "Singapore (sgp1)" },
-  { value: "blr1", label: "Bangalore, India (blr1)" },
-  { value: "syd1", label: "Sydney, Australia (syd1)" },
-];
+/** Provider regions/sizes; the option values stay as API identifiers. */
+type ProviderOption = { value: string; label: string };
+type CloudTranslator = ReturnType<typeof useTranslations<"reverseProxy">>;
 
-const DIGITALOCEAN_SIZES = [
-  { value: "s-1vcpu-1gb", label: "Basic - 1 vCPU / 1 GB" },
-  { value: "s-1vcpu-2gb", label: "Basic - 1 vCPU / 2 GB" },
-  { value: "s-2vcpu-2gb", label: "Basic - 2 vCPU / 2 GB" },
-  { value: "s-2vcpu-4gb", label: "Basic - 2 vCPU / 4 GB" },
-];
+function useDigitalOceanRegions(tr: CloudTranslator): ProviderOption[] {
+  return useMemo(
+    () => [
+      { value: "fra1", label: tr("regionFra1") },
+      { value: "ams3", label: tr("regionAms3") },
+      { value: "lon1", label: tr("regionLon1") },
+      { value: "nyc3", label: tr("regionNyc3") },
+      { value: "sfo3", label: tr("regionSfo3") },
+      { value: "tor1", label: tr("regionTor1") },
+      { value: "sgp1", label: tr("regionSgp1") },
+      { value: "blr1", label: tr("regionBlr1") },
+      { value: "syd1", label: tr("regionSyd1") },
+    ],
+    [tr],
+  );
+}
 
-const AWS_REGIONS = [
-  { value: "us-east-1", label: "US East (N. Virginia)" },
-  { value: "us-east-2", label: "US East (Ohio)" },
-  { value: "us-west-2", label: "US West (Oregon)" },
-  { value: "eu-central-1", label: "Europe (Frankfurt)" },
-  { value: "eu-west-1", label: "Europe (Ireland)" },
-  { value: "eu-west-2", label: "Europe (London)" },
-  { value: "ap-southeast-1", label: "Asia Pacific (Singapore)" },
-  { value: "ap-northeast-1", label: "Asia Pacific (Tokyo)" },
-];
+function useDigitalOceanSizes(tr: CloudTranslator): ProviderOption[] {
+  return useMemo(
+    () => [
+      {
+        value: "s-1vcpu-1gb",
+        label: tr("dropletSize1vcpu1gb"),
+      },
+      {
+        value: "s-1vcpu-2gb",
+        label: tr("dropletSize1vcpu2gb"),
+      },
+      {
+        value: "s-2vcpu-2gb",
+        label: tr("dropletSize2vcpu2gb"),
+      },
+      {
+        value: "s-2vcpu-4gb",
+        label: tr("dropletSize2vcpu4gb"),
+      },
+    ],
+    [tr],
+  );
+}
+
+function useAwsRegions(tr: CloudTranslator): ProviderOption[] {
+  return useMemo(
+    () => [
+      { value: "us-east-1", label: tr("awsRegionUsEast1") },
+      { value: "us-east-2", label: tr("awsRegionUsEast2") },
+      { value: "us-west-2", label: tr("awsRegionUsWest2") },
+      { value: "eu-central-1", label: tr("awsRegionEuCentral1") },
+      { value: "eu-west-1", label: tr("awsRegionEuWest1") },
+      { value: "eu-west-2", label: tr("awsRegionEuWest2") },
+      { value: "ap-southeast-1", label: tr("awsRegionApSoutheast1") },
+      { value: "ap-northeast-1", label: tr("awsRegionApNortheast1") },
+    ],
+    [tr],
+  );
+}
 
 export type CloudProvider = "hetzner" | "digitalocean" | "aws";
 
@@ -240,6 +272,7 @@ const RegistrationCheck = ({
   domain: string;
   onRegistered?: () => void;
 }) => {
+  const t = useTranslations("reverseProxy");
   const cluster = useProxyCluster(domain, {
     done: isClusterConnected,
     maxAttempts: 120,
@@ -257,14 +290,14 @@ const RegistrationCheck = ({
         <>
           <CheckCircle2 size={16} className={"text-green-500 shrink-0"} />
           <span className={"text-nb-gray-100"}>
-            Proxy registered with NetBird and connected.
+            {t("proxyRegisteredConnected")}
           </span>
         </>
       ) : (
         <>
           <Loader2 size={16} className={"animate-spin shrink-0"} />
           <span className={"text-nb-gray-300"}>
-            Waiting for the proxy to register with NetBird...
+            {t("proxyWaitingRegistration")}
           </span>
         </>
       )}
@@ -285,34 +318,39 @@ const DeploySuccess = ({
   onRegistered,
   children,
 }: DeploySuccessProps) => {
+  const t = useTranslations("reverseProxy");
+  const tCommon = useTranslations("common");
   return (
     <div className={"flex flex-col gap-4"}>
       <Callout variant={"info"}>
-        {resourceLabel} <span className={"text-white font-medium"}>{name}</span>{" "}
-        was created
-        {ip ? (
-          <>
-            {" "}
-            with {isStaticIP ? "static IP" : "IP"}{" "}
-            <span className={"text-netbird font-medium"}>{ip}</span> and is still
-            bootstrapping. Meanwhile, add the DNS records below.
-          </>
-        ) : (
-          <> {ipPendingNote}</>
-        )}
+        {t.rich("resourceCreatedCloud", {
+          resource: resourceLabel,
+          // The instance name and the assigned address keep their highlight
+          // styling through rich placeholders in both locales.
+          name: (chunks) => (
+            <span className={"text-white font-medium"}>{chunks}</span>
+          ),
+          ipKind: isStaticIP ? t("staticIpKind") : t("ipKind"),
+          ip: (chunks) => (
+            <span className={"text-netbird font-medium"}>{chunks}</span>
+          ),
+        })}
       </Callout>
       {ip && (
         <div>
-          <Label>Create DNS Records</Label>
+          <Label>{t("createDnsRecords")}</Label>
           <HelpText>
-            Point these records at the new {resourceLabel.toLowerCase()}. The
-            proxy gets its certificate once they resolve.
+            {t("createDnsRecordsHelp", {
+              resource: resourceLabel.toLowerCase(),
+            })}
           </HelpText>
           <CardTable>
             <CardTable.Header>
-              <CardTable.HeaderCell width={100}>Type</CardTable.HeaderCell>
-              <CardTable.HeaderCell>Name</CardTable.HeaderCell>
-              <CardTable.HeaderCell>Content</CardTable.HeaderCell>
+              <CardTable.HeaderCell width={100}>
+                {tCommon("type")}
+              </CardTable.HeaderCell>
+              <CardTable.HeaderCell>{tCommon("name")}</CardTable.HeaderCell>
+              <CardTable.HeaderCell>{t("contentColumn")}</CardTable.HeaderCell>
             </CardTable.Header>
             <CardTable.Body>
               <CardTable.Row>
@@ -350,6 +388,7 @@ const HetznerDeploy = ({
   isGeneratingToken,
   onRegistered,
 }: ProviderProps) => {
+  const t = useTranslations("reverseProxy");
   const [hetznerToken, setHetznerToken] = useState("");
   const [catalog, setCatalog] = useState<HetznerCatalog | null>(null);
   const [catalogError, setCatalogError] = useState("");
@@ -486,10 +525,10 @@ const HetznerDeploy = ({
       .finally(() => setIsDeploying(false));
 
     notify({
-      title: "Hetzner Deployment",
-      description: "Failed to create the Hetzner server",
+      title: t("hetznerDeploymentTitle"),
+      description: t("hetznerDeployFailed"),
       promise,
-      loadingMessage: "Creating Hetzner server...",
+      loadingMessage: t("hetznerDeployCreating"),
       showOnlyError: true,
       preventSuccessToast: true,
     });
@@ -498,7 +537,7 @@ const HetznerDeploy = ({
   if (serverIP) {
     return (
       <DeploySuccess
-        resourceLabel={"Server"}
+        resourceLabel={t("resourceTypeServer")}
         name={serverName}
         ip={serverIP}
         isStaticIP={staticIP}
@@ -512,32 +551,27 @@ const HetznerDeploy = ({
     <div className={"flex flex-col gap-4"}>
       <div>
         <Label>
-          Hetzner API Token
+          {t("hetznerApiToken")}
           <HelpTooltip
             interactive={true}
-            content={
-              <>
-                The token goes straight from your browser to Hetzner and never
-                touches NetBird&apos;s servers, and you can delete it once setup
-                succeeds.{" "}
+            content={t.rich("hetznerTokenTooltip", {
+              link: (chunks) => (
                 <InlineLink
                   href={
                     "https://docs.hetzner.com/cloud/api/getting-started/generating-api-token/"
                   }
                   target={"_blank"}
                 >
-                  How to create a token
+                  {chunks}
                 </InlineLink>
-              </>
-            }
+              ),
+            })}
           />
         </Label>
-        <HelpText>
-          Create a read &amp; write API token. It is never stored by NetBird.
-        </HelpText>
+        <HelpText>{t("hetznerTokenHelp")}</HelpText>
         <Input
           type={"password"}
-          placeholder={"Paste your Hetzner Cloud API token here"}
+          placeholder={t("hetznerTokenPlaceholder")}
           value={hetznerToken}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setHetznerToken(e.target.value)
@@ -546,14 +580,14 @@ const HetznerDeploy = ({
       </div>
       {catalogError && (
         <Callout variant={"warning"}>
-          Could not load Hetzner options: {catalogError}
+          {t("hetznerCatalogError", { error: catalogError })}
         </Callout>
       )}
       {catalog ? (
         <>
           <div className={"flex gap-4"}>
             <div className={"w-1/2"}>
-              <Label>Location</Label>
+              <Label>{t("locationField")}</Label>
               <SelectDropdown
                 value={location}
                 onChange={(v) => setLocation(v as string)}
@@ -561,7 +595,7 @@ const HetznerDeploy = ({
               />
             </div>
             <div className={"w-1/2"}>
-              <Label>Server Type</Label>
+              <Label>{t("serverTypeLabel")}</Label>
               <SelectDropdown
                 value={serverType}
                 onChange={(v) => setServerType(v as string)}
@@ -570,7 +604,7 @@ const HetznerDeploy = ({
             </div>
           </div>
           <div>
-            <Label>SSH Key</Label>
+            <Label>{t("sshKeyLabel")}</Label>
             {catalog.sshKeys.length > 0 ? (
               <SelectDropdown
                 value={sshKeyId}
@@ -581,26 +615,21 @@ const HetznerDeploy = ({
                 }))}
               />
             ) : (
-              <HelpText className={"mb-0"}>
-                No SSH keys found in this Hetzner project. Add one in the
-                Hetzner Console first if you need SSH access to the server.
-              </HelpText>
+              <HelpText className={"mb-0"}>{t("noSshKeysHelp")}</HelpText>
             )}
           </div>
           <FancyToggleSwitch
             value={staticIP}
             onChange={setStaticIP}
-            label={"Static IP"}
-            helpText={
-              "Keep the server's IP when the server is deleted or rebuilt, so the DNS records stay valid. Hetzner bills unassigned IPs."
-            }
+            label={t("staticIpLabel")}
+            helpText={t("hetznerStaticIpHelp")}
           />
         </>
       ) : (
         <HelpText className={"mb-0"}>
           {isLoadingCatalog
-            ? "Loading available locations and server types..."
-            : "Enter your API token to load the available locations and server types."}
+            ? t("loadingHetznerCatalog")
+            : t("enterTokenToLoadCatalog")}
         </HelpText>
       )}
       <Button
@@ -620,7 +649,7 @@ const HetznerDeploy = ({
         ) : (
           <RocketIcon size={16} />
         )}
-        {isGeneratingToken ? "Preparing proxy token..." : "Deploy Server"}
+        {isGeneratingToken ? t("preparingProxyToken") : t("deployServerBtn")}
       </Button>
     </div>
   );
@@ -659,6 +688,9 @@ const DigitalOceanDeploy = ({
   isGeneratingToken,
   onRegistered,
 }: ProviderProps) => {
+  const t = useTranslations("reverseProxy");
+  const digitalOceanRegions = useDigitalOceanRegions(t);
+  const digitalOceanSizes = useDigitalOceanSizes(t);
   const [rootPassword] = useState(generateRootPassword);
   const [doToken, setDoToken] = useState("");
   const [region, setRegion] = useState("fra1");
@@ -728,10 +760,10 @@ const DigitalOceanDeploy = ({
       .finally(() => setIsDeploying(false));
 
     notify({
-      title: "DigitalOcean Deployment",
-      description: "Failed to create the DigitalOcean droplet",
+      title: t("digitalOceanDeploymentTitle"),
+      description: t("digitalOceanDeployFailed"),
       promise,
-      loadingMessage: "Creating DigitalOcean droplet...",
+      loadingMessage: t("digitalOceanDeployCreating"),
       showOnlyError: true,
       preventSuccessToast: true,
     });
@@ -740,7 +772,7 @@ const DigitalOceanDeploy = ({
   if (isCreated) {
     return (
       <DeploySuccess
-        resourceLabel={"Droplet"}
+        resourceLabel={t("resourceTypeDroplet")}
         name={dropletName}
         ip={reservedIP || dropletIP}
         isStaticIP={!!reservedIP}
@@ -748,16 +780,13 @@ const DigitalOceanDeploy = ({
         onRegistered={onRegistered}
         ipPendingNote={
           isDeploying
-            ? "and is provisioning. Waiting for its public IP..."
-            : "but waiting for its public IP timed out - find the IP in the DigitalOcean control panel."
+            ? t("dropletProvisioningNote")
+            : t("dropletIpTimeoutNote")
         }
       >
         <div>
-          <Label>Droplet Root Password</Label>
-          <HelpText>
-            Use it with the Droplet Web Console. Copy it now - it is not stored
-            anywhere.
-          </HelpText>
+          <Label>{t("dropletRootPassword")}</Label>
+          <HelpText>{t("dropletRootPasswordHelp")}</HelpText>
           <Code codeToCopy={rootPassword}>
             <Code.Line>{rootPassword}</Code.Line>
           </Code>
@@ -770,36 +799,31 @@ const DigitalOceanDeploy = ({
     <div className={"flex flex-col gap-4"}>
       <div>
         <Label>
-          DigitalOcean API Token
+          {t("digitalOceanApiToken")}
           <HelpTooltip
             interactive={true}
-            content={
-              <>
-                For the tightest scope, grant full access to{" "}
-                <span className={"font-mono text-netbird"}>tag</span>,{" "}
-                <span className={"font-mono text-netbird"}>droplet</span>, and{" "}
-                <span className={"font-mono text-netbird"}>reserved_ip</span>{" "}
-                only. The token goes straight from your browser to DigitalOcean
-                and never touches NetBird&apos;s servers, and you can delete it
-                once setup succeeds.{" "}
+            content={t.rich("digitalOceanTokenTooltip", {
+              // DigitalOcean scope names stay literal in both locales.
+              code: (chunks) => (
+                <span className={"font-mono text-netbird"}>{chunks}</span>
+              ),
+              link: (chunks) => (
                 <InlineLink
                   href={
                     "https://docs.digitalocean.com/reference/api/create-personal-access-token/"
                   }
                   target={"_blank"}
                 >
-                  How to create a token
+                  {chunks}
                 </InlineLink>
-              </>
-            }
+              ),
+            })}
           />
         </Label>
-        <HelpText>
-          Create a token with write access. It is never stored by NetBird.
-        </HelpText>
+        <HelpText>{t("digitalOceanTokenHelp")}</HelpText>
         <Input
           type={"password"}
-          placeholder={"Paste your DigitalOcean API token here"}
+          placeholder={t("digitalOceanTokenPlaceholder")}
           value={doToken}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setDoToken(e.target.value)
@@ -808,29 +832,27 @@ const DigitalOceanDeploy = ({
       </div>
       <div className={"flex gap-4"}>
         <div className={"w-1/2"}>
-          <Label>Region</Label>
+          <Label>{t("regionField")}</Label>
           <SelectDropdown
             value={region}
             onChange={(v) => setRegion(v as string)}
-            options={DIGITALOCEAN_REGIONS}
+            options={digitalOceanRegions}
           />
         </div>
         <div className={"w-1/2"}>
-          <Label>Droplet Size</Label>
+          <Label>{t("dropletSizeLabel")}</Label>
           <SelectDropdown
             value={size}
             onChange={(v) => setSize(v as string)}
-            options={DIGITALOCEAN_SIZES}
+            options={digitalOceanSizes}
           />
         </div>
       </div>
       <FancyToggleSwitch
         value={staticIP}
         onChange={setStaticIP}
-        label={"Static IP"}
-        helpText={
-          "Reserve a static IP so DNS records remain valid after rebuilds. Free of charge while assigned to a Droplet."
-        }
+        label={t("staticIpLabel")}
+        helpText={t("digitalOceanStaticIpHelp")}
       />
       <Button
         variant={"primary"}
@@ -842,7 +864,7 @@ const DigitalOceanDeploy = ({
         ) : (
           <RocketIcon size={16} />
         )}
-        {isGeneratingToken ? "Preparing proxy token..." : "Deploy Droplet"}
+        {isGeneratingToken ? t("preparingProxyToken") : t("deployDropletBtn")}
       </Button>
     </div>
   );
@@ -855,6 +877,8 @@ const AWSDeploy = ({
   isGeneratingToken,
   onRegistered,
 }: ProviderProps) => {
+  const t = useTranslations("reverseProxy");
+  const awsRegions = useAwsRegions(t);
   const [region, setRegion] = useState("eu-central-1");
   const [launched, setLaunched] = useState(false);
 
@@ -871,23 +895,20 @@ const AWSDeploy = ({
   return (
     <div className={"flex flex-col gap-4"}>
       <div>
-        <Label>Proxy Access Token</Label>
-        <HelpText>
-          Copy this token for AWS stack creation. It is excluded from outputs and
-          logs.
-        </HelpText>
+        <Label>{t("proxyAccessToken")}</Label>
+        <HelpText>{t("proxyAccessTokenHelp")}</HelpText>
         <Code codeToCopy={token} showCopyIcon={!isGeneratingToken}>
           <Code.Line>
-            {isGeneratingToken ? "Generating proxy token..." : token}
+            {isGeneratingToken ? t("proxyTokenGenerating") : token}
           </Code.Line>
         </Code>
       </div>
       <div>
-        <Label>Region</Label>
+        <Label>{t("regionField")}</Label>
         <SelectDropdown
           value={region}
           onChange={(v) => setRegion(v as string)}
-          options={AWS_REGIONS}
+          options={awsRegions}
         />
       </div>
       <Button
@@ -899,13 +920,10 @@ const AWSDeploy = ({
         }}
       >
         <RocketIcon size={16} />
-        Launch Stack in AWS Console
+        {t("launchStackBtn")}
         <ExternalLinkIcon size={14} />
       </Button>
-      <HelpText className={"mb-0"}>
-        The AWS Console opens with a prefilled form. Paste the token, create the
-        stack, then point your DNS records to the PublicIP output.
-      </HelpText>
+      <HelpText className={"mb-0"}>{t("awsConsoleHelp")}</HelpText>
       {launched && (
         <RegistrationCheck domain={domain} onRegistered={onRegistered} />
       )}

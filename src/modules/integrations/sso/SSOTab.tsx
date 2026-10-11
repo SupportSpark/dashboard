@@ -4,6 +4,7 @@ import Paragraph from "@components/Paragraph";
 import { SkeletonIntegration } from "@components/skeletons/SkeletonIntegration";
 import * as Tabs from "@radix-ui/react-tabs";
 import { ExternalLinkIcon, KeyRoundIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React from "react";
 import IntegrationIcon from "@/assets/icons/IntegrationIcon";
 import { useAccount } from "@/modules/account/useAccount";
@@ -13,6 +14,9 @@ import { OktaSSOIntegrationCard } from "@/modules/integrations/sso/okta/OktaSSOI
 
 export default function SSOTab() {
   const account = useAccount();
+  const t = useTranslations("idpSync");
+  const tCommon = useTranslations("common");
+  const tNav = useTranslations("navigation");
 
   return (
     <Tabs.Content value={"sso"}>
@@ -20,21 +24,18 @@ export default function SSOTab() {
         <Breadcrumbs>
           <Breadcrumbs.Item
             href={"/integrations"}
-            label={"Integrations"}
+            label={tNav("integrations")}
             icon={<IntegrationIcon size={13} />}
           />
           <Breadcrumbs.Item
             href={"/settings?tab=sso"}
-            label={"Single Sign-On"}
+            label={t("singleSignOnTitle")}
             icon={<KeyRoundIcon size={14} />}
             active
           />
         </Breadcrumbs>
-        <h1>Single Sign-On</h1>
-        <Paragraph>
-          Configure your preferred Identity Provider (IdP) to enable Single
-          Sign-On (SSO) for your team.
-        </Paragraph>
+        <h1>{t("singleSignOnTitle")}</h1>
+        <Paragraph>{t("ssoDescription")}</Paragraph>
         <Paragraph>
           <InlineLink
             href={
@@ -42,13 +43,13 @@ export default function SSOTab() {
             }
             target={"_blank"}
           >
-            Learn more
+            {tCommon("learnMore")}
             <ExternalLinkIcon size={12} />
           </InlineLink>
         </Paragraph>
 
         <LockedFeatureInfoCard
-          featureText={"Identity Provider (IdP) Sync"}
+          featureText={t("idpSyncFeatureText")}
           feature={"IDP_SYNC"}
         />
 

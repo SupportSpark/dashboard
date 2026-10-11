@@ -17,6 +17,7 @@ import {
   AIProvider,
   AIProviderId,
 } from "@/modules/agent-network/data/mockData";
+import { useTranslations } from "next-intl";
 
 // Same gray-to-netbird treatment the install-peer modal gives its OS tabs.
 const TAB_ICON =
@@ -46,9 +47,10 @@ function ModeSwitch({
   value: ClaudeMode;
   onChange: (mode: ClaudeMode) => void;
 }) {
+  const t = useTranslations("agentNetwork");
   const options: { value: ClaudeMode; label: string }[] = [
-    { value: "config", label: "JSON" },
-    { value: "shell", label: "Shell" },
+    { value: "config", label: t("json") },
+    { value: "shell", label: t("shell") },
   ];
 
   return (
@@ -95,12 +97,13 @@ function Snippet({
   lines: string[];
   copyText?: string;
 }) {
+  const tServiceUsers = useTranslations("serviceUsers");
   const [, copy, copied] = useCopyToClipboard(copyText ?? lines.join("\n"));
 
   const code = (
     <Code
       codeToCopy={copyText ?? lines.join("\n")}
-      message={"Copied to clipboard"}
+      message={tServiceUsers("copySuccess")}
       showCopyIcon={!title}
       className={title ? "rounded-none border-0" : undefined}
     >
@@ -285,6 +288,7 @@ export function AgentConnectTabs({
   // The request the SDK and cURL tabs send; see connectExample.
   example?: ConnectExample;
 }) {
+  const t = useTranslations("agentNetwork");
   const baseUrl = `https://${endpoint}`;
   const openaiBase = `${baseUrl}/v1`;
   const hasKimi = providerIds.includes("kimi_api");
@@ -308,28 +312,28 @@ export function AgentConnectTabs({
       <TabsList justify={"start"} className={listClassName}>
         <TabsTrigger value={"claude-code"}>
           <ClaudeIcon className={TAB_ICON} size={14} />
-          Claude Code
+          {t("claudeCode")}
         </TabsTrigger>
         <TabsTrigger value={"codex"}>
           <OpenAIIcon className={TAB_ICON} size={14} />
-          Codex
+          {t("codex")}
         </TabsTrigger>
         {hasKimi && (
           <TabsTrigger value={"kimi-cli"}>
             <KimiIcon className={TAB_ICON} size={14} />
-            Kimi CLI
+            {t("kimiCli")}
           </TabsTrigger>
         )}
         <TabsTrigger value={"sdk"}>
           {example.api === "anthropic" ? (
             <>
               <ClaudeIcon className={TAB_ICON} size={14} />
-              Anthropic SDK
+              {t("anthropicSdk")}
             </>
           ) : (
             <>
               <OpenAIIcon className={TAB_ICON} size={14} />
-              OpenAI SDK
+              {t("openaiSdk")}
             </>
           )}
         </TabsTrigger>
@@ -351,24 +355,24 @@ export function AgentConnectTabs({
               }
               options={[
                 {
-                  label: "Anthropic API",
+                  label: t("anthropicApi"),
                   value: "anthropic",
                   icon: providerIcon("anthropic_api"),
                 },
                 {
-                  label: "Vertex AI",
+                  label: t("vertexAi"),
                   value: "vertex",
                   icon: providerIcon("vertex_ai_api"),
                 },
                 {
-                  label: "Bedrock",
+                  label: t("bedrock"),
                   value: "bedrock",
                   icon: providerIcon("bedrock_api"),
                 },
                 ...(hasKimi
                   ? [
                       {
-                        label: "Kimi (Moonshot AI)",
+                        label: t("kimiMoonshotAi"),
                         value: "kimi",
                         icon: providerIcon("kimi_api"),
                       },
@@ -386,7 +390,7 @@ export function AgentConnectTabs({
                 title={
                   claudeMode === "config" ? (
                     <>
-                      Add to <ConfigPath path={"~/.claude/settings.json"} />
+                      {t("addTo")} <ConfigPath path={"~/.claude/settings.json"} />
                     </>
                   ) : (
                     "Run in your shell"
@@ -419,7 +423,7 @@ export function AgentConnectTabs({
             <Snippet
               title={
                 <>
-                  Add to <ConfigPath path={"~/.claude/settings.json"} />
+                  {t("addTo")} <ConfigPath path={"~/.claude/settings.json"} />
                 </>
               }
               lines={[
@@ -440,7 +444,7 @@ export function AgentConnectTabs({
             <Snippet
               title={
                 <>
-                  Add to <ConfigPath path={"~/.claude/settings.json"} />
+                  {t("addTo")} <ConfigPath path={"~/.claude/settings.json"} />
                 </>
               }
               lines={[
@@ -461,7 +465,7 @@ export function AgentConnectTabs({
                 title={
                   claudeMode === "config" ? (
                     <>
-                      Add to <ConfigPath path={"~/.claude/settings.json"} />
+                      {t("addTo")} <ConfigPath path={"~/.claude/settings.json"} />
                     </>
                   ) : (
                     "Run in your shell"
@@ -526,7 +530,7 @@ export function AgentConnectTabs({
           <Snippet
             title={
               <>
-                Add to <ConfigPath path={"~/.codex/config.toml"} />
+                {t("addTo")} <ConfigPath path={"~/.codex/config.toml"} />
               </>
             }
             lines={[
@@ -550,7 +554,7 @@ export function AgentConnectTabs({
             // placeholder since NetBird injects the real key server-side.
             title={
               <>
-                Add to <ConfigPath path={"~/.kimi/config.toml"} />
+                {t("addTo")} <ConfigPath path={"~/.kimi/config.toml"} />
               </>
             }
             lines={[

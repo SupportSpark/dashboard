@@ -5,6 +5,7 @@ import { cn } from "@utils/helpers";
 import { Boxes, ShieldCheckIcon } from "lucide-react";
 import * as React from "react";
 import { AgentGuardrail } from "@/modules/agent-network/data/mockData";
+import { useTranslations } from "next-intl";
 
 type Props = {
   guardrail: AgentGuardrail;
@@ -17,6 +18,7 @@ export default function AgentGuardrailChecksCell({
   disableHover = false,
   className,
 }: Readonly<Props>) {
+  const t = useTranslations("agentNetwork");
   const c = guardrail.checks;
   return (
     <div className={"flex"}>
@@ -49,7 +51,7 @@ export default function AgentGuardrailChecksCell({
           {c.prompt_capture.enabled && (
             <FullTooltip
               content={
-                <div className={"text-xs"}>Prompt capture · PII redaction</div>
+                <div className={"text-xs"}>{t("promptCapturePiiRedaction")}</div>
               }
             >
               <div

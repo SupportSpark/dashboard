@@ -28,6 +28,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useSWRConfig } from "swr";
 import { useApiCall } from "@/utils/api";
 import { cn, validator } from "@utils/helpers";
+import { useTranslations } from "next-intl";
 import { GRPC_API_ORIGIN, isNetBirdCloud } from "@/utils/netbird";
 import { SelectDropdown } from "@components/select/SelectDropdown";
 import {
@@ -98,6 +99,9 @@ const renderHighlightedCommand = (command: string, highlights: string[]) => {
 
 export const ClustersModal = ({ open, onOpenChange, onFinish }: Props) => {
   const { mutate } = useSWRConfig();
+  const t = useTranslations("reverseProxy");
+  const tCommon = useTranslations("common");
+  const tDns = useTranslations("dns");
   const [tab, setTab] = useState("domain");
   const [domain, setDomain] = useState("");
   const [token, setToken] = useState("");
@@ -117,10 +121,10 @@ export const ClustersModal = ({ open, onOpenChange, onFinish }: Props) => {
       preventLeadingAndTrailingDots: true,
     });
     if (!isValid) {
-      return "Please enter a valid TLD domain, e.g., company.com";
+      return t("invalidTldDomain");
     }
     return "";
-  }, [domain]);
+  }, [domain, t]);
 
   // Same convention as the add-peer modals: prefer the configured gRPC
   // endpoint so self-hosted and stage deployments point at their own
@@ -229,35 +233,37 @@ spec:
       port: 443
       targetPort: 443`;
 
+  // Product and provider names (Docker, Kubernetes, Hetzner Cloud, ...) stay in
+  // English in both locales; only the step titles are translated.
   const deployment = {
     docker: {
       label: "Docker",
-      title: "Run with Docker",
+      title: t("runWithDocker"),
       command: dockerCommand,
     },
     compose: {
       label: "Docker Compose",
-      title: "Run with Docker Compose",
+      title: t("runWithDockerCompose"),
       command: composeCommand,
     },
     kubernetes: {
       label: "Kubernetes",
-      title: "Deploy on Kubernetes",
+      title: t("deployOnKubernetes"),
       command: kubernetesCommand,
     },
     hetzner: {
       label: "Hetzner Cloud",
-      title: "Deploy on Hetzner Cloud",
+      title: t("deployOnHetzner"),
       command: "",
     },
     digitalocean: {
       label: "DigitalOcean",
-      title: "Deploy on DigitalOcean",
+      title: t("deployOnDigitalOcean"),
       command: "",
     },
     aws: {
       label: "AWS CloudFormation",
-      title: "Deploy on AWS",
+      title: t("deployOnAws"),
       command: "",
     },
   }[deployMethod];
@@ -281,14 +287,14 @@ spec:
 
   const deployDescription =
     deployMethod === "digitalocean"
-      ? "Launch a droplet to run the proxy."
+      ? t("deployDescDigitalOcean")
       : deployMethod === "aws"
-      ? "Launch a dedicated AWS server to run the proxy."
+      ? t("deployDescAws")
       : isCloudDeploy
-      ? "Launch a cloud server to run the proxy."
+      ? t("deployDescCloud")
       : deployMethod === "kubernetes"
-      ? "Apply this manifest to start the proxy."
-      : "Run on your machine to start the proxy.";
+      ? t("deployDescKubernetes")
+      : t("deployDescLocal");
 
   const generateToken = useCallback(async () => {
     setIsGeneratingToken(true);
@@ -305,15 +311,15 @@ spec:
       });
 
     notify({
-      title: "Proxy Token",
-      description: "Failed to generate proxy token",
+      title: t("proxyTokenTitle"),
+      description: t("proxyTokenFailed"),
       promise,
-      loadingMessage: "Generating proxy token...",
+      loadingMessage: t("proxyTokenGenerating"),
       showOnlyError: true,
       preventSuccessToast: true,
     });
     return promise;
-  }, [domain, tokenRequest]);
+  }, [domain, tokenRequest, t]);
 
   const goToInstall = useCallback(() => {
     setTab("install");
@@ -331,8 +337,8 @@ spec:
       <ModalContent maxWidthClass={"relative max-w-[600px]"} showClose={true}>
         <ModalHeader
           icon={<ServerIcon size={16} />}
-          title={"Setup Cluster"}
-          description={"Setup a proxy cluster on infra you own"}
+          title={t("setupClusterTitle")}
+          description={t("setupClusterDescription")}
           color={"netbird"}
         />
 
@@ -343,7 +349,7 @@ spec:
           <TabsList justify={"start"} className={"px-8"}>
             <TabsTrigger value={"domain"}>
               <GlobeIcon size={14} />
-              Domain
+              {t("domain")}
             </TabsTrigger>
             {!isCloudDeploy && (
               <TabsTrigger
@@ -351,7 +357,7 @@ spec:
                 disabled={!domain.trim() || !!domainError}
               >
                 <ListIcon size={14} />
-                DNS Records
+                {tDns("dnsRecords")}
               </TabsTrigger>
             )}
             <TabsTrigger
@@ -359,20 +365,18 @@ spec:
               disabled={!domain.trim() || !!domainError}
             >
               <SquareTerminalIcon size={14} />
-              {isCloudDeploy ? "Deploy" : "Run the Proxy"}
+              {isCloudDeploy ? t("tabDeploy") : t("tabRunProxy")}
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value={"domain"} className={"pb-8"}>
             <div className={"px-8 flex flex-col gap-6"}>
               <div>
-                <Label>Domain</Label>
-                <HelpText>
-                  Enter a domain name that will be used for your cluster.
-                </HelpText>
+                <Label>{t("domain")}</Label>
+                <HelpText>{t("clusterDomainHelp")}</HelpText>
                 <Input
                   autoFocus={true}
-                  placeholder={"e.g., proxy.company.com"}
+                  placeholder={t("clusterDomainPlaceholder")}
                   value={domain}
                   error={domainError}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -381,7 +385,7 @@ spec:
                 />
               </div>
               <div>
-                <Label>Deployment Method</Label>
+                <Label>{t("deploymentMethod")}</Label>
                 <HelpText>{deployDescription}</HelpText>
                 <SelectDropdown
                   value={deployMethod}
@@ -418,23 +422,22 @@ spec:
               </div>
               {!isCloudDeploy && (
                 <Callout variant={"info"}>
-                  In order to run the proxy, please make sure your machine meets
-                  the following requirements:
+                  {t("proxyRequirements")}
                   <ul className={"list-disc pl-4 mt-2 flex flex-col gap-1"}>
                     <li>
                       <span className={"text-white font-medium"}>
-                        Publicly accessible IP address
+                        {t("reqPublicIp")}
                       </span>
                     </li>
                     <li>
                       <span className={"text-white font-medium"}>Docker</span>{" "}
-                      installed and running
+                      {t("reqDockerInstalled")}
                     </li>
                     <li>
                       <span className={"text-white font-medium"}>
-                        Port 80 and 443
+                        {t("reqPortsOpen")}
                       </span>{" "}
-                      open and not in use
+                      {t("reqPortsAvailable")}
                     </li>
                   </ul>
                 </Callout>
@@ -445,17 +448,16 @@ spec:
           <TabsContent value={"dns"} className={"pb-8"}>
             <div className={"px-8 flex flex-col"}>
               <div>
-                <Label>Configure DNS</Label>
-                <HelpText>
-                  Add the following DNS records pointing to your machine&apos;s
-                  public IP address.
-                </HelpText>
+                <Label>{t("configureDns")}</Label>
+                <HelpText>{t("configureDnsHelp")}</HelpText>
               </div>
               <CardTable>
                 <CardTable.Header>
-                  <CardTable.HeaderCell width={100}>Type</CardTable.HeaderCell>
-                  <CardTable.HeaderCell>Name</CardTable.HeaderCell>
-                  <CardTable.HeaderCell>Content</CardTable.HeaderCell>
+                  <CardTable.HeaderCell width={100}>
+                    {tCommon("type")}
+                  </CardTable.HeaderCell>
+                  <CardTable.HeaderCell>{tCommon("name")}</CardTable.HeaderCell>
+                  <CardTable.HeaderCell>{t("contentColumn")}</CardTable.HeaderCell>
                 </CardTable.Header>
                 <CardTable.Body>
                   <CardTable.Row>
@@ -464,7 +466,7 @@ spec:
                       {domain}
                     </CardTable.Cell>
                     <CardTable.Cell className={"italic"}>
-                      Your machine&apos;s IP
+                      {t("yourMachineIp")}
                     </CardTable.Cell>
                   </CardTable.Row>
                   <CardTable.Row>
@@ -490,15 +492,13 @@ spec:
 
               {!isNetBirdCloud() && (
                 <Callout variant={"warning"}>
-                  For self-hosted deployments, make sure the proxy service
-                  routes are configured on your NetBird management server before
-                  starting the proxy.&nbsp;
+                  {t("selfHostedRoutingNotice")}&nbsp;
                   <InlineLink
                     href={REVERSE_PROXY_SELFHOSTED_ROUTING_DOCS_LINK}
                     target={"_blank"}
                     className={"block mt-1"}
                   >
-                    Required routing endpoints
+                    {t("requiredRoutingEndpoints")}
                     <ExternalLinkIcon size={12} />
                   </InlineLink>
                 </Callout>
@@ -527,7 +527,7 @@ spec:
                     {isGeneratingToken && (
                       <div className="absolute inset-0 z-10 flex items-center justify-center gap-2 text-nb-gray-100 bg-nb-gray-950/90">
                         <Loader2 size={16} className="animate-spin" />
-                        Generating proxy token...
+                        {t("proxyTokenGenerating")}
                       </div>
                     )}
 
@@ -539,14 +539,17 @@ spec:
                   </Code>
 
                   <HelpText className={"mb-0"}>
-                    Need to fine-tune the proxy? See all available&nbsp;
-                    <InlineLink
-                      href={REVERSE_PROXY_ENV_REFERENCE_DOCS_LINK}
-                      target={"_blank"}
-                    >
-                      environment variables
-                      <ExternalLinkIcon size={12} />
-                    </InlineLink>
+                    {t.rich("proxyEnvVarsHelp", {
+                      link: (chunks) => (
+                        <InlineLink
+                          href={REVERSE_PROXY_ENV_REFERENCE_DOCS_LINK}
+                          target={"_blank"}
+                        >
+                          {chunks}
+                          <ExternalLinkIcon size={12} />
+                        </InlineLink>
+                      ),
+                    })}
                   </HelpText>
                 </>
               )}
@@ -557,12 +560,12 @@ spec:
         <ModalFooter className={"items-center"}>
           <div className={"w-full"}>
             <Paragraph className={"text-sm mt-auto"}>
-              Learn more about
+              {tCommon("learnMoreAbout")}
               <InlineLink
                 href={REVERSE_PROXY_CLUSTERS_DOCS_LINK}
                 target={"_blank"}
               >
-                Proxy Cluster
+                {t("proxyClusterLabel")}
                 <ExternalLinkIcon size={12} />
               </InlineLink>
             </Paragraph>
@@ -571,24 +574,24 @@ spec:
             {tab === "domain" && (
               <>
                 <ModalClose asChild={true}>
-                  <Button variant={"secondary"}>Cancel</Button>
+                  <Button variant={"secondary"}>{tCommon("cancel")}</Button>
                 </ModalClose>
                 <Button
                   variant={"primary"}
                   onClick={() => (isCloudDeploy ? goToInstall() : setTab("dns"))}
                   disabled={!domain.trim() || !!domainError}
                 >
-                  Continue
+                  {tCommon("continue")}
                 </Button>
               </>
             )}
             {tab === "dns" && (
               <>
                 <Button variant={"secondary"} onClick={() => setTab("domain")}>
-                  Back
+                  {tCommon("back")}
                 </Button>
                 <Button variant={"primary"} onClick={goToInstall}>
-                  Continue
+                  {tCommon("continue")}
                 </Button>
               </>
             )}
@@ -598,14 +601,14 @@ spec:
                   variant={"secondary"}
                   onClick={() => setTab(isCloudDeploy ? "domain" : "dns")}
                 >
-                  Back
+                  {tCommon("back")}
                 </Button>
                 <Button
                   variant={"primary"}
                   onClick={finishSetup}
                   disabled={isCloudDeploy && !proxyRegistered}
                 >
-                  Finish Setup
+                  {t("finishSetupBtn")}
                 </Button>
               </>
             )}

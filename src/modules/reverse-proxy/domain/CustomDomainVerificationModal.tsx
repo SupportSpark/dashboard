@@ -23,6 +23,7 @@ import {
 import Paragraph from "@components/Paragraph";
 import InlineLink from "@components/InlineLink";
 import { isNetBirdCloud } from "@/utils/netbird";
+import { useTranslations } from "next-intl";
 
 type Props = {
   open: boolean;
@@ -39,6 +40,8 @@ export const CustomDomainVerificationModal = ({
   onStartVerification,
   targetCluster,
 }: Props) => {
+  const t = useTranslations("reverseProxy");
+  const tCommon = useTranslations("common");
   const { domains } = useReverseProxies();
 
   const handleStartVerification = () => {
@@ -59,22 +62,21 @@ export const CustomDomainVerificationModal = ({
         <GradientFadedBackground />
         <ModalHeader
           icon={<GlobeIcon size={20} />}
-          title={"Verify Domain"}
+          title={t("verifyDomain")}
           description={domain.domain}
           color={"netbird"}
         />
         <div className={"px-8 flex flex-col gap-0 pb-6"}>
           <Steps className={"pt-0 stepper-bg-variant"}>
             <Steps.Step step={1}>
-              <p className={"font-normal"}>
-                Sign in to your domain name provider (e.g. cloudflare.com or
-                godaddy.com)
-              </p>
+              <p className={"font-normal"}>{t("verifyDomainStep1")}</p>
             </Steps.Step>
             <Steps.Step step={2} line={false}>
               <p className={"font-normal"}>
-                Add the <Mark>CNAME record</Mark> below to your DNS
-                configuration for <Mark>{domain.domain}</Mark>
+                {t.rich("verifyDomainStep2", {
+                  domain: domain.domain,
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
               </p>
             </Steps.Step>
           </Steps>
@@ -82,32 +84,36 @@ export const CustomDomainVerificationModal = ({
             {!cnameTarget ? (
               isNetBirdCloud() ? (
                 <Callout variant={"warning"}>
-                  No proxy clusters are currently connected. Please try again in
-                  a few minutes. If the issue persists, check{" "}
-                  <InlineLink
-                    href={"https://status.netbird.io/"}
-                    target={"_blank"}
-                  >
-                    NetBird Status
-                  </InlineLink>{" "}
-                  or reach out to{"  "}
-                  <InlineLink href={"mailto:support@netbird.io"}>
-                    support@netbird.io
-                  </InlineLink>
+                  {t.rich("noProxyClustersCloud", {
+                    status: (chunks) => (
+                      <InlineLink
+                        href={"https://status.netbird.io/"}
+                        target={"_blank"}
+                      >
+                        {chunks}
+                      </InlineLink>
+                    ),
+                    support: (chunks) => (
+                      <InlineLink href={"mailto:support@netbird.io"}>
+                        {chunks}
+                      </InlineLink>
+                    ),
+                  })}
                 </Callout>
               ) : (
                 <Callout variant={"warning"}>
-                  No proxy clusters are currently connected. Please ensure at
-                  least one proxy is running to configure DNS verification.{" "}
-                  <br />
-                  Learn more about{" "}
-                  <InlineLink
-                    href={REVERSE_PROXY_CLUSTERS_DOCS_LINK}
-                    target={"_blank"}
-                  >
-                    Proxy Clusters
-                    <ExternalLinkIcon size={12} />
-                  </InlineLink>
+                  {t.rich("noProxyClustersSelfHostedVerification", {
+                    br: () => <br />,
+                    link: (chunks) => (
+                      <InlineLink
+                        href={REVERSE_PROXY_CLUSTERS_DOCS_LINK}
+                        target={"_blank"}
+                      >
+                        {chunks}
+                        <ExternalLinkIcon size={12} />
+                      </InlineLink>
+                    ),
+                  })}
                 </Callout>
               )
             ) : (
@@ -117,13 +123,13 @@ export const CustomDomainVerificationModal = ({
                     <Card.ListItem
                       copy
                       copyText={`*.${domain.domain}`}
-                      label={"CNAME Record"}
+                      label={t("cnameRecordLabel")}
                       value={`*.${domain.domain}`}
                     />
                     <Card.ListItem
                       copy
                       copyText={cnameTarget}
-                      label={"CNAME Content"}
+                      label={t("cnameContentLabel")}
                       value={cnameTarget}
                     />
                   </Card.List>
@@ -131,18 +137,17 @@ export const CustomDomainVerificationModal = ({
 
                 {!targetCluster && freeDomains.length > 1 && (
                   <Callout variant={"info"}>
-                    <span className="font-medium">
-                      Available proxy clusters:
-                    </span>{" "}
-                    {freeDomains.map((d) => d.domain).join(", ")}. Choose the
-                    cluster closest to your users for best performance.
+                    {t.rich("availableProxyClusters", {
+                      clusters: freeDomains.map((d) => d.domain).join(", "),
+                      b: (chunks) => (
+                        <span className="font-medium">{chunks}</span>
+                      ),
+                    })}
                   </Callout>
                 )}
 
                 <Callout variant={"warning"}>
-                  DNS changes may take some time to propagate. If NetBird does
-                  not find the record immediately, please wait up to 24 hours
-                  and try again.
+                  {t("dnsPropagationNotice")}
                 </Callout>
               </>
             )}
@@ -151,12 +156,12 @@ export const CustomDomainVerificationModal = ({
         <ModalFooter className={"items-center"}>
           <div className={"w-full"}>
             <Paragraph className={"text-sm mt-auto"}>
-              Learn more about
+              {tCommon("learnMoreAbout")}
               <InlineLink
                 href={REVERSE_PROXY_DOMAIN_VERIFICATION_LINK}
                 target={"_blank"}
               >
-                Domain Verification
+                {t("domainVerificationLabel")}
                 <ExternalLinkIcon size={12} />
               </InlineLink>
             </Paragraph>
@@ -164,7 +169,7 @@ export const CustomDomainVerificationModal = ({
           <div className={"flex gap-3 w-full justify-end"}>
             <ModalClose asChild={true}>
               <Button variant={"secondary"} data-testid={"verify-domain-later"}>
-                Verify Later
+                {t("verifyLaterBtn")}
               </Button>
             </ModalClose>
 
@@ -173,7 +178,7 @@ export const CustomDomainVerificationModal = ({
               onClick={handleStartVerification}
               disabled={!cnameTarget}
             >
-              Start Verification
+              {t("startVerificationBtn")}
             </Button>
           </div>
         </ModalFooter>

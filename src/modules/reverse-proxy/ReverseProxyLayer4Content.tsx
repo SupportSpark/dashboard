@@ -39,6 +39,7 @@ export default function ReverseProxyLayer4Content({
   initialNetwork,
 }: Readonly<Props>) {
   const t = useTranslations("common");
+  const tr = useTranslations("reverseProxy");
 
   const listenPortRef = useRef<HTMLInputElement>(null);
   const portRef = useRef<HTMLInputElement>(null);
@@ -67,13 +68,13 @@ export default function ReverseProxyLayer4Content({
       <div className={"flex gap-4 items-center"}>
         <div className={"w-full max-w-[180px]"}>
           <Label>
-            Listen Port
+            {tr("listenPortLabel")}
             <HelpTooltip
               className={isListenPortSupported ? "max-w-sm" : "max-w-xs"}
               content={
                 isListenPortSupported
-                  ? "Enter the public listen port this service will be reachable on."
-                  : "The listen port will be automatically assigned after the service is created."
+                  ? tr("listenPortHelp")
+                  : tr("listenPortAutoHelp")
               }
             />
           </Label>
@@ -83,7 +84,7 @@ export default function ReverseProxyLayer4Content({
               type="number"
               min={1}
               max={65535}
-              placeholder={!isListenPortSupported ? "Auto" : "443"}
+              placeholder={!isListenPortSupported ? tr("autoLabel") : "443"}
               value={!isListenPortSupported ? "" : listenPort || ""}
               onChange={(e) => setListenPort(parseInt(e.target.value) || 0)}
               disabled={!isListenPortSupported || !l4Target}
@@ -96,7 +97,7 @@ aria-label={t("publicListenPort")}
         <div className={"w-full flex"}>
           <div className={"w-full"}>
             <Label>
-              Host / IP
+              {tr("hostIpLabel")}
               <CidrHelpText target={l4Target} />
             </Label>
             <div className="flex w-full mt-2 relative">
@@ -108,12 +109,8 @@ aria-label={t("publicListenPort")}
           </div>
           <div>
             <Label>
-              Port
-              <HelpTooltip
-                content={
-                  "Enter the port where your service (e.g., webserver, app, API) is currently listening."
-                }
-              />
+              {tr("portLabel")}
+              <HelpTooltip content={tr("portHelpShort")} />
             </Label>
             <div className={"mt-2 min-w-[120px]"}>
               <Input

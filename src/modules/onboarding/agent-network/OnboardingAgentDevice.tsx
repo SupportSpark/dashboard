@@ -1,4 +1,5 @@
 import Button from "@components/Button";
+import { useTranslations } from "next-intl";
 import { DeviceCard } from "@components/DeviceCard";
 import { Modal, ModalContent } from "@components/modal/Modal";
 import { ArrowRightIcon, CheckCircle2Icon, DownloadIcon } from "lucide-react";
@@ -21,7 +22,9 @@ type Props = {
 // Network" step: agent-network endpoints are reachable only over the
 // NetBird overlay, so the operator's device must run the client and be
 // authenticated before anything else works.
-export const OnboardingAgentDevice = ({ onBack, onNext, device }: Props) => {
+export const OnboardingAgentDevice = ({
+onBack, onNext, device }: Props) => {
+  const tonb = useTranslations("onboarding");
   const [open, setOpen] = useState(false);
 
   // Close the install modal automatically once the device shows up so the
@@ -33,7 +36,7 @@ export const OnboardingAgentDevice = ({ onBack, onNext, device }: Props) => {
   return (
     <div className={"relative flex flex-col h-full gap-4"}>
       <div>
-        <h1 className={"text-xl text-center"}>Connect your device</h1>
+        <h1 className={"text-xl text-center"}>{tonb("connectYourDevice")}</h1>
         <div
           className={
             "text-sm text-nb-gray-300 font-light mt-2 block text-center sm:px-4"

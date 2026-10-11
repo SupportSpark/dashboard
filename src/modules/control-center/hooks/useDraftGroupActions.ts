@@ -31,6 +31,7 @@ import {
   patchGroupInPolicies,
   sameGroupMatcher,
 } from "@/modules/control-center/utils/policy-group-sync";
+import { useTranslations } from "next-intl";
 
 export const GROUP_NODE_TYPES = new Set([
   "groupNode",
@@ -139,6 +140,7 @@ const collectGroupStrip = (
 
 // Every action here touches only the canvas and the changeset; the API runs on deploy.
 export function useDraftGroupActions() {
+  const tCommon = useTranslations("common");
   const reactFlow = useReactFlow();
   const { setNodes, setEdges, setSelectedDestinationGroup } = useCanvasState();
   const { groups, policies } = useControlCenterData();
@@ -968,8 +970,8 @@ export function useDraftGroupActions() {
               }.`
             : ""
         }`,
-        confirmText: "Delete",
-        cancelText: "Cancel",
+        confirmText: tCommon("delete"),
+        cancelText: tCommon("cancel"),
         type: "danger",
         dismissOnOutsideClick: true,
       });

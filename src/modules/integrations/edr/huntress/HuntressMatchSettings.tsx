@@ -1,5 +1,6 @@
 import FancyToggleSwitch from "@components/FancyToggleSwitch";
 import { BrickWallShieldIcon, ShieldCheckIcon, ShieldIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import {
   DEFAULT_HUNTRESS_MATCH_ATTRIBUTES,
@@ -15,6 +16,7 @@ export const HuntressMatchSettings = ({
   value: matchAttributes,
   dispatch: dispatchMatchAttributes,
 }: Props) => {
+  const t = useTranslations("integrations");
   return (
     <div className={"mt-6 grid grid-cols-1 gap-6 mb-3"}>
       <FancyToggleSwitch
@@ -44,12 +46,10 @@ export const HuntressMatchSettings = ({
         label={
           <>
             <ShieldIcon size={14} />
-            Managed Microsoft Defender
+            {t("defenderLabel")}
           </>
         }
-        helpText={
-          "Defender is enabled, up-to-date, scanned recently, and no conflicting antivirus detected"
-        }
+        helpText={t("defenderHelp")}
       />
 
       <FancyToggleSwitch
@@ -66,12 +66,10 @@ export const HuntressMatchSettings = ({
         label={
           <>
             <ShieldCheckIcon size={14} />
-            Defender Policy Compliance
+            {t("defenderPolicyLabel")}
           </>
         }
-        helpText={
-          "Defender configuration should match your organization's security policy requirements"
-        }
+        helpText={t("defenderPolicyHelp")}
       />
 
       <FancyToggleSwitch
@@ -88,15 +86,10 @@ export const HuntressMatchSettings = ({
         label={
           <>
             <BrickWallShieldIcon size={14} />
-            Firewall
+            {t("firewall")}
           </>
         }
-        helpText={
-          <span>
-            Device has an active firewall with <br />
-            all required profiles enabled
-          </span>
-        }
+        helpText={t("firewallHelpHuntress")}
       />
     </div>
   );

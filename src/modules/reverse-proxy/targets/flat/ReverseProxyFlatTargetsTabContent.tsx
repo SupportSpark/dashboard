@@ -11,6 +11,7 @@ import {
   ReverseProxyFlatTarget,
 } from "@/interfaces/ReverseProxy";
 import { ReverseProxyFlatTargetsTable } from "@/modules/reverse-proxy/targets/flat/ReverseProxyFlatTargetsTable";
+import { useTranslations } from "next-intl";
 
 type Props = {
   targets: ReverseProxyFlatTarget[];
@@ -24,17 +25,19 @@ export const ReverseProxyFlatTargetsTabContent = ({
   targets,
   isLoading,
   hideResourceColumn,
-  emptyTableTitle = "This network has no services",
-  emptyTableDescription = "Create resources and expose services securely through NetBird's reverse proxy.",
+  emptyTableTitle,
+  emptyTableDescription,
 }: Props) => {
+  const t = useTranslations("reverseProxy");
+  const tCommon = useTranslations("common");
   return (
     <div className={"pb-10 px-8"}>
       <div className={"flex justify-between items-center mb-5"}>
         <div>
           <Paragraph>
-            Expose services securely through NetBird&apos;s reverse proxy.{" "}
+            {t("exposeServicesDesc")}{" "}
             <InlineLink href={REVERSE_PROXY_DOCS_LINK} target={"_blank"}>
-              Learn more
+              {tCommon("learnMore")}
               <ExternalLinkIcon size={12} />
             </InlineLink>
           </Paragraph>
@@ -54,8 +57,10 @@ export const ReverseProxyFlatTargetsTabContent = ({
           targets={targets}
           isLoading={isLoading}
           hideResourceColumn={hideResourceColumn}
-          emptyTableTitle={emptyTableTitle}
-          emptyTableDescription={emptyTableDescription}
+          emptyTableTitle={emptyTableTitle ?? t("networkNoServices")}
+          emptyTableDescription={
+            emptyTableDescription ?? t("networkNoServicesDescription")
+          }
         />
       </Suspense>
     </div>

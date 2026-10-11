@@ -43,6 +43,7 @@ import {
   getPlaceholderPeer,
   isTrackablePolicy,
 } from "@/modules/control-center/utils/helpers";
+import { useTranslations } from "next-intl";
 
 interface PolicyContextType {
   setSelectedPolicy: (id: string) => void;
@@ -86,6 +87,8 @@ export function ControlCenterPolicyProvider({
 }: {
   children: React.ReactNode;
 }) {
+  const t = useTranslations("controlCenter");
+  const tCommon = useTranslations("common");
   const { policies, peers, networkResources, networks, groups } =
     useControlCenterData();
   const { nodes, refreshLiveViewRef } = useCanvasState();
@@ -119,23 +122,22 @@ export function ControlCenterPolicyProvider({
   // Live edits apply to the account immediately, so confirm before the PUT.
   const confirmLivePolicySave = () =>
     confirm({
-      title: "Save policy changes?",
-      description:
-        "You are in live mode. Saving your changes will apply them to your account immediately.",
-      confirmText: "Save",
-      cancelText: "Cancel",
+      title: t("savePolicyChanges"),
+      description: t("liveModeSaveNotice"),
+      confirmText: tCommon("save"),
+      cancelText: tCommon("cancel"),
       type: "warning",
       dismissOnOutsideClick: true,
     });
 
   const confirmLiveAgentSave = () =>
     confirm({
-      title: "Save changes?",
+      title: t("saveChanges"),
       description: isDraft
         ? "Agent Network changes aren't part of the draft. Saving applies them to your account immediately."
-        : "You are in live mode. Saving your changes will apply them to your account immediately.",
-      confirmText: "Save",
-      cancelText: "Cancel",
+        : t("liveModeSaveNotice"),
+      confirmText: tCommon("save"),
+      cancelText: tCommon("cancel"),
       type: "warning",
       dismissOnOutsideClick: true,
     });
@@ -948,14 +950,14 @@ export function ControlCenterPolicyProvider({
       return;
     }
     void confirm({
-      title: "Replace current source group?",
+      title: t("replaceCurrentSourceGroup"),
       description: `Are you sure you want to replace “${groupNameForRef(
         current,
       )}” with “${groupNameForRef(groupRef)}”? “${groupNameForRef(
         current,
       )}” will no longer have access to this policy's providers.`,
-      confirmText: "Replace",
-      cancelText: "Cancel",
+      confirmText: t("replace"),
+      cancelText: tCommon("cancel"),
       type: "warning",
     }).then((ok) => ok && apply());
   };
@@ -1038,7 +1040,7 @@ export function ControlCenterPolicyProvider({
       if (!isCompletePolicy(policy)) {
         trackDeletePolicy({
           policyId: policy.id,
-          name: policy.name ?? "Policy",
+          name: policy.name ?? t("policy"),
         });
         drawPolicyOnCanvas(policy);
         return;

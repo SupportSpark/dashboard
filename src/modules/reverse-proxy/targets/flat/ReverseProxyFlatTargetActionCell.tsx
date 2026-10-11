@@ -18,6 +18,7 @@ import { useState } from "react";
 import { usePermissions } from "@/contexts/PermissionsProvider";
 import { useReverseProxies } from "@/contexts/ReverseProxiesProvider";
 import { isL4Mode, ReverseProxyFlatTarget } from "@/interfaces/ReverseProxy";
+import { useTranslations } from "next-intl";
 
 type Props = {
   target: ReverseProxyFlatTarget;
@@ -26,6 +27,8 @@ type Props = {
 export default function ReverseProxyFlatTargetActionCell({
   target,
 }: Readonly<Props>) {
+  const t = useTranslations("common");
+  const tr = useTranslations("reverseProxy");
   const { permission } = usePermissions();
   const {
     openModal,
@@ -64,7 +67,7 @@ export default function ReverseProxyFlatTargetActionCell({
           >
             <div className={"flex gap-3 items-center pr-8"}>
               <SquarePenIcon size={14} className={"shrink-0"} />
-              Edit Target
+              {tr("editTargetBtn")}
             </div>
           </DropdownMenuItem>
 
@@ -78,7 +81,9 @@ export default function ReverseProxyFlatTargetActionCell({
           >
             <div className={"flex gap-3 items-center"}>
               <PowerIcon size={14} className={"shrink-0"} />
-              {target.enabled ? "Disable" : "Enable"}
+              {target.enabled
+                ? tr("actionDisable")
+                : tr("actionEnable")}
             </div>
           </DropdownMenuItem>
 
@@ -92,7 +97,7 @@ export default function ReverseProxyFlatTargetActionCell({
           >
             <div className={"flex gap-3 items-center pr-6"}>
               <Settings size={14} className={"shrink-0"} />
-              Advanced Settings
+              {tr("advancedSettings")}
             </div>
           </DropdownMenuItem>
 
@@ -108,7 +113,7 @@ export default function ReverseProxyFlatTargetActionCell({
           >
             <div className={"flex gap-3 items-center"}>
               <Trash2 size={14} className={"shrink-0"} />
-              Delete
+              {t("delete")}
             </div>
           </DropdownMenuItem>
         </DropdownMenuContent>

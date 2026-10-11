@@ -1,6 +1,7 @@
 import { ScrollArea, ScrollBar } from "@components/ScrollArea";
 import { cn } from "@utils/helpers";
 import { CheckIcon, CopyIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React from "react";
 import useCopyToClipboard from "@/hooks/useCopyToClipboard";
 
@@ -18,19 +19,22 @@ type Props = {
 export default function Code({
   children,
   codeToCopy,
-  message = "Code has been copied to clipboard",
+  message,
   onClick,
   className,
   showCopyIcon = true,
   dark = false,
   small = false,
 }: Props) {
+  const t = useTranslations("common");
   const [wrapper, copyToClipboard, copied] = useCopyToClipboard(
     codeToCopy ? codeToCopy : undefined,
   );
 
   const handleCopy = () => {
-    copyToClipboard(message).then(() => onClick && onClick());
+    copyToClipboard(message ?? t("codeCopiedToClipboard")).then(
+      () => onClick && onClick(),
+    );
   };
 
   return (

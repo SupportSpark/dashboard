@@ -1,6 +1,7 @@
 import { notify } from "@components/Notification";
 import { SkeletonIntegration } from "@components/skeletons/SkeletonIntegration";
 import useFetchApi, { useApiCall } from "@utils/api";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useState } from "react";
 import { useSWRConfig } from "swr";
@@ -13,6 +14,9 @@ import DatadogSetup from "@/modules/integrations/event-streaming/datadog/Datadog
 import { IntegrationCard } from "@/modules/integrations/IntegrationCard";
 
 export default function Datadog() {
+  const t = useTranslations("integrations");
+  const tCommon = useTranslations("common");
+  const tPeers = useTranslations("peers");
   const { permission } = usePermissions();
   // Event Streaming is a licensed feature; skip the call on open-source.
   const { isLicensed } = useIsLicensed();
@@ -46,22 +50,21 @@ export default function Datadog() {
     if (!dataDogSettings) return setSetupModal(true);
 
     const choice = await confirm({
-      title: `Disconnect Datadog?`,
-      description:
-        "Disconnecting deletes the current configuration. You will need to start the setup process again.",
-      confirmText: "Disconnect",
-      cancelText: "Cancel",
+      title: t("disconnectIntegrationTitle", { name: "Datadog" }),
+      description: t("disconnectConfirmDescription"),
+      confirmText: tPeers("disconnect"),
+      cancelText: tCommon("cancel"),
       type: "warning",
     });
     if (!choice) return;
 
     notify({
-      title: "Datadog Integration",
-      description: `Datadog was successfully disconnected`,
+      title: t("integrationLinkText", { name: "Datadog" }),
+      description: t("integrationWasDisconnected", { name: "Datadog" }),
       promise: integrationRequest.del({}, "/" + dataDogSettings.id).then(() => {
         mutate("/integrations/event-streaming");
       }),
-      loadingMessage: "Disconnecting integration...",
+      loadingMessage: t("disconnectingIntegration"),
     });
   };
 
@@ -71,7 +74,7 @@ export default function Datadog() {
     <>
       <IntegrationCard
         name="Datadog"
-        description="Datadog is a monitoring service for cloud-scale applications."
+        description={t("datadogDescription")}
         url={{
           title: "datadoghq.com",
           href: "https://www.datadoghq.com/",

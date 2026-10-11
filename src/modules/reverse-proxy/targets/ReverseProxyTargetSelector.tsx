@@ -17,6 +17,7 @@ import {
 import { HelpTooltip } from "@components/HelpTooltip";
 import InlineLink, { InlineButtonLink } from "@components/InlineLink";
 import SetupModal from "@/modules/setup-netbird-modal/SetupModal";
+import { useTranslations } from "next-intl";
 
 export type Target = {
   type: ReverseProxyTargetType;
@@ -47,6 +48,8 @@ export default function ReverseProxyTargetSelector({
   serviceCluster,
   onClusterPick,
 }: Readonly<Props>) {
+  const t = useTranslations("reverseProxy");
+  const tCommon = useTranslations("common");
   const { resources, peers, domains } = useReverseProxies();
   const [installModal, setInstallModal] = useState(false);
 
@@ -83,68 +86,71 @@ export default function ReverseProxyTargetSelector({
     <div>
       <Label className={"gap-0 inline"}>
         {initialNetwork ? (
-          "Select Resource"
+          t("selectResourceLabel")
         ) : (
           <>
-            Select{" "}
+            {t("selectTargetPrefix")}{" "}
             <HelpTooltip
               className={"max-w-sm"}
               content={
                 <>
-                  A <span className={"text-white font-medium"}>peer</span> is a
-                  machine (e.g., laptop, server, container) running NetBird.
-                  Select a peer if your service runs directly on it.
+                  {t.rich("peerTooltipPart1", {
+                    name: (chunks) => (
+                      <span className={"text-white font-medium"}>{chunks}</span>
+                    ),
+                  })}
                   <span className={"mt-1 block"}>
-                    If you don&apos;t have a peer yet, you can{" "}
-                    <InlineButtonLink onClick={() => setInstallModal(true)}>
-                      Install NetBird
-                    </InlineButtonLink>
-                    .
+                    {t.rich("peerTooltipPart2", {
+                      install: (chunks) => (
+                        <InlineButtonLink onClick={() => setInstallModal(true)}>
+                          {chunks}
+                        </InlineButtonLink>
+                      ),
+                    })}
                   </span>
                 </>
               }
               interactive={true}
             >
-              Peer
+              {t("peerLabel")}
             </HelpTooltip>
             ,{" "}
             <HelpTooltip
               className={"max-w-sm"}
               content={
                 <>
-                  A <span className={"text-white font-medium"}>resource</span>{" "}
-                  is a destination (IP, subnet, or domain) that can&apos;t run
-                  NetBird directly. Resources are part of a network and are
-                  reached through a routing peer that forwards traffic to them.
+                  {t.rich("resourceTooltipPart1", {
+                    name: (chunks) => (
+                      <span className={"text-white font-medium"}>{chunks}</span>
+                    ),
+                  })}
                   <span className={"mt-1 block"}>
-                    If you don&apos;t have resources yet, go to{" "}
-                    <InlineLink href={"/networks"}>Networks</InlineLink> to
-                    create some.
+                    {t.rich("resourceTooltipPart2", {
+                      networks: (chunks) => (
+                        <InlineLink href={"/networks"}>{chunks}</InlineLink>
+                      ),
+                    })}
                   </span>
                 </>
               }
               interactive={true}
             >
-              Resource
+              {t("resourceLabel")}
             </HelpTooltip>
             {showClusters && (
               <>
-                {" "}or{" "}
+                {" "}
+                {t("targetSeparatorOr")}{" "}
                 <HelpTooltip
                   className={"max-w-sm"}
-                  content={
-                    <>
-                      A <span className={"text-white font-medium"}>
-                        proxy cluster
-                      </span>{" "}
-                      forwards inbound traffic to an upstream the proxy reaches
-                        without WireGuard. Useful for external APIs and services
-                        co-located with the proxy.
-                    </>
-                  }
+                  content={t.rich("proxyClusterTooltip", {
+                    name: (chunks) => (
+                      <span className={"text-white font-medium"}>{chunks}</span>
+                    ),
+                  })}
                   interactive={true}
                 >
-                  Proxy Cluster
+                  {t("proxyClusterLabel")}
                 </HelpTooltip>
               </>
             )}
@@ -152,19 +158,17 @@ export default function ReverseProxyTargetSelector({
         )}
       </Label>
       <HelpText>
-        {initialNetwork
-          ? "Select the resource from your network you want to expose."
-          : "Choose where the proxy should forward incoming requests."}
+        {initialNetwork ? t("selectResourceHelp") : t("chooseTargetHelp")}
       </HelpText>
       <PeerGroupSelector
         values={[]}
         onChange={() => {}}
         placeholder={
           initialNetwork
-            ? "Select a resource..."
+            ? t("selectResourcePlaceholder")
             : showClusters
-            ? "Select a peer, resource, or proxy cluster..."
-            : "Select a peer or resource..."
+            ? t("selectPeerResourceClusterPlaceholder")
+            : t("selectPeerResourcePlaceholder")
         }
         showPeers={!initialNetwork}
         showResources={true}

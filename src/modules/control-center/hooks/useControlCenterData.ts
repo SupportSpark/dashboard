@@ -9,8 +9,10 @@ import { Network, NetworkResource } from "@/interfaces/Network";
 import { Peer } from "@/interfaces/Peer";
 import { Policy } from "@/interfaces/Policy";
 import { User } from "@/interfaces/User";
+import { useTranslations } from "next-intl";
 
 export function useControlCenterData() {
+  const t = useTranslations("controlCenter");
   const { data: policies, isLoading: isPoliciesLoading } =
     useFetchApi<Policy[]>("/policies");
   const { data: peers, isLoading: isPeersLoading } =
@@ -54,7 +56,7 @@ export function useControlCenterData() {
     );
     allNetworks.unshift({
       value: "",
-      label: "All Networks",
+      label: t("allNetworks"),
       icon: () => React.createElement(LayoutGridIcon, { size: 14 }),
     } as SelectOption);
     return allNetworks;

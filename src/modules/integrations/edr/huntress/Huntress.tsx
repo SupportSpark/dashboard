@@ -5,6 +5,7 @@ import { useApiCall } from "@utils/api";
 import dayjs from "dayjs";
 import { isEmpty } from "lodash";
 import { HistoryIcon, Settings } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useEffect, useMemo, useState } from "react";
 import { useSWRConfig } from "swr";
@@ -30,6 +31,8 @@ export const HUNTRESS_NETBIRD_DOCUMENTATION_URL =
   "https://docs.netbird.io/how-to/huntress-edr";
 
 export const Huntress = ({ account }: Props) => {
+  const t = useTranslations("integrations");
+  const tCommon = useTranslations("common");
   const { mutate } = useSWRConfig();
   const [setupModal, setSetupModal] = useState(false);
   const { permission } = usePermissions();
@@ -56,10 +59,10 @@ export const Huntress = ({ account }: Props) => {
 
     const choice = isCurrentlyEnabled
       ? await confirm({
-          title: `Disable Huntress?`,
-          description: `Are you sure you want to disable the Huntress integration?`,
-          confirmText: "Disable",
-          cancelText: "Cancel",
+          title: t("disableIntegrationTitle", { name: "Huntress" }),
+          description: t("disableIntegrationDescription", { name: "Huntress" }),
+          confirmText: tCommon("disable"),
+          cancelText: tCommon("cancel"),
           type: "warning",
         })
       : true;
@@ -71,10 +74,11 @@ export const Huntress = ({ account }: Props) => {
       ) || [];
 
     notify({
-      title: "Huntress Integration",
-      description: `Huntress was successfully ${
-        isCurrentlyEnabled ? "disabled" : "enabled"
-      }`,
+      title: t("integrationLinkText", { name: "Huntress" }),
+      description: t("integrationWasEnabledOrDisabled", {
+        name: "Huntress",
+        status: isCurrentlyEnabled ? t("disableAction") : t("enableAction"),
+      }),
       promise: integrationRequest
         .put({
           ...integration,
@@ -84,7 +88,7 @@ export const Huntress = ({ account }: Props) => {
         .then(() => {
           mutate("/integrations/edr/huntress");
         }),
-      loadingMessage: "Updating integration...",
+      loadingMessage: t("updatingIntegration"),
     });
   };
 
@@ -94,7 +98,7 @@ export const Huntress = ({ account }: Props) => {
     <>
       <IntegrationCard
         name={"Huntress"}
-        description="EDR with comprehensive, enterprise-grade protection, continuously backed by 24/7 AI-assisted SOC."
+        description={t("huntressDescription")}
         url={{
           title: "huntress.com",
           href: "https://huntress.com/",
@@ -127,12 +131,13 @@ type ConfigurationProps = {
 };
 
 const ConfigurationButton = ({ config }: ConfigurationProps) => {
+  const t = useTranslations("integrations");
   const [configModal, setConfigModal] = useState(false);
 
   const lastSync = useMemo(() => {
-    if (isEmpty(config?.last_synced_at)) return "Not synchronized";
-    return "Synced " + dayjs().to(config?.last_synced_at);
-  }, [config]);
+    if (isEmpty(config?.last_synced_at)) return t("notSynchronized");
+    return t("syncedRelative", { time: dayjs().to(config?.last_synced_at) });
+  }, [config, t]);
 
   return (
     <>
@@ -155,7 +160,7 @@ const ConfigurationButton = ({ config }: ConfigurationProps) => {
           }}
         >
           <Settings size={14} />
-          Settings
+          {t("settings")}
         </Button>
       </div>
       <HuntressConfiguration

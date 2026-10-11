@@ -28,6 +28,7 @@ import {
   SelectDropdown,
   SelectOption,
 } from "@components/select/SelectDropdown";
+import { useTranslations } from "next-intl";
 
 type Props = {
   open: boolean;
@@ -40,6 +41,8 @@ export const CustomDomainModal = ({
   onOpenChange,
   onDomainSubmit,
 }: Props) => {
+  const t = useTranslations("reverseProxy");
+  const tCommon = useTranslations("common");
   const { domains } = useReverseProxies();
   const [domain, setDomain] = useState("");
   const [selectedCluster, setSelectedCluster] = useState("");
@@ -64,10 +67,10 @@ export const CustomDomainModal = ({
       preventLeadingAndTrailingDots: true,
     });
     if (!isValid) {
-      return "Please enter a valid TLD domain, e.g., company.com";
+      return t("invalidTldDomain");
     }
     return "";
-  }, [domain]);
+  }, [domain, t]);
 
   const isValidDomain = !error && domain.length > 0;
   const canSubmit = isValidDomain && selectedCluster;
@@ -91,8 +94,8 @@ export const CustomDomainModal = ({
       <ModalContent maxWidthClass={"relative max-w-lg"} showClose={true}>
         <ModalHeader
           icon={<GlobeIcon size={20} />}
-          title={"Add Custom Domain"}
-          description={"You will need to verify the domain with DNS records"}
+          title={t("addCustomDomainTitle")}
+          description={t("addCustomDomainDescription")}
           color={"netbird"}
         />
 
@@ -102,37 +105,42 @@ export const CustomDomainModal = ({
           {availableClusters.length === 0 ? (
             isNetBirdCloud() ? (
               <Callout variant={"warning"}>
-                No proxy clusters are currently connected. Please try again in a
-                few minutes. If the issue persists, check{" "}
-                <InlineLink
-                  href={"https://status.netbird.io/"}
-                  target={"_blank"}
-                >
-                  NetBird Status
-                </InlineLink>{" "}
-                or reach out to{"  "}
-                <InlineLink href={"mailto:support@netbird.io"}>
-                  support@netbird.io
-                </InlineLink>
+                {t.rich("noProxyClustersCloud", {
+                  status: (chunks) => (
+                    <InlineLink
+                      href={"https://status.netbird.io/"}
+                      target={"_blank"}
+                    >
+                      {chunks}
+                    </InlineLink>
+                  ),
+                  support: (chunks) => (
+                    <InlineLink href={"mailto:support@netbird.io"}>
+                      {chunks}
+                    </InlineLink>
+                  ),
+                })}
               </Callout>
             ) : (
               <Callout variant="warning">
-                No proxy clusters are currently connected. Please ensure at
-                least one proxy is running before adding a domain. <br /> Learn
-                more about{" "}
-                <InlineLink
-                  href={REVERSE_PROXY_CLUSTERS_DOCS_LINK}
-                  target={"_blank"}
-                >
-                  Proxy Clusters
-                  <ExternalLinkIcon size={12} />
-                </InlineLink>
+                {t.rich("noProxyClustersSelfHostedDomain", {
+                  br: () => <br />,
+                  link: (chunks) => (
+                    <InlineLink
+                      href={REVERSE_PROXY_CLUSTERS_DOCS_LINK}
+                      target={"_blank"}
+                    >
+                      {chunks}
+                      <ExternalLinkIcon size={12} />
+                    </InlineLink>
+                  ),
+                })}
               </Callout>
             )
           ) : (
             <>
               <div>
-                <Label>Domain</Label>
+                <Label>{t("domain")}</Label>
                 <Input
                   autoFocus
                   value={domain}
@@ -142,23 +150,21 @@ export const CustomDomainModal = ({
                       addDomain();
                     }
                   }}
-                  placeholder="e.g., company.com"
+                  placeholder={t("companyDomainPlaceholder")}
                   error={error || undefined}
                   data-testid={"custom-domain-input"}
                 />
               </div>
 
               <div data-testid={"custom-domain-cluster-selector"}>
-                <Label>Target Proxy Cluster</Label>
-                <HelpText>
-                  Select the cluster your CNAME record should point to
-                </HelpText>
+                <Label>{t("targetProxyCluster")}</Label>
+                <HelpText>{t("targetProxyClusterHelp")}</HelpText>
                 <SelectDropdown
                   showSearch={false}
                   value={selectedCluster}
                   onChange={setSelectedCluster}
                   options={availableClusterOptions}
-                  placeholder={"Select a proxy cluster..."}
+                  placeholder={t("selectProxyClusterPlaceholder")}
                 />
               </div>
             </>
@@ -167,19 +173,19 @@ export const CustomDomainModal = ({
         <ModalFooter className={"items-center"}>
           <div className={"w-full"}>
             <Paragraph className={"text-sm mt-auto"}>
-              Learn more about
+              {tCommon("learnMoreAbout")}
               <InlineLink
                 href={REVERSE_PROXY_CUSTOM_DOMAINS_DOCS_LINK}
                 target={"_blank"}
               >
-                Custom Domains
+                {t("customDomains")}
                 <ExternalLinkIcon size={12} />
               </InlineLink>
             </Paragraph>
           </div>
           <div className={"flex gap-3 w-full justify-end"}>
             <ModalClose asChild={true}>
-              <Button variant={"secondary"}>Cancel</Button>
+              <Button variant={"secondary"}>{tCommon("cancel")}</Button>
             </ModalClose>
 
             <Button
@@ -188,7 +194,7 @@ export const CustomDomainModal = ({
               disabled={!canSubmit}
               data-testid={"submit-custom-domain"}
             >
-              Add Domain
+              {t("addDomainBtn")}
             </Button>
           </div>
         </ModalFooter>

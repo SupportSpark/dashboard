@@ -32,6 +32,7 @@ import {
   Shield,
   ShieldCheckIcon,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React, { useReducer, useState } from "react";
 import { useSWRConfig } from "swr";
 import integrationImage from "@/assets/integrations/huntress.png";
@@ -82,6 +83,8 @@ type ModalProps = {
 };
 
 export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
+  const t = useTranslations("integrations");
+  const tCommon = useTranslations("common");
   const { mutate } = useSWRConfig();
   const huntressRequest = useApiCall<HuntressIntegration>(
     "/integrations/edr/huntress",
@@ -127,8 +130,8 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
     const savedGroups = await saveGroups();
 
     notify({
-      title: "Huntress Integration",
-      description: `Huntress was successfully connected to NetBird.`,
+      title: t("integrationLinkText", { name: "Huntress" }),
+      description: t("integrationWasConnectedToNetBird", { name: "Huntress" }),
       promise: huntressRequest
         .post({
           api_key: apiKey,
@@ -142,7 +145,7 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
           mutate("/integrations/edr/huntress");
           onSuccess();
         }),
-      loadingMessage: "Setting up integration...",
+      loadingMessage: t("settingUpIntegration"),
     });
   };
 
@@ -184,10 +187,8 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
 
       <IntegrationModalHeader
         image={integrationImage}
-        title={"Connect NetBird with Huntress"}
-        description={
-          "Restrict network access to devices managed by Huntress based on their security posture."
-        }
+        title={t("connectNetBirdWith", { name: "Huntress" })}
+        description={t("huntressSetupDescription")}
       />
 
       {step === 0 && (
@@ -202,21 +203,16 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
             }
           >
             <Shield size={16} />
-            Required Permissions
+            {t("requiredPermissions")}
           </div>
           <p className={"mt-2 !text-nb-gray-300 !leading-[1.5]"}>
-            Ensure that you have an{" "}
-            <span className={"text-nb-gray-100 font-semibold"}>
-              Huntress account
-            </span>{" "}
-            with the following{" "}
-            <span className={"text-nb-gray-100 font-semibold"}>
-              permissions
-            </span>
-            .{" "}
-            {
-              "If you don't have the required permissions, ask your administrator to grant them to you."
-            }
+            {t.rich("huntressPermissionsIntro", {
+              accent: (chunks) => (
+                <span className={"text-nb-gray-100 font-semibold"}>
+                  {chunks}
+                </span>
+              ),
+            })}
           </p>
           <div
             className={
@@ -229,7 +225,7 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
               }
             >
               <PlusCircle size={14} className={"text-sky-500"} />
-              Create API Keys
+              {t("huntressPermissionsLine1")}
             </div>
             <div
               className={
@@ -237,7 +233,7 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
               }
             >
               <Settings2 size={14} className={"text-sky-500"} />
-              Manage API Keys
+              {t("huntressPermissionsLine2")}
             </div>
           </div>
         </div>
@@ -247,41 +243,46 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
         <div className={"px-8 py-3 flex flex-col gap-0 mt-4"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <KeyRound size={18} />
-            Get Huntress API Credentials
+            {t("huntressGetCredentials")}
           </p>
 
           <Steps>
             <Steps.Step step={1}>
               <p>
-                Navigate to your{" "}
-                <InlineLink
-                  className={"inline"}
-                  target={"_blank"}
-                  href={"https://huntress.io/login"}
-                >
-                  Huntress Management Console
-                </InlineLink>{" "}
-                then open the menu at the top right and click{" "}
-                <Mark>API Credentials</Mark>
+                {t.rich("huntressConsoleStep", {
+                  link: (chunks) => (
+                    <InlineLink
+                      className={"inline"}
+                      target={"_blank"}
+                      href={"https://huntress.io/login"}
+                    >
+                      {chunks}
+                    </InlineLink>
+                  ),
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
               </p>
             </Steps.Step>
 
             <Steps.Step step={2}>
               <p>
-                Under User API Credentials click <Mark>+ Add</Mark> then select
-                your user and add
-                <Mark copy={true}>NetBird</Mark> as the description
+                {t.rich("huntressAddCredentialsStep", {
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                  copy: (chunks) => <Mark copy={true}>{chunks}</Mark>,
+                })}
               </p>
             </Steps.Step>
             <Steps.Step step={3} line={false}>
-              <p>Enter your API Credentials</p>
+              <p>{t("enterApiCredentials")}</p>
             </Steps.Step>
           </Steps>
           <div className={"mb-4 flex-col gap-4 flex"}>
             <Input
               type={"text"}
               className={"w-full"}
-              customPrefix={<div className={"min-w-[80px]"}>API Key</div>}
+              customPrefix={
+                <div className={"min-w-[80px]"}>{t("apiKeyLabel")}</div>
+              }
               placeholder={"hk_30813a372c41f72f1892"}
               value={apiKey}
               onChange={(e) => setApiKey(e.target.value)}
@@ -289,7 +290,9 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
             <Input
               type={"text"}
               className={"w-full"}
-              customPrefix={<div className={"min-w-[80px]"}>API Secret</div>}
+              customPrefix={
+                <div className={"min-w-[80px]"}>{t("apiSecretLabel")}</div>
+              }
               placeholder={"hs_3b80d8e463aeb037ac211fafb7fc59c1"}
               value={apiSecret}
               onChange={(e) => setApiSecret(e.target.value)}
@@ -302,11 +305,11 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
         <div className={"px-8 py-3 flex flex-col gap-0 mt-4 mb-3"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <FolderGit2 size={16} />
-            Peer Approval
+            {t("peerApproval")}
           </p>
 
           <HelpText className={"max-w-lg mt-2"}>
-            Select groups you want to apply the Huntress integration to
+            {t("selectGroupsHelp", { name: "Huntress" })}
           </HelpText>
 
           <PeerGroupSelector values={groups} onChange={setGroups} />
@@ -317,16 +320,16 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
         <div className={"px-8 py-3 flex flex-col gap-0 mt-4 mb-3"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <ShieldCheckIcon size={16} />
-            Compliance Requirements
+            {t("complianceRequirements")}
           </p>
           <p className={"mt-2 !text-nb-gray-300 !leading-[1.5]"}>
-            Set the specific requirements that devices must meet to be
-            considered compliant. Learn more in the{" "}
-            <InlineLink href={HUNTRESS_DOCUMENTATION_URL} target={"_blank"}>
-              Huntress Documentation
-              <ExternalLinkIcon size={12} />
-            </InlineLink>{" "}
-            about the different statuses.
+            {t.rich("huntressComplianceHelp", {
+              link: (chunks) => (
+                <InlineLink href={HUNTRESS_DOCUMENTATION_URL} target={"_blank"}>
+                  {chunks}
+                </InlineLink>
+              ),
+            })}
           </p>
 
           <HuntressMatchSettings
@@ -340,23 +343,19 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
         <div className={"px-8 py-3 flex flex-col gap-0 mt-4 mb-3"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <RefreshCcw size={16} />
-            Huntress Sync Window
+            {t("syncWindowName", { name: "Huntress" })}
           </p>
           <div className={"mt-2 flex flex-row gap-3"}>
             <FullTooltip
               interactive={false}
               content={
                 <div className={"max-w-xs text-xs"}>
-                  Example: This property is set to 24 hours. Jane&apos;s laptop
-                  hasn&apos;t synced with Huntress for 27 hours. Even though
-                  it&apos;s marked as Compliant in Huntress, it will still be
-                  blocked from network access.
+                  {t("syncWindowExample", { name: "Huntress" })}
                 </div>
               }
             >
               <HelpText className={"max-w-lg"}>
-                Devices not synced with Huntress in this time won&apos;t have
-                network access.
+                {t("syncWindowHelp", { name: "Huntress" })}
                 <IconInfoCircle
                   size={14}
                   className={"relative inline ml-1 -top-[1px]"}
@@ -371,7 +370,7 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
               value={lastSyncedInterval}
               type={"number"}
               onChange={(e) => setLastSyncedInterval(e.target.value)}
-              customSuffix={"Hours"}
+              customSuffix={t("hoursSuffix")}
             />
           </div>
         </div>
@@ -385,7 +384,7 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
             onClick={() => setStep(step - 1)}
           >
             <IconArrowLeft size={16} />
-            Back
+            {tCommon("back")}
           </Button>
         )}
         {step >= 0 && step < maxSteps && (
@@ -395,7 +394,7 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
             disabled={isDisabled}
             onClick={() => setStep(step + 1)}
           >
-            {step === 0 ? "Get Started" : "Continue"}
+            {step === 0 ? t("getStarted") : tCommon("continue")}
             <IconArrowRight size={16} />
           </Button>
         )}
@@ -407,7 +406,7 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
             onClick={connect}
           >
             <Repeat size={16} />
-            Connect
+            {t("connect")}
           </Button>
         )}
       </ModalFooter>
@@ -419,8 +418,11 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
         >
           <Clock4 size={12} />
           <div>
-            Estimated setup time:
-            <span className={"font-medium"}> 10-20 Minutes</span>
+            {t("estimatedSetupTime")}
+            <span className={"font-medium"}>
+              {" "}
+              {t("setupDuration", { duration: "10-20" })}
+            </span>
           </div>
         </div>
       )}

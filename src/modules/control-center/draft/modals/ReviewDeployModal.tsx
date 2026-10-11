@@ -36,6 +36,7 @@ import { useDeployChangeset } from "@/modules/control-center/hooks/useDeployChan
 import { useRemoveChange } from "@/modules/control-center/hooks/useRemoveChange";
 import { LiveData } from "@/modules/control-center/utils/changeset-request";
 import { getPlaceholderSetupKey } from "@/modules/control-center/utils/helpers";
+import { useTranslations } from "next-intl";
 
 type Props = {
   open: boolean;
@@ -48,6 +49,8 @@ export const ReviewDeployModal = ({
   onOpenChange,
   onDeployed,
 }: Props) => {
+  const t = useTranslations("controlCenter");
+  const tCommon = useTranslations("common");
   const { changes, clearChanges } = useDraftChangeset();
   const { removeWithCascade, previewRemove } = useRemoveChange();
   const { deploy, isDeploying, deployStatus } = useDeployChangeset();
@@ -175,7 +178,7 @@ export const ReviewDeployModal = ({
     // retry.
     if (!ok) return;
     notify({
-      title: "Deploy complete",
+      title: t("deployComplete"),
       description:
         deployableCount > 0
           ? `Your ${deployableCount} change${
@@ -204,7 +207,7 @@ export const ReviewDeployModal = ({
           icon={
             <GitPullRequestArrowIcon size={18} className={"text-netbird"} />
           }
-          title={"Review & Deploy"}
+          title={t("reviewAndDeploy")}
           description={description}
           color={"netbird"}
         />
@@ -248,14 +251,14 @@ export const ReviewDeployModal = ({
         <ModalFooter className={"items-center"}>
           <div className={"w-full"}>
             <Paragraph className={"text-sm mt-auto"}>
-              Learn more about
+              {tCommon("learnMoreAbout")}
               <InlineLink
                 // TODO: point at the Control Center / Review & Deploy docs
                 // page once it exists.
                 href={"https://docs.netbird.io/"}
                 target={"_blank"}
               >
-                Review & Deploy
+                {t("reviewAndDeploy")}
                 <ExternalLinkIcon size={12} />
               </InlineLink>
             </Paragraph>
@@ -263,7 +266,7 @@ export const ReviewDeployModal = ({
           <div className={"flex gap-3 w-full justify-end"}>
             <ModalClose asChild={true}>
               <Button variant={"secondary"} disabled={isDeploying}>
-                Cancel
+                {tCommon("cancel")}
               </Button>
             </ModalClose>
             {/* A disabled button emits no hover, so the wrapper div FullTooltip
@@ -293,7 +296,7 @@ export const ReviewDeployModal = ({
                   )}
                 >
                   <ListTodoIcon size={16} />
-                  Approve & Deploy
+                  {t("approveAndDeploy")}
                 </span>
                 {isDeploying && (
                   <span

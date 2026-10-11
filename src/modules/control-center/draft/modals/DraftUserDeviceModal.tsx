@@ -21,6 +21,7 @@ import { useDraftMode } from "@/modules/control-center/draft/DraftModeContext";
 import { usePlaceholderUpgrade } from "@/modules/control-center/hooks/useDraftPeerUpgrade";
 import { useStructuralNodes } from "@/modules/control-center/utils/helpers";
 import { PeerOperatingSystemIcon } from "@/modules/peers/PeerOperatingSystemIcon";
+import { useTranslations } from "next-intl";
 
 export const DraftUserDeviceModal = () => {
   const { userDeviceModal, setUserDeviceModal } = useDraftMode();
@@ -49,6 +50,10 @@ const StepperContent = ({
   name: string;
   onClose: () => void;
 }) => {
+  const t = useTranslations("controlCenter");
+  const tCommon = useTranslations("common");
+  const tGroups = useTranslations("groups");
+  const tPeers = useTranslations("peers");
   const { setInstallModal } = useDraftMode();
   const { data: peers } = useFetchApi<Peer[]>("/peers");
   const nodes = useStructuralNodes();
@@ -109,13 +114,13 @@ const StepperContent = ({
                 }
               >
                 <DownloadIcon size={14} />
-                Install NetBird
+                {t("installNetBird")}
               </Button>
             </div>
           </Steps.Step>
           <Steps.Step step={2} line={false}>
             <p className={"text-sm font-normal"}>
-              Assign the peer this device registered as
+              {t("assignRegisteredDevice")}
             </p>
             <SelectDropdown
               variant={"secondary"}
@@ -123,8 +128,8 @@ const StepperContent = ({
               onChange={setSelected}
               options={options}
               showSearch={true}
-              searchPlaceholder={"Search peers..."}
-              placeholder={"Select a peer..."}
+              searchPlaceholder={tGroups("searchPeer")}
+              placeholder={tPeers("selectPeer")}
               maxHeight={280}
             />
           </Steps.Step>
@@ -135,7 +140,7 @@ const StepperContent = ({
       <ModalFooter className={"items-center"} separator={false}>
         <div className={"flex gap-3 w-full justify-end"}>
           <ModalClose asChild={true}>
-            <Button variant={"secondary"}>Cancel</Button>
+            <Button variant={"secondary"}>{tCommon("cancel")}</Button>
           </ModalClose>
           <Button
             variant={"primary"}
@@ -143,7 +148,7 @@ const StepperContent = ({
             onClick={apply}
             data-testid={"cc-user-device-select"}
           >
-            Assign
+            {t("assign")}
           </Button>
         </div>
       </ModalFooter>

@@ -6,7 +6,7 @@ import HelpText from "@components/HelpText";
 import { Input } from "@components/Input";
 import { Label } from "@components/Label";
 import { SegmentedTabs } from "@components/SegmentedTabs";
-import { SelectDropdown } from "@components/select/SelectDropdown";
+import { SelectDropdown, SelectOption } from "@components/select/SelectDropdown";
 import { cn } from "@utils/helpers";
 import {
   BriefcaseIcon,
@@ -21,6 +21,7 @@ import {
   Waypoints,
 } from "lucide-react";
 import React, { useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { useLoggedInUser } from "@/contexts/UsersProvider";
 import { HubspotFormField } from "@/contexts/AnalyticsProvider";
 
@@ -52,63 +53,41 @@ export const companySizes = [
   },
 ];
 
-export const referralSourceOptions = [
-  {
-    label: "Search Engines (Google, Bing etc.)",
-    value: "Search Engines (Google, Bing etc.)",
-  },
-  {
-    label: "Coworker or Friend",
-    value: "Coworker or Friend",
-  },
-  {
-    label: "Trade Show or Event",
-    value: "Trade Show or Event",
-  },
-  {
-    label: "Blogs",
-    value: "Blogs",
-  },
-  {
-    label: "Comparison Sites",
-    value: "Comparison Sites",
-  },
-  {
-    label: "Slack",
-    value: "Slack",
-  },
-  {
-    label: "Other",
-    value: "Other",
-  },
-  {
-    label: "NetBird YouTube Channel",
-    value: "NetBird YouTube Channel",
-  },
-  {
-    label: "Other YouTube Channel",
-    value: "Other YouTube Channel",
-  },
-  {
-    label: "NetBird SubReddit",
-    value: "NetBird SubReddit",
-  },
-  {
-    label: "Other Reddit Thread",
-    value: "Other Reddit Thread",
-  },
-  {
-    label: "GitHub",
-    value: "GitHub",
-  },
+// Referral-source options for the signup survey. The LABEL is localized; the
+// VALUE stays the English short name because it is sent to HubSpot as the
+// `how_did_you_hear_about_us` field.
+const referralSourceValues: { key: string; value: string }[] = [
+  { key: "searchEngines", value: "Search Engines (Google, Bing etc.)" },
+  { key: "coworkerOrFriend", value: "Coworker or Friend" },
+  { key: "tradeShowOrEvent", value: "Trade Show or Event" },
+  { key: "blogs", value: "Blogs" },
+  { key: "comparisonSites", value: "Comparison Sites" },
+  { key: "slack", value: "Slack" },
+  { key: "other", value: "Other" },
+  { key: "netbirdYoutubeChannel", value: "NetBird YouTube Channel" },
+  { key: "otherYoutubeChannel", value: "Other YouTube Channel" },
+  { key: "netbirdSubreddit", value: "NetBird SubReddit" },
+  { key: "otherRedditThread", value: "Other Reddit Thread" },
+  { key: "github", value: "GitHub" },
 ];
 
+/** Build the referral-source options; `t` is bound to the `onboarding` namespace. */
+export function getReferralSourceOptions(
+  t: (key: string) => string,
+): SelectOption[] {
+  return referralSourceValues.map((option) => ({
+    label: t(option.key),
+    value: option.value,
+  }));
+}
+
 export const OnboardingSurvey = ({ domainCategory, onSubmit }: Props) => {
+  const t = useTranslations("onboarding");
   const { oidcUser: user } = useOidcUser();
   const name = user?.given_name || user?.name || user?.preferred_username;
   const welcomeMessage = name
-    ? `Welcome to NetBird, ${name}!`
-    : "Welcome to NetBird!";
+    ? t("surveyWelcomeNamed", { name })
+    : t("surveyWelcome");
 
   const isPrivate = domainCategory === "private";
   const [personalOrBusiness, setPersonalOrBusiness] = useState(
@@ -217,8 +196,8 @@ export const OnboardingSurvey = ({ domainCategory, onSubmit }: Props) => {
   ]);
 
   const randomizedOptions = useMemo(() => {
-    return referralSourceOptions.sort(() => Math.random() - 0.5);
-  }, []);
+    return getReferralSourceOptions(t).sort(() => Math.random() - 0.5);
+  }, [t]);
 
   const submitForm = () => {
     let fields: HubspotFormField[] = [];
@@ -291,8 +270,7 @@ export const OnboardingSurvey = ({ domainCategory, onSubmit }: Props) => {
             "text-sm text-nb-gray-300 font-light mt-2 block text-center max-w-md px-10"
           }
         >
-          Share a few details about your use case to help us get you started
-          smoothly.
+          {t("surveyIntro")}
         </div>
         <div className={"flex flex-col mt-8 z-0 gap-8"}>
           <SegmentedTabs
@@ -302,11 +280,11 @@ export const OnboardingSurvey = ({ domainCategory, onSubmit }: Props) => {
             <SegmentedTabs.List className={"rounded-lg border"}>
               <SegmentedTabs.Trigger value={"business"}>
                 <BriefcaseIcon size={16} />
-                Business
+                {t("business")}
               </SegmentedTabs.Trigger>
               <SegmentedTabs.Trigger value={"personal"}>
                 <UserIcon size={16} />
-                Personal
+                {t("personal")}
               </SegmentedTabs.Trigger>
             </SegmentedTabs.List>
           </SegmentedTabs>
@@ -315,7 +293,7 @@ export const OnboardingSurvey = ({ domainCategory, onSubmit }: Props) => {
             <div className={"flex w-full flex-col gap-2"}>
               <div>
                 <Label>
-                  How many people in your company will use NetBird?
+                  {t("companySizeQuestion")}
                   <RequiredAsterisk />
                 </Label>
               </div>
@@ -340,7 +318,7 @@ export const OnboardingSurvey = ({ domainCategory, onSubmit }: Props) => {
 
           <div className={"flex w-full flex-col gap-2"}>
             <Label>
-              How did you hear about NetBird?
+              {t("referralQuestion")}
               <RequiredAsterisk />
             </Label>
             <SelectDropdown
@@ -348,7 +326,7 @@ export const OnboardingSurvey = ({ domainCategory, onSubmit }: Props) => {
               onChange={setReferralSource}
               options={randomizedOptions}
               showValues={false}
-              placeholder={"Please select an option..."}
+              placeholder={t("selectAnOptionPlaceholder")}
               variant={"dropdown"}
             />
           </div>
@@ -356,12 +334,10 @@ export const OnboardingSurvey = ({ domainCategory, onSubmit }: Props) => {
           <div className={"flex w-full flex-col gap-2"}>
             <div>
               <Label>
-                How do you plan to use NetBird?
+                {t("useCaseQuestion")}
                 <RequiredAsterisk />
               </Label>
-              <HelpText className={"mt-1.5"}>
-                You can also select multiple use cases.
-              </HelpText>
+              <HelpText className={"mt-1.5"}>{t("useCaseHelp")}</HelpText>
             </div>
 
             <div className={"flex flex-col gap-3"}>
@@ -369,61 +345,61 @@ export const OnboardingSurvey = ({ domainCategory, onSubmit }: Props) => {
                 <>
                   <OnboardingCheckbox value={zeroTrust} setValue={setZeroTrust}>
                     <ShieldCheck size={16} />
-                    Zero Trust Security
+                    {t("useCaseZeroTrust")}
                   </OnboardingCheckbox>
                   <OnboardingCheckbox
                     value={remoteAccess}
                     setValue={setRemoteAccess}
                   >
                     <Laptop size={16} />
-                    Employee Remote Access
+                    {t("useCaseEmployeeRemoteAccess")}
                   </OnboardingCheckbox>
                   <OnboardingCheckbox
                     value={businessVPN}
                     setValue={setBusinessVPN}
                   >
                     <BriefcaseIcon size={16} />
-                    Business VPN
+                    {t("useCaseBusinessVpn")}
                   </OnboardingCheckbox>
                   <OnboardingCheckbox
                     value={siteToSite}
                     setValue={setSiteToSite}
                   >
                     <Layers size={16} />
-                    Site-to-Site Connectivity
+                    {t("useCaseSiteToSite")}
                   </OnboardingCheckbox>
                   <OnboardingCheckbox value={ioT} setValue={setIoT}>
                     <Waypoints size={16} />
-                    IoT (Internet of Things)
+                    {t("useCaseIot")}
                   </OnboardingCheckbox>
                   <OnboardingCheckbox value={msp} setValue={setMsp}>
                     <Server size={15} />
-                    MSP (Managed Service Provider)
+                    {t("useCaseMsp")}
                   </OnboardingCheckbox>
                 </>
               ) : (
                 <>
                   <OnboardingCheckbox value={homelab} setValue={setHomelab}>
                     <HomeIcon size={16} />
-                    Homelab Automation
+                    {t("useCaseHomelab")}
                   </OnboardingCheckbox>
                   <OnboardingCheckbox
                     value={homeRemoteAccess}
                     setValue={setHomeRemoteAccess}
                   >
                     <Laptop size={16} />
-                    Home Remote Access
+                    {t("useCaseHomeRemoteAccess")}
                   </OnboardingCheckbox>
                   <OnboardingCheckbox
                     value={fileAccess}
                     setValue={setFileAccess}
                   >
                     <FolderIcon size={16} />
-                    File Access
+                    {t("useCaseFileAccess")}
                   </OnboardingCheckbox>
                   <OnboardingCheckbox value={gaming} setValue={setGaming}>
                     <Gamepad2 size={16} />
-                    Gaming
+                    {t("useCaseGaming")}
                   </OnboardingCheckbox>
                 </>
               )}
@@ -445,7 +421,7 @@ export const OnboardingSurvey = ({ domainCategory, onSubmit }: Props) => {
                     "flex items-center gap-1.5 whitespace-nowrap text-sm select-none"
                   }
                 >
-                  Other (Please specify)
+                  {t("otherPleaseSpecify")}
                 </div>
               </label>
             </div>
@@ -461,8 +437,8 @@ export const OnboardingSurvey = ({ domainCategory, onSubmit }: Props) => {
                 ref={inputRef}
                 placeholder={
                   isBusiness
-                    ? "e.g. DNS Management, File Access"
-                    : "e.g. DNS Management, IoT"
+                    ? t("otherUseCaseBusinessPlaceholder")
+                    : t("otherUseCasePersonalPlaceholder")
                 }
                 value={otherUseCase}
                 onChange={(e) => setOtherUseCase(e.target.value)}
@@ -478,7 +454,7 @@ export const OnboardingSurvey = ({ domainCategory, onSubmit }: Props) => {
         onClick={submitForm}
         disabled={!canSubmit}
       >
-        Continue
+        {t("continue")}
       </Button>
     </>
   );

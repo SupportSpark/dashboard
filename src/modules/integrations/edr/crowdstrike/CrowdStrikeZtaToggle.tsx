@@ -1,6 +1,7 @@
 import FancyToggleSwitch from "@components/FancyToggleSwitch";
 import InlineLink from "@components/InlineLink";
 import { ExternalLinkIcon, GaugeIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 
 type Props = {
@@ -8,6 +9,7 @@ type Props = {
   onChange: (value: boolean) => void;
 };
 export const CrowdStrikeZtaToggle = ({ value, onChange }: Props) => {
+  const t = useTranslations("integrations");
   return (
     <FancyToggleSwitch
       value={value}
@@ -15,28 +17,25 @@ export const CrowdStrikeZtaToggle = ({ value, onChange }: Props) => {
       label={
         <>
           <GaugeIcon size={15} />
-          Use Zero Trust Assessment Score
+          {t("ztaToggleLabel")}
         </>
       }
-      helpText={
-        <div>
-          The{" "}
+      helpText={t.rich("ztaToggleHelp", {
+        link: (chunks) => (
           <InlineLink
             href={
               "https://www.crowdstrike.com/resources/white-papers/falcon-zero-trust-risk-score/"
             }
             target={"_blank"}
           >
-            ZTA score
+            {chunks}
             <ExternalLinkIcon
               size={12}
               className={"shrink-0 relative -top-[1px] mr-[1px]"}
             />
-          </InlineLink>{" "}
-          is a parameter that allows you to set the minimum ZTA score for the
-          peer to be approved
-        </div>
-      }
+          </InlineLink>
+        ),
+      })}
     />
   );
 };

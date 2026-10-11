@@ -46,6 +46,7 @@ import {
   PolicyLimits,
   PolicyTokenLimit,
 } from "@/modules/agent-network/data/mockData";
+import { useTranslations } from "next-intl";
 
 type LimitKind = "token" | "budget";
 
@@ -58,6 +59,7 @@ export default function AgentPolicyLimitsTab({
   limits,
   setLimits,
 }: Readonly<Props>) {
+  const t = useTranslations("agentNetwork");
   const [editKind, setEditKind] = useState<LimitKind | null>(null);
 
   const tokenAttached = limits.tokenLimit.enabled;
@@ -94,7 +96,7 @@ export default function AgentPolicyLimitsTab({
           <div className={"flex justify-between gap-10 mb-5 items-end"}>
             <div>
               <Label>
-                {attachedCount} {attachedCount === 1 ? "Limit" : "Limits"}
+                {attachedCount} {attachedCount === 1 ? "Limit" : t("limits")}
               </Label>
               <HelpText className={"mb-0"}>
                 Token and budget caps applied directly to this policy.
@@ -108,7 +110,7 @@ export default function AgentPolicyLimitsTab({
                 onClick={() => setEditKind("token")}
               >
                 <PlusCircle size={14} />
-                Add Token Limit
+                {t("addTokenLimit")}
               </Button>
               <Button
                 variant={"primary"}
@@ -117,7 +119,7 @@ export default function AgentPolicyLimitsTab({
                 onClick={() => setEditKind("budget")}
               >
                 <PlusCircle size={14} />
-                Add Budget Limit
+                {t("addBudgetLimit")}
               </Button>
             </div>
           </div>
@@ -166,8 +168,9 @@ function LimitRow({
   onEdit: () => void;
   onDetach: () => void;
 }) {
+  const t = useTranslations("agentNetwork");
   const isToken = kind === "token";
-  const title = isToken ? "Token Limit" : "Budget Limit";
+  const title = isToken ? t("tokenLimit") : t("budgetLimit");
   const groupCap = isToken
     ? (limit as PolicyTokenLimit).groupCap
     : (limit as PolicyBudgetLimit).groupCapUsd;
@@ -219,13 +222,13 @@ function LimitRow({
           <DropdownMenuItem onClick={onEdit}>
             <div className={"flex gap-3 items-center"}>
               <Edit size={14} className={"shrink-0"} />
-              Edit Limit
+              {t("editLimit")}
             </div>
           </DropdownMenuItem>
           <DropdownMenuItem onClick={onDetach}>
             <div className={"flex gap-3 items-center"}>
               <MinusCircleIcon size={14} className={"shrink-0"} />
-              Detach
+              {t("detach")}
             </div>
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -241,6 +244,7 @@ function NoLimitsInfo({
   onAddToken: () => void;
   onAddBudget: () => void;
 }) {
+  const t = useTranslations("agentNetwork");
   return (
     <div>
       <div
@@ -258,11 +262,11 @@ function NoLimitsInfo({
       <div className={"flex items-center justify-center gap-4 mt-5"}>
         <Button variant={"primary"} size={"xs"} onClick={onAddToken}>
           <IconCirclePlus size={14} />
-          Add Token Limit
+          {t("addTokenLimit")}
         </Button>
         <Button variant={"primary"} size={"xs"} onClick={onAddBudget}>
           <IconCirclePlus size={14} />
-          Add Budget Limit
+          {t("addBudgetLimit")}
         </Button>
       </div>
     </div>
@@ -306,6 +310,9 @@ function LimitEditModal({
   onSave: (next: PolicyLimits) => void;
   onClose: () => void;
 }) {
+  const t = useTranslations("agentNetwork");
+  const tCommon = useTranslations("common");
+  const tSettings = useTranslations("settings");
   const isToken = kind === "token";
   const initial = isToken ? limits.tokenLimit : limits.budgetLimit;
   // Track inputs as strings so the user can clear the field; an empty
@@ -384,7 +391,7 @@ function LimitEditModal({
       <ModalContent maxWidthClass={"max-w-xl"} showClose={true}>
         <ModalHeader
           icon={isToken ? <Gauge size={19} /> : <Wallet size={19} />}
-          title={isToken ? "Token Limit" : "Budget Limit"}
+          title={isToken ? t("tokenLimit") : t("budgetLimit")}
           description={
             isToken
               ? "Cap tokens per group and per user over a rolling window."
@@ -397,7 +404,7 @@ function LimitEditModal({
           <div className={"grid grid-cols-2 gap-4"}>
             <div>
               <Label>
-                Group Cap
+                {t("groupCap")}
                 <HelpTooltip
                   content={
                     <>
@@ -420,7 +427,7 @@ function LimitEditModal({
             </div>
             <div>
               <Label>
-                Individual Cap
+                {t("individualCap")}
                 <HelpTooltip
                   content={
                     <>
@@ -443,7 +450,7 @@ function LimitEditModal({
             </div>
           </div>
           <div>
-            <Label>Reset Window</Label>
+            <Label>{t("resetWindow")}</Label>
             <HelpText>
               How often the cap counters reset. Minimum 1 minute.
             </HelpText>
@@ -462,13 +469,13 @@ function LimitEditModal({
                 <SelectTrigger className={"w-[135px] shrink-0"}>
                   <div className={"flex items-center gap-3"}>
                     <CalendarClock size={15} className={"text-nb-gray-300"} />
-                    <SelectValue placeholder={"Select interval..."} />
+                    <SelectValue placeholder={tSettings("selectInterval")} />
                   </div>
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value={"m"}>Minutes</SelectItem>
-                  <SelectItem value={"h"}>Hours</SelectItem>
-                  <SelectItem value={"d"}>Days</SelectItem>
+                  <SelectItem value={"m"}>{t("minutes")}</SelectItem>
+                  <SelectItem value={"h"}>{t("hours")}</SelectItem>
+                  <SelectItem value={"d"}>{t("days")}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -477,14 +484,14 @@ function LimitEditModal({
         <ModalFooter className={"items-center"}>
           <div className={"flex gap-3 w-full justify-end"}>
             <ModalClose asChild={true}>
-              <Button variant={"secondary"}>Cancel</Button>
+              <Button variant={"secondary"}>{tCommon("cancel")}</Button>
             </ModalClose>
             <Button
               variant={"primary"}
               disabled={!canSave}
               onClick={handleSave}
             >
-              Save
+              {tCommon("save")}
             </Button>
           </div>
         </ModalFooter>

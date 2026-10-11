@@ -120,21 +120,20 @@ function Get-KeyPaths([string]$path) {
 }
 
 if ((Test-Path -LiteralPath $enPath) -and (Test-Path -LiteralPath $zhPath)) {
-  $enKeys = Get-KeyPaths $enPath
-  $zhKeys = Get-KeyPaths $zhPath
-  $missingInZh = @($enKeys | Where-Object { $_ -notin $zhKeys })
-  $extraInZh   = @($zhKeys | Where-Object { $_ -notin $enKeys })
-  Write-Host "         en keys: $($enKeys.Count) / zh keys: $($zhKeys.Count)"
-  if ($missingInZh.Count -eq 0) { Pass "zh.ts covers every en.ts key path" }
-  else {
-    Warn "$($missingInZh.Count) key path(s) in en.ts are absent from zh.ts (tsc will flag these)"
-    $missingInZh | Select-Object -First 25 | ForEach-Object { Write-Host "           - $_" -ForegroundColor Yellow }
-    if ($missingInZh.Count -gt 25) { Write-Host "           ... and $($missingInZh.Count - 25) more" -ForegroundColor Yellow }
-  }
-  if ($extraInZh.Count -eq 0) { Pass "zh.ts has no orphan keys" }
-  else {
-    Warn "$($extraInZh.Count) orphan key path(s) in zh.ts not present in en.ts"
-    $extraInZh | Select-Object -First 15 | ForEach-Object { Write-Host "           + $_" -ForegroundColor Yellow }
+  # The authoritative comparison is tools/check-catalog-parity.mjs: it compiles
+  # both catalogs with TypeScript and walks the resulting objects, which is exact.
+  # The brace-counting heuristic that used to live here mis-nested on ICU strings
+  # and template literals and reported ~4000 phantom mismatches on a catalog that
+  # was in fact perfectly aligned, so it is not used for the verdict.
+  $parityOut = & node tools/check-catalog-parity.mjs . 2>&1
+  $parityCode = $LASTEXITCODE
+  $summary = ($parityOut | Select-String -Pattern 'leaf keys' | Select-Object -First 1).Line
+  if ($summary) { Pass $summary.Trim() }
+  if ($parityCode -eq 0) {
+    Pass "catalog parity OK (verified by TypeScript object walk)"
+  } else {
+    Fail "catalog parity FAILED - see 'node tools/check-catalog-parity.mjs .'"
+    $parityOut | Select-Object -First 20 | ForEach-Object { Write-Host "           $_" -ForegroundColor Red }
   }
 }
 

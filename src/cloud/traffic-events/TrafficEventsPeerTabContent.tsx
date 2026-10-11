@@ -1,5 +1,6 @@
 import Button from "@components/Button";
 import Card from "@components/Card";
+import { useTranslations } from "next-intl";
 import { DatePickerWithRange } from "@components/DatePickerWithRange";
 import Paragraph from "@components/Paragraph";
 import SkeletonTable, {
@@ -317,9 +318,9 @@ const TrafficEventsPeerDetailTable = ({
   defaultDateRange: DateRange;
   totalEvents?: number;
 }) => {
+  const tte = useTranslations("trafficEvents");
   const { mutate } = useSWRConfig();
   const router = useRouter();
-
   const [sorting, setSorting] = useState<SortingState>([
     {
       id: "timestamp",
@@ -351,7 +352,7 @@ const TrafficEventsPeerDetailTable = ({
         return <TrafficEventsDetailRow event={e} className={"ml-[11px]"} />;
       }}
       tableClassName={"mt-0"}
-      columns={TrafficEventsTableColumns}
+      columns={TrafficEventsTableColumns(tte)}
       keepStateInLocalStorage={false}
       data={events}
       globalFilter={searchQuery}

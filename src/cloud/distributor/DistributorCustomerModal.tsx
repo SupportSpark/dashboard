@@ -1,4 +1,5 @@
 import Button from "@components/Button";
+import { useTranslations } from "next-intl";
 import HelpText from "@components/HelpText";
 import InlineLink from "@components/InlineLink";
 import { Input } from "@components/Input";
@@ -73,6 +74,7 @@ const CustomerModalContent = ({
   initialTab,
   onCreated,
 }: Omit<Props, "open">) => {
+  const td = useTranslations("distributor");
   const { mutate } = useSWRConfig();
   const customerRequest = useApiCall<DistributorCustomer>(
     "/integrations/msp/reseller/msps",
@@ -109,9 +111,9 @@ const CustomerModalContent = ({
 
     notify({
       title: `Add ${domain} customer`,
-      description: "The customer account has been created successfully.",
+      description: td("customerCreated"),
       preventSuccessToast: true,
-      loadingMessage: "Creating customer account...",
+      loadingMessage: td("creatingCustomer"),
       promise,
     });
   };
@@ -127,8 +129,8 @@ const CustomerModalContent = ({
 
     notify({
       title: `Update ${customer.name}`,
-      description: "The customer has been updated successfully.",
-      loadingMessage: "Updating customer...",
+      description: td("customerUpdated"),
+      loadingMessage: td("updatingCustomer"),
       promise,
     });
   };
@@ -183,7 +185,7 @@ const CustomerModalContent = ({
           <TabsContent value={"general"} className={"px-8 pb-10"}>
             <div className={"flex flex-col gap-6"}>
               <div>
-                <Label>Company</Label>
+                <Label>{td("company")}</Label>
                 <HelpText>
                   Enter the name of your customers company.
                 </HelpText>
@@ -240,7 +242,7 @@ const CustomerModalContent = ({
           <div className={"px-8 py-6 pb-8"}>
             <div className={"flex flex-col gap-6"}>
               <div>
-                <Label>Company</Label>
+                <Label>{td("company")}</Label>
                 <HelpText>
                   Enter the name of your customers company.
                 </HelpText>

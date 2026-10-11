@@ -23,6 +23,7 @@ import {
   Repeat,
 } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import React, { useState } from "react";
 import { useSWRConfig } from "swr";
 import datadogLogo from "@/assets/integrations/datadog.png";
@@ -61,6 +62,8 @@ type ModalProps = {
 };
 
 export function SetupContent({ onSuccess }: Readonly<ModalProps>) {
+  const t = useTranslations("integrations");
+  const tCommon = useTranslations("common");
   const { mutate } = useSWRConfig();
 
   const integrationRequest = useApiCall<EventStream>(
@@ -97,8 +100,8 @@ export function SetupContent({ onSuccess }: Readonly<ModalProps>) {
 
   const connect = async () => {
     notify({
-      title: "Datadog Integration",
-      description: `Datadog was successfully connected to NetBird.`,
+      title: t("integrationLinkText", { name: "Datadog" }),
+      description: t("integrationWasConnectedToNetBird", { name: "Datadog" }),
       promise: integrationRequest
         .post({
           platform: "datadog",
@@ -112,7 +115,7 @@ export function SetupContent({ onSuccess }: Readonly<ModalProps>) {
           mutate("/integrations/event-streaming");
           onSuccess();
         }),
-      loadingMessage: "Setting up integration...",
+      loadingMessage: t("settingUpIntegration"),
     });
   };
 
@@ -128,28 +131,29 @@ export function SetupContent({ onSuccess }: Readonly<ModalProps>) {
 
       <IntegrationModalHeader
         image={datadogLogo}
-        title={"Connect NetBird with Datadog"}
-        description={
-          "Start streaming your NetBird audit & traffic events to Datadog. Follow the steps below to get started."
-        }
+        title={t("connectNetBirdWith", { name: "Datadog" })}
+        description={t("datadogSetupDescription")}
       />
 
       {step == 1 && (
         <div className={"px-8 py-3 flex flex-col mt-4 z-0"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <GlobeIcon size={16} />
-            Select your Datadog region
+            {t("datadogSelectRegion")}
           </p>
           <p className={"mb-3 mt-2"}>
-            To identify which region you are on please check out the{" "}
-            <InlineLink
-              href={"https://docs.datadoghq.com/getting_started/site/"}
-              target={"_blank"}
-              variant={"default"}
-              className={"inline"}
-            >
-              Datadog Documentation.
-            </InlineLink>
+            {t.rich("datadogRegionHelp", {
+              docs: (chunks) => (
+                <InlineLink
+                  href={"https://docs.datadoghq.com/getting_started/site/"}
+                  target={"_blank"}
+                  variant={"default"}
+                  className={"inline"}
+                >
+                  {chunks}
+                </InlineLink>
+              ),
+            })}
           </p>
           <SelectDropdown
             value={selectedRegion}
@@ -179,31 +183,33 @@ export function SetupContent({ onSuccess }: Readonly<ModalProps>) {
         <div className={"px-8 py-3 flex flex-col gap-0 mt-4 z-0"}>
           <p className={"font-medium flex gap-3 items-center text-base"}>
             <KeyRound size={16} />
-            Get your Datadog API Key
+            {t("datadogGetApiKeyTitle")}
           </p>
           <Steps>
             <Steps.Step step={1}>
-              <p>Navigate to Datadogs API Keys page</p>
+              <p>{t("datadogNavigateApiKeys")}</p>
               <div className={"flex gap-4"}>
                 <Link href={apiPageUrl} passHref target={"_blank"}>
                   <Button variant={"primary"} size={"xs"}>
                     <ExternalLinkIcon size={14} />
-                    API Keys
+                    {t("datadogApiKeysButton")}
                   </Button>
                 </Link>
               </div>
             </Steps.Step>
             <Steps.Step step={2}>
               <p className={"font-normal"}>
-                Click <Mark>+ New Key</Mark>
-                at the top
+                {t.rich("datadogNewKeyStep", {
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
               </p>
             </Steps.Step>
             <Steps.Step step={3}>
               <p className={"font-normal"}>
-                Give it a descriptive name like{" "}
-                <Mark copy>NetBird Activity Events</Mark>
-                and click <Mark>Create Key</Mark>
+                {t.rich("datadogDescribeNameStep", {
+                  copy: (chunks) => <Mark copy>{chunks}</Mark>,
+                  mark: (chunks) => <Mark>{chunks}</Mark>,
+                })}
                 <Tooltip>
                   <TooltipTrigger>
                     <InfoIcon
@@ -215,14 +221,14 @@ export function SetupContent({ onSuccess }: Readonly<ModalProps>) {
                   </TooltipTrigger>
                   <TooltipContent>
                     <p className={"max-w-[200px] text-xs"}>
-                      {`When creating a new Datadog API key, it could take up to 5 minutes for the key to be available for use.`}
+                      {t("datadogApiKeyDelayTooltip")}
                     </p>
                   </TooltipContent>
                 </Tooltip>
               </p>
             </Steps.Step>
             <Steps.Step step={4} line={false}>
-              <p className={"font-normal"}>Enter your API-Key</p>
+              <p className={"font-normal"}>{t("enterApiKey")}</p>
             </Steps.Step>
           </Steps>
           <div className={"mb-4"}>
@@ -250,7 +256,7 @@ export function SetupContent({ onSuccess }: Readonly<ModalProps>) {
             disabled={!apiUrlEntered}
             onClick={() => setStep(2)}
           >
-            Continue
+            {tCommon("continue")}
             <IconArrowRight size={16} />
           </Button>
         )}
@@ -262,7 +268,7 @@ export function SetupContent({ onSuccess }: Readonly<ModalProps>) {
               onClick={() => setStep(1)}
             >
               <IconArrowLeft size={16} />
-              Back
+              {tCommon("back")}
             </Button>
             <Button
               variant={"primary"}
@@ -271,7 +277,7 @@ export function SetupContent({ onSuccess }: Readonly<ModalProps>) {
               onClick={connect}
             >
               <Repeat size={16} />
-              Connect
+              {t("connect")}
             </Button>
           </>
         )}

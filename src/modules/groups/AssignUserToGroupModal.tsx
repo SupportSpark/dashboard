@@ -74,9 +74,11 @@ export const AssignUserToGroupModalContent = ({
 	onSuccess,
 	excludedUsers,
 	showClose = true,
-	buttonText = "Assign Users",
+	buttonText,
 }: ContentProps) => {
 	const t = useTranslations("common");
+	const tassign = useTranslations("common");
+	const resolvedButtonText = buttonText ?? tassign("assignUsers");
 	const { data: users, isLoading } = useFetchApi<User[]>(
 		"/users?service_user=false",
 	);
@@ -157,7 +159,7 @@ export const AssignUserToGroupModalContent = ({
 									onSuccess?.(selectedUsers);
 								}}
 							>
-								{buttonText}
+								{resolvedButtonText}
 							</Button>
 						)}
 					</div>

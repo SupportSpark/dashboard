@@ -39,9 +39,10 @@ export default function Navigation({
 	fullWidth = false,
 	hideOnMobile = false,
 }: Readonly<Props>) {
+	const t = useTranslations("navigation");
 	const { bannerHeight } = useAnnouncement();
 	const { isNavigationCollapsed } = useApplicationContext();
-	const t = useTranslations("navigation");
+
 	const { permission } = usePermissions();
 	// "enabled" already falls back to the caller's agent_network grants when
 	// the feature flag can't be resolved (no accounts read — usage_viewer and
@@ -202,10 +203,10 @@ export default function Navigation({
 									labelClassName={"pr-0"}
 									label={
 										<div className={"flex items-center gap-2"}>
-											Agent Network
+											{t("agentNetwork")}
 											{!agentNetworkOnly && (
 												<SmallBadge
-													text={"Beta"}
+													text={t("beta")}
 													variant={"sky"}
 													className={
 														"text-[8px] leading-none py-[3px] px-[5px]"
@@ -238,7 +239,7 @@ export default function Navigation({
 									}
 								>
 									<SidebarItem
-										label="Connect Agent"
+										label={t("connectAgent")}
 										isChild
 										href={"/agent-network/connect"}
 										exactPathMatch={true}
@@ -253,7 +254,7 @@ export default function Navigation({
 										}
 									/>
 									<SidebarItem
-										label="Providers"
+										label={t("providers")}
 										isChild
 										href={"/agent-network/providers"}
 										exactPathMatch={true}
@@ -273,7 +274,7 @@ export default function Navigation({
 										}
 									/>
 									<SidebarItem
-										label="Usage & Logs"
+										label={t("usageAndLogs")}
 										isChild
 										href={"/agent-network/usage"}
 										exactPathMatch={true}
@@ -287,7 +288,7 @@ export default function Navigation({
 										}
 									/>
 									<SidebarItem
-										label="Configuration"
+										label={t("configuration")}
 										isChild
 										href={"/agent-network/configuration"}
 										exactPathMatch={true}

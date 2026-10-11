@@ -22,6 +22,7 @@ import {
 import { useDraftNodeCreation } from "@/modules/control-center/hooks/useDraftNodeCreation";
 import { NetworkModalContent } from "@/modules/networks/NetworkModal";
 import { SmallBadge } from "@components/ui/SmallBadge";
+import { useTranslations } from "next-intl";
 
 // "No Network" picker for a standalone draft resource: assign it to an existing
 // network (a canvas frame or a real API network) or to a new draft network.
@@ -49,6 +50,9 @@ const PickerContent = ({
   resourceNodeId: string;
   onClose: () => void;
 }) => {
+  const t = useTranslations("controlCenter");
+  const tCommon = useTranslations("common");
+  const tNetworks = useTranslations("networks");
   const reactFlow = useReactFlow();
   const { networks } = useControlCenterData();
   const {
@@ -67,7 +71,7 @@ const PickerContent = ({
     const frames = frameNodes.map((n) => {
       const name =
         (n.data as { network?: { name?: string } })?.network?.name ??
-        "Network";
+        tCommon("network");
       const isNew = n.id.startsWith("network-new-");
       return {
         value: `frame:${n.id}`,
@@ -183,7 +187,7 @@ const PickerContent = ({
             onChange={setSelected}
             options={options}
             showSearch={true}
-            searchPlaceholder={"Search networks..."}
+            searchPlaceholder={tNetworks("searchNetworks")}
             placeholder={"Select or create a network..."}
             maxHeight={190}
             // Pinned below the options so scroll or search can't hide it.
@@ -200,7 +204,7 @@ const PickerContent = ({
                   }}
                 >
                   <PlusCircle size={14} />
-                  Create New Network
+                  {t("createNewNetwork")}
                 </button>
               </div>
             )}
@@ -211,10 +215,10 @@ const PickerContent = ({
         <ModalFooter className={"items-center"} separator={false}>
           <div className={"flex gap-3 w-full justify-end"}>
             <ModalClose asChild={true}>
-              <Button variant={"secondary"}>Cancel</Button>
+              <Button variant={"secondary"}>{tCommon("cancel")}</Button>
             </ModalClose>
             <Button variant={"primary"} disabled={!selected} onClick={save}>
-              Assign Network
+              {t("assignNetwork")}
             </Button>
           </div>
         </ModalFooter>

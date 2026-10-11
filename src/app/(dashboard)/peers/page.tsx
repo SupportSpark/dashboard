@@ -7,6 +7,7 @@ import SkeletonTable from "@components/skeletons/SkeletonTable";
 import FullScreenLoading from "@components/ui/FullScreenLoading";
 import { usePortalElement } from "@hooks/usePortalElement";
 import { ExternalLinkIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { lazy, Suspense, useMemo } from "react";
 import PeerIcon from "@/assets/icons/PeerIcon";
@@ -22,6 +23,8 @@ import { SetupModalContent } from "@/modules/setup-netbird-modal/SetupModal";
 const PeersTable = lazy(() => import("@/modules/peers/PeersTable"));
 
 export default function PeersPage() {
+  const t = useTranslations("peers");
+  const tCommon = useTranslations("common");
   const { isRestricted } = usePermissions();
   const { isLoading: isDistributorRedirecting } = useDistributorRedirect();
   if (isDistributorRedirecting) return <FullScreenLoading />;
@@ -44,6 +47,8 @@ export default function PeersPage() {
 }
 
 function PeersView() {
+  const t = useTranslations("peers");
+  const tCommon = useTranslations("common");
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -93,19 +98,19 @@ function PeersView() {
         <Breadcrumbs>
           <Breadcrumbs.Item
             href={"/peers"}
-            label={"Peers"}
+            label={tCommon("peers")}
             icon={<PeerIcon size={13} />}
             active
           />
         </Breadcrumbs>
-        <h1 ref={headingRef}>Peers</h1>
+        <h1 ref={headingRef}>{tCommon("peers")}</h1>
         <Paragraph>
-            User devices and headless machines, such as servers and autonomous agents, connected to your network.{" "}
+            {t("peersPageDescription")}{" "}
           <InlineLink
             href={"https://docs.netbird.io/how-to/add-machines-to-your-network"}
             target={"_blank"}
           >
-            Learn more
+            {tCommon("learnMore")}
             <ExternalLinkIcon size={12} />
           </InlineLink>
         </Paragraph>
@@ -124,19 +129,18 @@ function PeersView() {
 }
 
 function PeersBlockedView() {
+  const t = useTranslations("peers");
   return (
     <div className={"flex items-center justify-center flex-col"}>
       <div className={"p-default py-6 max-w-3xl text-center"}>
-        <h1>Add new device to your network</h1>
+        <h1>{t("addNewDeviceTitle")}</h1>
         <Paragraph className={"inline"}>
-          To get started, install NetBird and log in using your email account.
-          After that you should be connected. If you have further questions
-          check out our{" "}
+          {t("addNewDeviceDescription")}{" "}
           <InlineLink
             href={"https://docs.netbird.io/how-to/getting-started#installation"}
             target={"_blank"}
           >
-            Installation Guide
+            {t("installationGuide")}
             <ExternalLinkIcon size={12} />
           </InlineLink>
         </Paragraph>

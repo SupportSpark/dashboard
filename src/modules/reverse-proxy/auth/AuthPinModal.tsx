@@ -24,6 +24,7 @@ export default function AuthPinModal({
   onRemove,
 }: Readonly<Props>) {
   const t = useTranslations("common");
+  const tr = useTranslations("reverseProxy");
   const [pin, setPin] = useState(currentPin);
   const [isMasked, setIsMasked] = useState(isEnabled && currentPin === "");
   const isEditing = isEnabled;
@@ -45,8 +46,8 @@ export default function AuthPinModal({
     <Modal open={open} onOpenChange={onOpenChange}>
       <ModalContent maxWidthClass="max-w-md">
         <ModalHeader
-          title="PIN Code"
-          description="Require a numeric PIN code to access this service."
+          title={tr("pinCode")}
+          description={tr("pinCodeDescription")}
         />
 
         <GradientFadedBackground />
@@ -71,7 +72,7 @@ export default function AuthPinModal({
             {isEditing ? (
               <>
                 <Button variant="danger-text" data-testid="remove-pin" onClick={handleRemove}>
-                  Remove
+                  {tr("removeBtn")}
                 </Button>
                 <div className="flex gap-3">
                   <ModalClose asChild>
@@ -82,7 +83,7 @@ export default function AuthPinModal({
                     onClick={handleSave}
                     disabled={pin.length !== 6}
                   >
-                    Save
+                    {t("save")}
                   </Button>
                 </div>
               </>
@@ -99,7 +100,7 @@ export default function AuthPinModal({
                     disabled={pin.length !== 6}
                     data-testid="submit-pin"
                   >
-                    Add PIN
+                    {tr("addPinBtn")}
                   </Button>
                 </div>
               </>

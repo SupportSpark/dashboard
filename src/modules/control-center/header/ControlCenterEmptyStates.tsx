@@ -12,12 +12,15 @@ import { useDraftMode } from "@/modules/control-center/draft/DraftModeContext";
 import { useControlCenterData } from "@/modules/control-center/hooks/useControlCenterData";
 import { useNetworksContext } from "@/modules/networks/NetworkProvider";
 import { useCanvasTransitionActive } from "@/modules/control-center/utils/canvas-transition";
+import { useTranslations } from "next-intl";
 
 // Must stay a literal: Tailwind only emits classes it finds as static text.
 const EMPTY_STATE_REVEAL_IN =
   "animate-in fade-in zoom-in-[.97] duration-[700ms] ease-out fill-mode-both";
 
 export function ControlCenterEmptyStates() {
+  const t = useTranslations("controlCenter");
+  const tCommon = useTranslations("common");
   const { currentView, selectedNetwork, layoutInitialized, instantDrill } =
     useCanvasState();
   const { isDraft } = useDraftMode();
@@ -89,18 +92,18 @@ export function ControlCenterEmptyStates() {
                     disabled={!permission.networks.update}
                   >
                     <PlusCircle size={16} />
-                    Add Resource
+                    {t("addResource")}
                   </Button>
                 </div>
               }
               learnMore={
                 <>
-                  Learn more about
+                  {tCommon("learnMoreAbout")}
                   <InlineLink
                     href={"https://docs.netbird.io/how-to/networks#resources"}
                     target={"_blank"}
                   >
-                    Resources
+                    {tCommon("resources")}
                     <ExternalLinkIcon size={12} />
                   </InlineLink>
                 </>
@@ -128,7 +131,7 @@ export function ControlCenterEmptyStates() {
                   size={"large"}
                 />
               }
-              title={"Create New Network"}
+              title={t("createNewNetwork")}
               description={
                 "It looks like you don't have any networks. Access internal resources in your LANs and VPC by adding a network."
               }
@@ -142,18 +145,18 @@ export function ControlCenterEmptyStates() {
                     disabled={!permission.networks.create}
                   >
                     <PlusCircle size={16} />
-                    Add Network
+                    {t("addNetwork")}
                   </Button>
                 </div>
               }
               learnMore={
                 <>
-                  Learn more about
+                  {tCommon("learnMoreAbout")}
                   <InlineLink
                     href={"https://docs.netbird.io/how-to/networks"}
                     target={"_blank"}
                   >
-                    Networks
+                    {t("networks")}
                     <ExternalLinkIcon size={12} />
                   </InlineLink>
                 </>

@@ -19,19 +19,22 @@ import { Clock, FileText, ScrollText } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import AgentNetworkIcon from "@/assets/icons/AgentNetworkIcon";
 import { useAIProviders } from "@/modules/agent-network/AIProvidersProvider";
+import { useTranslations } from "next-intl";
 
 // Retention options for access-log rows. "0" keeps them indefinitely. Usage
 // records are retained independently and aren't affected by this.
-const RETENTION_OPTIONS = [
-  { value: "7", label: "7 days" },
-  { value: "14", label: "14 days" },
-  { value: "30", label: "30 days" },
-  { value: "60", label: "60 days" },
-  { value: "90", label: "90 days" },
-  { value: "0", label: "Indefinite" },
+const retentionOptions = (t: (key: string) => string) => [
+  { value: "7", label: t("retention7Days") },
+  { value: "14", label: t("retention14Days") },
+  { value: "30", label: t("retention30Days") },
+  { value: "60", label: t("retention60Days") },
+  { value: "90", label: t("retention90Days") },
+  { value: "0", label: t("retentionIndefinite") },
 ];
 
 export default function AgentAccountControlsCard() {
+  const t = useTranslations("agentNetwork");
+  const RETENTION_OPTIONS = retentionOptions(t);
   const { settings, settingsLoading, updateAgentNetworkSettings } =
     useAIProviders();
 
@@ -87,19 +90,19 @@ export default function AgentAccountControlsCard() {
       <Breadcrumbs>
         <Breadcrumbs.Item
           href={"/agent-network/providers"}
-          label={"Agent Network"}
+          label={t("brand")}
           icon={<AgentNetworkIcon size={16} />}
         />
         <Breadcrumbs.Item
           href={"/agent-network/configuration?tab=log-settings"}
-          label={"Log Collection"}
+          label={t("logCollection")}
           icon={<ScrollText size={14} />}
           active
         />
       </Breadcrumbs>
 
       <div className={"flex items-start justify-between"}>
-        <h1>Log Collection</h1>
+        <h1>{t("logCollection")}</h1>
 
         <Button
           variant={"primary"}
@@ -107,7 +110,7 @@ export default function AgentAccountControlsCard() {
           onClick={onSave}
           data-testid={"save-account-controls"}
         >
-          Save Changes
+          {t("submitLimit")}
         </Button>
       </div>
 
@@ -120,11 +123,11 @@ export default function AgentAccountControlsCard() {
             label={
               <>
                 <ScrollText size={15} />
-                Enable Log Collection
+                {t("enableLogCollection")}
               </>
             }
             helpText={
-              <>Persist access log entries for every agent-network request.</>
+              <>{t("persistAccessLogs")}</>
             }
           />
 
@@ -138,7 +141,7 @@ export default function AgentAccountControlsCard() {
           >
             <div className={"flex justify-between gap-10 mt-2"}>
               <div className={"w-full"}>
-                <Label>Retention Period</Label>
+                <Label>{t("retentionPeriod")}</Label>
                 <HelpText className={"mt-1"}>
                   How long access logs are kept before they&apos;re deleted.
                   Usage history is kept separately.
@@ -156,7 +159,7 @@ export default function AgentAccountControlsCard() {
                   >
                     <div className={"flex items-center gap-3"}>
                       <Clock size={15} className={"text-nb-gray-300"} />
-                      <SelectValue placeholder={"Select retention..."} />
+                      <SelectValue placeholder={t("selectRetention")} />
                     </div>
                   </SelectTrigger>
                   <SelectContent>
@@ -179,15 +182,10 @@ export default function AgentAccountControlsCard() {
           label={
             <>
               <FileText size={15} />
-              Enable Prompt Collection
+              {t("enablePromptCollection")}
             </>
           }
-          helpText={
-            <>
-              Capture prompt and completion bodies. A policy guardrail must also
-              be enabled.
-            </>
-          }
+          helpText={<>{t("capturePromptHelp")}</>}
         />
       </div>
     </div>

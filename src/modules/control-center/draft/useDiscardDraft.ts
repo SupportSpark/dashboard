@@ -5,9 +5,12 @@ import { useDraftChangeset } from "@/modules/control-center/draft/DraftChangeset
 import { useControlCenterUI } from "@/modules/control-center/contexts/ControlCenterContext";
 import { FlowView } from "@/modules/control-center/header/FlowSelector";
 import { usePlaceholderArtifacts } from "@/modules/control-center/hooks/usePlaceholderArtifacts";
+import { useTranslations } from "next-intl";
 
 // Leaving draft destroys the changeset; a deploy exits via exitAfterDeploy.
 export function useDiscardDraft() {
+  const t = useTranslations("controlCenter");
+  const tCommon = useTranslations("common");
   const { setIsDraft } = useDraftMode();
   const { changeCount, clearChanges } = useDraftChangeset();
   const { onViewChange } = useControlCenterUI();
@@ -37,12 +40,12 @@ export function useDiscardDraft() {
   const discardAndExit = useCallback(async () => {
     if (changeCount > 0) {
       const choice = await confirm({
-        title: "Discard draft changes?",
+        title: t("discardDraftChanges"),
         description: `You have ${changeCount} pending change${
           changeCount !== 1 ? "s" : ""
         } that will be lost. This cannot be undone.`,
-        confirmText: "Discard",
-        cancelText: "Cancel",
+        confirmText: t("discard"),
+        cancelText: tCommon("cancel"),
         type: "danger",
         dismissOnOutsideClick: true,
       });

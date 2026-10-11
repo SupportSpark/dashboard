@@ -203,7 +203,7 @@ export function SetupKeyModalContent({
 		notify({
 			title: "Create Setup Key",
 			description:
-				"Setup key created successfully. You can now enroll peers with your new key.",
+				t("setupKeyCreatedDescriptionText"),
 			promise: saveGroups().then(async (groups) => {
 				return setupKeyRequest
 					.post({
@@ -222,7 +222,7 @@ export function SetupKeyModalContent({
 						mutate("/groups");
 					});
 			}),
-			loadingMessage: "Creating your setup key...",
+			loadingMessage: t("creatingYourSetupKey"),
 		});
 	};
 

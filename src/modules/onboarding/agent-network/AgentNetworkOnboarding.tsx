@@ -1,4 +1,5 @@
 import InlineLink from "@components/InlineLink";
+import { useTranslations } from "next-intl";
 import { Modal, ModalPortal } from "@components/modal/Modal";
 import { NetBirdLogo } from "@components/NetBirdLogo";
 import { GradientFadedBackground } from "@components/ui/GradientFadedBackground";
@@ -62,6 +63,7 @@ type Props = {
 };
 
 export const AgentNetworkOnboarding = ({
+
   initialStep,
   onStepChange,
   gatewayStep,
@@ -71,6 +73,7 @@ export const AgentNetworkOnboarding = ({
   onSkip,
   onFinish,
 }: Props) => {
+  const tonb = useTranslations("onboarding");
   const steps = agentSteps(gatewayStep, existingAccount);
   const policyStep = steps.includes(AGENT_STEP.POLICY);
   const firstStep = stepAfterSignup(steps);
@@ -136,7 +139,7 @@ export const AgentNetworkOnboarding = ({
         >
           <div data-testid={"agent-network-onboarding"}>
             <VisuallyHidden asChild>
-              <DialogTitle>Agent Network Onboarding</DialogTitle>
+              <DialogTitle>{tonb("agentNetworkTitle")}</DialogTitle>
             </VisuallyHidden>
             <div
               className={

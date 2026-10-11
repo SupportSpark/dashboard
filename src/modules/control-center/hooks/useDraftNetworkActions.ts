@@ -23,6 +23,7 @@ import {
   NETWORK_FRAME_WIDTH,
   withResourceLiveBaseline,
 } from "@/modules/control-center/utils/helpers";
+import { useTranslations } from "next-intl";
 
 export const getNetworkRef = (node?: Node): DraftNetworkRef | undefined => {
   const network = (node?.data as { network?: Network })?.network;
@@ -37,6 +38,7 @@ export const getNetworkRef = (node?: Node): DraftNetworkRef | undefined => {
 
 // Changeset-only: the API is called on deploy.
 export function useDraftNetworkActions() {
+  const t = useTranslations("controlCenter");
   const reactFlow = useReactFlow();
   const { data: networks } = useFetchApi<Network[]>("/networks");
   const { updateDraftPolicy } = useControlCenterPolicy();
@@ -403,8 +405,7 @@ export function useDraftNetworkActions() {
           // rename the deploy never carries, so refuse the save outright.
           notify({
             title: resource?.name ?? name,
-            description:
-              "The resource's network could not be determined, so the edit was not saved.",
+            description: t("resourceNetworkUnknown"),
             backgroundColor: "bg-red-500",
           });
           return;

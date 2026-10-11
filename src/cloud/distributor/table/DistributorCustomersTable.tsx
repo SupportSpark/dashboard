@@ -1,4 +1,5 @@
 import Button from "@components/Button";
+import { useTranslations } from "next-intl";
 import CopyToClipboardText from "@components/CopyToClipboardText";
 import SquareIcon from "@components/SquareIcon";
 import { DataTable } from "@components/table/DataTable";
@@ -36,12 +37,14 @@ const CustomerPlanCellWithUpgrade = ({
   );
 };
 
-const CustomersTableColumns: ColumnDef<DistributorCustomer>[] = [
+const CustomersTableColumns = (
+  td: ReturnType<typeof useTranslations>,
+): ColumnDef<DistributorCustomer>[] => [
   {
     id: "name",
     accessorKey: "name",
     header: ({ column }) => (
-      <DataTableHeader column={column}>Customer</DataTableHeader>
+      <DataTableHeader column={column}>{td("customer")}</DataTableHeader>
     ),
     cell: ({ row }) => <CustomerNameCell customer={row.original} />,
   },
@@ -53,7 +56,7 @@ const CustomersTableColumns: ColumnDef<DistributorCustomer>[] = [
     id: "reseller_customer_id",
     accessorKey: "reseller_customer_id",
     header: ({ column }) => (
-      <DataTableHeader column={column}>Customer ID</DataTableHeader>
+      <DataTableHeader column={column}>{td("customerId")}</DataTableHeader>
     ),
     cell: ({ row }) =>
       row.original.reseller_customer_id ? (
@@ -70,7 +73,7 @@ const CustomersTableColumns: ColumnDef<DistributorCustomer>[] = [
     id: "plan",
     accessorKey: "plan",
     header: ({ column }) => (
-      <DataTableHeader column={column}>Plan</DataTableHeader>
+      <DataTableHeader column={column}>{td("plan")}</DataTableHeader>
     ),
     cell: ({ row }) => <CustomerPlanCellWithUpgrade customer={row.original} />,
   },
@@ -101,6 +104,7 @@ export default function DistributorCustomersTable({
   isLoading,
   headingTarget,
 }: Readonly<Props>) {
+  const td = useTranslations("distributor");
   const { mutate } = useSWRConfig();
   const path = usePathname();
   const router = useRouter();
@@ -133,7 +137,7 @@ export default function DistributorCustomersTable({
       text={"Customers"}
       sorting={sorting}
       setSorting={setSorting}
-      columns={CustomersTableColumns}
+      columns={CustomersTableColumns(td)}
       data={customers}
       searchPlaceholder={"Search by name, domain or id..."}
       columnVisibility={{

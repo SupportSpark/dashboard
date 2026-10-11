@@ -3,6 +3,7 @@ import Card from "@components/Card";
 import { notify } from "@components/Notification";
 import { cn } from "@utils/helpers";
 import { TrashIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useState } from "react";
 import { useDialog } from "@/contexts/DialogProvider";
@@ -16,24 +17,27 @@ type Props = {
   connectionId: string;
 };
 export const DomainVerificationCard = ({ domain, connectionId }: Props) => {
+  const t = useTranslations("idpSync");
+  const tCommon = useTranslations("common");
+  const tNetworks = useTranslations("networks");
   const [modal, setModal] = useState(false);
   const { deleteDomain, verifyDomain, mutate } = useEnterpriseConnections();
   const { confirm } = useDialog();
 
   const deleteDomainHandler = async () => {
     const choice = await confirm({
-      title: `Remove Domain?`,
-      description: "Are you sure you want to remove this domain?",
-      confirmText: "Remove",
-      cancelText: "Cancel",
+      title: t("removeDomainQuestion"),
+      description: t("removeDomainDescription"),
+      confirmText: tNetworks("remove"),
+      cancelText: tCommon("cancel"),
       type: "danger",
     });
     if (!choice) return;
     notify({
-      title: "Okta Domains",
-      description: `${domain.name} has been removed`,
+      title: t("oktaDomainsTitle"),
+      description: t("domainRemoved", { domain: domain.name }),
       promise: deleteDomain(connectionId, domain.name).then(() => mutate()),
-      loadingMessage: "Removing domain...",
+      loadingMessage: t("removingDomain"),
     });
   };
 
@@ -64,7 +68,7 @@ export const DomainVerificationCard = ({ domain, connectionId }: Props) => {
             size={"xs"}
             onClick={() => setModal(true)}
           >
-            Verify
+            {t("verifyAction")}
           </Button>
         )}
 
@@ -74,7 +78,7 @@ export const DomainVerificationCard = ({ domain, connectionId }: Props) => {
           onClick={deleteDomainHandler}
         >
           <TrashIcon size={14} />
-          Remove
+          {tNetworks("remove")}
         </Button>
       </div>
     </Card>
@@ -82,6 +86,7 @@ export const DomainVerificationCard = ({ domain, connectionId }: Props) => {
 };
 
 const VerificationStatus = ({ status }: { status: DomainValidationStatus }) => {
+  const t = useTranslations("idpSync");
   const isVerified = status === DomainValidationStatus.VERIFIED;
   const isPending = status === DomainValidationStatus.PENDING;
   const isFailed = status === DomainValidationStatus.FAILED;
@@ -100,9 +105,9 @@ const VerificationStatus = ({ status }: { status: DomainValidationStatus }) => {
           isFailed && "bg-red-500",
         )}
       ></span>
-      {isVerified && "Ownership Verified"}
-      {isFailed && "Verification Failed"}
-      {isPending && "Pending Verification"}
+      {isVerified && t("ownershipVerified")}
+      {isFailed && t("verificationFailed")}
+      {isPending && t("pendingVerification")}
     </span>
   );
 };

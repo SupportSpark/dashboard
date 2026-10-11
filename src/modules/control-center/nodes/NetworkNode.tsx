@@ -33,6 +33,7 @@ import {
   NETWORK_FRAME_HEADER,
 } from "@/modules/control-center/utils/helpers";
 import { NodeType } from "@/modules/control-center/utils/nodes";
+import { useTranslations } from "next-intl";
 
 type NetworkNodeType = {
   network: Network;
@@ -294,6 +295,7 @@ const FrameAddResourceButton = ({
   setHoveredNetworkNodeId: (v: string | null) => void;
   setControlsHovered: (v: boolean) => void;
 }) => {
+  const t = useTranslations("controlCenter");
   const { setResourceEditor } = useDraftMode();
   return (
     <div
@@ -330,7 +332,7 @@ const FrameAddResourceButton = ({
         }}
       >
         <CirclePlusIcon size={12} />
-        Add Resource
+        {t("addResource")}
       </Button>
     </div>
   );

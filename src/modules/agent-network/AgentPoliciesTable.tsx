@@ -65,6 +65,7 @@ import {
 } from "@/modules/agent-network/data/mockData";
 import ActiveInactiveRow from "@/modules/common-table-rows/ActiveInactiveRow";
 import EmptyRow from "@/modules/common-table-rows/EmptyRow";
+import { useTranslations } from "next-intl";
 
 function NameCell({ policy }: { policy: AgentPolicy }) {
   return (
@@ -163,6 +164,7 @@ function ModelsCell({
   policy: AgentPolicy;
   onClickAdd: () => void;
 }) {
+  const t = useTranslations("agentNetwork");
   const { guardrails } = useAIProviders();
   const models = allowlistModels(policy, guardrails);
 
@@ -180,7 +182,7 @@ function ModelsCell({
           }}
         >
           <IconCirclePlus size={14} />
-          Restrict
+          {t("restrict")}
         </Badge>
       </div>
     );
@@ -209,7 +211,7 @@ function ModelsCell({
       <FullTooltip
         content={
           <div className={"text-xs space-y-0.5"}>
-            <div className={"font-semibold"}>Model allowlist</div>
+            <div className={"font-semibold"}>{t("modelAllowlist")}</div>
             {listed.map((model) => (
               <div key={model}>· {model}</div>
             ))}
@@ -236,6 +238,7 @@ function LimitsCell({
   policy: AgentPolicy;
   onClickAdd: () => void;
 }) {
+  const t = useTranslations("agentNetwork");
   const tokenOn = policy.limits.tokenLimit.enabled;
   const budgetOn = policy.limits.budgetLimit.enabled;
 
@@ -251,7 +254,7 @@ function LimitsCell({
           }}
         >
           <IconCirclePlus size={14} />
-          Add Limit
+          {t("addLimit")}
         </Badge>
       </div>
     );
@@ -264,7 +267,7 @@ function LimitsCell({
         <FullTooltip
           content={
             <div className={"text-xs space-y-0.5"}>
-              <div className={"font-semibold"}>Token Limit</div>
+              <div className={"font-semibold"}>{t("tokenLimit")}</div>
               <div>· Group: {capDisplay(tl.groupCap, false)}</div>
               <div>· Individual: {capDisplay(tl.userCap, false)}</div>
               <div>· Resets every {formatLimitWindow(tl.windowSeconds)}</div>
@@ -281,7 +284,7 @@ function LimitsCell({
         <FullTooltip
           content={
             <div className={"text-xs space-y-0.5"}>
-              <div className={"font-semibold"}>Budget Limit</div>
+              <div className={"font-semibold"}>{t("budgetLimit")}</div>
               <div>· Group: {capDisplay(bl.groupCapUsd, true)}</div>
               <div>· Individual: {capDisplay(bl.userCapUsd, true)}</div>
               <div>· Resets every {formatLimitWindow(bl.windowSeconds)}</div>
@@ -343,6 +346,9 @@ function ActionsCell({
   onEdit: (p: AgentPolicy) => void;
   onDuplicate: (p: AgentPolicy) => void;
 }) {
+  const t = useTranslations("agentNetwork");
+  const tCommon = useTranslations("common");
+  const tPolicies = useTranslations("policies");
   const { confirm } = useDialog();
   const { togglePolicy, deletePolicy } = useAIProviders();
   const { permission } = usePermissions();
@@ -351,10 +357,9 @@ function ActionsCell({
   const onDelete = async () => {
     const ok = await confirm({
       title: `Delete '${policy.name}'?`,
-      description:
-        "Are you sure you want to delete this policy? This action cannot be undone.",
-      confirmText: "Delete",
-      cancelText: "Cancel",
+      description: t("deletePolicyConfirm"),
+      confirmText: tCommon("delete"),
+      cancelText: tCommon("cancel"),
       type: "danger",
     });
     if (!ok) return;
@@ -374,7 +379,7 @@ function ActionsCell({
           <Button
             variant={"secondary"}
             className={"!px-3"}
-            aria-label={"Policy actions"}
+            aria-label={tPolicies("policyActions")}
             data-testid={"agent-policy-actions"}
           >
             <MoreVertical size={16} className={"shrink-0"} />
@@ -384,7 +389,7 @@ function ActionsCell({
           <DropdownMenuItem onClick={() => onEdit(policy)}>
             <div className={"flex gap-3 items-center"}>
               <PencilLineIcon size={14} className={"shrink-0"} />
-              Edit Policy
+              {t("editPolicy")}
             </div>
           </DropdownMenuItem>
           <DropdownMenuItem
@@ -394,20 +399,20 @@ function ActionsCell({
           >
             <div className={"flex gap-3 items-center"}>
               <Copy size={14} className={"shrink-0"} />
-              Duplicate
+              {t("duplicate")}
             </div>
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => togglePolicy(policy.id)}>
             <div className={"flex gap-3 items-center"}>
               <Power size={14} className={"shrink-0"} />
-              {policy.enabled ? "Disable" : "Enable"}
+              {policy.enabled ? tCommon("disable") : "Enable"}
             </div>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={onDelete} variant={"danger"}>
             <div className={"flex gap-3 items-center"}>
               <Trash2 size={14} className={"shrink-0"} />
-              Delete
+              {tCommon("delete")}
             </div>
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -421,6 +426,8 @@ type Props = {
 };
 
 export default function AgentPoliciesTable({ headingTarget }: Readonly<Props>) {
+  const t = useTranslations("agentNetwork");
+  const tCommon = useTranslations("common");
   const path = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -451,7 +458,7 @@ export default function AgentPoliciesTable({ headingTarget }: Readonly<Props>) {
     () => [
       {
         id: "source_group_names",
-        label: "Groups",
+        label: tCommon("groups"),
         renderPicker: (p) => (
           <GroupsPicker
             value={p.value as string[] | undefined}
@@ -464,7 +471,7 @@ export default function AgentPoliciesTable({ headingTarget }: Readonly<Props>) {
       },
       {
         id: "provider_ids",
-        label: "Providers",
+        label: t("providers"),
         renderPicker: (p) => (
           <CheckboxListPicker
             value={p.value as string[] | undefined}
@@ -514,7 +521,7 @@ export default function AgentPoliciesTable({ headingTarget }: Readonly<Props>) {
       accessorKey: "name",
       sortingFn: "text",
       header: ({ column }) => (
-        <DataTableHeader column={column}>Name</DataTableHeader>
+        <DataTableHeader column={column}>{tCommon("name")}</DataTableHeader>
       ),
       cell: ({ row }) => <NameCell policy={row.original} />,
     },
@@ -523,7 +530,7 @@ export default function AgentPoliciesTable({ headingTarget }: Readonly<Props>) {
       accessorFn: (p) => p.sourceGroups.length,
       sortingFn: "basic",
       header: ({ column }) => (
-        <DataTableHeader column={column}>Groups</DataTableHeader>
+        <DataTableHeader column={column}>{tCommon("groups")}</DataTableHeader>
       ),
       cell: ({ row }) => <SourceCell policy={row.original} />,
     },
@@ -532,7 +539,7 @@ export default function AgentPoliciesTable({ headingTarget }: Readonly<Props>) {
       accessorFn: (p) => p.destinationProviderIds.length,
       sortingFn: "basic",
       header: ({ column }) => (
-        <DataTableHeader column={column}>Provider</DataTableHeader>
+        <DataTableHeader column={column}>{t("provider")}</DataTableHeader>
       ),
       cell: ({ row }) => <ProviderCell policy={row.original} />,
     },
@@ -541,7 +548,7 @@ export default function AgentPoliciesTable({ headingTarget }: Readonly<Props>) {
       accessorFn: (p) => allowlistModels(p, guardrails).length,
       sortingFn: "basic",
       header: ({ column }) => (
-        <DataTableHeader column={column}>Models</DataTableHeader>
+        <DataTableHeader column={column}>{t("models")}</DataTableHeader>
       ),
       cell: ({ row }) => (
         <ModelsCell
@@ -568,7 +575,7 @@ export default function AgentPoliciesTable({ headingTarget }: Readonly<Props>) {
         (p.limits.budgetLimit.enabled ? 1 : 0),
       sortingFn: "basic",
       header: ({ column }) => (
-        <DataTableHeader column={column}>Limits</DataTableHeader>
+        <DataTableHeader column={column}>{t("limits")}</DataTableHeader>
       ),
       cell: ({ row }) => (
         <LimitsCell
@@ -617,7 +624,7 @@ export default function AgentPoliciesTable({ headingTarget }: Readonly<Props>) {
         key={`policies-${initialSearch ?? ""}`}
         headingTarget={headingTarget}
         isLoading={isLoading}
-        text={"Policies"}
+        text={tCommon("policies")}
         sorting={sorting}
         setSorting={setSorting}
         columns={columns}
@@ -653,17 +660,17 @@ export default function AgentPoliciesTable({ headingTarget }: Readonly<Props>) {
                 }}
               >
                 <PlusCircle size={16} />
-                Add Policy
+                {t("addPolicy")}
               </Button>
             }
             learnMore={
               <>
-                Learn more about
+                {tCommon("learnMoreAbout")}
                 <InlineLink
                   href={"https://docs.netbird.io/agent-network"}
                   target={"_blank"}
                 >
-                  Agent Network
+                  {t("brand")}
                   <ExternalLinkIcon size={12} />
                 </InlineLink>
               </>
@@ -681,7 +688,7 @@ export default function AgentPoliciesTable({ headingTarget }: Readonly<Props>) {
                 }}
               >
                 <PlusCircle size={16} />
-                Add Policy
+                {tCommon("addPolicy")}
               </Button>
             </div>
           )

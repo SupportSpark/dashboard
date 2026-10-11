@@ -53,6 +53,7 @@ import {
   isFrameNode,
   useStructuralNodes,
 } from "@/modules/control-center/utils/helpers";
+import { useTranslations } from "next-intl";
 
 // Sized to the longest option label (~6.5px/char at text-xs), clamped to 256px.
 const networkSelectorWidth = (labels: unknown[]) => {
@@ -70,6 +71,7 @@ function NetworkActionsMenu({
   networkNodeId: string;
   onDeleted?: () => void;
 }) {
+  const tCommon = useTranslations("common");
   const { isDraft, setNetworkEditor } = useDraftMode();
   const { permission } = usePermissions();
   const reactFlow = useReactFlow();
@@ -119,7 +121,7 @@ function NetworkActionsMenu({
           <DropdownMenuItem onClick={() => setNetworkEditor({ networkNodeId })}>
             <div className={"flex gap-3 items-center"}>
               <SquarePenIcon size={14} className={"shrink-0"} />
-              Edit
+              {tCommon("edit")}
             </div>
           </DropdownMenuItem>
         )}
@@ -132,7 +134,7 @@ function NetworkActionsMenu({
               ) : (
                 <Trash2Icon size={14} className={"shrink-0"} />
               )}
-              {isDraftNew ? "Remove" : "Delete"}
+              {isDraftNew ? "Remove" : tCommon("delete")}
             </div>
           </DropdownMenuItem>
         )}
@@ -142,6 +144,7 @@ function NetworkActionsMenu({
 }
 
 function AddResourceButton({ networkNodeId }: { networkNodeId: string }) {
+  const t = useTranslations("controlCenter");
   const { setResourceEditor } = useDraftMode();
   return (
     <button
@@ -157,12 +160,13 @@ function AddResourceButton({ networkNodeId }: { networkNodeId: string }) {
       )}
     >
       <CirclePlusIcon size={14} className={"shrink-0"} />
-      Add Resource
+      {t("addResource")}
     </button>
   );
 }
 
 function DraftDrillDownHeader() {
+  const t = useTranslations("controlCenter");
   const {
     drillDownNetworkNodeId,
     setDrillDownNetworkNodeId,
@@ -194,7 +198,7 @@ function DraftDrillDownHeader() {
     );
     options.unshift({
       value: "",
-      label: "All Networks",
+      label: t("allNetworks"),
       icon: () => <LayoutGridIcon size={14} />,
     } as SelectOption);
     return options;
@@ -521,6 +525,7 @@ function HeaderBottom() {
 }
 
 function FeedbackButton() {
+  const t = useTranslations("controlCenter");
   return (
     <div className={"absolute bottom-0 right-0 z-10 p-3 md:px-6 md:py-4"}>
       <a
@@ -530,7 +535,7 @@ function FeedbackButton() {
       >
         <Button variant={"secondary"} size={"xs"} className={"h-[39px] px-4.5"}>
           <MessageSquareShare size={14} />
-          Feedback
+          {t("feedback")}
         </Button>
       </a>
     </div>

@@ -1,4 +1,5 @@
 import Button from "@components/Button";
+import { useTranslations } from "next-intl";
 import { Input } from "@components/Input";
 import {
   Modal,
@@ -21,7 +22,9 @@ type Props = {
   onOpenChange: (open: boolean) => void;
 };
 
-export const AddSignInDomainModal = ({ open, onOpenChange }: Props) => {
+export const AddSignInDomainModal = ({
+open, onOpenChange }: Props) => {
+  const tsid = useTranslations("signInDomains");
   const { addDomain, verifyDomain, mutate } = useSignInDomains();
   const [name, setName] = useState("");
   const [verifyModal, setVerifyModal] = useState(false);
@@ -51,7 +54,7 @@ export const AddSignInDomainModal = ({ open, onOpenChange }: Props) => {
     setOpen(false);
 
     notify({
-      title: "Sign-in Domains",
+      title: tsid("title"),
       description: `${domain} has been added`,
       promise: addDomain(domain).then((added) => {
         if (
@@ -64,7 +67,7 @@ export const AddSignInDomainModal = ({ open, onOpenChange }: Props) => {
         mutate().catch(() => {});
         return added;
       }),
-      loadingMessage: "Adding domain...",
+      loadingMessage: tsid("addingDomain"),
     });
   };
 

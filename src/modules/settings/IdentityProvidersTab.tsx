@@ -59,6 +59,7 @@ type ActionCellProps = {
 };
 
 function ActionCell({ provider, onEdit }: ActionCellProps) {
+	const t = useTranslations("settings");
 	const { confirm } = useDialog();
 	const { mutate } = useSWRConfig();
 	const deleteRequest = useApiCall<SSOIdentityProvider>(
@@ -69,8 +70,7 @@ function ActionCell({ provider, onEdit }: ActionCellProps) {
 	const handleDelete = async () => {
 		const choice = await confirm({
 			title: `Delete '${provider.name}'?`,
-			description:
-				"Are you sure you want to delete this identity provider? This action cannot be undone.",
+			description: t("deleteIdentityProviderConfirm"),
 			confirmText: "Delete",
 			cancelText: "Cancel",
 			type: "danger",
@@ -79,12 +79,12 @@ function ActionCell({ provider, onEdit }: ActionCellProps) {
 		if (!choice) return;
 
 		notify({
-			title: "Delete Identity Provider",
-			description: "Identity provider was deleted successfully.",
+			title: t("deleteIdentityProvider"),
+			description: t("identityProviderDeleted"),
 			promise: deleteRequest.del().then(() => {
 				mutate("/identity-providers");
 			}),
-			loadingMessage: "Deleting identity provider...",
+			loadingMessage: t("deletingIdentityProvider"),
 		});
 	};
 

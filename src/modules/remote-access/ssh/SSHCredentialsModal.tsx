@@ -86,7 +86,7 @@ export const SSHCredentialsModal = ({ open, onOpenChange, peer }: Props) => {
 
         <div className={"px-8 py-6 flex flex-col gap-8"}>
           <div className={""}>
-            <Label>Username & Port</Label>
+            <Label>{t("usernameAndPort")}</Label>
             <HelpText>
               The username and port you will use to connect to the remote host.
             </HelpText>

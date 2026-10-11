@@ -1,4 +1,5 @@
 import Button from "@components/Button";
+import { useTranslations } from "next-intl";
 import { Modal, ModalContent } from "@components/modal/Modal";
 import { notify } from "@components/Notification";
 import Paragraph from "@components/Paragraph";
@@ -14,6 +15,7 @@ import { useLoggedInUser } from "@/contexts/UsersProvider";
 import { useAccount } from "@/modules/account/useAccount";
 
 export const DistributorTransferAccountModal = () => {
+  const td = useTranslations("distributor");
   const { mspInfo } = useMSP();
   const account = useAccount();
   const { confirm } = useDialog();
@@ -32,16 +34,16 @@ export const DistributorTransferAccountModal = () => {
     const choice = await confirm({
       title: `Grant access to distributor?`,
       description: `Are you sure you want to grant access? This action cannot be undone.`,
-      confirmText: "Grant Access",
+      confirmText: td("grantAccess"),
       cancelText: "Cancel",
       type: "danger",
     });
     if (!choice) return;
 
     notify({
-      title: "Granting access to distributor",
-      description: "Access has been successfully granted.",
-      loadingMessage: "Granting access...",
+      title: td("grantingAccessToDistributor"),
+      description: td("accessGranted"),
+      loadingMessage: td("grantingAccess"),
       promise: resellerRequest
         .put(
           {
@@ -59,9 +61,9 @@ export const DistributorTransferAccountModal = () => {
 
   const deny = () => {
     notify({
-      title: "Access request denied",
-      description: "You have denied the distributor access request.",
-      loadingMessage: "Declining access...",
+      title: td("accessRequestDenied"),
+      description: td("youDeniedDistributorAccess"),
+      loadingMessage: td("decliningAccess"),
       promise: resellerRequest
         .put(
           {

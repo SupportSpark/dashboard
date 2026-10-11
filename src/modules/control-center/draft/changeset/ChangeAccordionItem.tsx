@@ -41,6 +41,7 @@ import {
 } from "@/modules/control-center/draft/changeset/change-presentation";
 import { ChangeCodeView } from "@/modules/control-center/draft/changeset/ChangeCodeView";
 import { DeployStatus } from "@/modules/control-center/hooks/useDeployChangeset";
+import { useTranslations } from "next-intl";
 
 type Props = {
   change: DraftChange;
@@ -64,6 +65,8 @@ export const ChangeAccordionItem = ({
   disabled,
   status,
 }: Props) => {
+  const tCommon = useTranslations("common");
+  const t = useTranslations("controlCenter");
   const apiCall = getChangeApiCall(change);
   const request = useMemo(
     () => buildChangeRequest(change, live),
@@ -74,7 +77,7 @@ export const ChangeAccordionItem = ({
   const doCopy = async (showInlineCheck: boolean) => {
     try {
       await navigator.clipboard.writeText(copyText);
-      notify({ title: "Copied as cURL request", description: apiCall });
+      notify({ title: t("copiedAsCurl"), description: apiCall });
       if (showInlineCheck) {
         setCopied(true);
         window.setTimeout(() => setCopied(false), 1200);
@@ -89,7 +92,7 @@ export const ChangeAccordionItem = ({
     [change, live],
   );
   const showStat = stat.additions + stat.deletions > 0;
-  const issue = getChangeIssue(change, changes);
+  const issue = getChangeIssue(change, changes, t);
 
   const [menuOpen, setMenuOpen] = useState(false);
   const { confirm } = useDialog();
@@ -98,8 +101,7 @@ export const ChangeAccordionItem = ({
     const preview = previewRemove(change);
     const ok = await confirm({
       title: preview.summary,
-      description:
-        "This reverts it on the canvas and drops it from the changeset. It won't be deployed.",
+      description: t("removeChangeDescription"),
       children: preview.effects.length ? (
         <ul className={"list-disc pl-5 text-sm text-nb-gray-300 space-y-1"}>
           {preview.effects.map((e) => (
@@ -107,8 +109,8 @@ export const ChangeAccordionItem = ({
           ))}
         </ul>
       ) : undefined,
-      confirmText: "Remove",
-      cancelText: "Cancel",
+      confirmText: t("remove"),
+      cancelText: tCommon("cancel"),
       type: "danger",
       dismissOnOutsideClick: true,
     });
@@ -257,7 +259,7 @@ export const ChangeAccordionItem = ({
                 }}
               >
                 <CopyIcon size={14} />
-                Copy cURL
+                {t("copyCurl")}
               </DropdownMenuItem>
               <DropdownMenuItem
                 variant={"danger"}
@@ -266,7 +268,7 @@ export const ChangeAccordionItem = ({
                 onClick={handleRemove}
               >
                 <Trash2Icon size={14} />
-                Remove
+                {t("remove")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

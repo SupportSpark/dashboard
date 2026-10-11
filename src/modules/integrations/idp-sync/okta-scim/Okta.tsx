@@ -8,6 +8,7 @@ import useFetchApi, { useApiCall } from "@utils/api";
 import dayjs from "dayjs";
 import { isEmpty } from "lodash";
 import { RefreshCw, Repeat, Settings } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { useEffect, useMemo, useState } from "react";
@@ -25,6 +26,7 @@ import { IntegrationCard } from "@/modules/integrations/IntegrationCard";
 import { useEnterpriseConnections } from "@/modules/integrations/sso/useEnterpriseConnections";
 
 export const Okta = () => {
+  const t = useTranslations("idpSync");
   const { mutate } = useSWRConfig();
   const [setupModal, setSetupModal] = useState(false);
   const { isOktaConnectionActive, isDataLoading: isSSOConnectionLoading } =
@@ -53,8 +55,10 @@ export const Okta = () => {
     if (!integration) return setSetupModal(true);
 
     notify({
-      title: "Okta Integration",
-      description: `Okta was successfully ${state ? "enabled" : "disabled"}`,
+      title: t("oktaIntegrationTitle"),
+      description: t("oktaWasEnabledOrDisabled", {
+        status: state ? t("enableAction") : t("disableAction"),
+      }),
       promise: oktaRequest
         .put(
           {
@@ -66,7 +70,7 @@ export const Okta = () => {
           mutate("/integrations/okta-scim-idp");
           setEnabled(state);
         }),
-      loadingMessage: "Updating integration...",
+      loadingMessage: t("updatingIntegration"),
     });
   };
 
@@ -80,7 +84,7 @@ export const Okta = () => {
     <>
       <IntegrationCard
         name="Okta"
-        description="Okta is a platform to provision and manage user accounts in cloud-based applications."
+        description={t("oktaDescription")}
         url={{
           title: "okta.com",
           href: "https://www.okta.com/",
@@ -101,14 +105,13 @@ export const Okta = () => {
               onClick={() => setSetupModal(true)}
             >
               <Repeat size={13} />
-              Connect Okta
+              {t("connectNamed", { name: "Okta" })}
             </Button>
           ) : (
             <FullTooltip
               content={
                 <div className={"text-xs max-w-xs"}>
-                  Please setup Okta SSO from the Single-Sign-On tab to enable
-                  user and group sync.
+                  {t("oktaSsoRequiredTooltip")}
                 </div>
               }
             >
@@ -118,7 +121,7 @@ export const Okta = () => {
                 className={"w-full items-center"}
                 onClick={() => switchTab("sso")}
               >
-                Okta SSO Required
+                {t("oktaSsoRequiredButton")}
                 <IconInfoCircle size={14} />
               </Button>
             </FullTooltip>
@@ -144,6 +147,7 @@ type ConfigurationProps = {
   config: OktaIntegration;
 };
 const ConfigurationButton = ({ config }: ConfigurationProps) => {
+  const t = useTranslations("idpSync");
   const { data: logs } = useFetchApi<IdentityProviderLog[]>(
     `/integrations/okta-scim-idp/${config.id}/logs`,
   );
@@ -151,8 +155,8 @@ const ConfigurationButton = ({ config }: ConfigurationProps) => {
   const [configModal, setConfigModal] = useState(false);
 
   const lastSync = useMemo(() => {
-    if (isEmpty(logs)) return "Not synchronized";
-    return "Synced " + dayjs().to(logs?.[0]?.timestamp);
+    if (isEmpty(logs)) return t("notSynchronized");
+    return t("syncedRelative", { time: dayjs().to(logs?.[0]?.timestamp) });
   }, [logs]);
 
   return (

@@ -91,7 +91,7 @@ export const AuthenticationSettings = ({
         <div className={"flex flex-col gap-2 mt-3"}>
           <Input
             customPrefix={"Bearer"}
-            placeholder="e.g. eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InVURWw0SmJieUU4S00zY3NwcmdUSSJ9.eyJodHRwOi8vbG9jYWxob3N0OjMwMDA"
+            placeholder={t("tokenPlaceholder")}
             value={value.bearerToken}
             onChange={(e) => value.setBearerToken(e.target.value)}
             type={mask ? "password" : "text"}

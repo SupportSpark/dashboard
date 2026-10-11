@@ -5,6 +5,7 @@ import useFetchApi, { useApiCall } from "@utils/api";
 import dayjs from "dayjs";
 import { isEmpty } from "lodash";
 import { RefreshCw, Repeat, Settings } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useEffect, useMemo, useState } from "react";
 import { useSWRConfig } from "swr";
@@ -20,6 +21,7 @@ import { useIntegrations } from "@/modules/integrations/idp-sync/useIntegrations
 import { IntegrationCard } from "@/modules/integrations/IntegrationCard";
 
 export const Jumpcloud = () => {
+  const t = useTranslations("idpSync");
   const { mutate } = useSWRConfig();
   const [setupModal, setSetupModal] = useState(false);
   const { permission } = usePermissions();
@@ -43,10 +45,10 @@ export const Jumpcloud = () => {
     if (!integration) return setSetupModal(true);
 
     notify({
-      title: "Jumpcloud Integration",
-      description: `Jumpcloud was successfully ${
-        state ? "enabled" : "disabled"
-      }`,
+      title: t("jumpcloudIntegrationTitle"),
+      description: t("jumpcloudWasEnabledOrDisabled", {
+        status: state ? t("enableAction") : t("disableAction"),
+      }),
       promise: scimRequest
         .put(
           {
@@ -58,7 +60,7 @@ export const Jumpcloud = () => {
           mutate("/integrations/scim-idp");
           setEnabled(state);
         }),
-      loadingMessage: "Updating integration...",
+      loadingMessage: t("updatingIntegration"),
     });
   };
 
@@ -68,7 +70,7 @@ export const Jumpcloud = () => {
     <>
       <IntegrationCard
         name="Jumpcloud"
-        description="Jumpcloud is a unified identity, device, and access management platform."
+        description={t("jumpcloudDescription")}
         url={{
           title: "jumpcloud.com",
           href: "https://jumpcloud.com/",
@@ -91,7 +93,7 @@ export const Jumpcloud = () => {
             onClick={() => setSetupModal(true)}
           >
             <Repeat size={13} />
-            Connect Jumpcloud
+            {t("connectNamed", { name: "Jumpcloud" })}
           </Button>
         }
       >

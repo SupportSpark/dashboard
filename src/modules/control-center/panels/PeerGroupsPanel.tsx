@@ -42,6 +42,7 @@ import {
   pinByOrder,
   useStructuralNodes,
 } from "@/modules/control-center/utils/helpers";
+import { useTranslations } from "next-intl";
 
 interface PeerGroupsPanelProps {
   // Real peer id; empty means closed.
@@ -53,6 +54,8 @@ interface PeerGroupsPanelProps {
 const groupRef = (g: Group) => g.id ?? g.name;
 
 export const PeerGroupsPanel = ({ peerId, onClose }: PeerGroupsPanelProps) => {
+  const t = useTranslations("controlCenter");
+  const tCommon = useTranslations("common");
   const { peers, groups } = useControlCenterData();
   const { groupUserCounts } = useCanvasUI();
   const nodes = useStructuralNodes();
@@ -168,10 +171,9 @@ export const PeerGroupsPanel = ({ peerId, onClose }: PeerGroupsPanelProps) => {
 
     const choice = await confirm({
       title: `Save groups of “${peer.name}”?`,
-      description:
-        "You are in live mode. Saving your changes will apply them to your account immediately.",
-      confirmText: "Save",
-      cancelText: "Cancel",
+      description: t("liveModeSaveNotice"),
+      confirmText: tCommon("save"),
+      cancelText: tCommon("cancel"),
       type: "warning",
       dismissOnOutsideClick: true,
     });
@@ -205,7 +207,7 @@ export const PeerGroupsPanel = ({ peerId, onClose }: PeerGroupsPanelProps) => {
     })();
     // useApiCall rejects but never toasts, so the promise drives the toast.
     notify({
-      title: peer.name ?? "Peer",
+      title: peer.name ?? t("peerSingular"),
       description: `Groups of ${
         peer.name ?? "the peer"
       } were successfully saved.`,
@@ -271,14 +273,14 @@ export const PeerGroupsPanel = ({ peerId, onClose }: PeerGroupsPanelProps) => {
   const confirmDiscard = async () => {
     if (!dirty) return true;
     return !!(await confirm({
-      title: "You have unsaved group changes",
+      title: t("unsavedGroupChanges"),
       description: `The group assignments you toggled for “${
         peer?.name ?? "this peer"
       }” haven't been ${
         isDraft ? "applied" : "saved"
       } yet. Closing the panel will lose them.`,
-      confirmText: "Discard",
-      cancelText: "Keep editing",
+      confirmText: t("discard"),
+      cancelText: t("keepEditing"),
       type: "warning",
       dismissOnOutsideClick: true,
     }));
@@ -327,7 +329,7 @@ export const PeerGroupsPanel = ({ peerId, onClose }: PeerGroupsPanelProps) => {
               "shrink-0 px-1.5 py-0.5 rounded border border-nb-gray-900 bg-nb-gray-920 shadow-[0_2px_0_0_#1e2123,inset_0_1px_0_0_rgba(255,255,255,0.05)] text-[8px] font-medium tracking-wide text-nb-gray-350 hover:bg-nb-gray-910 hover:text-nb-gray-200 transition-colors"
             }
           >
-            ESC
+            {t("escKey")}
           </button>
         </div>
 
@@ -343,7 +345,7 @@ export const PeerGroupsPanel = ({ peerId, onClose }: PeerGroupsPanelProps) => {
                   "text-nb-gray-500 group-data-[state=active]/trigger:text-netbird transition-all"
                 }
               />
-              Groups
+              {tCommon("groups")}
             </TabsTrigger>
           </TabsList>
         </div>
@@ -438,7 +440,7 @@ export const PeerGroupsPanel = ({ peerId, onClose }: PeerGroupsPanelProps) => {
               className={"py-2.5"}
               onClick={onClose}
             >
-              Cancel
+              {tCommon("cancel")}
             </Button>
             <Button
               variant={"primary"}
@@ -448,7 +450,7 @@ export const PeerGroupsPanel = ({ peerId, onClose }: PeerGroupsPanelProps) => {
               onClick={() => void saveAssignments()}
             >
               <span className={cn(saving && "invisible")}>
-                {isDraft ? "Assign" : "Save"}
+                {isDraft ? t("assign") : tCommon("save")}
               </span>
               {saving && (
                 <Loader2

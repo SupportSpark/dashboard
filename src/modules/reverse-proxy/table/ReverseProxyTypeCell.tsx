@@ -1,11 +1,9 @@
 import * as React from "react";
-import { useMemo } from "react";
 import { ReverseProxy, ServiceMode } from "@/interfaces/ReverseProxy";
-import { trim } from "lodash";
-import { SERVICE_MODES } from "@/modules/reverse-proxy/ReverseProxyServiceModeSelector";
 import Badge from "@components/Badge";
 import { cn } from "@utils/helpers";
 import { ArrowRightFromLineIcon, GlobeIcon, LockKeyhole } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 type Props = {
   reverseProxy?: ReverseProxy;
@@ -13,12 +11,18 @@ type Props = {
 };
 
 export const ReverseProxyTypeCell = ({ reverseProxy, compact }: Props) => {
-  const serviceModeLabel = useMemo(() => {
-    if (!reverseProxy?.mode) return "HTTPS";
-    const mode = SERVICE_MODES[reverseProxy.mode];
-    if (!mode) return "HTTPS";
-    return trim(mode.label.replace("Service", ""));
-  }, [reverseProxy]);
+  const t = useTranslations("reverseProxy");
+
+  // Protocol acronyms stay in English in both locales (see the i18n glossary);
+  // only the TLS passthrough label is prose and comes from the catalog.
+  const serviceModeLabel = reverseProxy?.mode
+    ? {
+        [ServiceMode.HTTP]: "HTTPS",
+        [ServiceMode.TLS]: t("tlsPassthrough"),
+        [ServiceMode.TCP]: "TCP",
+        [ServiceMode.UDP]: "UDP",
+      }[reverseProxy.mode]
+    : "HTTPS";
 
   if (compact) {
     return <span className={"truncate"}>{serviceModeLabel}</span>;

@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import * as React from "react";
 import { ReverseProxyEvent } from "@/interfaces/ReverseProxy";
+import { useTranslations } from "next-intl";
 
 type Props = {
   event: ReverseProxyEvent;
@@ -22,6 +23,7 @@ export const ReverseProxyEventsAuthMethodCell = ({
   event,
   compact = false,
 }: Props) => {
+  const t = useTranslations("reverseProxy");
   const authMethod = event.auth_method_used;
 
   if (!authMethod) {
@@ -49,7 +51,7 @@ export const ReverseProxyEventsAuthMethodCell = ({
               PWD
             </span>
           ),
-          label: "Password",
+          label: t("password"),
         };
       case "pin":
         return {
@@ -62,54 +64,54 @@ export const ReverseProxyEventsAuthMethodCell = ({
               PIN
             </span>
           ),
-          label: "PIN Code",
+          label: t("pinCode"),
         };
       case "header":
         return {
           icon: <Braces size={12} />,
-          label: "HTTP Headers",
+          label: t("httpHeaders"),
         };
       case "link":
       case "magic_link":
       case "magic-link":
         return {
           icon: <Link2 size={12} />,
-          label: "Magic Link",
+          label: t("authMagicLink"),
         };
       case "ip_restricted":
         return {
           icon: <Network size={12} />,
-          label: "IP Restricted",
+          label: t("authIpRestricted"),
         };
       case "country_restricted":
         return {
           icon: <Flag size={12} />,
-          label: "Country Restricted",
+          label: t("authCountryRestricted"),
         };
       case "geo_unavailable":
         return {
           icon: <GlobeOff size={12} />,
-          label: "Geo Unavailable",
+          label: t("authGeoUnavailable"),
         };
       case "crowdsec_ban":
         return {
           icon: <ShieldAlert size={12} />,
-          label: "CrowdSec Ban",
+          label: t("authCrowdSecBan"),
         };
       case "crowdsec_captcha":
         return {
           icon: <ShieldAlert size={12} />,
-          label: "CrowdSec Captcha",
+          label: t("authCrowdSecCaptcha"),
         };
       case "crowdsec_throttle":
         return {
           icon: <ShieldAlert size={12} />,
-          label: "CrowdSec Throttle",
+          label: t("authCrowdSecThrottle"),
         };
       case "crowdsec_unavailable":
         return {
           icon: <ShieldOff size={12} />,
-          label: "CrowdSec Unavailable",
+          label: t("authCrowdSecUnavailable"),
         };
       default:
         return {
@@ -127,7 +129,7 @@ export const ReverseProxyEventsAuthMethodCell = ({
         interactive={false}
         content={
           <span className={"text-xs"}>
-            <span className={"text-nb-gray-400"}>Auth: </span>
+            <span className={"text-nb-gray-400"}>{t("authTooltipPrefix")}</span>
             <span className={"text-nb-gray-100"}>{label}</span>
           </span>
         }

@@ -14,6 +14,7 @@ import CircleIcon from "@/assets/icons/CircleIcon";
 import { usePermissions } from "@/contexts/PermissionsProvider";
 import { useDraftMode } from "@/modules/control-center/draft/DraftModeContext";
 import { PeerOperatingSystemIcon } from "@/modules/peers/PeerOperatingSystemIcon";
+import { useTranslations } from "next-intl";
 
 export const RoutingPeersIndicator = ({
   count,
@@ -103,6 +104,7 @@ export const RoutingPeersBar = ({
   // Frame variant: matches the height of the node's floating "Install" button.
   compact?: boolean;
 }) => {
+  const tCommon = useTranslations("common");
   const [open, setOpen] = React.useState(false);
   const triggerRef = React.useRef<HTMLButtonElement>(null);
   const contentRef = React.useRef<HTMLDivElement>(null);
@@ -255,7 +257,7 @@ export const RoutingPeersBar = ({
                   <span className={"truncate flex-1 min-w-0"}>
                     {row.name}
                     {row.peersCount !== undefined &&
-                      ` (${singularize("Peers", row.peersCount, true)})`}
+                      ` (${singularize(tCommon("peers"), row.peersCount, true)})`}
                   </span>
                   {row.onEdit && (
                     <SquarePenIcon
@@ -287,7 +289,7 @@ export const RoutingPeersBar = ({
           )}
         >
           <CirclePlusIcon size={12} className={"shrink-0"} />
-          Add
+          {tCommon("add")}
         </button>
       )}
     </div>

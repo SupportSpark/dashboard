@@ -24,6 +24,7 @@ import {
   FileCode2Icon,
   Repeat,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React, { useMemo, useState } from "react";
 import { useSWRConfig } from "swr";
 import integrationImage from "@/assets/integrations/generic-http.png";
@@ -94,6 +95,8 @@ export function GenericHTTPModalContent({
   onDelete,
   stream,
 }: Readonly<ModalProps>) {
+  const t = useTranslations("integrations");
+  const tCommon = useTranslations("common");
   const { mutate } = useSWRConfig();
   const { confirm } = useDialog();
   const integrationRequest = useApiCall("/integrations/event-streaming", true);
@@ -145,9 +148,9 @@ export function GenericHTTPModalContent({
     };
 
     notify({
-      title: "Generic HTTP Integration",
-      description: "HTTP Integration was successfully connected.",
-      loadingMessage: "Setting up HTTP integration...",
+      title: t("integrationLinkText", { name: "Generic HTTP" }),
+      description: t("genericHttpConnectDescription"),
+      loadingMessage: t("genericHttpSetupLoading"),
       promise: integrationRequest.post(payload).then(() => {
         mutate("/integrations/event-streaming");
         onSuccess && onSuccess();
@@ -169,9 +172,9 @@ export function GenericHTTPModalContent({
     };
 
     notify({
-      title: "Generic HTTP Integration",
-      description: "HTTP Integration was updated successfully.",
-      loadingMessage: "Updating HTTP integration...",
+      title: t("integrationLinkText", { name: "Generic HTTP" }),
+      description: t("genericHttpUpdateDescription"),
+      loadingMessage: t("genericHttpUpdateLoading"),
       promise: integrationRequest.put(payload, `/${stream?.id}`).then(() => {
         mutate("/integrations/event-streaming");
         onSuccess && onSuccess();
@@ -182,24 +185,23 @@ export function GenericHTTPModalContent({
   const deleteIntegration = async () => {
     if (!stream) return;
     const choice = await confirm({
-      title: `Delete Generic HTTP Integration?`,
-      description:
-        "Are you sure you want to delete this integration? You will need to start the setup process again.",
-      confirmText: "Delete",
-      cancelText: "Cancel",
+      title: t("deleteIntegrationNameTitle", { name: "Generic HTTP" }),
+      description: t("deleteIntegrationDescriptionSetupAgain"),
+      confirmText: tCommon("delete"),
+      cancelText: tCommon("cancel"),
       type: "danger",
       maxWidthClass: "max-w-lg",
     });
     if (!choice) return;
 
     notify({
-      title: "Generic HTTP Integration",
-      description: `Generic HTTP was successfully deleted`,
+      title: t("integrationLinkText", { name: "Generic HTTP" }),
+      description: t("integrationWasDeleted", { name: "Generic HTTP" }),
       promise: integrationRequest.del({}, "/" + stream.id).then(() => {
         onDelete?.();
         mutate("/integrations/event-streaming");
       }),
-      loadingMessage: "Deleting integration...",
+      loadingMessage: t("deletingIntegration"),
     });
   };
 
@@ -223,12 +225,12 @@ export function GenericHTTPModalContent({
         image={integrationImage}
         title={
           stream
-            ? "Generic HTTP Configuration"
-            : "Connect NetBird with Generic HTTP"
+            ? t("configurationTitle", { name: "Generic HTTP" })
+            : t("connectNetBirdWith", { name: "Generic HTTP" })
         }
-        description={`Start streaming your NetBird audit & traffic events to a Generic HTTP endpoint. ${
-          stream ? "" : "Follow the steps to get started."
-        }`}
+        description={t("genericHttpSetupDescription", {
+          extra: stream ? "" : t("genericHttpSetupDescriptionExtra"),
+        })}
       />
 
       <Tabs
@@ -245,7 +247,7 @@ export function GenericHTTPModalContent({
                 "text-nb-gray-500 group-data-[state=active]/trigger:text-netbird transition-all"
               }
             />
-            General
+            {t("general")}
           </TabsTrigger>
           <TabsTrigger value={"headers"} disabled={!config.canContinueToHeaders}>
             <FileCode2Icon
@@ -254,7 +256,7 @@ export function GenericHTTPModalContent({
                 "text-nb-gray-500 group-data-[state=active]/trigger:text-netbird transition-all"
               }
             />
-            Headers
+            {t("headers")}
           </TabsTrigger>
           <TabsTrigger
             value={"template"}
@@ -266,7 +268,7 @@ export function GenericHTTPModalContent({
                 "text-nb-gray-500 group-data-[state=active]/trigger:text-netbird transition-all"
               }
             />
-            Body Template
+            {t("bodyTemplate")}
           </TabsTrigger>
           {stream && (
             <TabsTrigger value={"danger"}>
@@ -276,13 +278,13 @@ export function GenericHTTPModalContent({
                   "text-nb-gray-500 group-data-[state=active]/trigger:text-netbird transition-all"
                 }
               />
-              Danger Zone
+              {t("dangerZone")}
             </TabsTrigger>
           )}
         </TabsList>
         <WebhookGeneralTabContent
           value={config}
-          urlHelpText="Full HTTP(S) URL where events will be sent later via a POST request."
+          urlHelpText={t("genericHttpConnectionSubtitle")}
           mask={!!stream}
         />
         <WebhookHeadersTabContent value={config} />
@@ -294,12 +296,10 @@ export function GenericHTTPModalContent({
             label={
               <>
                 <BracesIcon size={15} />
-                Custom Body Template (optional)
+                {t("customBodyTemplate")}
               </>
             }
-            helpText={
-              "Customize the request body template for your events. Build your own in plain text or JSON format."
-            }
+            helpText={t("customBodyTemplateHelp")}
           />
           {customBodyTemplate && (
             <>
@@ -312,16 +312,14 @@ export function GenericHTTPModalContent({
                 onChange={(e) => setBodyTemplate(e.target.value)}
               />
               <HelpText>
-                There are various variables available to structure the body
-                template. Please refer to the documentation for more details on
-                how to use them.
+                {t("bodyTemplateHelp")}
                 <InlineLink
                   href={
                     "https://docs.netbird.io/how-to/stream-activity-to-generic-http#custom-body-template-optional"
                   }
                   className={"relative top-[0px] ml-1"}
                 >
-                  Body Template Variables
+                  {t("bodyTemplateVariablesLink")}
                   <ExternalLinkIcon size={12} />
                 </InlineLink>
               </HelpText>
@@ -334,13 +332,11 @@ export function GenericHTTPModalContent({
             <Label>
               <div className={"flex gap-2 items-center"}>
                 <AlertOctagon size={16} />
-                Delete Integration
+                {t("deleteIntegration")}
               </div>
             </Label>
             <HelpText className={"max-w-lg mt-2"}>
-              Deleting this integration will remove the ability to stream
-              events. If you delete the integration you will need to reconfigure
-              it again to enable event streaming.
+              {t("genericHttpDeleteHelp")}
             </HelpText>
           </div>
           <Button
@@ -349,7 +345,7 @@ export function GenericHTTPModalContent({
             className={"mt-3"}
             onClick={deleteIntegration}
           >
-            Delete Integration
+            {t("deleteIntegration")}
           </Button>
         </TabsContent>
       </Tabs>
@@ -358,14 +354,14 @@ export function GenericHTTPModalContent({
       <ModalFooter className={"items-center"}>
         <div className={"w-full"}>
           <Paragraph className={"text-sm mt-auto"}>
-            Learn more about
+            {t("learnMoreAbout")}
             <InlineLink
               href={
                 "https://docs.netbird.io/how-to/stream-activity-to-generic-http"
               }
               target={"_blank"}
             >
-              Generic HTTP Streaming
+              {t("genericHttpStreamingLink")}
               <ExternalLinkIcon size={12} />
             </InlineLink>
           </Paragraph>
@@ -373,12 +369,12 @@ export function GenericHTTPModalContent({
         <div className={"flex gap-3 w-full justify-end"}>
           {tab === "general" && !stream && (
             <ModalClose asChild={true}>
-              <Button variant={"secondary"}>Cancel</Button>
+              <Button variant={"secondary"}>{tCommon("cancel")}</Button>
             </ModalClose>
           )}
           {tab !== "general" && !stream && (
             <Button variant={"secondary"} onClick={goBack}>
-              Back
+              {tCommon("back")}
             </Button>
           )}
           {tab === "general" && !stream && (
@@ -387,7 +383,7 @@ export function GenericHTTPModalContent({
               disabled={!config.canContinueToHeaders}
               onClick={() => setTab("headers")}
             >
-              Continue
+              {tCommon("continue")}
               <IconArrowRight size={16} />
             </Button>
           )}
@@ -397,7 +393,7 @@ export function GenericHTTPModalContent({
               disabled={!config.canContinueToHeaders || !canContinueToBodyTemplate}
               onClick={() => setTab("template")}
             >
-              Continue
+              {tCommon("continue")}
               <IconArrowRight size={16} />
             </Button>
           )}
@@ -409,21 +405,21 @@ export function GenericHTTPModalContent({
               onClick={connect}
             >
               <Repeat size={16} />
-              Connect
+              {t("connect")}
             </Button>
           )}
 
           {stream && (
             <>
               <ModalClose asChild={true}>
-                <Button variant={"secondary"}>Cancel</Button>
+                <Button variant={"secondary"}>{tCommon("cancel")}</Button>
               </ModalClose>
               <Button
                 variant={"primary"}
                 onClick={update}
                 disabled={!canCreateOrUpdate}
               >
-                Save Changes
+                {t("saveChanges")}
               </Button>
             </>
           )}

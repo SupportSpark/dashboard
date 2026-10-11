@@ -1,4 +1,5 @@
 import Button from "@components/Button";
+import { useTranslations } from "next-intl";
 import FullTooltip from "@components/FullTooltip";
 import { notify } from "@components/Notification";
 import { cn } from "@utils/helpers";
@@ -15,7 +16,9 @@ type Props = {
   domain: SignInDomain;
 };
 
-export default function DomainActionCell({ domain }: Readonly<Props>) {
+export default function DomainActionCell({
+domain }: Readonly<Props>) {
+  const tsid = useTranslations("signInDomains");
   const { permission } = usePermissions();
   const { verifyDomain, deleteDomain, mutate } = useSignInDomains();
   const { confirm } = useDialog();
@@ -43,7 +46,7 @@ export default function DomainActionCell({ domain }: Readonly<Props>) {
     const choice = await confirm({
       title: `Remove ${domain.name}?`,
       description:
-        "Users with an email address on this domain will no longer be matched to your account.",
+        tsid("removeDescription"),
       confirmText: "Remove",
       cancelText: "Cancel",
       type: "danger",
@@ -51,13 +54,13 @@ export default function DomainActionCell({ domain }: Readonly<Props>) {
     });
     if (!choice) return;
     notify({
-      title: "Sign-in Domains",
+      title: tsid("title"),
       description: `${domain.name} has been removed`,
       promise: deleteDomain(domain.id).then((res) => {
         mutate().catch(() => {});
         return res;
       }),
-      loadingMessage: "Removing domain...",
+      loadingMessage: tsid("removingDomain"),
     });
   };
 

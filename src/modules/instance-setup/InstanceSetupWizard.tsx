@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@utils/helpers";
+import { useTranslations } from "next-intl";
 import { CheckCircle2, Loader2 } from "lucide-react";
 import React, { useCallback, useEffect, useState } from "react";
 import { ApiError, SetupRequest } from "@/interfaces/Instance";
@@ -30,6 +31,7 @@ interface FormErrors {
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$/i;
 
 export default function InstanceSetupWizard() {
+  const tisetup = useTranslations("instanceSetup");
   const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
@@ -89,14 +91,14 @@ export default function InstanceSetupWizard() {
       setIsSuccess(true);
     } catch (err) {
       const error = err as ApiError;
-      let message = "An error occurred. Please try again.";
+      let message = tisetup("genericError");
 
       switch (error.code) {
         case 400:
-          message = "Invalid request. Please check your input.";
+          message = tisetup("invalidRequest");
           break;
         case 412:
-          message = "Setup has already been completed. Redirecting to login...";
+          message = tisetup("alreadyCompleted");
           setTimeout(() => (window.location.href = "/"), 2000);
           break;
         case 422:
@@ -216,7 +218,7 @@ export default function InstanceSetupWizard() {
               id="name"
               value={formData.name}
               onChange={handleInputChange("name")}
-              placeholder="Your name"
+              placeholder={tisetup("yourNamePlaceholder")}
               disabled={isSubmitting}
               autoFocus
               error={errors.name}
@@ -243,7 +245,7 @@ export default function InstanceSetupWizard() {
               id="password"
               value={formData.password}
               onChange={handleInputChange("password")}
-              placeholder="Enter a strong password"
+              placeholder={tisetup("strongPasswordPlaceholder")}
               disabled={isSubmitting}
               error={errors.password}
               showPasswordToggle={true}
@@ -260,7 +262,7 @@ export default function InstanceSetupWizard() {
               id="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleInputChange("confirmPassword")}
-              placeholder="Re-enter your password"
+              placeholder={tisetup("reEnterPasswordPlaceholder")}
               disabled={isSubmitting}
               error={confirmPasswordError}
               showPasswordToggle={true}

@@ -1,4 +1,5 @@
 import Breadcrumbs from "@components/Breadcrumbs";
+import { useTranslations } from "next-intl";
 import FancyToggleSwitch from "@components/FancyToggleSwitch";
 import InlineLink from "@components/InlineLink";
 import { notify } from "@components/Notification";
@@ -16,7 +17,9 @@ type Props = {
   account: Account;
 };
 
-export default function MetricsTab({ account }: Readonly<Props>) {
+export default function MetricsTab({
+account }: Readonly<Props>) {
+  const t = useTranslations("settings");
   const { permission } = usePermissions();
   const { mutate } = useSWRConfig();
   const saveRequest = useApiCall<Account>("/accounts/" + account.id, true);
@@ -43,7 +46,7 @@ export default function MetricsTab({ account }: Readonly<Props>) {
           setMetricsPushEnabled(toggle);
           mutate("/accounts");
         }),
-      loadingMessage: "Updating metrics setting...",
+      loadingMessage: t("updatingMetricsSetting"),
     });
   };
 

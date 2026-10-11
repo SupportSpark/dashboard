@@ -32,8 +32,8 @@ export default function PermissionsTab({ account }: Props) {
 
 	const saveChanges = async () => {
 		notify({
-			title: "Permission Settings",
-			description: "Permissions were updated successfully.",
+			title: t("permissionSettings"),
+			description: t("permissionsUpdated"),
 			promise: saveRequest
 				.put({
 					id: account.id,
@@ -46,7 +46,7 @@ export default function PermissionsTab({ account }: Props) {
 					mutate("/accounts");
 					updateRef([userViewBlocked]);
 				}),
-			loadingMessage: "Updating permissions...",
+			loadingMessage: t("updatingPermissions"),
 		});
 	};
 

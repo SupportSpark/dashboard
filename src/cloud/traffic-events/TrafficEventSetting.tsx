@@ -1,4 +1,5 @@
 import Button from "@components/Button";
+import { useTranslations } from "next-intl";
 import FancyToggleSwitch from "@components/FancyToggleSwitch";
 import HelpText from "@components/HelpText";
 import InlineLink from "@components/InlineLink";
@@ -31,7 +32,10 @@ type Props = {
 export const TRAFFIC_EVENTS_DOC_LINK =
   "https://docs.netbird.io/how-to/traffic-events-logging";
 
-export const TrafficEventSetting = ({ account }: Props) => {
+export const TrafficEventSetting = ({
+  account,
+}: Props) => {
+  const tte = useTranslations("trafficEvents");
   const { permission } = usePermissions();
   const { groups } = useGroups();
   const { mutate } = useSWRConfig();
@@ -74,7 +78,7 @@ export const TrafficEventSetting = ({ account }: Props) => {
           setTrafficEventsEnabled(toggle);
           mutate("/accounts");
         }),
-      loadingMessage: "Updating traffic events setting...",
+      loadingMessage: tte("updatingTrafficEventsSetting"),
     });
   };
 
@@ -82,9 +86,9 @@ export const TrafficEventSetting = ({ account }: Props) => {
     let choice = false;
     if (toggle) {
       choice = await confirm({
-        title: "Enable Traffic Reporting (Kernel)?",
+        title: tte("enableTrafficReportingKernel"),
         description:
-          "Note: Enabling this setting will lead to a higher CPU usage than usual on the NetBird client.",
+          tte("enableTrafficReportingWarning"),
         confirmText: "Enable",
         cancelText: "Cancel",
         type: "default",
@@ -93,7 +97,7 @@ export const TrafficEventSetting = ({ account }: Props) => {
     }
 
     notify({
-      title: "Traffic Reporting",
+      title: tte("trafficReporting"),
       description: `Traffic reporting successfully ${
         toggle ? "enabled" : "disabled"
       }.`,
@@ -112,7 +116,7 @@ export const TrafficEventSetting = ({ account }: Props) => {
           setTrafficPacketCounterEnabled(toggle);
           mutate("/accounts");
         }),
-      loadingMessage: "Updating traffic reporting setting...",
+      loadingMessage: tte("updatingTrafficReportingSetting"),
     });
   };
 
@@ -189,7 +193,7 @@ export const TrafficEventSetting = ({ account }: Props) => {
                 disabled={!permission.settings.update}
               />
               <div className={"mt-2"}>
-                <Label>Limit To Specific Groups</Label>
+                <Label>{tte("limitToSpecificGroups")}</Label>
                 <HelpText className={"mb-3"}>
                   Select peer groups for which traffic events will be logged.{" "}
                   <br />
@@ -216,6 +220,7 @@ type TrafficEventGroupsSettingProps = {
 export const TrafficEventGroupsSetting = ({
   account,
 }: TrafficEventGroupsSettingProps) => {
+  const tte = useTranslations("trafficEvents");
   const saveRequest = useApiCall<Account>("/accounts/" + account.id);
   const { mutate } = useSWRConfig();
 
@@ -231,8 +236,8 @@ export const TrafficEventGroupsSetting = ({
     const groupIds = groups.map((group) => group.id) as string[];
 
     notify({
-      title: "Traffic Events Groups",
-      description: "Traffic events groups successfully updated.",
+      title: tte("trafficEventsGroups"),
+      description: tte("trafficEventsGroupsUpdated"),
       promise: saveRequest
         .put({
           id: account.id,
@@ -249,7 +254,7 @@ export const TrafficEventGroupsSetting = ({
           updateRef([groups]);
           mutate("/accounts");
         }),
-      loadingMessage: "Updating traffic events groups...",
+      loadingMessage: tte("updatingTrafficEventsGroups"),
     });
   };
 

@@ -1,4 +1,5 @@
 import { notify } from "@components/Notification";
+import { useTranslations } from "next-intl";
 import { useApiCall } from "@utils/api";
 import loadConfig from "@utils/config";
 import { isNetBirdCloud } from "@utils/netbird";
@@ -23,6 +24,7 @@ import { useAccount } from "@/modules/account/useAccount";
 import { requestAgentNetworkOnboarding } from "@/modules/onboarding/agent-network/existingAccountOnboarding";
 import { OnboardingProvider } from "@/modules/onboarding/OnboardingProvider";
 
+  const t = useTranslations("agentNetworkLabels");
 export const NetBirdCloudProvider = () => {
   const { mutate } = useSWRConfig();
   const { subscription } = useBilling();
@@ -89,7 +91,7 @@ export const NetBirdCloudProvider = () => {
         ...(isNewAccount ? { agent_network_only: true } : {}),
       };
       notify({
-        title: "Agent Network",
+        title: t("agentNetworkLabel"),
         description: isNewAccount
           ? "Agent Network focused view enabled for your account."
           : "Agent Network enabled for your account.",

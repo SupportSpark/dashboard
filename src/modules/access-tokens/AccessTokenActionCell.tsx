@@ -1,4 +1,5 @@
 import Button from "@components/Button";
+import { useTranslations } from "next-intl";
 import { notify } from "@components/Notification";
 import { useApiCall } from "@utils/api";
 import { Trash2 } from "lucide-react";
@@ -14,8 +15,10 @@ type Props = {
   access_token: AccessToken;
 };
 export default function AccessTokenActionCell({
+
   access_token,
 }: Readonly<Props>) {
+  const tcommon = useTranslations("common");
   const { user } = useUserContext();
   const { permission } = usePermissions();
   const { confirm } = useDialog();
@@ -27,11 +30,11 @@ export default function AccessTokenActionCell({
   const handleRevoke = async () => {
     notify({
       title: access_token.name,
-      description: "Access token was successfully deleted",
+      description: tcommon("accessTokenDeleted"),
       promise: deleteRequest.del().then(() => {
         mutate(`/users/${user.id}/tokens`);
       }),
-      loadingMessage: "Deleting the access token...",
+      loadingMessage: tcommon("deletingAccessToken"),
     });
   };
 
@@ -39,7 +42,7 @@ export default function AccessTokenActionCell({
     const choice = await confirm({
       title: `Delete '${access_token.name}'?`,
       description:
-        "Are you sure you want to delete this token? This action cannot be undone.",
+        tcommon("confirmDeleteToken"),
       confirmText: "Delete",
       cancelText: "Cancel",
       type: "danger",

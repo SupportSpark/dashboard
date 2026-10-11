@@ -8,6 +8,7 @@ import { RestrictedAccess } from "@components/ui/RestrictedAccess";
 import { usePortalElement } from "@hooks/usePortalElement";
 import useRedirect from "@hooks/useRedirect";
 import useFetchApi from "@utils/api";
+import { useTranslations } from "next-intl";
 import React, { Suspense, useMemo } from "react";
 import MSPIcon from "@/assets/icons/MSPIcon";
 import { useMSP } from "@/cloud/msp/contexts/MSPProvider";
@@ -40,6 +41,7 @@ const Redirect = () => {
 };
 
 const TenantsPageContent = () => {
+  const t = useTranslations("msp");
   const { permission } = usePermissions();
   const { data: tenants, isLoading } = useFetchApi<Tenant[]>(
     "/integrations/msp/tenants",
@@ -55,21 +57,18 @@ const TenantsPageContent = () => {
         <Breadcrumbs>
           <Breadcrumbs.Item
             href={"/tenants"}
-            label={"Tenants"}
+            label={t("tenantsLabel")}
             icon={<MSPIcon size={15} />}
           />
         </Breadcrumbs>
-        <h1 ref={headingRef}>Tenants</h1>
-        <Paragraph>
-          A list of all tenants and their subscription details. Use this view to
-          manage accounts, plans and permissions.
-        </Paragraph>
+        <h1 ref={headingRef}>{t("tenantsLabel")}</h1>
+        <Paragraph>{t("tenantsPageDescription")}</Paragraph>
         <Paragraph>
           <MSPTenantDocsLink />
-          in our documentation.
+          {t("tenantsDocsSuffix")}
         </Paragraph>
       </div>
-      <RestrictedAccess page={"Tenants"} hasAccess={permission.tenants.read}>
+      <RestrictedAccess page={t("tenantsLabel")} hasAccess={permission.tenants.read}>
         <Suspense fallback={<SkeletonTable />}>
           <TenantsProvider>
             <MSPTenantsTable

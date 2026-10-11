@@ -1,4 +1,5 @@
 import Button from "@components/Button";
+import { useTranslations } from "next-intl";
 import Card from "@components/Card";
 import HelpText from "@components/HelpText";
 import InlineLink from "@components/InlineLink";
@@ -77,6 +78,7 @@ const ModalWidth = {
 } as Record<string, string>;
 
 const MspAccountModalContent = ({ setOpen, tenant, initialTab }: Props) => {
+  const tm = useTranslations("msp");
   const { mutate } = useSWRConfig();
   const { openDomainVerificationModal, verifyDomain, openAccountExistsModal } =
     useTenants();
@@ -121,7 +123,7 @@ const MspAccountModalContent = ({ setOpen, tenant, initialTab }: Props) => {
 
     notify({
       title: `Add ${domain} account`,
-      description: "The tenant account has been created successfully.",
+      description: tm("tenantCreated"),
       preventSuccessToast: true,
       promise: tenantRequest
         .post({ name, domain, groups: newTenantGroups })
@@ -154,7 +156,7 @@ const MspAccountModalContent = ({ setOpen, tenant, initialTab }: Props) => {
 
     notify({
       title: `Update ${tenant?.domain} account`,
-      description: "The tenant account has been updated successfully.",
+      description: tm("tenantUpdated"),
       promise: tenantRequest
         .put({ name, groups: newTenantGroups }, `/${tenant.id}`)
         .then(() => refreshAndClose()),

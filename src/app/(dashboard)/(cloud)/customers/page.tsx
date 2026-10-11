@@ -6,6 +6,7 @@ import SkeletonTable from "@components/skeletons/SkeletonTable";
 import FullScreenLoading from "@components/ui/FullScreenLoading";
 import { usePortalElement } from "@hooks/usePortalElement";
 import useFetchApi from "@utils/api";
+import { useTranslations } from "next-intl";
 import React, { Suspense } from "react";
 import MSPIcon from "@/assets/icons/MSPIcon";
 import { CustomersProvider } from "@/cloud/distributor/contexts/CustomersProvider";
@@ -24,6 +25,7 @@ export default function CustomersPage() {
 }
 
 const CustomersPageContent = () => {
+  const t = useTranslations("distributor");
   const { permission } = usePermissions();
   const { data: customers, isLoading } = useFetchApi<DistributorCustomer[]>(
     "/integrations/msp/reseller/msps",
@@ -37,21 +39,19 @@ const CustomersPageContent = () => {
         <Breadcrumbs>
           <Breadcrumbs.Item
             href={"/customers"}
-            label={"Customers"}
+            label={t("customersLabel")}
             icon={<MSPIcon size={15} />}
           />
         </Breadcrumbs>
-        <h1 ref={headingRef}>Customers</h1>
-        <Paragraph>
-          Use this view to manage customer accounts and their plans.
-        </Paragraph>
+        <h1 ref={headingRef}>{t("customersLabel")}</h1>
+        <Paragraph>{t("customersPageDescription")}</Paragraph>
         <Paragraph>
           <DistributorDocsLink />
-          in our documentation.
+          {t("customersDocsSuffix")}
         </Paragraph>
       </div>
       <RestrictedAccess
-        page={"Customers"}
+        page={t("customersLabel")}
         hasAccess={permission.tenants.create}
       >
         <Suspense fallback={<SkeletonTable />}>

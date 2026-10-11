@@ -3,6 +3,7 @@ import { notify } from "@components/Notification";
 import { SkeletonIntegration } from "@components/skeletons/SkeletonIntegration";
 import { useApiCall } from "@utils/api";
 import { Settings } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useSWRConfig } from "swr";
@@ -21,6 +22,8 @@ type Props = {
 };
 
 export const CrowdStrike = ({ account }: Props) => {
+  const t = useTranslations("integrations");
+  const tCommon = useTranslations("common");
   const { permission } = usePermissions();
   const { mutate } = useSWRConfig();
   const [setupModal, setSetupModal] = useState(false);
@@ -49,11 +52,12 @@ export const CrowdStrike = ({ account }: Props) => {
 
     const choice = isCurrentlyEnabled
       ? await confirm({
-          title: `Disable CrowdStrike?`,
-          description:
-            "Are you sure you want to disable the CrowdStrike integration?",
-          confirmText: "Disable",
-          cancelText: "Cancel",
+          title: t("disableIntegrationTitle", { name: "CrowdStrike" }),
+          description: t("disableIntegrationDescription", {
+            name: "CrowdStrike",
+          }),
+          confirmText: tCommon("disable"),
+          cancelText: tCommon("cancel"),
           type: "warning",
         })
       : true;
@@ -65,10 +69,11 @@ export const CrowdStrike = ({ account }: Props) => {
       ) || [];
 
     notify({
-      title: "CrowdStrike Integration",
-      description: `CrowdStrike was successfully ${
-        isCurrentlyEnabled ? "disabled" : "enabled"
-      }`,
+      title: t("integrationLinkText", { name: "CrowdStrike" }),
+      description: t("integrationWasEnabledOrDisabled", {
+        name: "CrowdStrike",
+        status: isCurrentlyEnabled ? t("disableAction") : t("enableAction"),
+      }),
       promise: integrationRequest
         .put({
           ...integration,
@@ -80,7 +85,7 @@ export const CrowdStrike = ({ account }: Props) => {
         .then(() => {
           mutate("/integrations/edr/falcon");
         }),
-      loadingMessage: "Updating integration...",
+      loadingMessage: t("updatingIntegration"),
     });
   };
 
@@ -90,7 +95,7 @@ export const CrowdStrike = ({ account }: Props) => {
     <>
       <IntegrationCard
         name="CrowdStrike"
-        description="CrowdStrike is a cloud-native platform for protecting endpoints, cloud workloads, identities and data."
+        description={t("crowdstrikeDescription")}
         url={{
           title: "crowdstrike.com",
           href: "https://www.crowdstrike.com/",
@@ -125,6 +130,7 @@ type ConfigurationProps = {
   config: CrowdstrikeIntegration;
 };
 const ConfigurationButton = ({ config }: ConfigurationProps) => {
+  const t = useTranslations("integrations");
   const [configModal, setConfigModal] = useState(false);
 
   return (
@@ -139,7 +145,7 @@ const ConfigurationButton = ({ config }: ConfigurationProps) => {
           }}
         >
           <Settings size={14} />
-          Settings
+          {t("settings")}
         </Button>
       </div>
       <CrowdStrikeConfiguration

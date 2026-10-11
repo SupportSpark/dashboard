@@ -67,6 +67,7 @@ export type AccessLogFilterId =
 export function useAccessLogFilters(options?: {
   include?: AccessLogFilterId[];
 }) {
+  const t = useTranslations("agentNetwork");
   const include = options?.include;
   const tDateRange = useTranslations("dateRange");
   const { providers } = useAIProviders();
@@ -140,7 +141,7 @@ export function useAccessLogFilters(options?: {
     () => [
       {
         id: "date",
-        label: "Date",
+        label: t("date"),
         renderPicker: (p) => (
           <div className={"p-1"}>
             <DatePickerWithRange
@@ -154,7 +155,7 @@ export function useAccessLogFilters(options?: {
       },
       {
         id: "user",
-        label: "User",
+        label: t("user"),
         renderPicker: (p) => (
           <UsersPicker
             value={p.value as string | undefined}
@@ -168,7 +169,7 @@ export function useAccessLogFilters(options?: {
       },
       {
         id: "group",
-        label: "Group",
+        label: t("groupSingular"),
         renderPicker: (p) => (
           <GroupsPicker
             value={p.value as string[] | undefined}
@@ -181,7 +182,7 @@ export function useAccessLogFilters(options?: {
       },
       {
         id: "provider",
-        label: "Provider",
+        label: t("provider"),
         renderPicker: (p) => (
           <CheckboxListPicker
             value={p.value as string[] | undefined}
@@ -199,7 +200,7 @@ export function useAccessLogFilters(options?: {
       },
       {
         id: "model",
-        label: "Model",
+        label: t("model"),
         renderPicker: (p) => (
           <CheckboxListPicker
             value={p.value as string[] | undefined}

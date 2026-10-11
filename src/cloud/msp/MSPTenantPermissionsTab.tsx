@@ -10,13 +10,13 @@ import {
   MinusCircleIcon,
   PlusIcon,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { TenantGroup } from "@/cloud/msp/interfaces/Tenant";
-import { useUsers } from "@/contexts/UsersProvider";
-import { Group } from "@/interfaces/Group";
+import { useUsers } from "@/contexts/UsersProvider";import { Group } from "@/interfaces/Group";
 import { Role } from "@/interfaces/User";
 import { HorizontalUsersStack } from "@/modules/users/HorizontalUsersStack";
-import { UserRoles, UserRoleSelector } from "@/modules/users/UserRoleSelector";
+import { getUserRoles, UserRoleSelector } from "@/modules/users/UserRoleSelector";
 
 type Props = {
   groups: Group[];
@@ -124,8 +124,10 @@ const ListItem = ({
   onChange,
   role = Role.Admin,
 }: ListItemProps) => {
+  const t = useTranslations("users");
   const { users } = useUsers();
-  const selectedRole = UserRoles.find((r) => r.value === role) || UserRoles[0];
+  const roles = getUserRoles(t);
+  const selectedRole = roles.find((r) => r.value === role) || roles[0];
 
   const usersOfGroup =
     users?.filter((user) => user.auto_groups.includes(group.id as string)) ||

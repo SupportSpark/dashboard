@@ -1,4 +1,5 @@
 import Button from "@components/Button";
+import { useTranslations } from "next-intl";
 import { Callout } from "@components/Callout";
 import InlineLink, { InlineButtonLink } from "@components/InlineLink";
 import useFetchApi from "@utils/api";
@@ -94,46 +95,48 @@ export const OnboardingAgentEnd = ({
 };
 
 // The dashboard's Agent Network sections, one line each.
-const SECTIONS: { icon: LucideIcon; title: string; description: string }[] = [
+const getSections = (
+  tonb: ReturnType<typeof useTranslations>,
+): { icon: LucideIcon; title: string; description: string }[] => [
   {
     icon: KeyRoundIcon,
-    title: "Providers",
-    description: "Connect providers and pick models.",
+    title: tonb("endProviders"),
+    description: tonb("endProvidersDesc"),
   },
   {
     icon: ShieldCheckIcon,
-    title: "Policies",
-    description: "Choose who can use each provider.",
+    title: tonb("endPolicies"),
+    description: tonb("endPoliciesDesc"),
   },
   {
     icon: ListChecksIcon,
-    title: "Guardrails",
-    description: "Limit models and capture prompts.",
+    title: tonb("endGuardrails"),
+    description: tonb("endGuardrailsDesc"),
   },
   {
     icon: GaugeIcon,
-    title: "Budgets and limits",
-    description: "Cap token use and spend.",
+    title: tonb("endBudgets"),
+    description: tonb("endBudgetsDesc"),
   },
   {
     icon: ChartColumnIcon,
-    title: "Usage",
-    description: "Track tokens and spend over time.",
+    title: tonb("endUsage"),
+    description: tonb("endUsageDesc"),
   },
   {
     icon: ScrollTextIcon,
-    title: "Access Logs",
-    description: "See every request and who sent it.",
+    title: tonb("endAccessLogs"),
+    description: tonb("endAccessLogsDesc"),
   },
   {
     icon: DatabaseIcon,
-    title: "Log retention",
-    description: "Choose how long logs are kept.",
+    title: tonb("endLogRetention"),
+    description: tonb("endLogRetentionDesc"),
   },
   {
     icon: SquareTerminalIcon,
-    title: "Agent setup",
-    description: "Configure Claude Code and Codex.",
+    title: tonb("endAgentSetup"),
+    description: tonb("endAgentSetupDesc"),
   },
 ];
 
@@ -147,11 +150,14 @@ const AllSet = ({
   entry: APIAgentNetworkAccessLog;
   onBack: () => void;
   onFinish: () => void;
-}) => (
+}) => {
+  const tonb = useTranslations("onboarding");
+  const SECTIONS = getSections(tonb);
+  return (
   <div className={"relative flex flex-col h-full gap-4"}>
     <div>
       <h1 className={"text-xl text-center max-w-sm mx-auto"}>
-        You&apos;re all set!
+        {tonb("allSet")}
       </h1>
       <PassedRequest entry={entry} />
     </div>
@@ -175,15 +181,16 @@ const AllSet = ({
 
     <div className={"flex items-center justify-center mt-4 gap-3"}>
       <Button variant={"secondary"} onClick={onBack}>
-        Go Back
+        {tonb("goBack")}
       </Button>
       <Button variant={"primary"} onClick={onFinish}>
-        Finish
+        {tonb("finish")}
         <CheckIcon size={16} />
       </Button>
     </div>
   </div>
-);
+  );
+};
 
 // PassedRequest is the step's subtitle: it names the provider the test
 // request was routed to when it is one of the account's.

@@ -1,4 +1,5 @@
 import Button from "@components/Button";
+import { useTranslations } from "next-intl";
 import FullTooltip from "@components/FullTooltip";
 import { notify } from "@components/Notification";
 import { DataTableMultiSelectPopup } from "@components/table/DataTableMultiSelectPopup";
@@ -17,9 +18,11 @@ type Props = {
 };
 
 export const GroupsMultiSelect = ({
+
   selectedGroups = [],
   onCanceled,
 }: Readonly<Props>) => {
+  const tgrp = useTranslations("groups");
   const { mutate } = useSWRConfig();
   const { confirm } = useDialog();
   const { deleteGroupDropdownOption } = useGroups();
@@ -76,7 +79,7 @@ export const GroupsMultiSelect = ({
     });
 
     notify({
-      title: "Delete Groups",
+      title: tgrp("deleteGroupsTitle"),
       description:
         groupCount > 1
           ? "Groups were successfully deleted"

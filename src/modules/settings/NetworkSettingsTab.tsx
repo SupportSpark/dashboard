@@ -69,7 +69,7 @@ function NetworkSettingsTabContent({ account }: Readonly<Props>) {
 
 	const toggleNetworkDNSSetting = async (toggle: boolean) => {
 		notify({
-			title: "Routing Peer DNS Resolution",
+			title: t("routingPeerDnsResolution"),
 			description: `Routing Peer DNS Resolution successfully ${
 				toggle ? "enabled" : "disabled"
 			}.`,
@@ -85,7 +85,7 @@ function NetworkSettingsTabContent({ account }: Readonly<Props>) {
 					setRoutingPeerDNSSetting(toggle);
 					mutate("/accounts");
 				}),
-			loadingMessage: "Updating routing peer DNS resolution setting...",
+			loadingMessage: t("updatingRoutingPeerDnsResolution"),
 		});
 	};
 
@@ -126,7 +126,7 @@ function NetworkSettingsTabContent({ account }: Readonly<Props>) {
 		}
 
 		notify({
-			title: "Network Settings",
+			title: t("networkSettings"),
 			description: `Network settings successfully updated.`,
 			promise: saveRequest
 				.put({
@@ -142,7 +142,7 @@ function NetworkSettingsTabContent({ account }: Readonly<Props>) {
 						ipv6GroupNames,
 					]);
 				}),
-			loadingMessage: "Updating network settings...",
+			loadingMessage: t("updatingNetworkSettings"),
 		});
 	};
 

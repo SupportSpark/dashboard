@@ -1,5 +1,6 @@
 import { cn } from "@utils/helpers";
 import { SearchIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { Dispatch, forwardRef } from "react";
 
@@ -10,14 +11,8 @@ type Props = {
 };
 
 export const SelectDropdownSearchInput = forwardRef<HTMLInputElement, Props>(
-  (
-    {
-      search,
-      setSearch,
-      placeholder = "Search for peers by name or ip...",
-    }: Props,
-    ref,
-  ) => {
+  ({ search, setSearch, placeholder }: Props, ref) => {
+    const t = useTranslations("common");
     return (
       <div className={"relative"}>
         <input
@@ -31,7 +26,7 @@ export const SelectDropdownSearchInput = forwardRef<HTMLInputElement, Props>(
           data-testid="select-dropdown-search"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder={placeholder}
+          placeholder={placeholder ?? t("searchForPeersByNameOrIp")}
         />
         <div className={"absolute left-0 top-0 h-full flex items-center pl-4"}>
           <div className={"flex items-center"}>

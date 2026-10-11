@@ -28,6 +28,7 @@ import { useDraftGroupActions } from "@/modules/control-center/hooks/useDraftGro
 import { useDraftNodeCreation } from "@/modules/control-center/hooks/useDraftNodeCreation";
 import { useEdgeAwareMenuPosition } from "@/modules/control-center/hooks/useEdgeAwareMenuPosition";
 import { menuItemSlug } from "@/modules/control-center/menus/menuItemTestId";
+import { useTranslations } from "next-intl";
 
 type MenuPosition = {
   x: number;
@@ -54,6 +55,7 @@ interface CanvasContextMenuProps {
 }
 
 export const CanvasContextMenu = ({ onOpenChange }: CanvasContextMenuProps) => {
+  const t = useTranslations("controlCenter");
   const [position, setPosition] = useState<MenuPosition | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   // Where the menu renders — flipped/clamped away from the viewport edges.
@@ -95,13 +97,13 @@ export const CanvasContextMenu = ({ onOpenChange }: CanvasContextMenuProps) => {
     const groups = [
       [
         {
-          label: "New Server",
+          label: t("newServer"),
           icon: <ServerIcon size={14} />,
           permitted: true,
           action: (pos: XYPosition) => addPeerPlaceholder("server", pos),
         },
         {
-          label: "New Agent",
+          label: t("newAgent"),
           icon: <BotIcon size={14} />,
           permitted: true,
           action: (pos: XYPosition) => addPeerPlaceholder("agent", pos),
@@ -109,13 +111,13 @@ export const CanvasContextMenu = ({ onOpenChange }: CanvasContextMenuProps) => {
       ],
       [
         {
-          label: "New Policy",
+          label: t("newPolicy"),
           icon: <ShieldIcon size={14} />,
           permitted: permission.policies.create,
           action: (pos: XYPosition) => addBlankPolicy(pos),
         },
         {
-          label: "New Group",
+          label: t("newGroup"),
           icon: <FolderGit2 size={14} />,
           permitted: permission.groups.create,
           action: (pos: XYPosition) =>
@@ -125,7 +127,7 @@ export const CanvasContextMenu = ({ onOpenChange }: CanvasContextMenuProps) => {
       drilled
         ? [
             {
-              label: "New Resource",
+              label: t("newResource"),
               icon: <WorkflowIcon size={14} />,
               permitted: permission.networks.create,
               // Created into the drilled network. Pass the right-click point so
@@ -138,7 +140,7 @@ export const CanvasContextMenu = ({ onOpenChange }: CanvasContextMenuProps) => {
                 }),
             },
             {
-              label: "Add Routing Peer",
+              label: t("addRoutingPeer"),
               icon: <WaypointsIcon size={14} />,
               permitted: permission.networks.create,
               action: () =>
@@ -149,13 +151,13 @@ export const CanvasContextMenu = ({ onOpenChange }: CanvasContextMenuProps) => {
           ]
         : [
             {
-              label: "New Network",
+              label: t("newNetwork"),
               icon: <NetworkIcon size={14} />,
               permitted: permission.networks.create,
               action: (pos: XYPosition) => addBlankNode("network", pos),
             },
             {
-              label: "New Resource",
+              label: t("newResource"),
               icon: <WorkflowIcon size={14} />,
               permitted: permission.networks.create,
               // Open the editor first — a resource must have an IP/CIDR/domain;
@@ -166,7 +168,7 @@ export const CanvasContextMenu = ({ onOpenChange }: CanvasContextMenuProps) => {
           ],
       [
         {
-          label: "New Agent Policy",
+          label: t("newAgentPolicy"),
           icon: <ShieldIcon size={14} />,
           permitted:
             agentNetworkEnabled &&
@@ -174,7 +176,7 @@ export const CanvasContextMenu = ({ onOpenChange }: CanvasContextMenuProps) => {
           action: (pos: XYPosition) => addBlankAgentPolicy(pos),
         },
         {
-          label: "New Agent Provider",
+          label: t("newAgentProvider"),
           icon: <SparklesIcon size={14} />,
           permitted:
             agentNetworkEnabled &&

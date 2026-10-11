@@ -79,10 +79,7 @@ import {
 } from "@/modules/reverse-proxy/targets/useReverseProxyTargetOptions";
 import useGroupHelper from "@/modules/groups/useGroupHelper";
 import { Group } from "@/interfaces/Group";
-import {
-  ReverseProxyServiceModeSelector,
-  SERVICE_MODES,
-} from "@/modules/reverse-proxy/ReverseProxyServiceModeSelector";
+import { ReverseProxyServiceModeSelector } from "@/modules/reverse-proxy/ReverseProxyServiceModeSelector";
 import { ReverseProxyAccessControlRules } from "@/modules/reverse-proxy/ReverseProxyAccessControlRules";
 
 type Props = {
@@ -200,9 +197,12 @@ export default function ReverseProxyModal({
   const timeoutError = useMemo(() => {
     if (!timeoutOption) return undefined;
     return serviceMode === ServiceMode.UDP
-      ? validateSessionIdleTimeout(timeoutOption)
-      : validateTimeout(timeoutOption);
-  }, [timeoutOption, serviceMode]);
+      ? validateSessionIdleTimeout(
+          timeoutOption,
+          t("invalidSessionTimeoutDuration"),
+        )
+      : validateTimeout(timeoutOption, t("invalidTimeoutDuration"));
+  }, [timeoutOption, serviceMode, t]);
 
   const [targets, setTargets] = useState<ReverseProxyTarget[]>(
     reverseProxy?.targets || [],

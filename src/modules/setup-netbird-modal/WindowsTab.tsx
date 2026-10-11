@@ -31,6 +31,7 @@ export default function WindowsTab({
   showSetupKeyInfo,
   hostname,
 }: Readonly<Props>) {
+  const t = useTranslations("setupModal");
   const [windowsUrl, setWindowsUrl] = useState(pkgsDownloadUrl("windows/x64"));
   // The CLI-run branch is required for the server flow (setupKeyContent
   // present) even before a key is generated — the placeholder keeps the
@@ -40,7 +41,7 @@ export default function WindowsTab({
   const baseMgmtStep = 2;
   const keyStep = GRPC_API_ORIGIN ? 3 : 2;
   const runStep = keyStep + (setupKeyContent ? 1 : 0);
-  const t = useTranslations("setupModal");
+
   return (
     <TabsContent value={String(OperatingSystem.WINDOWS)}>
       <TabsContentPadding>
@@ -67,7 +68,7 @@ export default function WindowsTab({
                     value: pkgsDownloadUrl("windows/arm64"),
                   },
                   {
-                    label: "64-Bit (MSI)",
+                    label: t("sixtyFourBitMsi"),
                     value: pkgsDownloadUrl("windows/msi/x64"),
                   },
                   {

@@ -30,6 +30,7 @@ import {
   NETWORK_FRAME_FALLBACK_ROW,
 } from "@/modules/control-center/utils/helpers";
 import { DROPPABLE_INTO_GROUP_NODE_TYPES as GROUPABLE_NODE_TYPES } from "@/modules/control-center/utils/node-capabilities";
+import { useTranslations } from "next-intl";
 
 const PEER_NODE_TYPES = new Set([
   "peerNode",
@@ -43,6 +44,8 @@ const RESOURCE_NODE_TYPES = new Set([
 ]);
 
 export const PeersToolbar = () => {
+  const t = useTranslations("controlCenter");
+  const tCommon = useTranslations("common");
   const { isDraft, drillDownNetworkNodeId } = useDraftMode();
   const { setNodes, setEdges } = useCanvasState();
   // Subscribing to positions re-rendered the toolbar on every drag tick.
@@ -344,21 +347,21 @@ export const PeersToolbar = () => {
                     className="px-3"
                   >
                     <FolderPlusIcon size={14} />
-                    <span className="text-xs ml-2">Create Group</span>
+                    <span className="text-xs ml-2">{t("createGroup")}</span>
                   </ToolbarButton>
                   <ToolbarButton
                     onClick={handleRemoveGroupables}
                     className="px-3"
                   >
                     <CircleXIcon size={14} />
-                    <span className="text-xs ml-2">Remove</span>
+                    <span className="text-xs ml-2">{t("remove")}</span>
                   </ToolbarButton>
                 </>
               ) : selectedGroupNodes.length >= 2 ? (
                 <>
                   <ToolbarButton onClick={handleRemoveGroups} className="px-3">
                     <CircleXIcon size={14} />
-                    <span className="text-xs ml-2">Remove</span>
+                    <span className="text-xs ml-2">{t("remove")}</span>
                   </ToolbarButton>
                   {deletableSelectedGroups.length > 0 && (
                     <ToolbarButton
@@ -366,7 +369,7 @@ export const PeersToolbar = () => {
                       className="px-3 text-red-500 hover:text-red-400"
                     >
                       <TrashIcon size={14} />
-                      <span className="text-xs ml-2">Delete</span>
+                      <span className="text-xs ml-2">{tCommon("delete")}</span>
                     </ToolbarButton>
                   )}
                 </>
@@ -376,7 +379,7 @@ export const PeersToolbar = () => {
                   className="px-3"
                 >
                   <CircleXIcon size={14} />
-                  <span className="text-xs ml-2">Remove</span>
+                  <span className="text-xs ml-2">{t("remove")}</span>
                 </ToolbarButton>
               )}
             </ToolbarGroup>

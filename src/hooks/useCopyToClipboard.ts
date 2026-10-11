@@ -1,11 +1,14 @@
 import { notify } from "@components/Notification";
+import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
 
 export default function useCopyToClipboard(textToCopy?: string) {
+  const t = useTranslations("common");
+  const tCopy = useTranslations("serviceUsers");
   const wrapper = useRef<HTMLDivElement>(null);
   const [copied, setCopied] = useState(false);
   const copyToClipboard = async (
-    description = "Text has been copied to your clipboard.",
+    description = t("textCopiedToClipboard"),
   ) => {
     const copy = textToCopy ? textToCopy : wrapper.current?.innerText;
     if (!copy) return;
@@ -14,7 +17,7 @@ export default function useCopyToClipboard(textToCopy?: string) {
       setCopied(true);
 
       notify({
-        title: "Copied to clipboard",
+        title: tCopy("copySuccess"),
         description: description,
       });
 

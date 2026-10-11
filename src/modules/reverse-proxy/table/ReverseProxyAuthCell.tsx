@@ -30,38 +30,39 @@ import { isL4Mode, ReverseProxy } from "@/interfaces/ReverseProxy";
 import FullTooltip from "@components/FullTooltip";
 import { useTranslations } from "next-intl";
 
-const AUTH_METHODS: {
+type AuthMethod = {
   key: "password_auth" | "pin_auth" | "bearer_auth";
   label: string;
   hoverLabel: string;
   Icon: LucideIcon;
-}[] = [
-  {
-    key: "password_auth",
-    label: "Password",
-    hoverLabel: "Password",
-    Icon: RectangleEllipsis,
-  },
-  { key: "pin_auth", label: "PIN Code", hoverLabel: "PIN Code", Icon: Binary },
-  {
-    key: "bearer_auth",
-    label: "SSO",
-    hoverLabel: "SSO (Single Sign On)",
-    Icon: Users,
-  },
-];
-
-const HEADER_AUTH_METHOD = {
-  label: "HTTP Headers",
-  hoverLabel: "HTTP Headers",
-  Icon: FileCode2Icon,
 };
 
-const NETBIRD_ONLY_METHOD = {
-  label: "NetBird Only",
-  hoverLabel: "NetBird-Only Access",
-  Icon: CircleUser,
-};
+/** Auth method rows; the labels come from the reverseProxy catalog. */
+function useAuthMethods(
+  tr: ReturnType<typeof useTranslations<"reverseProxy">>,
+): AuthMethod[] {
+  return [
+    {
+      key: "password_auth",
+      label: tr("password"),
+      hoverLabel: tr("password"),
+      Icon: RectangleEllipsis,
+    },
+    {
+      key: "pin_auth",
+      label: tr("pinCode"),
+      hoverLabel: tr("pinCode"),
+      Icon: Binary,
+    },
+    {
+      key: "bearer_auth",
+      // The short badge reads "SSO"; the hover row spells the acronym out.
+      label: "SSO",
+      hoverLabel: tr("sso"),
+      Icon: Users,
+    },
+  ];
+}
 
 type Props = {
   reverseProxy: ReverseProxy;
@@ -71,6 +72,19 @@ export default function ReverseProxyAuthCell({
   reverseProxy,
 }: Readonly<Props>) {
   const t = useTranslations("common");
+  const tr = useTranslations("reverseProxy");
+  const authMethods = useAuthMethods(tr);
+  const HEADER_AUTH_METHOD = {
+    label: tr("httpHeaders"),
+    hoverLabel: tr("httpHeaders"),
+    Icon: FileCode2Icon,
+  };
+  // NetBird-Only Access reuses the label that the auth modals already use.
+  const NETBIRD_ONLY_METHOD = {
+    label: tr("netBirdOnlyAccess"),
+    hoverLabel: tr("netBirdOnlyAccess"),
+    Icon: CircleUser,
+  };
 
   const { permission } = usePermissions();
   const { openModal } = useReverseProxies();
@@ -82,8 +96,7 @@ export default function ReverseProxyAuthCell({
         <FullTooltip
           content={
             <div className={"flex text-xs max-w-[340px]"}>
-              Auth methods are not supported for TCP/UDP and TLS passthrough
-              services as they operate at the network layer.
+              {tr("l4AuthNotSupported")}
             </div>
           }
         >
@@ -99,7 +112,7 @@ export default function ReverseProxyAuthCell({
   const auth = reverseProxy.auth;
   const isPrivate = !!reverseProxy.private;
 
-  const enabled = AUTH_METHODS.filter((m) => auth?.[m.key]?.enabled);
+  const enabled = authMethods.filter((m) => auth?.[m.key]?.enabled);
   const hasHeaderAuths = (auth?.header_auths ?? []).some((h) => h.enabled);
   const authCount =
     enabled.length + (hasHeaderAuths ? 1 : 0) + (isPrivate ? 1 : 0);
@@ -164,8 +177,8 @@ export default function ReverseProxyAuthCell({
                       value={
                         <div className={"text-green-500"}>
                           {key === "bearer_auth" && ssoGroups.length === 0
-                            ? "All Users"
-                            : "Enabled"}
+                            ? tr("allUsers")
+                            : t("enabled")}
                         </div>
                       }
                     >
@@ -207,10 +220,8 @@ export default function ReverseProxyAuthCell({
                       value={
                         <div className={"text-green-500"}>
                           {accessGroups.length === 0
-                            ? "No groups"
-                            : accessGroups.length === 1
-                              ? "1 Group"
-                              : `${accessGroups.length} Groups`}
+                            ? tr("noGroups")
+                            : tr("groupCount", { count: accessGroups.length })}
                         </div>
                       }
                     >

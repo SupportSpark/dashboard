@@ -6,6 +6,7 @@ import useFetchApi, { useApiCall } from "@utils/api";
 import dayjs from "dayjs";
 import { isEmpty } from "lodash";
 import { RefreshCw, Settings } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useEffect, useMemo, useState } from "react";
 import { useSWRConfig } from "swr";
@@ -21,6 +22,7 @@ import { useIntegrations } from "@/modules/integrations/idp-sync/useIntegrations
 import { IntegrationCard } from "@/modules/integrations/IntegrationCard";
 
 export const AzureAD = () => {
+  const t = useTranslations("idpSync");
   const { mutate } = useSWRConfig();
   const [setupModal, setSetupModal] = useState(false);
   const { permission } = usePermissions();
@@ -46,10 +48,10 @@ export const AzureAD = () => {
     if (!integration) return setSetupModal(true);
 
     notify({
-      title: "Entra ID (API) Integration",
-      description: `Entra ID (API) was successfully ${
-        state ? "enabled" : "disabled"
-      }`,
+      title: t("entraIdApiIntegrationTitle"),
+      description: t("entraIdApiWasEnabledOrDisabled", {
+        status: state ? t("enableAction") : t("disableAction"),
+      }),
       promise: azureRequest
         .put(
           {
@@ -61,7 +63,7 @@ export const AzureAD = () => {
           mutate("/integrations/azure-idp");
           setEnabled(state);
         }),
-      loadingMessage: "Updating integration...",
+      loadingMessage: t("updatingIntegration"),
     });
   };
 
@@ -71,7 +73,7 @@ export const AzureAD = () => {
     <>
       <IntegrationCard
         name="Entra ID (API)"
-        description="Microsoft Entra ID is a cloud-based identity and access management solution."
+        description={t("entraIdDescription")}
         url={{
           title: "microsoft.com",
           href: "https://www.microsoft.com/en-us/security/business/identity-access/microsoft-entra-id",
@@ -102,6 +104,7 @@ type ConfigurationProps = {
   config: AzureADIntegration;
 };
 const ConfigurationButton = ({ config }: ConfigurationProps) => {
+  const t = useTranslations("idpSync");
   const { data: logs } = useFetchApi<IdentityProviderLog[]>(
     `/integrations/azure-idp/${config.id}/logs`,
   );
@@ -114,9 +117,9 @@ const ConfigurationButton = ({ config }: ConfigurationProps) => {
 
   const forceSync = async () => {
     notify({
-      title: "Entra ID (API) Integration",
-      description: `Entra ID (API) was successfully synced`,
-      loadingMessage: "Syncing integration...",
+      title: t("entraIdApiIntegrationTitle"),
+      description: t("entraIdApiWasSynced"),
+      loadingMessage: t("syncingIntegration"),
       promise: syncRequest.post({}).then(() => {
         mutate(`/integrations/azure-idp/${config.id}/logs`);
       }),
@@ -124,8 +127,8 @@ const ConfigurationButton = ({ config }: ConfigurationProps) => {
   };
 
   const lastSync = useMemo(() => {
-    if (isEmpty(logs)) return "Not synchronized";
-    return "Synced " + dayjs().to(logs?.[0]?.timestamp);
+    if (isEmpty(logs)) return t("notSynchronized");
+    return t("syncedRelative", { time: dayjs().to(logs?.[0]?.timestamp) });
   }, [logs]);
 
   return (
@@ -133,9 +136,7 @@ const ConfigurationButton = ({ config }: ConfigurationProps) => {
       <div className={"flex gap-2"}>
         <FullTooltip
           content={
-            <div className={"text-xs"}>
-              Force synchronization of users and groups
-            </div>
+            <div className={"text-xs"}>{t("forceSyncTooltip")}</div>
           }
           disabled={!config.enabled}
           className={"w-full"}

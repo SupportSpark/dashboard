@@ -14,6 +14,7 @@ import type { Peer } from "@/interfaces/Peer";
 import { useCloseOnCanvasClick } from "@/modules/control-center/hooks/useCloseOnCanvasClick";
 import { DeviceCard } from "@/modules/control-center/nodes/DeviceCard";
 import { OSLogo } from "@/modules/peers/PeerOSCell";
+import { useTranslations } from "next-intl";
 
 type PeerNodeProps = Node<
   {
@@ -26,6 +27,7 @@ type PeerNodeProps = Node<
 >;
 
 export const SelectPeerNode = ({ data, id }: PeerNodeProps) => {
+  const tGroups = useTranslations("groups");
   const { data: peers, isLoading: isPeersLoading } =
     useFetchApi<Peer[]>("/peers");
 
@@ -78,7 +80,7 @@ export const SelectPeerNode = ({ data, id }: PeerNodeProps) => {
         onChange={data.onPeerChange}
         options={peerSelectOptions}
         showSearch={true}
-        searchPlaceholder={data?.placeholder ?? "Search peers..."}
+        searchPlaceholder={data?.placeholder ?? tGroups("searchPeer")}
         open={open}
         onOpenChange={setOpen}
         popoverWidth={280}

@@ -4,6 +4,7 @@ import { useCallback, useSyncExternalStore } from "react";
 import { mutate } from "swr";
 import { Group } from "@/interfaces/Group";
 import { SetupKey } from "@/interfaces/SetupKey";
+import { useTranslations } from "next-intl";
 
 // Real API objects a server/agent placeholder creates: a throwaway group the key
 // auto-assigns to match the registering peer, and the setup key.
@@ -55,6 +56,7 @@ const setupKeyUpdateBody = (
 });
 
 export function usePlaceholderArtifacts() {
+  const t = useTranslations("controlCenter");
   const groupRequest = useApiCall<Group>("/groups", true);
   const keyRequest = useApiCall<SetupKey>("/setup-keys", true);
 
@@ -123,7 +125,7 @@ export function usePlaceholderArtifacts() {
 
       if (failed.length > 0) {
         notify({
-          title: "Draft cleanup",
+          title: t("draftCleanup"),
           description: `Could not delete the temporary ${failed.join(
             " and ",
           )}. Remove it manually.${
@@ -247,7 +249,7 @@ export function usePlaceholderArtifacts() {
               .catch(() => undefined);
             if (!still || still.revoked) return;
             notify({
-              title: "Draft cleanup",
+              title: t("draftCleanup"),
               description: `Could not revoke the temporary setup key “${
                 still.name ?? key.name ?? setupKeyId
               }”. It stays usable until the draft is closed.`,

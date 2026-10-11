@@ -1,6 +1,7 @@
 "use client";
 
 import Button from "@components/Button";
+import { useTranslations } from "next-intl";
 import { Input } from "@components/Input";
 import Paragraph from "@components/Paragraph";
 import FullScreenLoading from "@components/ui/FullScreenLoading";
@@ -28,6 +29,7 @@ export default function InviteAcceptPage() {
 }
 
 function InviteAcceptContent() {
+  const tinvite = useTranslations("invite");
   const searchParams = useSearchParams();
   const router = useRouter();
   const token = searchParams?.get("token");
@@ -247,7 +249,7 @@ function InviteAcceptContent() {
             <div>
               <Input
                 type="password"
-                placeholder="Password"
+                placeholder={tinvite("passwordPlaceholder")}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 customPrefix={
@@ -256,11 +258,11 @@ function InviteAcceptContent() {
               />
               {password && (
                 <div className="mt-2 space-y-1">
-                  <PasswordRule met={hasMinLength} text="At least 8 characters" />
-                  <PasswordRule met={hasUppercase} text="One uppercase letter" />
-                  <PasswordRule met={hasLowercase} text="One lowercase letter" />
-                  <PasswordRule met={hasNumber} text="One number" />
-                  <PasswordRule met={hasSpecialChar} text="One special character (!@#$%^&*)" />
+                  <PasswordRule met={hasMinLength} text={tinvite("atLeast8Characters")} />
+                  <PasswordRule met={hasUppercase} text={tinvite("oneUppercaseLetter")} />
+                  <PasswordRule met={hasLowercase} text={tinvite("oneLowercaseLetter")} />
+                  <PasswordRule met={hasNumber} text={tinvite("oneNumber")} />
+                  <PasswordRule met={hasSpecialChar} text={tinvite("oneSpecialCharacter")} />
                 </div>
               )}
             </div>
@@ -268,7 +270,7 @@ function InviteAcceptContent() {
             <div>
               <Input
                 type="password"
-                placeholder="Confirm Password"
+                placeholder={tinvite("confirmPassword")}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 customPrefix={
@@ -277,7 +279,7 @@ function InviteAcceptContent() {
               />
               {confirmPassword && !passwordsMatch && (
                 <p className="text-xs text-red-500 mt-1">
-                  Passwords do not match
+                  {tinvite("passwordsDoNotMatch")}
                 </p>
               )}
             </div>

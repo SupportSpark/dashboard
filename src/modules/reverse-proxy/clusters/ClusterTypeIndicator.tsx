@@ -5,6 +5,7 @@ import {
   ReverseProxyCluster,
   ReverseProxyClusterType,
 } from "@/interfaces/ReverseProxy";
+import { useTranslations } from "next-intl";
 
 type Props = {
   cluster: ReverseProxyCluster;
@@ -14,6 +15,7 @@ type Props = {
 // same pattern as EphemeralPeerIndicator — so the source of the
 // cluster is visible at a glance without a dedicated column.
 export const ClusterTypeIndicator = ({ cluster }: Props) => {
+  const t = useTranslations("reverseProxy");
   // TODO(NET-1722): label a NetBird-managed gateway "Managed by NetBird"; it
   // is an account cluster but not self-hosted.
   if (cluster.type === ReverseProxyClusterType.ACCOUNT) {
@@ -21,9 +23,11 @@ export const ClusterTypeIndicator = ({ cluster }: Props) => {
       <FullTooltip
         content={
           <div className={"text-xs max-w-xs"}>
-            <span className={"font-medium text-white"}>Account cluster.</span>{" "}
-            Self-hosted on your own infrastructure — you operate the proxy
-            nodes and control where traffic terminates.
+            {t.rich("accountClusterTooltip", {
+              b: (chunks) => (
+                <span className={"font-medium text-white"}>{chunks}</span>
+              ),
+            })}
           </div>
         }
       >
@@ -35,9 +39,11 @@ export const ClusterTypeIndicator = ({ cluster }: Props) => {
     <FullTooltip
       content={
         <div className={"text-xs max-w-xs"}>
-          <span className={"font-medium text-white"}>Shared cluster.</span>{" "}
-          Deployed at the server level and available to every account on this
-          instance.
+          {t.rich("sharedClusterTooltip", {
+            b: (chunks) => (
+              <span className={"font-medium text-white"}>{chunks}</span>
+            ),
+          })}
         </div>
       }
     >

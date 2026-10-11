@@ -1,6 +1,7 @@
 import { IconArrowBack } from "@tabler/icons-react";
 import { cn } from "@utils/helpers";
 import { SearchIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { forwardRef } from "react";
 
@@ -17,13 +18,15 @@ export const DropdownInput = forwardRef<HTMLInputElement, Props>(
     {
       value,
       onChange,
-      placeholder = "Search...",
+      placeholder,
       className,
       hideEnterIcon = false,
       ...props
     },
     ref,
   ) => {
+    const t = useTranslations("table");
+    const resolvedPlaceholder = placeholder ?? t("search");
     return (
       <div className={"relative w-full"}>
         <input
@@ -37,7 +40,7 @@ export const DropdownInput = forwardRef<HTMLInputElement, Props>(
           )}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          placeholder={placeholder}
+          placeholder={resolvedPlaceholder}
           {...props}
         />
         <div className={"absolute left-0 top-0 h-full flex items-center pl-4"}>

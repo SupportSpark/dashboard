@@ -1,4 +1,5 @@
 import { DeviceCard } from "@components/DeviceCard";
+import { useTranslations } from "next-intl";
 import { cn } from "@utils/helpers";
 import { ShieldCheckIcon, ShieldXIcon } from "lucide-react";
 import * as React from "react";
@@ -23,6 +24,7 @@ export const OnboardingDevices = ({
   firstRoutingPeer,
   enabled = false,
 }: Props) => {
+  const tonb = useTranslations("onboarding");
   return intent === Intent.P2P ? (
     <div
       className={cn(
@@ -59,8 +61,8 @@ export const OnboardingDevices = ({
         <WaitingForDevice
           text={
             !firstDevice
-              ? "Waiting for your first device to connect"
-              : "Waiting for your second device to connect"
+              ? tonb("waitingForFirstDevice")
+              : tonb("waitingForSecondDevice")
           }
         />
       )}
@@ -142,7 +144,7 @@ export const OnboardingDevices = ({
 };
 
 export const WaitingForDevice = ({
-  text = "Waiting for your first device to connect",
+  text,
 }: {
   text: string;
 }) => {

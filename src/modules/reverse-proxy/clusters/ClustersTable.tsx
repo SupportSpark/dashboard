@@ -34,12 +34,19 @@ import ClustersConnectedCell from "@/modules/reverse-proxy/clusters/ClustersConn
 import ClustersFeaturesCell from "@/modules/reverse-proxy/clusters/ClustersFeaturesCell";
 import { ClustersModal } from "@/modules/reverse-proxy/clusters/ClustersModal";
 import ClustersNameCell from "@/modules/reverse-proxy/clusters/ClustersNameCell";
+import { useTranslations } from "next-intl";
 
-const ClustersColumns: ColumnDef<ReverseProxyCluster>[] = [
+/** Column headers; the definitions take `t` so the labels stay translatable. */
+const clustersColumns = (
+  t: ReturnType<typeof useTranslations<"reverseProxy">>,
+  tCommon: ReturnType<typeof useTranslations<"common">>,
+): ColumnDef<ReverseProxyCluster>[] => [
   {
     accessorKey: "address",
     header: ({ column }) => {
-      return <DataTableHeader column={column}>Cluster</DataTableHeader>;
+      return (
+        <DataTableHeader column={column}>{t("clusterColumn")}</DataTableHeader>
+      );
     },
     sortingFn: "text",
     cell: ({ row }) => <ClustersNameCell cluster={row.original} />,
@@ -48,7 +55,9 @@ const ClustersColumns: ColumnDef<ReverseProxyCluster>[] = [
     accessorKey: "connected_proxies",
     header: ({ column }) => {
       return (
-        <DataTableHeader column={column}>Connected Proxies</DataTableHeader>
+        <DataTableHeader column={column}>
+          {t("connectedProxies")}
+        </DataTableHeader>
       );
     },
     sortingFn: "basic",
@@ -56,7 +65,9 @@ const ClustersColumns: ColumnDef<ReverseProxyCluster>[] = [
   },
   {
     id: "features",
-    header: () => <span className={"font-medium text-xs"}>Features</span>,
+    header: () => (
+      <span className={"font-medium text-xs"}>{t("featuresColumn")}</span>
+    ),
     enableSorting: false,
     cell: ({ row }) => <ClustersFeaturesCell cluster={row.original} />,
   },
@@ -90,6 +101,8 @@ export default function ClustersTable({ headingTarget }: Readonly<Props>) {
   const { mutate } = useSWRConfig();
   const path = usePathname();
   const { permission } = usePermissions();
+  const t = useTranslations("reverseProxy");
+  const tCommon = useTranslations("common");
   const { data: clusters, isLoading } = useFetchApi<ReverseProxyCluster[]>(
     "/reverse-proxies/clusters",
   );
@@ -110,27 +123,27 @@ export default function ClustersTable({ headingTarget }: Readonly<Props>) {
 
   const statusOptions = useMemo<RadioOption<boolean | undefined>[]>(
     () => [
-      { value: undefined, label: "All", dotClass: "bg-nb-gray-500" },
-      { value: true, label: "Online", dotClass: "bg-green-500" },
-      { value: false, label: "Offline", dotClass: "bg-red-500" },
+      { value: undefined, label: tCommon("all"), dotClass: "bg-nb-gray-500" },
+      { value: true, label: tCommon("online"), dotClass: "bg-green-500" },
+      { value: false, label: tCommon("offline"), dotClass: "bg-red-500" },
     ],
-    [],
+    [tCommon],
   );
 
   const typeOptions = useMemo<RadioOption<string | undefined>[]>(
     () => [
-      { value: undefined, label: "All" },
-      { value: ReverseProxyClusterType.SHARED, label: "Shared" },
-      { value: ReverseProxyClusterType.ACCOUNT, label: "Self-Hosted" },
+      { value: undefined, label: tCommon("all") },
+      { value: ReverseProxyClusterType.SHARED, label: t("clusterTypeShared") },
+      { value: ReverseProxyClusterType.ACCOUNT, label: t("clusterTypeSelfHosted") },
     ],
-    [],
+    [t, tCommon],
   );
 
   const filterDefs = useMemo<TableFilterDef[]>(
     () => [
       {
         id: "online",
-        label: "Status",
+        label: tCommon("status"),
         renderPicker: (p) => (
           <RadioPicker
             value={p.value as boolean | undefined}
@@ -144,7 +157,7 @@ export default function ClustersTable({ headingTarget }: Readonly<Props>) {
       },
       {
         id: "type",
-        label: "Type",
+        label: tCommon("type"),
         renderPicker: (p) => (
           <RadioPicker
             value={p.value as string | undefined}
@@ -157,7 +170,7 @@ export default function ClustersTable({ headingTarget }: Readonly<Props>) {
           formatRadioChip(v as string | undefined, typeOptions),
       },
     ],
-    [statusOptions, typeOptions],
+    [statusOptions, typeOptions, tCommon],
   );
 
   return (
@@ -175,13 +188,13 @@ export default function ClustersTable({ headingTarget }: Readonly<Props>) {
         keepStateInLocalStorage={false}
         initialPageSize={25}
         showResetFilterButton={false}
-        text={"Clusters"}
+        text={t("clusters")}
         sorting={sorting}
         setSorting={setSorting}
-        columns={ClustersColumns}
+        columns={clustersColumns(t, tCommon)}
         data={rows}
         useRowId={true}
-        searchPlaceholder={"Search by cluster domain..."}
+        searchPlaceholder={t("searchClusterDomain")}
         aboveTable={(table) => (
           <TableFilterChips table={table} filters={filterDefs} />
         )}
@@ -199,10 +212,8 @@ export default function ClustersTable({ headingTarget }: Readonly<Props>) {
                 size={"large"}
               />
             }
-            title={"No clusters available"}
-            description={
-              "Set up a cluster to route traffic through your own infrastructure."
-            }
+            title={t("noClusters")}
+            description={t("noClustersDescription")}
             button={
               <Button
                 variant={"primary"}
@@ -210,7 +221,7 @@ export default function ClustersTable({ headingTarget }: Readonly<Props>) {
                 disabled={!permission?.services?.create}
               >
                 <PlusCircle size={16} />
-                Setup Self-Hosted Cluster
+                {t("setupSelfHostedCluster")}
               </Button>
             }
           />
@@ -225,7 +236,7 @@ export default function ClustersTable({ headingTarget }: Readonly<Props>) {
                 disabled={!permission?.services?.create}
               >
                 <PlusCircle size={16} />
-                Setup Self-Hosted Cluster
+                {t("setupSelfHostedCluster")}
               </Button>
             )}
           </>

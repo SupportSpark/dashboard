@@ -56,6 +56,7 @@ import {
   PolicyLimits,
 } from "@/modules/agent-network/data/mockData";
 import useGroupHelper from "@/modules/groups/useGroupHelper";
+import { useTranslations } from "next-intl";
 
 type Props = {
   open: boolean;
@@ -122,6 +123,9 @@ function AgentPolicyModalContent({
   onDraftSubmit?: (policy: Omit<AgentPolicy, "id">) => void;
   onSuccess: () => void;
 }) {
+  const t = useTranslations("agentNetwork");
+  const tCommon = useTranslations("common");
+  const tPolicies = useTranslations("policies");
   const {
     providers: accountProviders,
     addPolicy,
@@ -301,15 +305,15 @@ function AgentPolicyModalContent({
         <TabsList justify={"start"} className={"px-8"}>
           <TabsTrigger value={"policy"}>
             <ArrowRightLeft size={16} />
-            Policy
+            {t("policy")}
           </TabsTrigger>
           <TabsTrigger value={"limits"}>
             <Gauge size={16} />
-            Limits
+            {t("limits")}
           </TabsTrigger>
           <TabsTrigger value={"guardrails"}>
             <ShieldHalf size={16} />
-            Guardrails
+            {t("guardrails")}
           </TabsTrigger>
         </TabsList>
 
@@ -319,7 +323,7 @@ function AgentPolicyModalContent({
               <div className={"w-full self-start"}>
                 <Label className={"mb-2"}>
                   <FolderDown size={15} />
-                  Source
+                  {t("source")}
                   <HelpTooltip
                     content={
                       <>
@@ -347,7 +351,7 @@ function AgentPolicyModalContent({
               <div className={"w-full self-start"}>
                 <Label className={"mb-2"}>
                   <Sparkles size={15} />
-                  Provider
+                  {t("provider")}
                   <HelpTooltip
                     content={<>AI providers the source is allowed to reach.</>}
                   />
@@ -361,9 +365,9 @@ function AgentPolicyModalContent({
             </div>
 
             <div>
-              <Label>Name of the Policy</Label>
+              <Label>{t("nameOfPolicy")}</Label>
               <HelpText>
-                Set an easily identifiable name for your policy.
+                {tPolicies("ruleNameHelp")}
               </HelpText>
               <Input
                 value={name}
@@ -375,9 +379,9 @@ function AgentPolicyModalContent({
               />
             </div>
             <div>
-              <Label>Description (optional)</Label>
+              <Label>{tPolicies("policyDescriptionLabel")}</Label>
               <HelpText>
-                Write a short description to add more context to this policy.
+                {tPolicies("policyDescriptionHelp")}
               </HelpText>
               <Textarea
                 value={description}
@@ -403,12 +407,12 @@ function AgentPolicyModalContent({
       <ModalFooter className={"items-center"}>
         <div className={"w-full"}>
           <Paragraph className={"text-sm mt-auto"}>
-            Learn more about
+            {tCommon("learnMoreAbout")}
             <InlineLink
               href={"https://docs.netbird.io/agent-network"}
               target={"_blank"}
             >
-              Agent Network
+              {t("brand")}
               <ExternalLinkIcon size={12} />
             </InlineLink>
           </Paragraph>
@@ -419,7 +423,7 @@ function AgentPolicyModalContent({
               {tab === "policy" && (
                 <>
                   <ModalClose asChild>
-                    <Button variant={"secondary"}>Cancel</Button>
+                    <Button variant={"secondary"}>{tCommon("cancel")}</Button>
                   </ModalClose>
                   <Button
                     variant={"primary"}
@@ -428,7 +432,7 @@ function AgentPolicyModalContent({
                       !canContinueFromPolicy || name.trim().length === 0
                     }
                   >
-                    Continue
+                    {tCommon("continue")}
                   </Button>
                 </>
               )}
@@ -438,13 +442,13 @@ function AgentPolicyModalContent({
                     variant={"secondary"}
                     onClick={() => setTab("policy")}
                   >
-                    Back
+                    {tCommon("back")}
                   </Button>
                   <Button
                     variant={"primary"}
                     onClick={() => setTab("guardrails")}
                   >
-                    Continue
+                    {tCommon("continue")}
                   </Button>
                 </>
               )}
@@ -454,7 +458,7 @@ function AgentPolicyModalContent({
                     variant={"secondary"}
                     onClick={() => setTab("limits")}
                   >
-                    Back
+                    {tCommon("back")}
                   </Button>
                   <Button
                     variant={"primary"}
@@ -462,7 +466,7 @@ function AgentPolicyModalContent({
                     disabled={submitDisabled}
                   >
                     <PlusCircle size={16} />
-                    Add Policy
+                    {t("addPolicy")}
                   </Button>
                 </>
               )}
@@ -470,14 +474,14 @@ function AgentPolicyModalContent({
           ) : (
             <>
               <ModalClose asChild>
-                <Button variant={"secondary"}>Cancel</Button>
+                <Button variant={"secondary"}>{tCommon("cancel")}</Button>
               </ModalClose>
               <Button
                 variant={"primary"}
                 onClick={handleSubmit}
                 disabled={submitDisabled}
               >
-                Save Changes
+                {t("submitLimit")}
               </Button>
             </>
           )}
@@ -494,6 +498,7 @@ function SourceGroupsSelector({
   value: Group[];
   onChange: React.Dispatch<React.SetStateAction<Group[]>>;
 }) {
+  const tCommon = useTranslations("common");
   const { users } = useUsers();
   return (
     <PeerGroupSelector
@@ -502,7 +507,7 @@ function SourceGroupsSelector({
         <div className={"flex items-center gap-2"}>
           <Badge className={"py-[3px]"} variant={"gray-ghost"}>
             <CircleUser size={12} />
-            All
+            {tCommon("all")}
           </Badge>
           Select source group(s)...
         </div>
