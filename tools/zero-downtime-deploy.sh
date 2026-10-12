@@ -43,16 +43,18 @@ COMPOSE="docker compose -f docker-compose.yml -f docker-compose.i18n.yml"
 # The host to probe after the swap. Taken from the environment rather than
 # hardcoded, so this script carries no deployment-specific address:
 #
-#   DEPLOY_URL=https://dashboard.example.com sh zero-downtime-deploy.sh
+#   DEPLOY_URL=https://dashboard.example.com/peers sh zero-downtime-deploy.sh
 #
-# Defaults to this host's own IP on 443, which is what a single-node
-# Traefik-behind-an-IP-cert install looks like. Override it for a domain.
+# Defaults to this host's address plus `/peers`, deliberately not `/`: the root
+# path is served from the static export and can answer 200 while the app itself is
+# broken, so it cannot tell a healthy swap from a bad one. `/peers` is a real route
+# that exercises the served bundle.
 if [ -n "${DEPLOY_URL:-}" ]; then
   URL="$DEPLOY_URL"
 else
   HOST_IP=$(hostname -I 2>/dev/null | awk '{print $1}')
   [ -n "$HOST_IP" ] || HOST_IP=$(ip -4 route get 1.1.1.1 2>/dev/null | awk '{print $7; exit}')
-  URL="https://${HOST_IP:-localhost}/"
+  URL="https://${HOST_IP:-localhost}/peers"
 fi
 # `-k` only when the certificate is a self-signed IP cert; a real domain should
 # validate normally.
