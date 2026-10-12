@@ -54,8 +54,8 @@ services:
       #
       #    注意选项名：是 retry.attempts，不是 retries。写成 retries 时
       #    Traefik 认为这个 middleware 无法构造，于是**整个 router 被丢弃**，
-      #    全站变成 404——而不是只忽略这一行。变更后务必用
-      #    `sh tools/verify-routing.sh` 确认 200 而不是 404。
+      #    全站变成 404——而不是只忽略这一行。改完 label 务必立刻确认页面返回
+      #    200 而不是 404（tools/zero-downtime-deploy.sh 会自己做这一步）。
       - traefik.http.middlewares.dashboard-retry.retry.attempts=4
       - traefik.http.routers.netbird-dashboard.middlewares=dashboard-retry
 

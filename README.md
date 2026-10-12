@@ -6,6 +6,29 @@ This project is the UI for NetBird's Management service.
 
 See [NetBird repo](https://github.com/netbirdio/netbird)
 
+> ## Simplified Chinese build (this fork)
+>
+> This fork adds a complete Simplified Chinese UI on the `i18n-zh` branch. The
+> English original is untouched — switch languages from the globe icon, or from
+> the switcher in Settings → Language.
+>
+> **Install:** a drop-in overlay for an existing self-hosted NetBird. The image is
+> public on GHCR — no account needed — and supports amd64 and arm64:
+>
+> ```bash
+> cd /opt/netbird
+> curl -fsSLO https://raw.githubusercontent.com/SupportSpark/dashboard/i18n-zh/docker-compose.i18n.yml
+> docker compose -f docker-compose.yml -f docker-compose.i18n.yml up -d dashboard
+> ```
+>
+> Roll back with `docker compose up -d dashboard`.
+>
+> Full instructions — slow-network workarounds, building your own, keeping up with
+> upstream — are in **[docs/INSTALL-ZH.md](docs/INSTALL-ZH.md)**.
+>
+> Note: the sign-in and logout pages are served by `netbird-server`, not by this
+> dashboard, so they are not translated here.
+
 ## Reporting bugs and requesting features
 
 NetBird uses a discussion-first workflow across all its repositories. Bug reports and
