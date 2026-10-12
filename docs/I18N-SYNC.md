@@ -457,6 +457,47 @@ ssh root@1.13.193.126 'sh /opt/netbird/zero-downtime-deploy.sh'
 
 ---
 
+## 10.5 上游更新会自动同步吗？
+
+**分三段看，答案是「仓库会、镜像会、服务器不会」。**
+
+### 1. 仓库：会自动同步 ✅
+
+`.github/workflows/sync-upstream.yml`，每天 03:17 UTC 运行，也可手动触发。
+
+- **同步的是上游的最新 release tag**，不是 `main`。上游 `main` 一天动很多次，
+  逐个合并会把分支刷满冲突；release 才是我们实际部署的单位。
+  想同步别的 ref 就用 `workflow_dispatch` 的 `upstream_ref` 输入。
+- 翻译目录（`src/i18n/messages/` 等）冲突时**保留我们这边**；
+  其他文件的冲突**不猜**——中止合并并开一个 issue，等你处理。
+- 合并后必须先通过 `npm run build` 和 `tsc --noEmit` 才会推送。
+  **这一步是「无人值守同步」安全的前提**：自动合并坏了会在门禁处失败，分支不会被污染。
+
+### 2. 镜像：会自动重建 ✅
+
+推送落到 `i18n-zh` 后，`build-localized.yml` 自动构建并推送
+`ghcr.io/supportspark/dashboard:zh-latest`。
+
+### 3. 服务器：不会自动更新 ⚠️
+
+**本仓库里没有任何东西会连到 `1.13.193.126`** —— 没有工作流引用该主机，
+也没有存放部署凭据。部署始终是一个明确动作：
+
+```bash
+ssh root@1.13.193.126 'sh /opt/netbird/zero-downtime-deploy.sh'
+```
+
+这是有意的（自动部署到生产环境风险更高），但**必须说清楚**：
+上游更新不会自己出现在你的站点上。
+
+### 怎么检查（而不是相信）
+
+```bash
+pwsh -File tools/verify-sync-logic.ps1   # 目标 ref、跳过判断、会冲突哪些文件
+pwsh -File tools/verify-sync-merge.ps1   # 在临时克隆里真实演练合并路径
+```
+
+前者今天会报「ALREADY UP TO DATE」（`v2.94.0` 已合并）——这是**正确的静默结果**。
 ## 11. 参考
 
 - 上游仓库：https://github.com/netbirdio/dashboard
