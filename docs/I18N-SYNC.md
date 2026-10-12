@@ -27,7 +27,7 @@
 | key 解析 | ✅ 2221 个命名空间内字面量 key 全部可解析 |
 | 语言探测断言 | ✅ `npm run test:i18n` 全通过 |
 | CI（parity + 镜像构建） | ✅ 已跑绿 |
-| 线上部署 | ✅ `https://1.13.193.126` 返回 200，中文包随镜像下发 |
+| 线上部署 | ✅ 返回 200，中文包随镜像下发（站点地址见你的部署环境） |
 
 ---
 
@@ -212,9 +212,13 @@ src/components/ui/LocaleSwitcher.tsx  # 头部语言切换器
 
 ## 7. 部署到自建 NetBird
 
-本部署在 `1.13.193.126`（单节点，Debian 13，Traefik v3.6 反代，IP 证书）。
+本部署面向单节点自建环境（Debian、Traefik 反代、IP 证书；具体地址与主机名按你自己的
+环境替换，本文档不记录实例地址）。
 **已完成本地化部署**：dashboard 容器现在跑
 `ghcr.io/supportspark/dashboard:zh-latest`，回滚只需回到 `netbirdio/dashboard:v2.94.0`。
+
+> **占位符**：下文命令里的 `$DEPLOY_HOST` 指你的服务器地址。
+> 先 `export DEPLOY_HOST=你的地址`，再照抄命令。
 
 ### 方案 A：拉构建好的镜像（推荐，已采用）
 
@@ -246,8 +250,8 @@ docker build -f docker/Dockerfile -t netbird-dashboard-zh:local .
 docker save netbird-dashboard-zh:local | gzip > zh.tar.gz
 
 # 传到服务器
-scp zh.tar.gz root@1.13.193.126:/root/
-ssh root@1.13.193.126 'gunzip -c /root/zh.tar.gz | docker load'
+scp zh.tar.gz root@$DEPLOY_HOST:/root/
+ssh root@$DEPLOY_HOST 'gunzip -c /root/zh.tar.gz | docker load'
 # 然后把 docker-compose.i18n.yml 里的 image 改成 netbird-dashboard-zh:local
 ```
 
@@ -255,16 +259,16 @@ ssh root@1.13.193.126 'gunzip -c /root/zh.tar.gz | docker load'
 
 ```bash
 docker inspect netbird-dashboard --format 'image={{.Config.Image}} status={{.State.Status}} health={{.State.Health.Status}}'
-curl -sSk -o /dev/null -w '%{http_code}\n' https://1.13.193.126/                    # 期望 200
-curl -sSk -o /dev/null -w '%{http_code}\n' https://1.13.193.126/api/users           # 期望 401
-curl -sSk -o /dev/null -w '%{http_code}\n' https://1.13.193.126/oauth2/.well-known/openid-configuration  # 期望 200
+curl -sSk -o /dev/null -w '%{http_code}\n' https://$DEPLOY_HOST/                    # 期望 200
+curl -sSk -o /dev/null -w '%{http_code}\n' https://$DEPLOY_HOST/api/users           # 期望 401
+curl -sSk -o /dev/null -w '%{http_code}\n' https://$DEPLOY_HOST/oauth2/.well-known/openid-configuration  # 期望 200
 ```
 
 确认中文确实上线（扫描公开的 JS 分片里是否有中文串）：
 
 ```bash
-curl -sSk https://1.13.193.126/ | grep -oE '/_next/static/chunks/[A-Za-z0-9_.-]+\.js' | while read -r c; do
-  curl -sSk "https://1.13.193.126$c" | grep -q '保存\|取消\|节点' && echo "zh in $c"
+curl -sSk https://$DEPLOY_HOST/ | grep -oE '/_next/static/chunks/[A-Za-z0-9_.-]+\.js' | while read -r c; do
+  curl -sSk "https://$DEPLOY_HOST$c" | grep -q '保存\|取消\|节点' && echo "zh in $c"
 done
 ```
 
@@ -367,8 +371,8 @@ pwsh -File tools/check-merge-integrity.ps1  # 冲突标记 / i18n 接线 / 目�
 请用仓库里的脚本：
 
 ```bash
-scp tools/zero-downtime-deploy.sh root@1.13.193.126:/opt/netbird/
-ssh root@1.13.193.126 'sh /opt/netbird/zero-downtime-deploy.sh'
+scp tools/zero-downtime-deploy.sh root@$DEPLOY_HOST:/opt/netbird/
+ssh root@$DEPLOY_HOST 'sh /opt/netbird/zero-downtime-deploy.sh'
 ```
 
 它做的事：先把新镜像以「cover」容器起起来（只带 `traefik.*` label），等它开始
@@ -480,15 +484,40 @@ ssh root@1.13.193.126 'sh /opt/netbird/zero-downtime-deploy.sh'
 
 ### 3. 服务器：不会自动更新 ⚠️
 
-**本仓库里没有任何东西会连到 `1.13.193.126`** —— 没有工作流引用该主机，
+**本仓库里没有任何东西会连到你的服务器** —— 没有工作流引用该主机，
 也没有存放部署凭据。部署始终是一个明确动作：
 
 ```bash
-ssh root@1.13.193.126 'sh /opt/netbird/zero-downtime-deploy.sh'
+ssh root@$DEPLOY_HOST 'sh /opt/netbird/zero-downtime-deploy.sh'
 ```
+
+部署脚本自己会探测要验证的地址（取本机 IP，或用 `DEPLOY_URL=` 指定域名），
+所以脚本里不含任何实例地址。
 
 这是有意的（自动部署到生产环境风险更高），但**必须说清楚**：
 上游更新不会自己出现在你的站点上。
+
+### 关于实例地址的处理
+
+仓库是**公开**的，因此实例地址不应出现在文件里。目前已从所有跟踪文件中移除：
+`docker-compose.i18n.yml` 的注释、本文档的部署段落、以及部署脚本里的探测地址。
+
+- 部署脚本改为**自动探测**：取本机 IP（或用 `DEPLOY_URL=` 指定域名）。
+  对域名会自动启用证书校验，只有 IP 证书才跳过（`-k`）。
+- 文档统一用 `$DEPLOY_HOST` 占位符，命令里先 `export DEPLOY_HOST=...` 即可照抄。
+
+**历史里仍有 3 个提交包含该地址**（`09ce9158`、`d698e01b`、`e1dd33bb`）。
+没有重写历史，原因是代价明确：
+
+- 重写会改变该分支上**所有提交的哈希**。CI 正在重建这个分支，
+  部署端也跟踪它 —— 哈希变化意味着一轮全量重建。
+- 已经推送过的公开仓库，重写后旧对象仍可能被缓存/镜像/他人克隆保留，
+  并不能保证彻底消失。
+
+如果确实需要从历史中根除，可选（按代价从低到高）：
+1. **换掉该实例的地址或端口**（最彻底，与仓库无关）；
+2. `git filter-repo --replace-text` 后强推，并同步更新 CI 与部署；
+3. 若该地址本就不该公开，考虑把仓库转为私有。
 
 ### 怎么检查（而不是相信）
 

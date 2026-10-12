@@ -38,8 +38,29 @@ cd /opt/netbird
 IMAGE="${1:-ghcr.io/supportspark/dashboard:zh-latest}"
 NAME="netbird-dashboard"
 COVER="netbird-dashboard-cover"
-URL="https://1.13.193.126/peers"
 COMPOSE="docker compose -f docker-compose.yml -f docker-compose.i18n.yml"
+
+# The host to probe after the swap. Taken from the environment rather than
+# hardcoded, so this script carries no deployment-specific address:
+#
+#   DEPLOY_URL=https://dashboard.example.com sh zero-downtime-deploy.sh
+#
+# Defaults to this host's own IP on 443, which is what a single-node
+# Traefik-behind-an-IP-cert install looks like. Override it for a domain.
+if [ -n "${DEPLOY_URL:-}" ]; then
+  URL="$DEPLOY_URL"
+else
+  HOST_IP=$(hostname -I 2>/dev/null | awk '{print $1}')
+  [ -n "$HOST_IP" ] || HOST_IP=$(ip -4 route get 1.1.1.1 2>/dev/null | awk '{print $7; exit}')
+  URL="https://${HOST_IP:-localhost}/"
+fi
+# `-k` only when the certificate is a self-signed IP cert; a real domain should
+# validate normally.
+CURL_OPTS="-sS -m 10"
+case "$URL" in
+  https://*[0-9].[0-9]*) CURL_OPTS="$CURL_OPTS -k" ;;
+esac
+echo "probing: $URL"
 
 revision() {
   docker inspect "$1" --format '{{ index .Config.Labels "org.opencontainers.image.revision" }}' 2>/dev/null || true
@@ -74,7 +95,8 @@ public_ok() {
   # How many of N public requests return 200.
   ok=0; i=1
   while [ $i -le "$1" ]; do
-    C=$(curl -sSk -m 10 -o /dev/null -w '%{http_code}' "$URL" 2>/dev/null)
+    # shellcheck disable=SC2086  # CURL_OPTS is a deliberate word list
+    C=$(curl $CURL_OPTS -o /dev/null -w '%{http_code}' "$URL" 2>/dev/null)
     [ "$C" = "200" ] && ok=$((ok + 1))
     i=$((i + 1))
   done
