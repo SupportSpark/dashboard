@@ -69,6 +69,35 @@ SupportSpark/dashboard                 ▼
 `main` 保持"上游纯净镜像"后，`git fetch upstream && git merge upstream/main`
 永远是一个可预期的动作，冲突只会出现在 `i18n-zh` 上，排查范围小得多。
 
+### 2.1 往 `main` 推上游内容时必须带 `[skip ci]`
+
+上游的 `.github/workflows/` 里有几条**在 fork 里不可能成功**的流水线：
+
+| 工作流 | 触发 | 在我们仓库里的结局 |
+| --- | --- | --- |
+| `build and push` | push 到任意分支 + `v*` tag | 推 `ghcr.io/netbirdio/dashboard-cloud`，没有 netbirdio 的凭据 → 必红 |
+| `Playwright E2E Tests` | push / PR | 需要 `npm run test:setup` 起的那套后端 → 必红 |
+| `Sync deploy templates to S3` | push 到 `main`（`templates/**` 变动） | 需要 AWS 凭据 → 必红 |
+
+`gh workflow disable` 需要 PAT 有 Actions 写权限（当前的细粒度 PAT 没有），所以改用
+**提交信息里的跳过标记**：GitHub Actions 在 push 触发的 workflow 上认
+`[skip ci]` / `[ci skip]` / `[no ci]` / `[skip actions]`。因此同步 `main` 时不要快进，
+而是合成一个带标记的合并提交：
+
+```bash
+git checkout main
+git merge --no-ff upstream/main -m "chore(sync): mirror upstream main <sha> [skip ci]"
+git push origin main
+```
+
+文件内容仍与上游完全一致（合并提交不改文件），只是多一个提交对象；`i18n-zh` 的
+流水线（`build-localized.yml`、`i18n-parity.yml`、`unit-tests.yml`）不受影响，照常跑。
+
+**不要再往 fork 推上游 tag**：`build-localized.yml` 现在已经自己
+`git fetch --tags upstream` 解析版本（见 §3.2），fork 上没有 tag 也能算对；
+而推 tag 会触发上面那条 `build and push`。
+
+
 ---
 
 ## 3. 自动化流水线
