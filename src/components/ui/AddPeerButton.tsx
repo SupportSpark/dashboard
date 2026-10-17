@@ -10,44 +10,44 @@ import { Peer } from "@/interfaces/Peer";
 import SetupModal from "@/modules/setup-netbird-modal/SetupModal";
 
 type Props = {
-	isUserDevice?: boolean;
+  isUserDevice?: boolean;
 };
 
 function AddPeerButton({ isUserDevice }: Readonly<Props>) {
-	const t = useTranslations("peers");
-	const { data: peers } = useFetchApi<Peer[]>("/peers");
-	const { oidcUser: user } = useOidcUser();
+  const t = useTranslations("peers");
+  const { data: peers } = useFetchApi<Peer[]>("/peers");
+  const { oidcUser: user } = useOidcUser();
 
-const [isFirstRun, setIsFirstRun] = useLocalStorage<boolean>(
-		"netbird-first-run",
-		!(peers && peers.length > 0),
-	);
+  const [isFirstRun, setIsFirstRun] = useLocalStorage<boolean>(
+    "netbird-first-run",
+    !(peers && peers.length > 0),
+  );
 
-	const [installModal, setInstallModal] = useState(
-		process.env.APP_ENV !== "test" ? false : isFirstRun,
-	);
+  const [installModal, setInstallModal] = useState(
+    process.env.APP_ENV !== "test" ? false : isFirstRun,
+  );
 
-	const handleOpenChange = (open: boolean) => {
-		setInstallModal(open);
-		setIsFirstRun(false);
-	};
+  const handleOpenChange = (open: boolean) => {
+    setInstallModal(open);
+    setIsFirstRun(false);
+  };
 
-return (
-		<Modal open={installModal} onOpenChange={handleOpenChange}>
-			<ModalTrigger asChild>
-				<Button
-					variant={"primary"}
-					size={"sm"}
-					className={"ml-auto"}
-					data-testid={"add-peer-button"}
-				>
-					<PlusCircle size={16} />
-					{t("addPeer")}
-				</Button>
-			</ModalTrigger>
-			<SetupModal user={user} isUserDevice={isUserDevice} />
-		</Modal>
-	);
+  return (
+    <Modal open={installModal} onOpenChange={handleOpenChange}>
+      <ModalTrigger asChild>
+        <Button
+          variant={"primary"}
+          size={"sm"}
+          className={"ml-auto"}
+          data-testid={"add-peer-button"}
+        >
+          <PlusCircle size={16} />
+          {t("addPeer")}
+        </Button>
+      </ModalTrigger>
+      <SetupModal user={user} isUserDevice={isUserDevice} />
+    </Modal>
+  );
 }
 
 export default memo(AddPeerButton);

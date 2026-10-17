@@ -15,70 +15,70 @@ import { Group } from "@/interfaces/Group";
 import { SetupKey } from "@/interfaces/SetupKey";
 
 const SetupKeysTable = lazy(
-	() => import("@/modules/setup-keys/SetupKeysTable"),
+  () => import("@/modules/setup-keys/SetupKeysTable"),
 );
 
 export default function SetupKeysTab() {
-	const t = useTranslations("settings");
-	const { data: setupKeys, isLoading } = useFetchApi<SetupKey[]>("/setup-keys");
-	const { permission } = usePermissions();
-	const { groups } = useGroups();
+  const t = useTranslations("settings");
+  const { data: setupKeys, isLoading } = useFetchApi<SetupKey[]>("/setup-keys");
+  const { permission } = usePermissions();
+  const { groups } = useGroups();
 
-	const setupKeysWithGroups = useMemo(() => {
-		if (!setupKeys) return [];
-		return setupKeys.map((setupKey) => {
-			if (!setupKey.auto_groups) return setupKey;
-			if (!groups) return setupKey;
-			return {
-				...setupKey,
-				groups: setupKey.auto_groups
-					?.map((group) => groups.find((g) => g.id === group) || undefined)
-					.filter((group) => group !== undefined) as Group[],
-			};
-		});
-	}, [setupKeys, groups]);
+  const setupKeysWithGroups = useMemo(() => {
+    if (!setupKeys) return [];
+    return setupKeys.map((setupKey) => {
+      if (!setupKey.auto_groups) return setupKey;
+      if (!groups) return setupKey;
+      return {
+        ...setupKey,
+        groups: setupKey.auto_groups
+          ?.map((group) => groups.find((g) => g.id === group) || undefined)
+          .filter((group) => group !== undefined) as Group[],
+      };
+    });
+  }, [setupKeys, groups]);
 
-	return (
-		<Tabs.Content value={"setup-keys"} className={"w-full"}>
-			<div className={"p-default py-6"}>
-				<Breadcrumbs>
-					<Breadcrumbs.Item
-						href={"/settings"}
-						label={t("title")}
-						icon={<SettingsIcon size={13} />}
-					/>
-					<Breadcrumbs.Item
-						href={"/settings?tab=setup-keys"}
-						label={t("setupKeys")}
-						icon={<KeyRound size={14} />}
-						active
-					/>
-				</Breadcrumbs>
-				<h1>{t("setupKeys")}</h1>
-				<Paragraph>
-					{t("setupKeysDescription")}{" "}
-					<InlineLink
-						href={
-							"https://docs.netbird.io/how-to/register-machines-using-setup-keys"
-						}
-						target={"_blank"}
-					>
-						{t("learnMore")}
-						<ExternalLinkIcon size={12} />
-					</InlineLink>
-				</Paragraph>
-			</div>
-			<RestrictedAccess
-				page={t("setupKeys")}
-				hasAccess={permission.setup_keys.read}
-			>
-				<Suspense fallback={<SkeletonTable />}>
-					<SetupKeysTable
-						setupKeys={setupKeysWithGroups}
-						isLoading={isLoading}
-					/>
-				</Suspense>
-			</RestrictedAccess>
-		</Tabs.Content>
-	);
+  return (
+    <Tabs.Content value={"setup-keys"} className={"w-full"}>
+      <div className={"p-default py-6"}>
+        <Breadcrumbs>
+          <Breadcrumbs.Item
+            href={"/settings"}
+            label={t("title")}
+            icon={<SettingsIcon size={13} />}
+          />
+          <Breadcrumbs.Item
+            href={"/settings?tab=setup-keys"}
+            label={t("setupKeys")}
+            icon={<KeyRound size={14} />}
+            active
+          />
+        </Breadcrumbs>
+        <h1>{t("setupKeys")}</h1>
+        <Paragraph>
+          {t("setupKeysDescription")}{" "}
+          <InlineLink
+            href={
+              "https://docs.netbird.io/how-to/register-machines-using-setup-keys"
+            }
+            target={"_blank"}
+          >
+            {t("learnMore")}
+            <ExternalLinkIcon size={12} />
+          </InlineLink>
+        </Paragraph>
+      </div>
+      <RestrictedAccess
+        page={t("setupKeys")}
+        hasAccess={permission.setup_keys.read}
+      >
+        <Suspense fallback={<SkeletonTable />}>
+          <SetupKeysTable
+            setupKeys={setupKeysWithGroups}
+            isLoading={isLoading}
+          />
+        </Suspense>
+      </RestrictedAccess>
+    </Tabs.Content>
+  );
 }

@@ -4,10 +4,10 @@ import type { Metadata } from "next";
 import BlankLayout from "@/layouts/BlankLayout";
 
 export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations();
-	return {
-		title: `${t("navigation.controlCenter")} - ${globalMetaTitle}`,
-	};
+  const t = await getTranslations();
+  return {
+    title: `${t("navigation.controlCenter")} - ${globalMetaTitle}`,
+  };
 }
 
 export default BlankLayout;

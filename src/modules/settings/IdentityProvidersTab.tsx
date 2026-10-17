@@ -1,10 +1,10 @@
 import Breadcrumbs from "@components/Breadcrumbs";
 import Button from "@components/Button";
 import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
 } from "@components/DropdownMenu";
 import { notify } from "@components/Notification";
 import Paragraph from "@components/Paragraph";
@@ -18,12 +18,12 @@ import * as Tabs from "@radix-ui/react-tabs";
 import { ColumnDef, SortingState } from "@tanstack/react-table";
 import useFetchApi, { useApiCall } from "@utils/api";
 import {
-	FingerprintIcon,
-	KeyRound,
-	MoreVertical,
-	PencilIcon,
-	PlusCircle,
-	Trash2,
+  FingerprintIcon,
+  KeyRound,
+  MoreVertical,
+  PencilIcon,
+  PlusCircle,
+  Trash2,
 } from "lucide-react";
 import React, { useState } from "react";
 import { useSWRConfig } from "swr";
@@ -34,255 +34,255 @@ import { useDialog } from "@/contexts/DialogProvider";
 import { usePermissions } from "@/contexts/PermissionsProvider";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import {
-	getSSOIdentityProviderLabelByType,
-	SSOIdentityProvider,
-	SSOIdentityProviderType,
+  getSSOIdentityProviderLabelByType,
+  SSOIdentityProvider,
+  SSOIdentityProviderType,
 } from "@/interfaces/IdentityProvider";
 import IdentityProviderModal from "@/modules/settings/IdentityProviderModal";
 
 export const idpTypeLabels: Record<SSOIdentityProviderType, string> = {
-	oidc: "OIDC",
-	zitadel: "Zitadel",
-	entra: "Microsoft Entra",
-	google: "Google",
-	okta: "Okta",
-	pocketid: "PocketID",
-	microsoft: "Microsoft",
-	authentik: "Authentik",
-	keycloak: "Keycloak",
-	adfs: "Microsoft AD FS",
+  oidc: "OIDC",
+  zitadel: "Zitadel",
+  entra: "Microsoft Entra",
+  google: "Google",
+  okta: "Okta",
+  pocketid: "PocketID",
+  microsoft: "Microsoft",
+  authentik: "Authentik",
+  keycloak: "Keycloak",
+  adfs: "Microsoft AD FS",
 };
 
 type ActionCellProps = {
-	provider: SSOIdentityProvider;
-	onEdit: (provider: SSOIdentityProvider) => void;
+  provider: SSOIdentityProvider;
+  onEdit: (provider: SSOIdentityProvider) => void;
 };
 
 function ActionCell({ provider, onEdit }: ActionCellProps) {
-	const t = useTranslations("settings");
-	const tCommon = useTranslations("common");
-	const { confirm } = useDialog();
-	const { mutate } = useSWRConfig();
-	const deleteRequest = useApiCall<SSOIdentityProvider>(
-		"/identity-providers/" + provider.id,
-	);
-	const { permission } = usePermissions();
+  const t = useTranslations("settings");
+  const tCommon = useTranslations("common");
+  const { confirm } = useDialog();
+  const { mutate } = useSWRConfig();
+  const deleteRequest = useApiCall<SSOIdentityProvider>(
+    "/identity-providers/" + provider.id,
+  );
+  const { permission } = usePermissions();
 
-	const handleDelete = async () => {
-		const choice = await confirm({
-			title: t("deleteIdentityProviderTitle", { name: provider.name }),
-			description: t("deleteIdentityProviderConfirm"),
-			confirmText: tCommon("delete"),
-			cancelText: tCommon("cancel"),
-			type: "danger",
-		});
+  const handleDelete = async () => {
+    const choice = await confirm({
+      title: t("deleteIdentityProviderTitle", { name: provider.name }),
+      description: t("deleteIdentityProviderConfirm"),
+      confirmText: tCommon("delete"),
+      cancelText: tCommon("cancel"),
+      type: "danger",
+    });
 
-		if (!choice) return;
+    if (!choice) return;
 
-		notify({
-			title: t("deleteIdentityProvider"),
-			description: t("identityProviderDeleted"),
-			promise: deleteRequest.del().then(() => {
-				mutate("/identity-providers");
-			}),
-			loadingMessage: t("deletingIdentityProvider"),
-		});
-	};
+    notify({
+      title: t("deleteIdentityProvider"),
+      description: t("identityProviderDeleted"),
+      promise: deleteRequest.del().then(() => {
+        mutate("/identity-providers");
+      }),
+      loadingMessage: t("deletingIdentityProvider"),
+    });
+  };
 
-	return (
-		<div className="flex justify-end">
-			<DropdownMenu>
-				<DropdownMenuTrigger asChild>
-					<Button variant="secondary" className="p-2">
-						<MoreVertical size={16} />
-					</Button>
-				</DropdownMenuTrigger>
-				<DropdownMenuContent align="end">
-					<DropdownMenuItem
-						onClick={() => onEdit(provider)}
-						disabled={!permission.identity_providers.update}
-					>
-						<PencilIcon size={14} className="mr-2" />
-						{tCommon("edit")}
-					</DropdownMenuItem>
-					<DropdownMenuItem
-						onClick={handleDelete}
-						disabled={!permission.identity_providers.delete}
-						className="text-red-500 focus:text-red-500"
-					>
-						<Trash2 size={14} className="mr-2" />
-						{t("delete")}
-					</DropdownMenuItem>
-				</DropdownMenuContent>
-			</DropdownMenu>
-		</div>
-	);
+  return (
+    <div className="flex justify-end">
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="secondary" className="p-2">
+            <MoreVertical size={16} />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuItem
+            onClick={() => onEdit(provider)}
+            disabled={!permission.identity_providers.update}
+          >
+            <PencilIcon size={14} className="mr-2" />
+            {tCommon("edit")}
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={handleDelete}
+            disabled={!permission.identity_providers.delete}
+            className="text-red-500 focus:text-red-500"
+          >
+            <Trash2 size={14} className="mr-2" />
+            {t("delete")}
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
+  );
 }
 
 export default function IdentityProvidersTab() {
-	const t = useTranslations("settings");
-	const { permission } = usePermissions();
-	const { mutate } = useSWRConfig();
-	const { data: providers, isLoading } = useFetchApi<SSOIdentityProvider[]>(
-		"/identity-providers",
-	);
+  const t = useTranslations("settings");
+  const { permission } = usePermissions();
+  const { mutate } = useSWRConfig();
+  const { data: providers, isLoading } = useFetchApi<SSOIdentityProvider[]>(
+    "/identity-providers",
+  );
 
-	const [modalOpen, setModalOpen] = useState(false);
-	const [editProvider, setEditProvider] = useState<SSOIdentityProvider | null>(
-		null,
-	);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editProvider, setEditProvider] = useState<SSOIdentityProvider | null>(
+    null,
+  );
 
-	const [sorting, setSorting] = useLocalStorage<SortingState>(
-		"netbird-table-sort-identity-providers",
-		[
-			{
-				id: "name",
-				desc: false,
-			},
-		],
-	);
+  const [sorting, setSorting] = useLocalStorage<SortingState>(
+    "netbird-table-sort-identity-providers",
+    [
+      {
+        id: "name",
+        desc: false,
+      },
+    ],
+  );
 
-	const handleEdit = (provider: SSOIdentityProvider) => {
-		setEditProvider(provider);
-		setModalOpen(true);
-	};
+  const handleEdit = (provider: SSOIdentityProvider) => {
+    setEditProvider(provider);
+    setModalOpen(true);
+  };
 
-	const handleCloseModal = () => {
-		setModalOpen(false);
-		setEditProvider(null);
-	};
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setEditProvider(null);
+  };
 
-	const columns: ColumnDef<SSOIdentityProvider>[] = [
-		{
-			accessorKey: "name",
-			header: ({ column }) => (
-				<DataTableHeader column={column}>{t("name")}</DataTableHeader>
-			),
-			sortingFn: "text",
-			cell: ({ row }) => (
-				<div className="flex items-center gap-3">
-					{idpIcon(row.original.type) || (
-						<KeyRound size={16} className="text-nb-gray-400" />
-					)}
-					<span className="font-medium">{row.original.name}</span>
-				</div>
-			),
-		},
-		{
-			accessorKey: "type",
-			header: ({ column }) => (
-				<DataTableHeader column={column}>{t("type")}</DataTableHeader>
-			),
-			cell: ({ row }) => (
-				<span className="text-nb-gray-400">
-					{getSSOIdentityProviderLabelByType(row.original.type)}
-				</span>
-			),
-		},
-		{
-			id: "actions",
-			accessorKey: "id",
-			header: "",
-			cell: ({ row }) => (
-				<ActionCell provider={row.original} onEdit={handleEdit} />
-			),
-		},
-	];
+  const columns: ColumnDef<SSOIdentityProvider>[] = [
+    {
+      accessorKey: "name",
+      header: ({ column }) => (
+        <DataTableHeader column={column}>{t("name")}</DataTableHeader>
+      ),
+      sortingFn: "text",
+      cell: ({ row }) => (
+        <div className="flex items-center gap-3">
+          {idpIcon(row.original.type) || (
+            <KeyRound size={16} className="text-nb-gray-400" />
+          )}
+          <span className="font-medium">{row.original.name}</span>
+        </div>
+      ),
+    },
+    {
+      accessorKey: "type",
+      header: ({ column }) => (
+        <DataTableHeader column={column}>{t("type")}</DataTableHeader>
+      ),
+      cell: ({ row }) => (
+        <span className="text-nb-gray-400">
+          {getSSOIdentityProviderLabelByType(row.original.type)}
+        </span>
+      ),
+    },
+    {
+      id: "actions",
+      accessorKey: "id",
+      header: "",
+      cell: ({ row }) => (
+        <ActionCell provider={row.original} onEdit={handleEdit} />
+      ),
+    },
+  ];
 
-	return (
-		<Tabs.Content value={"identity-providers"} className={"w-full"}>
-			<div className={"p-default py-6"}>
-				<Breadcrumbs>
-					<Breadcrumbs.Item
-						href={"/settings"}
-						label={t("title")}
-						icon={<SettingsIcon size={13} />}
-					/>
-					<Breadcrumbs.Item
-						href={"/settings?tab=identity-providers"}
-						label={t("identityProviders")}
-						icon={<FingerprintIcon size={14} />}
-						active
-					/>
-				</Breadcrumbs>
-				<div className={"flex items-start justify-between -mt-1"}>
-					<div>
-						<h1>{t("identityProviders")}</h1>
-						<Paragraph>{t("configureIdpDescription")}</Paragraph>
-					</div>
-				</div>
-			</div>
+  return (
+    <Tabs.Content value={"identity-providers"} className={"w-full"}>
+      <div className={"p-default py-6"}>
+        <Breadcrumbs>
+          <Breadcrumbs.Item
+            href={"/settings"}
+            label={t("title")}
+            icon={<SettingsIcon size={13} />}
+          />
+          <Breadcrumbs.Item
+            href={"/settings?tab=identity-providers"}
+            label={t("identityProviders")}
+            icon={<FingerprintIcon size={14} />}
+            active
+          />
+        </Breadcrumbs>
+        <div className={"flex items-start justify-between -mt-1"}>
+          <div>
+            <h1>{t("identityProviders")}</h1>
+            <Paragraph>{t("configureIdpDescription")}</Paragraph>
+          </div>
+        </div>
+      </div>
 
-			<IdentityProviderModal
-				open={modalOpen}
-				key={modalOpen ? 1 : 0}
-				onClose={handleCloseModal}
-				provider={editProvider}
-			/>
+      <IdentityProviderModal
+        open={modalOpen}
+        key={modalOpen ? 1 : 0}
+        onClose={handleCloseModal}
+        provider={editProvider}
+      />
 
-			<DataTable
-				isLoading={isLoading}
-				text={t("identityProviders")}
-				sorting={sorting}
-				setSorting={setSorting}
-				columns={columns}
-				data={providers}
-				onRowClick={(row) => handleEdit(row.original)}
-				searchPlaceholder={t("searchIdpPlaceholder")}
-				getStartedCard={
-					<GetStartedTest
-						icon={
-							<SquareIcon
-								icon={
-									<FingerprintIcon size={20} className={"text-nb-gray-200"} />
-								}
-								color={"gray"}
-								size={"large"}
-							/>
-						}
-						title={t("addIdentityProvider")}
-						description={t("addIdentityProviderCardDescription")}
-						button={
-							<Button
-								variant={"primary"}
-								onClick={() => setModalOpen(true)}
-								disabled={!permission.identity_providers.create}
-							>
-								<PlusCircle size={16} />
-								{t("addIdentityProvider")}
-							</Button>
-						}
-					/>
-				}
-				rightSide={() => (
-					<>
-						{providers && providers.length > 0 && (
-							<Button
-								variant={"primary"}
-								className={"ml-auto"}
-								onClick={() => setModalOpen(true)}
-								disabled={!permission.identity_providers.create}
-							>
-								<PlusCircle size={16} />
-								{t("addIdentityProvider")}
-							</Button>
-						)}
-					</>
-				)}
-			>
-				{(table) => (
-					<>
-						<DataTableRowsPerPage
-							table={table}
-							disabled={!providers || providers.length === 0}
-						/>
-						<DataTableRefreshButton
-							isDisabled={!providers || providers.length === 0}
-							onClick={() => mutate("/identity-providers")}
-						/>
-					</>
-				)}
-			</DataTable>
-		</Tabs.Content>
-	);
+      <DataTable
+        isLoading={isLoading}
+        text={t("identityProviders")}
+        sorting={sorting}
+        setSorting={setSorting}
+        columns={columns}
+        data={providers}
+        onRowClick={(row) => handleEdit(row.original)}
+        searchPlaceholder={t("searchIdpPlaceholder")}
+        getStartedCard={
+          <GetStartedTest
+            icon={
+              <SquareIcon
+                icon={
+                  <FingerprintIcon size={20} className={"text-nb-gray-200"} />
+                }
+                color={"gray"}
+                size={"large"}
+              />
+            }
+            title={t("addIdentityProvider")}
+            description={t("addIdentityProviderCardDescription")}
+            button={
+              <Button
+                variant={"primary"}
+                onClick={() => setModalOpen(true)}
+                disabled={!permission.identity_providers.create}
+              >
+                <PlusCircle size={16} />
+                {t("addIdentityProvider")}
+              </Button>
+            }
+          />
+        }
+        rightSide={() => (
+          <>
+            {providers && providers.length > 0 && (
+              <Button
+                variant={"primary"}
+                className={"ml-auto"}
+                onClick={() => setModalOpen(true)}
+                disabled={!permission.identity_providers.create}
+              >
+                <PlusCircle size={16} />
+                {t("addIdentityProvider")}
+              </Button>
+            )}
+          </>
+        )}
+      >
+        {(table) => (
+          <>
+            <DataTableRowsPerPage
+              table={table}
+              disabled={!providers || providers.length === 0}
+            />
+            <DataTableRefreshButton
+              isDisabled={!providers || providers.length === 0}
+              onClick={() => mutate("/identity-providers")}
+            />
+          </>
+        )}
+      </DataTable>
+    </Tabs.Content>
+  );
 }

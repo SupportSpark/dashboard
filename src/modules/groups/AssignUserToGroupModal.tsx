@@ -23,230 +23,230 @@ import UserStatusCell from "@/modules/users/table-cells/UserStatusCell";
 import { useTranslations } from "next-intl";
 
 type Props = {
-	group: Group;
-	open: boolean;
-	setOpen: (open: boolean) => void;
-	onSuccess?: (users: User[]) => void;
-	excludedUsers?: User[];
-	showClose?: boolean;
-	buttonText?: string;
+  group: Group;
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  onSuccess?: (users: User[]) => void;
+  excludedUsers?: User[];
+  showClose?: boolean;
+  buttonText?: string;
 };
 
 export const AssignUserToGroupModal = ({
-	group,
-	open = false,
-	setOpen,
-	onSuccess,
-	excludedUsers,
-	showClose,
-	buttonText,
+  group,
+  open = false,
+  setOpen,
+  onSuccess,
+  excludedUsers,
+  showClose,
+  buttonText,
 }: Props) => {
-	const t = useTranslations("common");
+  const t = useTranslations("common");
 
-	return (
-		<Modal open={open} onOpenChange={setOpen} key={open ? "1" : "0"}>
-			{open && (
-				<AssignUserToGroupModalContent
-					group={group}
-					onSuccess={(users) => {
-						setOpen(false);
-						onSuccess?.(users);
-					}}
-					excludedUsers={excludedUsers}
-					showClose={showClose}
-					buttonText={buttonText}
-				/>
-			)}
-		</Modal>
-	);
+  return (
+    <Modal open={open} onOpenChange={setOpen} key={open ? "1" : "0"}>
+      {open && (
+        <AssignUserToGroupModalContent
+          group={group}
+          onSuccess={(users) => {
+            setOpen(false);
+            onSuccess?.(users);
+          }}
+          excludedUsers={excludedUsers}
+          showClose={showClose}
+          buttonText={buttonText}
+        />
+      )}
+    </Modal>
+  );
 };
 
 type ContentProps = {
-	group: Group;
-	onSuccess?: (users: User[]) => void;
-	excludedUsers?: User[];
-	showClose?: boolean;
-	buttonText?: string;
+  group: Group;
+  onSuccess?: (users: User[]) => void;
+  excludedUsers?: User[];
+  showClose?: boolean;
+  buttonText?: string;
 };
 
 export const AssignUserToGroupModalContent = ({
-	group,
-	onSuccess,
-	excludedUsers,
-	showClose = true,
-	buttonText,
+  group,
+  onSuccess,
+  excludedUsers,
+  showClose = true,
+  buttonText,
 }: ContentProps) => {
-	const t = useTranslations("common");
-	const tassign = useTranslations("common");
-	const tTable = useTranslations("table");
-	const tUsers = useTranslations("users");
-	const tGroups = useTranslations("groups");
-	const resolvedButtonText = buttonText ?? tassign("assignUsers");
-	const { data: users, isLoading } = useFetchApi<User[]>(
-		"/users?service_user=false",
-	);
-	const [selectedRows, setSelectedRows] = useState<RowSelectionState>({});
-	const isAllGroup = group.name === "All";
-	const [sorting, setSorting] = useState([
-		{
-			id: "name",
-			desc: false,
-		},
-	]);
+  const t = useTranslations("common");
+  const tassign = useTranslations("common");
+  const tTable = useTranslations("table");
+  const tUsers = useTranslations("users");
+  const tGroups = useTranslations("groups");
+  const resolvedButtonText = buttonText ?? tassign("assignUsers");
+  const { data: users, isLoading } = useFetchApi<User[]>(
+    "/users?service_user=false",
+  );
+  const [selectedRows, setSelectedRows] = useState<RowSelectionState>({});
+  const isAllGroup = group.name === "All";
+  const [sorting, setSorting] = useState([
+    {
+      id: "name",
+      desc: false,
+    },
+  ]);
 
-	const data = useMemo(() => {
-		return users?.filter((p) => {
-			if (!excludedUsers || excludedUsers.length === 0) return true;
-			return !excludedUsers.find((ep) => ep.id === p.id);
-		});
-	}, [users, excludedUsers]);
+  const data = useMemo(() => {
+    return users?.filter((p) => {
+      if (!excludedUsers || excludedUsers.length === 0) return true;
+      return !excludedUsers.find((ep) => ep.id === p.id);
+    });
+  }, [users, excludedUsers]);
 
-	return (
-		<ModalContent
-			maxWidthClass={"max-w-4xl"}
-			className={cn(users && users.length > 0 ? "pb-0" : "pb-8")}
-			showClose={showClose}
-		>
-			<DataTable
-				useRowId={true}
-				rowSelection={selectedRows}
-				setRowSelection={setSelectedRows}
-				onRowClick={(row) => row.toggleSelected()}
-				text={t("users")}
-				resetRowSelectionOnSearch={false}
-				uniqueKey={group?.id ?? group?.name}
-				sorting={sorting}
-				keepStateInLocalStorage={false}
-				setSorting={setSorting}
-				columns={UsersTableColumns(t, tTable, tUsers)}
-				data={data}
-				isLoading={isLoading}
-				tableCellClassName={"!py-1 scale-[95%]"}
-				searchPlaceholder={tGroups("searchUsersByNameEmailOrRole")}
-				searchClassName={"w-[350px]"}
-				minimal={false}
-				columnVisibility={{}}
-				getStartedCard={
-					<NoResultsCard
-						className={"mb-8"}
-						title={tGroups("noUsersToAssign")}
-						description={tGroups("noUsersToAssignDescription")}
-						icon={<TeamIcon className={"fill-nb-gray-200"} size={14} />}
-					/>
-				}
-				rightSide={(table) => (
-					<div className={"ml-auto flex items-center gap-5"}>
-						<div className={"text-sm"}>
-							{Object.keys(selectedRows).length > 0 && (
-								<div className={"text-nb-gray-200"}>
-									{tGroups.rich("usersSelected", {
-										count: Object.keys(selectedRows).length,
-										count2: (chunks) => (
-											<span className={"text-netbird font-medium"}>
-												{chunks}
-											</span>
-										),
-									})}
-								</div>
-							)}
-						</div>
-						{!isAllGroup && (
-							<Button
-								variant={"primary"}
-								className={"ml-auto"}
-								disabled={
-									users?.length === 0 || Object.keys(selectedRows).length === 0
-								}
-								onClick={() => {
-									const selectedUsers = table
-										.getSelectedRowModel()
-										.rows.map((row) => row.original);
-									onSuccess?.(selectedUsers);
-								}}
-							>
-								{resolvedButtonText}
-							</Button>
-						)}
-					</div>
-				)}
-			/>
-		</ModalContent>
-	);
+  return (
+    <ModalContent
+      maxWidthClass={"max-w-4xl"}
+      className={cn(users && users.length > 0 ? "pb-0" : "pb-8")}
+      showClose={showClose}
+    >
+      <DataTable
+        useRowId={true}
+        rowSelection={selectedRows}
+        setRowSelection={setSelectedRows}
+        onRowClick={(row) => row.toggleSelected()}
+        text={t("users")}
+        resetRowSelectionOnSearch={false}
+        uniqueKey={group?.id ?? group?.name}
+        sorting={sorting}
+        keepStateInLocalStorage={false}
+        setSorting={setSorting}
+        columns={UsersTableColumns(t, tTable, tUsers)}
+        data={data}
+        isLoading={isLoading}
+        tableCellClassName={"!py-1 scale-[95%]"}
+        searchPlaceholder={tGroups("searchUsersByNameEmailOrRole")}
+        searchClassName={"w-[350px]"}
+        minimal={false}
+        columnVisibility={{}}
+        getStartedCard={
+          <NoResultsCard
+            className={"mb-8"}
+            title={tGroups("noUsersToAssign")}
+            description={tGroups("noUsersToAssignDescription")}
+            icon={<TeamIcon className={"fill-nb-gray-200"} size={14} />}
+          />
+        }
+        rightSide={(table) => (
+          <div className={"ml-auto flex items-center gap-5"}>
+            <div className={"text-sm"}>
+              {Object.keys(selectedRows).length > 0 && (
+                <div className={"text-nb-gray-200"}>
+                  {tGroups.rich("usersSelected", {
+                    count: Object.keys(selectedRows).length,
+                    count2: (chunks) => (
+                      <span className={"text-netbird font-medium"}>
+                        {chunks}
+                      </span>
+                    ),
+                  })}
+                </div>
+              )}
+            </div>
+            {!isAllGroup && (
+              <Button
+                variant={"primary"}
+                className={"ml-auto"}
+                disabled={
+                  users?.length === 0 || Object.keys(selectedRows).length === 0
+                }
+                onClick={() => {
+                  const selectedUsers = table
+                    .getSelectedRowModel()
+                    .rows.map((row) => row.original);
+                  onSuccess?.(selectedUsers);
+                }}
+              >
+                {resolvedButtonText}
+              </Button>
+            )}
+          </div>
+        )}
+      />
+    </ModalContent>
+  );
 };
 
 function UsersTableColumns(
-	t: (key: string) => string,
-	tTable: (key: string) => string = t,
-	tUsers: (key: string) => string = t,
+  t: (key: string) => string,
+  tTable: (key: string) => string = t,
+  tUsers: (key: string) => string = t,
 ): ColumnDef<any>[] {
-	return [
-		{
-			id: "select",
-			header: ({ table }) => (
-				<div className={"min-w-[20px] max-w-[20px]"}>
-					<Checkbox
-						checked={table.getIsAllPageRowsSelected()}
-						onCheckedChange={(value) => table.toggleAllRowsSelected(!!value)}
-						aria-label={tTable("selectAll")}
-					/>
-				</div>
-			),
-			cell: ({ row }) => (
-				<div className={"min-w-[20px] max-w-[20px]"}>
-					<Checkbox
-						checked={row.getIsSelected()}
-						variant={"tableCell"}
-						onCheckedChange={(value) => row.toggleSelected(!!value)}
-						aria-label={tTable("selectRow")}
-					/>
-				</div>
-			),
-			enableSorting: false,
-			enableHiding: false,
-		},
-		{
-			accessorKey: "name",
-			header: ({ column }) => {
-				return <DataTableHeader column={column}>{t("name")}</DataTableHeader>;
-			},
-			accessorFn: (row) => row.name + " " + row.email,
-			sortingFn: "text",
-			cell: ({ row }) => <UserNameCell user={row.original} />,
-		},
-		{
-			accessorKey: "role",
-			header: ({ column }) => {
-				return (
-					<DataTableHeader column={column}>{tUsers("role")}</DataTableHeader>
-				);
-			},
-			sortingFn: "text",
-			cell: ({ row }) => <UserRoleCell user={row.original} />,
-		},
-		{
-			accessorKey: "status",
-			header: ({ column }) => {
-				return <DataTableHeader column={column}>{t("status")}</DataTableHeader>;
-			},
-			sortingFn: "text",
-			cell: ({ row }) => <UserStatusCell user={row.original} />,
-		},
-		{
-			accessorKey: "last_login",
-			header: ({ column }) => {
-				return (
-					<DataTableHeader column={column}>
-						{tUsers("lastLoginOn")}
-					</DataTableHeader>
-				);
-			},
-			sortingFn: "text",
-			cell: ({ row }) => (
-				<LastTimeRow
-					date={dayjs(row.original.last_login).toDate()}
-					text={tUsers("lastLoginOn")}
-				/>
-			),
-		},
-	];
+  return [
+    {
+      id: "select",
+      header: ({ table }) => (
+        <div className={"min-w-[20px] max-w-[20px]"}>
+          <Checkbox
+            checked={table.getIsAllPageRowsSelected()}
+            onCheckedChange={(value) => table.toggleAllRowsSelected(!!value)}
+            aria-label={tTable("selectAll")}
+          />
+        </div>
+      ),
+      cell: ({ row }) => (
+        <div className={"min-w-[20px] max-w-[20px]"}>
+          <Checkbox
+            checked={row.getIsSelected()}
+            variant={"tableCell"}
+            onCheckedChange={(value) => row.toggleSelected(!!value)}
+            aria-label={tTable("selectRow")}
+          />
+        </div>
+      ),
+      enableSorting: false,
+      enableHiding: false,
+    },
+    {
+      accessorKey: "name",
+      header: ({ column }) => {
+        return <DataTableHeader column={column}>{t("name")}</DataTableHeader>;
+      },
+      accessorFn: (row) => row.name + " " + row.email,
+      sortingFn: "text",
+      cell: ({ row }) => <UserNameCell user={row.original} />,
+    },
+    {
+      accessorKey: "role",
+      header: ({ column }) => {
+        return (
+          <DataTableHeader column={column}>{tUsers("role")}</DataTableHeader>
+        );
+      },
+      sortingFn: "text",
+      cell: ({ row }) => <UserRoleCell user={row.original} />,
+    },
+    {
+      accessorKey: "status",
+      header: ({ column }) => {
+        return <DataTableHeader column={column}>{t("status")}</DataTableHeader>;
+      },
+      sortingFn: "text",
+      cell: ({ row }) => <UserStatusCell user={row.original} />,
+    },
+    {
+      accessorKey: "last_login",
+      header: ({ column }) => {
+        return (
+          <DataTableHeader column={column}>
+            {tUsers("lastLoginOn")}
+          </DataTableHeader>
+        );
+      },
+      sortingFn: "text",
+      cell: ({ row }) => (
+        <LastTimeRow
+          date={dayjs(row.original.last_login).toDate()}
+          text={tUsers("lastLoginOn")}
+        />
+      ),
+    },
+  ];
 }

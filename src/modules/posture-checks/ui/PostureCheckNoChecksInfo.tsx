@@ -10,56 +10,56 @@ import { usePermissions } from "@/contexts/PermissionsProvider";
 import { PostureCheck } from "@/interfaces/PostureCheck";
 
 export function PostureCheckNoChecksInfo({
-	onAddClick,
-	onBrowseClick,
+  onAddClick,
+  onBrowseClick,
 }: {
-	onAddClick: () => void;
-	onBrowseClick: () => void;
+  onAddClick: () => void;
+  onBrowseClick: () => void;
 }) {
-	const t = useTranslations("postureChecks");
-	const { permission } = usePermissions();
+  const t = useTranslations("postureChecks");
+  const { permission } = usePermissions();
 
-	const { data: postureChecks } =
-		useFetchApi<PostureCheck[]>("/posture-checks");
+  const { data: postureChecks } =
+    useFetchApi<PostureCheck[]>("/posture-checks");
 
-	return (
-		<div>
-			<div
-				className={
-					"mx-auto text-center flex flex-col items-center justify-center"
-				}
-			>
-				<h2 className={"text-lg my-0 leading-[1.5 text-center]"}>
-					{t("noChecks")}
-				</h2>
-				<Paragraph className={cn("text-sm text-center max-w-md mt-1")}>
-					{t("noChecksDescription")}
-				</Paragraph>
-			</div>
-			<div className={"flex items-center justify-center gap-4 mt-5"}>
-				<Button
-					variant={"secondary"}
-					size={"xs"}
-					disabled={
-						postureChecks?.length == 0 ||
-						!permission.policies.create ||
-						!permission.policies.update
-					}
-					onClick={onBrowseClick}
-				>
-					<FolderSearch size={14} />
-					{t("browseChecks")}
-				</Button>
-				<Button
-					variant={"primary"}
-					size={"xs"}
-					onClick={onAddClick}
-					disabled={!permission.policies.create || !permission.policies.update}
-				>
-					<IconCirclePlus size={14} />
-					{t("newPostureCheck")}
-				</Button>
-			</div>
-		</div>
-	);
+  return (
+    <div>
+      <div
+        className={
+          "mx-auto text-center flex flex-col items-center justify-center"
+        }
+      >
+        <h2 className={"text-lg my-0 leading-[1.5 text-center]"}>
+          {t("noChecks")}
+        </h2>
+        <Paragraph className={cn("text-sm text-center max-w-md mt-1")}>
+          {t("noChecksDescription")}
+        </Paragraph>
+      </div>
+      <div className={"flex items-center justify-center gap-4 mt-5"}>
+        <Button
+          variant={"secondary"}
+          size={"xs"}
+          disabled={
+            postureChecks?.length == 0 ||
+            !permission.policies.create ||
+            !permission.policies.update
+          }
+          onClick={onBrowseClick}
+        >
+          <FolderSearch size={14} />
+          {t("browseChecks")}
+        </Button>
+        <Button
+          variant={"primary"}
+          size={"xs"}
+          onClick={onAddClick}
+          disabled={!permission.policies.create || !permission.policies.update}
+        >
+          <IconCirclePlus size={14} />
+          {t("newPostureCheck")}
+        </Button>
+      </div>
+    </div>
+  );
 }

@@ -54,8 +54,8 @@ export default function Activity() {
           </InlineLink>
         </Paragraph>
       </div>
-<RestrictedAccess page={t("title")} hasAccess={permission.events.read}>
-			<EventStreamingCard />
+      <RestrictedAccess page={t("title")} hasAccess={permission.events.read}>
+        <EventStreamingCard />
         <ActivityTable
           events={events}
           isLoading={isLoading}

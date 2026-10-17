@@ -2,10 +2,10 @@
 
 import Button from "@components/Button";
 import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
 } from "@components/DropdownMenu";
 import HelpText from "@components/HelpText";
 import { Label } from "@components/Label";
@@ -27,286 +27,301 @@ import AccessControlSourcesCell from "@/modules/access-control/table/AccessContr
 import { useNetworksContext } from "@/modules/networks/NetworkProvider";
 
 type Props = {
-	existingPolicies: Policy[];
-	newPolicies: Policy[];
-	onNewPoliciesChange: (policies: Policy[]) => void;
-	address: string;
-	resourceName?: string;
-	resourceId?: string;
-	hasResourceGroups?: boolean;
+  existingPolicies: Policy[];
+  newPolicies: Policy[];
+  onNewPoliciesChange: (policies: Policy[]) => void;
+  address: string;
+  resourceName?: string;
+  resourceId?: string;
+  hasResourceGroups?: boolean;
 };
 
 function getResourceType(address: string): "domain" | "host" | "subnet" {
-	const hasChars = !!address.match(/[a-z*]/i);
-	const isCIDR = !!address.match(/\//);
-	return hasChars ? "domain" : isCIDR ? "subnet" : "host";
+  const hasChars = !!address.match(/[a-z*]/i);
+  const isCIDR = !!address.match(/\//);
+  return hasChars ? "domain" : isCIDR ? "subnet" : "host";
 }
 
 export default function NetworkResourceAccessControl({
-	existingPolicies,
-	newPolicies,
-	onNewPoliciesChange,
-	address,
-	resourceName,
-	resourceId,
-	hasResourceGroups = false,
+  existingPolicies,
+  newPolicies,
+  onNewPoliciesChange,
+  address,
+  resourceName,
+  resourceId,
+  hasResourceGroups = false,
 }: Readonly<Props>) {
-	const t = useTranslations("networks");
-	const tCommon = useTranslations("common");
-	const labelClass = useLabelClass();
-	const { network, confirmMultiResourceAction } = useNetworksContext();
-	const { openEditPolicyModal, deletePolicy } = usePolicies();
-	const [policyModalOpen, setPolicyModalOpen] = useState(false);
-	const [editingPolicyIndex, setEditingPolicyIndex] = useState<number | null>(
-		null,
-	);
+  const t = useTranslations("networks");
+  const tCommon = useTranslations("common");
+  const labelClass = useLabelClass();
+  const { network, confirmMultiResourceAction } = useNetworksContext();
+  const { openEditPolicyModal, deletePolicy } = usePolicies();
+  const [policyModalOpen, setPolicyModalOpen] = useState(false);
+  const [editingPolicyIndex, setEditingPolicyIndex] = useState<number | null>(
+    null,
+  );
 
-	const allPolicies = useMemo(
-		() => [...existingPolicies, ...newPolicies],
-		[existingPolicies, newPolicies],
-	);
+  const allPolicies = useMemo(
+    () => [...existingPolicies, ...newPolicies],
+    [existingPolicies, newPolicies],
+  );
 
-	const destinationResource: PolicyRuleResource = useMemo(() => {
-		return {
-			id: resourceId || resourceName || address,
-			type: getResourceType(address),
-		};
-	}, [address, resourceName, resourceId]);
+  const destinationResource: PolicyRuleResource = useMemo(() => {
+    return {
+      id: resourceId || resourceName || address,
+      type: getResourceType(address),
+    };
+  }, [address, resourceName, resourceId]);
 
-	const currentResource = useMemo<NetworkResource>(() => {
-		return {
-			id: resourceId || resourceName || address,
-			name: resourceName || address,
-			address,
-			type: getResourceType(address),
-			enabled: true,
-		};
-	}, [resourceId, resourceName, address]);
+  const currentResource = useMemo<NetworkResource>(() => {
+    return {
+      id: resourceId || resourceName || address,
+      name: resourceName || address,
+      address,
+      type: getResourceType(address),
+      enabled: true,
+    };
+  }, [resourceId, resourceName, address]);
 
-	const openAddPolicy = () => {
-		setEditingPolicyIndex(null);
-		setPolicyModalOpen(true);
-	};
+  const openAddPolicy = () => {
+    setEditingPolicyIndex(null);
+    setPolicyModalOpen(true);
+  };
 
-	const openEditPolicy = async (policy: Policy) => {
-		if (policy.id) {
-			const confirm = await confirmMultiResourceAction(
-				policy,
-				"edit",
-				currentResource,
-			);
-			if (!confirm) return;
-			openEditPolicyModal(policy);
-		} else {
-			const idx = newPolicies.indexOf(policy);
-			if (idx === -1) return;
-			setEditingPolicyIndex(idx);
-			setPolicyModalOpen(true);
-		}
-	};
+  const openEditPolicy = async (policy: Policy) => {
+    if (policy.id) {
+      const confirm = await confirmMultiResourceAction(
+        policy,
+        "edit",
+        currentResource,
+      );
+      if (!confirm) return;
+      openEditPolicyModal(policy);
+    } else {
+      const idx = newPolicies.indexOf(policy);
+      if (idx === -1) return;
+      setEditingPolicyIndex(idx);
+      setPolicyModalOpen(true);
+    }
+  };
 
-	const savePolicy = (policy: Policy) => {
-		if (editingPolicyIndex !== null) {
-			onNewPoliciesChange(
-				newPolicies.map((p, i) => (i === editingPolicyIndex ? policy : p)),
-			);
-		} else {
-			onNewPoliciesChange([...newPolicies, policy]);
-		}
-	};
+  const savePolicy = (policy: Policy) => {
+    if (editingPolicyIndex !== null) {
+      onNewPoliciesChange(
+        newPolicies.map((p, i) => (i === editingPolicyIndex ? policy : p)),
+      );
+    } else {
+      onNewPoliciesChange([...newPolicies, policy]);
+    }
+  };
 
-	const handleDeletePolicy = async (policy: Policy) => {
-		const confirm = await confirmMultiResourceAction(
-			policy,
-			"delete",
-			currentResource,
-		);
-		if (!confirm) return;
-		if (policy.id) {
-			await deletePolicy(policy);
-		} else {
-			onNewPoliciesChange(newPolicies.filter((p) => p !== policy));
-		}
-	};
+  const handleDeletePolicy = async (policy: Policy) => {
+    const confirm = await confirmMultiResourceAction(
+      policy,
+      "delete",
+      currentResource,
+    );
+    if (!confirm) return;
+    if (policy.id) {
+      await deletePolicy(policy);
+    } else {
+      onNewPoliciesChange(newPolicies.filter((p) => p !== policy));
+    }
+  };
 
-	return (
-		<div className={"px-8 flex-col flex gap-6"}>
-			<div>
-				<Label>{t("accessControlPolicies")}</Label>
-				<HelpText>{t("accessControlPoliciesHelp")}</HelpText>
+  return (
+    <div className={"px-8 flex-col flex gap-6"}>
+      <div>
+        <Label>{t("accessControlPolicies")}</Label>
+        <HelpText>{t("accessControlPoliciesHelp")}</HelpText>
 
-				{allPolicies.length > 0 && (
-					<div
-						className={
-							"mt-3 mb-3 overflow-hidden border border-nb-gray-900 bg-nb-gray-920/30 py-1 px-1 rounded-md"
-						}
-					>
-						<table className="w-full">
-							<thead>
-								<tr>
-									<th className={cn("py-2 px-4 text-left text-nb-gray-400 font-medium", labelClass)}>
-										{t("resourceNameLabel")}
-									</th>
-									<th className={cn("py-2 pl-5 pr-2 text-left text-nb-gray-400 font-medium", labelClass)}>
-										{t("resourceGroupsLabel")}
-									</th>
-									<th className={cn("py-2 px-4 text-left text-nb-gray-400 font-medium", labelClass)}>
-										{tCommon("configurePolicies")}
-									</th>
-									<th className="py-2 pr-4 pl-2" />
-								</tr>
-							</thead>
-							<tbody>
-								{allPolicies.map((policy, index) => {
-									return (
-										<tr
-											key={policy.id || `new-${index}`}
-											onClick={() => openEditPolicy(policy)}
-											className="rounded-md hover:bg-nb-gray-900/30 cursor-pointer transition-all"
-										>
-											<td className="py-2.5 px-4 align-middle">
-												<div
-													className={
-														"text-[13px] mt-1 flex items-center gap-2 leading-none font-medium text-nb-gray-300 group-hover:text-nb-gray-200 whitespace-nowrap"
-													}
-												>
-													<div className={"self-start flex"}>
-														<CircleIcon
-															size={8}
-															active={policy.enabled}
-															className={cn("shrink-0 relative top-[5px]")}
-														/>
-													</div>
-													<div
-														className={
-															"flex flex-col items-start justify-start"
-														}
-													>
-														<TruncatedText
-															text={policy.name}
-															maxWidth={"130px"}
-															className={"leading-normal"}
-														/>
-														{policy.description && (
-															<div className={"text-nb-gray-400 text-xs"}>
-																<TruncatedText
-																	text={policy.description}
-																	maxWidth={"130px"}
-																/>
-															</div>
-														)}
-													</div>
-												</div>
-											</td>
-											<td className="py-2.5 pl-5 pr-2 align-middle">
-												<AccessControlSourcesCell
-													policy={policy}
-													hideEdit
-													disableRedirect
-												/>
-											</td>
-											<td className="py-2.5 pl-3 pr-2 align-middle">
-												<div className={"flex items-center gap-2"}>
-													<AccessControlProtocolCell policy={policy} />
-													<AccessControlPortsCell
-														policy={policy}
-														visiblePorts={1}
-													/>
-												</div>
-											</td>
+        {allPolicies.length > 0 && (
+          <div
+            className={
+              "mt-3 mb-3 overflow-hidden border border-nb-gray-900 bg-nb-gray-920/30 py-1 px-1 rounded-md"
+            }
+          >
+            <table className="w-full">
+              <thead>
+                <tr>
+                  <th
+                    className={cn(
+                      "py-2 px-4 text-left text-nb-gray-400 font-medium",
+                      labelClass,
+                    )}
+                  >
+                    {t("resourceNameLabel")}
+                  </th>
+                  <th
+                    className={cn(
+                      "py-2 pl-5 pr-2 text-left text-nb-gray-400 font-medium",
+                      labelClass,
+                    )}
+                  >
+                    {t("resourceGroupsLabel")}
+                  </th>
+                  <th
+                    className={cn(
+                      "py-2 px-4 text-left text-nb-gray-400 font-medium",
+                      labelClass,
+                    )}
+                  >
+                    {tCommon("configurePolicies")}
+                  </th>
+                  <th className="py-2 pr-4 pl-2" />
+                </tr>
+              </thead>
+              <tbody>
+                {allPolicies.map((policy, index) => {
+                  return (
+                    <tr
+                      key={policy.id || `new-${index}`}
+                      onClick={() => openEditPolicy(policy)}
+                      className="rounded-md hover:bg-nb-gray-900/30 cursor-pointer transition-all"
+                    >
+                      <td className="py-2.5 px-4 align-middle">
+                        <div
+                          className={
+                            "text-[13px] mt-1 flex items-center gap-2 leading-none font-medium text-nb-gray-300 group-hover:text-nb-gray-200 whitespace-nowrap"
+                          }
+                        >
+                          <div className={"self-start flex"}>
+                            <CircleIcon
+                              size={8}
+                              active={policy.enabled}
+                              className={cn("shrink-0 relative top-[5px]")}
+                            />
+                          </div>
+                          <div
+                            className={
+                              "flex flex-col items-start justify-start"
+                            }
+                          >
+                            <TruncatedText
+                              text={policy.name}
+                              maxWidth={"130px"}
+                              className={"leading-normal"}
+                            />
+                            {policy.description && (
+                              <div className={"text-nb-gray-400 text-xs"}>
+                                <TruncatedText
+                                  text={policy.description}
+                                  maxWidth={"130px"}
+                                />
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-2.5 pl-5 pr-2 align-middle">
+                        <AccessControlSourcesCell
+                          policy={policy}
+                          hideEdit
+                          disableRedirect
+                        />
+                      </td>
+                      <td className="py-2.5 pl-3 pr-2 align-middle">
+                        <div className={"flex items-center gap-2"}>
+                          <AccessControlProtocolCell policy={policy} />
+                          <AccessControlPortsCell
+                            policy={policy}
+                            visiblePorts={1}
+                          />
+                        </div>
+                      </td>
 
-											<td className="py-2.5 pl-2 pr-3">
-												<div
-													className="flex items-center gap-6 justify-end"
-													onClick={(e) => e.stopPropagation()}
-												>
-													<DropdownMenu modal={false}>
-														<DropdownMenuTrigger asChild>
-															<Button
-																variant="default-outline"
-																className="!px-3"
-															>
-																<MoreVertical size={16} className="shrink-0" />
-															</Button>
-														</DropdownMenuTrigger>
-														<DropdownMenuContent
-															className="w-auto min-w-[200px]"
-															align="end"
-														>
-															<DropdownMenuItem
-																onClick={() => openEditPolicy(policy)}
-															>
-																<div className="flex gap-3 items-center">
-																	<Edit2 size={14} className="shrink-0" />
-																	{t("editPolicy")}
-																</div>
-															</DropdownMenuItem>
-															<DropdownMenuItem
-																variant={"danger"}
-																onClick={() => handleDeletePolicy(policy)}
-															>
-																<div className="flex gap-3 items-center">
-																	<Trash2 size={14} className="shrink-0" />
-																	{t("deletePolicy")}
-																</div>
-															</DropdownMenuItem>
-														</DropdownMenuContent>
-													</DropdownMenu>
-												</div>
-											</td>
-										</tr>
-									);
-								})}
-							</tbody>
-						</table>
-					</div>
-				)}
+                      <td className="py-2.5 pl-2 pr-3">
+                        <div
+                          className="flex items-center gap-6 justify-end"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <DropdownMenu modal={false}>
+                            <DropdownMenuTrigger asChild>
+                              <Button
+                                variant="default-outline"
+                                className="!px-3"
+                              >
+                                <MoreVertical size={16} className="shrink-0" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent
+                              className="w-auto min-w-[200px]"
+                              align="end"
+                            >
+                              <DropdownMenuItem
+                                onClick={() => openEditPolicy(policy)}
+                              >
+                                <div className="flex gap-3 items-center">
+                                  <Edit2 size={14} className="shrink-0" />
+                                  {t("editPolicy")}
+                                </div>
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                variant={"danger"}
+                                onClick={() => handleDeletePolicy(policy)}
+                              >
+                                <div className="flex gap-3 items-center">
+                                  <Trash2 size={14} className="shrink-0" />
+                                  {t("deletePolicy")}
+                                </div>
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
 
-	<Button
-					variant="dotted"
-					className={"w-full mt-1"}
-					size="sm"
-					onClick={openAddPolicy}
-					data-testid="add-policy"
-				>
-					<PlusIcon size={14} />
-					{tCommon("addPolicy")}
-				</Button>
+        <Button
+          variant="dotted"
+          className={"w-full mt-1"}
+          size="sm"
+          onClick={openAddPolicy}
+          data-testid="add-policy"
+        >
+          <PlusIcon size={14} />
+          {tCommon("addPolicy")}
+        </Button>
 
-			<Modal
-				open={policyModalOpen}
-				onOpenChange={(open) => {
-					setPolicyModalOpen(open);
-					if (!open) setEditingPolicyIndex(null);
-				}}
-				key={policyModalOpen ? 1 : 0}
-			>
-				<AccessControlModalContent
-					useSave={false}
-					policy={
-						editingPolicyIndex !== null
-							? newPolicies[editingPolicyIndex]
-							: undefined
-					}
-					initialDestinationResource={
-						editingPolicyIndex === null ? destinationResource : undefined
-					}
-					disableDestinationSelector={!hasResourceGroups}
-					additionalResources={[currentResource]}
-					initialName={`${resourceName || address} Access`}
-					initialDescription={
-						network?.description
-							? `${network.name}, ${network.description}`
-							: network?.name || ""
-					}
-					onSuccess={(policy) => {
-						savePolicy(policy);
-						setPolicyModalOpen(false);
-						setEditingPolicyIndex(null);
-					}}
-				/>
-			</Modal>
-		</div>
-		</div>
-	);
+        <Modal
+          open={policyModalOpen}
+          onOpenChange={(open) => {
+            setPolicyModalOpen(open);
+            if (!open) setEditingPolicyIndex(null);
+          }}
+          key={policyModalOpen ? 1 : 0}
+        >
+          <AccessControlModalContent
+            useSave={false}
+            policy={
+              editingPolicyIndex !== null
+                ? newPolicies[editingPolicyIndex]
+                : undefined
+            }
+            initialDestinationResource={
+              editingPolicyIndex === null ? destinationResource : undefined
+            }
+            disableDestinationSelector={!hasResourceGroups}
+            additionalResources={[currentResource]}
+            initialName={`${resourceName || address} Access`}
+            initialDescription={
+              network?.description
+                ? `${network.name}, ${network.description}`
+                : network?.name || ""
+            }
+            onSuccess={(policy) => {
+              savePolicy(policy);
+              setPolicyModalOpen(false);
+              setEditingPolicyIndex(null);
+            }}
+          />
+        </Modal>
+      </div>
+    </div>
+  );
 }

@@ -22,62 +22,61 @@ import { IdentityProviderCard } from "@/modules/integrations/idp-sync/IdentityPr
 const UsersTable = lazy(() => import("@/modules/users/UsersTable"));
 
 export default function TeamUsers() {
-	const t = useTranslations("users");
-	const { isLoading: isGroupsLoading } = useGroups();
-	const { permission } = usePermissions();
-	const { data: users, isLoading } = useFetchApi<User[]>(
-		"/users?service_user=false",
-	);
+  const t = useTranslations("users");
+  const { isLoading: isGroupsLoading } = useGroups();
+  const { permission } = usePermissions();
+  const { data: users, isLoading } = useFetchApi<User[]>(
+    "/users?service_user=false",
+  );
 
-	const { ref: headingRef, portalTarget } =
-		usePortalElement<HTMLHeadingElement>();
+  const { ref: headingRef, portalTarget } =
+    usePortalElement<HTMLHeadingElement>();
 
-
-	return (
-		<PageContainer>
-			<div className={"p-default py-6"}>
-				<Breadcrumbs>
-					<Breadcrumbs.Item
-						href={"/team"}
-						label={t("team")}
-						icon={<TeamIcon size={13} />}
-					/>
-					<Breadcrumbs.Item
-						href={"/team/users"}
-						label={t("title")}
-						active
-						icon={<User2 size={16} />}
-					/>
-				</Breadcrumbs>
-				<h1 ref={headingRef}>{t("title")}</h1>
-				<Paragraph>
-					{t("usersPageDescription")} {" "}
-					<InlineLink
-						href={"https://docs.netbird.io/how-to/add-users-to-your-network"}
-						target={"_blank"}
-					>
-						{t("learnMore")}
-						<ExternalLinkIcon size={12} />
-					</InlineLink>
-				</Paragraph>
-			</div>
-			<RestrictedAccess page={t("title")} hasAccess={permission.users.read}>
-				<Suspense fallback={<SkeletonTable />}>
-					{permission.settings.read && (
-						<div className={"flex flex-wrap gap-4 p-default pb-6"}>
-							{(permission?.idp?.read || !isNetBirdCloud()) && (
-								<IdentityProviderCard />
-							)}
-							<AccountMfaCard />
-						</div>
-					)}
-					<UsersTable
-						users={users}
-						isLoading={isLoading || isGroupsLoading}
-						headingTarget={portalTarget}
-					/>
-				</Suspense>
-			</RestrictedAccess>
-		</PageContainer>
-	);
+  return (
+    <PageContainer>
+      <div className={"p-default py-6"}>
+        <Breadcrumbs>
+          <Breadcrumbs.Item
+            href={"/team"}
+            label={t("team")}
+            icon={<TeamIcon size={13} />}
+          />
+          <Breadcrumbs.Item
+            href={"/team/users"}
+            label={t("title")}
+            active
+            icon={<User2 size={16} />}
+          />
+        </Breadcrumbs>
+        <h1 ref={headingRef}>{t("title")}</h1>
+        <Paragraph>
+          {t("usersPageDescription")}{" "}
+          <InlineLink
+            href={"https://docs.netbird.io/how-to/add-users-to-your-network"}
+            target={"_blank"}
+          >
+            {t("learnMore")}
+            <ExternalLinkIcon size={12} />
+          </InlineLink>
+        </Paragraph>
+      </div>
+      <RestrictedAccess page={t("title")} hasAccess={permission.users.read}>
+        <Suspense fallback={<SkeletonTable />}>
+          {permission.settings.read && (
+            <div className={"flex flex-wrap gap-4 p-default pb-6"}>
+              {(permission?.idp?.read || !isNetBirdCloud()) && (
+                <IdentityProviderCard />
+              )}
+              <AccountMfaCard />
+            </div>
+          )}
+          <UsersTable
+            users={users}
+            isLoading={isLoading || isGroupsLoading}
+            headingTarget={portalTarget}
+          />
+        </Suspense>
+      </RestrictedAccess>
+    </PageContainer>
+  );
 }

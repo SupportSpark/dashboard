@@ -88,8 +88,8 @@ export default function ReverseProxyLayer4Content({
               value={!isListenPortSupported ? "" : listenPort || ""}
               onChange={(e) => setListenPort(parseInt(e.target.value) || 0)}
               disabled={!isListenPortSupported || !l4Target}
-aria-label={t("publicListenPort")}
-							data-testid="listen-port-input"
+              aria-label={t("publicListenPort")}
+              data-testid="listen-port-input"
             />
           </div>
         </div>

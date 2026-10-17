@@ -420,16 +420,16 @@ export default function ReverseProxyEventsTable({
               size={"large"}
             />
           }
-		  title={t("noProxyEventsTitle")}
-		  description={t("noProxyEventsDescription")}
+          title={t("noProxyEventsTitle")}
+          description={t("noProxyEventsDescription")}
           learnMore={
             <>
-			  {tCommon("learnMoreAbout")} {" "}
+              {tCommon("learnMoreAbout")}{" "}
               <InlineLink
                 href={REVERSE_PROXY_EVENTS_DOCS_LINK}
                 target={"_blank"}
               >
-				{t("proxyEvents")}
+                {t("proxyEvents")}
                 <ExternalLinkIcon size={12} />
               </InlineLink>
             </>

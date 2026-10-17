@@ -18,16 +18,16 @@ import { Policy } from "@/interfaces/Policy";
 import PageContainer from "@/layouts/PageContainer";
 
 const AccessControlTable = lazy(
-	() => import("@/modules/access-control/table/AccessControlTable"),
+  () => import("@/modules/access-control/table/AccessControlTable"),
 );
 export default function AccessControlPage() {
-	const t = useTranslations("policies");
-	const { permission } = usePermissions();
+  const t = useTranslations("policies");
+  const { permission } = usePermissions();
 
-	const { data: policies, isLoading } = useFetchApi<Policy[]>("/policies");
+  const { data: policies, isLoading } = useFetchApi<Policy[]>("/policies");
 
-	const { ref: headingRef, portalTarget } =
-		usePortalElement<HTMLHeadingElement>();
+  const { ref: headingRef, portalTarget } =
+    usePortalElement<HTMLHeadingElement>();
 
   return (
     <PageContainer>
@@ -53,21 +53,21 @@ export default function AccessControlPage() {
           </Paragraph>
         </div>
 
-				<RestrictedAccess
-					page={t("title")}
-					hasAccess={permission.policies.read}
-				>
-					<PoliciesProvider>
-						<Suspense fallback={<SkeletonTable />}>
-							<AccessControlTable
-								isLoading={isLoading}
-								policies={policies}
-								headingTarget={portalTarget}
-							/>
-						</Suspense>
-					</PoliciesProvider>
-				</RestrictedAccess>
-			</GroupsProvider>
-		</PageContainer>
-	);
+        <RestrictedAccess
+          page={t("title")}
+          hasAccess={permission.policies.read}
+        >
+          <PoliciesProvider>
+            <Suspense fallback={<SkeletonTable />}>
+              <AccessControlTable
+                isLoading={isLoading}
+                policies={policies}
+                headingTarget={portalTarget}
+              />
+            </Suspense>
+          </PoliciesProvider>
+        </RestrictedAccess>
+      </GroupsProvider>
+    </PageContainer>
+  );
 }

@@ -4,17 +4,17 @@ import { Input } from "@components/Input";
 import { Modal, ModalClose, ModalContent } from "@components/modal/Modal";
 import ModalHeader from "@components/modal/ModalHeader";
 import {
-	SelectDropdown,
-	SelectOption,
+  SelectDropdown,
+  SelectOption,
 } from "@components/select/SelectDropdown";
 import {
-	BracesIcon,
-	CircleUserIcon,
-	FileCode2Icon,
-	KeyRoundIcon,
-	MinusCircleIcon,
-	PlusIcon,
-	UserIcon,
+  BracesIcon,
+  CircleUserIcon,
+  FileCode2Icon,
+  KeyRoundIcon,
+  MinusCircleIcon,
+  PlusIcon,
+  UserIcon,
 } from "lucide-react";
 import React, { useMemo, useReducer, useRef } from "react";
 import { useTranslations } from "next-intl";
@@ -24,464 +24,464 @@ import type { HeaderAuthConfig } from "@/interfaces/ReverseProxy";
 type HeaderType = "basic" | "bearer" | "custom";
 
 interface HeaderAuthItem {
-	id: string;
-	type: HeaderType;
-	header: string;
-	value: string;
-	username: string;
-	password: string;
-	existingSecret: boolean;
+  id: string;
+  type: HeaderType;
+  header: string;
+  value: string;
+  username: string;
+  password: string;
+  existingSecret: boolean;
 }
 
 /** Header type options; the labels live in the reverseProxy catalog. */
 function useHeaderTypeOptions(
-	tr: ReturnType<typeof useTranslations<"reverseProxy">>,
+  tr: ReturnType<typeof useTranslations<"reverseProxy">>,
 ): SelectOption[] {
-	return useMemo(
-		() => [
-			{
-				value: "basic" satisfies HeaderType,
-				label: tr("basicAuth"),
-				icon: () => <CircleUserIcon size={14} />,
-			},
-			{
-				value: "bearer" satisfies HeaderType,
-				label: tr("bearerToken"),
-				icon: () => <KeyRoundIcon size={14} />,
-			},
-			{
-				value: "custom" satisfies HeaderType,
-				label: tr("customHeader"),
-				icon: () => <BracesIcon size={14} />,
-			},
-		],
-		[tr],
-	);
+  return useMemo(
+    () => [
+      {
+        value: "basic" satisfies HeaderType,
+        label: tr("basicAuth"),
+        icon: () => <CircleUserIcon size={14} />,
+      },
+      {
+        value: "bearer" satisfies HeaderType,
+        label: tr("bearerToken"),
+        icon: () => <KeyRoundIcon size={14} />,
+      },
+      {
+        value: "custom" satisfies HeaderType,
+        label: tr("customHeader"),
+        icon: () => <BracesIcon size={14} />,
+      },
+    ],
+    [tr],
+  );
 }
 
 const MASKED_VALUE = "••••••••";
 
 const INPUT_PROPS = {
-	autoComplete: "off",
-	"data-1p-ignore": true,
-	"data-lpignore": "true",
-	"data-form-type": "other",
+  autoComplete: "off",
+  "data-1p-ignore": true,
+  "data-lpignore": "true",
+  "data-form-type": "other",
 } as const;
 
 function createHeaderEntry(
-	overrides?: Partial<HeaderAuthItem>,
+  overrides?: Partial<HeaderAuthItem>,
 ): HeaderAuthItem {
-	return {
-		id: crypto.randomUUID(),
-		type: "basic",
-		header: "Authorization",
-		value: "",
-		username: "",
-		password: "",
-		existingSecret: false,
-		...overrides,
-	};
+  return {
+    id: crypto.randomUUID(),
+    type: "basic",
+    header: "Authorization",
+    value: "",
+    username: "",
+    password: "",
+    existingSecret: false,
+    ...overrides,
+  };
 }
 
 function toBase64(str: string): string {
-	return btoa(
-		new TextEncoder()
-			.encode(str)
-			.reduce((acc, byte) => acc + String.fromCharCode(byte), ""),
-	);
+  return btoa(
+    new TextEncoder()
+      .encode(str)
+      .reduce((acc, byte) => acc + String.fromCharCode(byte), ""),
+  );
 }
 
 function fromBase64(b64: string): string {
-	return new TextDecoder().decode(
-		Uint8Array.from(atob(b64), (c) => c.charCodeAt(0)),
-	);
+  return new TextDecoder().decode(
+    Uint8Array.from(atob(b64), (c) => c.charCodeAt(0)),
+  );
 }
 
 function headerEntryToConfig(entry: HeaderAuthItem): HeaderAuthConfig {
-	if (entry.existingSecret) {
-		const value = entry.value === MASKED_VALUE ? "" : entry.value;
-		return { enabled: true, header: entry.header, value };
-	}
-	switch (entry.type) {
-		case "basic": {
-			const encoded = toBase64(`${entry.username}:${entry.password}`);
-			return {
-				enabled: true,
-				header: "Authorization",
-				value: `Basic ${encoded}`,
-			};
-		}
-		case "bearer":
-			return {
-				enabled: true,
-				header: "Authorization",
-				value: `Bearer ${entry.value}`,
-			};
-		case "custom":
-			return { enabled: true, header: entry.header, value: entry.value };
-	}
+  if (entry.existingSecret) {
+    const value = entry.value === MASKED_VALUE ? "" : entry.value;
+    return { enabled: true, header: entry.header, value };
+  }
+  switch (entry.type) {
+    case "basic": {
+      const encoded = toBase64(`${entry.username}:${entry.password}`);
+      return {
+        enabled: true,
+        header: "Authorization",
+        value: `Basic ${encoded}`,
+      };
+    }
+    case "bearer":
+      return {
+        enabled: true,
+        header: "Authorization",
+        value: `Bearer ${entry.value}`,
+      };
+    case "custom":
+      return { enabled: true, header: entry.header, value: entry.value };
+  }
 }
 
 function configToHeaderEntry(config: HeaderAuthConfig): HeaderAuthItem {
-	const isExisting = !config.value;
+  const isExisting = !config.value;
 
-	if (config.header === "Authorization" && config.value?.startsWith("Basic ")) {
-		try {
-			const decoded = fromBase64(config.value.slice(6));
-			const sep = decoded.indexOf(":");
-			if (sep >= 0) {
-				return createHeaderEntry({
-					type: "basic",
-					username: decoded.slice(0, sep),
-					password: decoded.slice(sep + 1),
-				});
-			}
-		} catch {}
-	}
+  if (config.header === "Authorization" && config.value?.startsWith("Basic ")) {
+    try {
+      const decoded = fromBase64(config.value.slice(6));
+      const sep = decoded.indexOf(":");
+      if (sep >= 0) {
+        return createHeaderEntry({
+          type: "basic",
+          username: decoded.slice(0, sep),
+          password: decoded.slice(sep + 1),
+        });
+      }
+    } catch {}
+  }
 
-	if (
-		config.header === "Authorization" &&
-		config.value?.startsWith("Bearer ")
-	) {
-		return createHeaderEntry({ type: "bearer", value: config.value.slice(7) });
-	}
+  if (
+    config.header === "Authorization" &&
+    config.value?.startsWith("Bearer ")
+  ) {
+    return createHeaderEntry({ type: "bearer", value: config.value.slice(7) });
+  }
 
-	return createHeaderEntry({
-		type: isExisting && config.header === "Authorization" ? "basic" : "custom",
-		header: config.header,
-		value: isExisting ? MASKED_VALUE : (config.value ?? ""),
-		existingSecret: isExisting,
-	});
+  return createHeaderEntry({
+    type: isExisting && config.header === "Authorization" ? "basic" : "custom",
+    header: config.header,
+    value: isExisting ? MASKED_VALUE : config.value ?? "",
+    existingSecret: isExisting,
+  });
 }
 
 function isHeaderValid(entry: HeaderAuthItem): boolean {
-	if (entry.existingSecret) return true;
-	switch (entry.type) {
-		case "basic":
-			return entry.username.trim().length > 0 && entry.password.length > 0;
-		case "bearer":
-			return entry.value.trim().length > 0;
-		case "custom":
-			return entry.header.trim().length > 0 && entry.value.trim().length > 0;
-	}
+  if (entry.existingSecret) return true;
+  switch (entry.type) {
+    case "basic":
+      return entry.username.trim().length > 0 && entry.password.length > 0;
+    case "bearer":
+      return entry.value.trim().length > 0;
+    case "custom":
+      return entry.header.trim().length > 0 && entry.value.trim().length > 0;
+  }
 }
 
 type HeaderAction =
-	| { type: "add" }
-	| { type: "remove"; index: number }
-	| { type: "update"; index: number; updates: Partial<HeaderAuthItem> };
+  | { type: "add" }
+  | { type: "remove"; index: number }
+  | { type: "update"; index: number; updates: Partial<HeaderAuthItem> };
 
 function headersReducer(
-	state: HeaderAuthItem[],
-	action: HeaderAction,
+  state: HeaderAuthItem[],
+  action: HeaderAction,
 ): HeaderAuthItem[] {
-	switch (action.type) {
-		case "add":
-			return [...state, createHeaderEntry()];
-		case "remove":
-			return state.length === 1
-				? [createHeaderEntry()]
-				: state.filter((_, i) => i !== action.index);
-		case "update":
-			return state.map((e, i) =>
-				i === action.index ? { ...e, ...action.updates } : e,
-			);
-	}
+  switch (action.type) {
+    case "add":
+      return [...state, createHeaderEntry()];
+    case "remove":
+      return state.length === 1
+        ? [createHeaderEntry()]
+        : state.filter((_, i) => i !== action.index);
+    case "update":
+      return state.map((e, i) =>
+        i === action.index ? { ...e, ...action.updates } : e,
+      );
+  }
 }
 
 function initHeaders(headers: HeaderAuthConfig[]): HeaderAuthItem[] {
-	return headers.length > 0
-		? headers.map(configToHeaderEntry)
-		: [createHeaderEntry()];
+  return headers.length > 0
+    ? headers.map(configToHeaderEntry)
+    : [createHeaderEntry()];
 }
 
 type Props = {
-	open: boolean;
-	onOpenChange: (open: boolean) => void;
-	currentHeaders: HeaderAuthConfig[];
-	onSave: (headers: HeaderAuthConfig[]) => void;
-	onRemove: () => void;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  currentHeaders: HeaderAuthConfig[];
+  onSave: (headers: HeaderAuthConfig[]) => void;
+  onRemove: () => void;
 };
 
 export default function AuthHeaderModal({
-	open,
-	onOpenChange,
-	currentHeaders,
-	onSave,
-	onRemove,
+  open,
+  onOpenChange,
+  currentHeaders,
+  onSave,
+  onRemove,
 }: Readonly<Props>) {
-	const t = useTranslations("common");
-	const tr = useTranslations("reverseProxy");
-	const headerTypeOptions = useHeaderTypeOptions(tr);
-	const [items, dispatch] = useReducer(
-		headersReducer,
-		currentHeaders,
-		initHeaders,
-	);
-	const isEditing = currentHeaders.length > 0;
-	const canSave = useMemo(() => items.every(isHeaderValid), [items]);
-	const { hasChanges } = useHasChanges(items);
+  const t = useTranslations("common");
+  const tr = useTranslations("reverseProxy");
+  const headerTypeOptions = useHeaderTypeOptions(tr);
+  const [items, dispatch] = useReducer(
+    headersReducer,
+    currentHeaders,
+    initHeaders,
+  );
+  const isEditing = currentHeaders.length > 0;
+  const canSave = useMemo(() => items.every(isHeaderValid), [items]);
+  const { hasChanges } = useHasChanges(items);
 
-	const handleSave = () => {
-		if (!canSave) return;
-		onOpenChange(false);
-		onSave(items.map(headerEntryToConfig));
-	};
+  const handleSave = () => {
+    if (!canSave) return;
+    onOpenChange(false);
+    onSave(items.map(headerEntryToConfig));
+  };
 
-	const handleRemoveAll = () => {
-		onOpenChange(false);
-		onRemove();
-	};
+  const handleRemoveAll = () => {
+    onOpenChange(false);
+    onRemove();
+  };
 
-	return (
-		<Modal open={open} onOpenChange={onOpenChange}>
-			<ModalContent
-				maxWidthClass="max-w-xl"
-				onOpenAutoFocus={(e) => {
-					e.preventDefault();
-					const container = e.currentTarget as HTMLElement | null;
-					container
-						?.querySelector<HTMLInputElement>("input:not([type=hidden])")
-						?.focus();
-				}}
-			>
-				<ModalHeader
-					title={tr("httpHeaders")}
-					description={tr("httpHeadersDescription")}
-				/>
+  return (
+    <Modal open={open} onOpenChange={onOpenChange}>
+      <ModalContent
+        maxWidthClass="max-w-xl"
+        onOpenAutoFocus={(e) => {
+          e.preventDefault();
+          const container = e.currentTarget as HTMLElement | null;
+          container
+            ?.querySelector<HTMLInputElement>("input:not([type=hidden])")
+            ?.focus();
+        }}
+      >
+        <ModalHeader
+          title={tr("httpHeaders")}
+          description={tr("httpHeadersDescription")}
+        />
 
-				<div className="px-8">
-					<div className="flex flex-col gap-3">
-						{items.map((item, index) => (
-							<HeaderItemRow
-								key={item.id}
-								item={item}
-								index={index}
-								onChange={(updates) =>
-									dispatch({ type: "update", index, updates })
-								}
-								onRemove={() => dispatch({ type: "remove", index })}
-								showRemove={items.length > 1}
-							/>
-						))}
-					</div>
+        <div className="px-8">
+          <div className="flex flex-col gap-3">
+            {items.map((item, index) => (
+              <HeaderItemRow
+                key={item.id}
+                item={item}
+                index={index}
+                onChange={(updates) =>
+                  dispatch({ type: "update", index, updates })
+                }
+                onRemove={() => dispatch({ type: "remove", index })}
+                showRemove={items.length > 1}
+              />
+            ))}
+          </div>
 
-					<Button
-						variant="dotted"
-						className="w-full mt-4"
-						size="sm"
-						onClick={() => dispatch({ type: "add" })}
-					>
-						<PlusIcon size={14} />
-						{tr("addHeaderBtn")}
-					</Button>
+          <Button
+            variant="dotted"
+            className="w-full mt-4"
+            size="sm"
+            onClick={() => dispatch({ type: "add" })}
+          >
+            <PlusIcon size={14} />
+            {tr("addHeaderBtn")}
+          </Button>
 
-					{items.length > 1 && (
-						<Callout className="mt-4" variant="info">
-							{tr.rich("matchedHeadersCallout", {
-								br: () => <br />,
-							})}
-						</Callout>
-					)}
+          {items.length > 1 && (
+            <Callout className="mt-4" variant="info">
+              {tr.rich("matchedHeadersCallout", {
+                br: () => <br />,
+              })}
+            </Callout>
+          )}
 
-					<div className="flex gap-3 w-full justify-between mt-6">
-						{isEditing ? (
-							<>
-								<Button
-									variant="danger-text"
-									data-testid="remove-headers"
-									onClick={handleRemoveAll}
-								>
-									{tr("removeAllBtn")}
-								</Button>
-								<div className="flex gap-3">
-									<ModalClose asChild>
-										<Button variant="secondary">{t("cancel")}</Button>
-									</ModalClose>
-									<Button
-										variant="primary"
-										onClick={handleSave}
-										disabled={!canSave || !hasChanges}
-										data-testid="submit-headers"
-									>
-										{t("save")}
-									</Button>
-								</div>
-							</>
-						) : (
-							<>
-								<div />
-								<div className="flex gap-3">
-									<ModalClose asChild>
-										<Button variant="secondary">{t("cancel")}</Button>
-									</ModalClose>
-									<Button
-										variant="primary"
-										onClick={handleSave}
-										disabled={!canSave}
-									>
-										{tr("addHeadersBtn")}
-									</Button>
-								</div>
-							</>
-						)}
-					</div>
-				</div>
-			</ModalContent>
-		</Modal>
-	);
+          <div className="flex gap-3 w-full justify-between mt-6">
+            {isEditing ? (
+              <>
+                <Button
+                  variant="danger-text"
+                  data-testid="remove-headers"
+                  onClick={handleRemoveAll}
+                >
+                  {tr("removeAllBtn")}
+                </Button>
+                <div className="flex gap-3">
+                  <ModalClose asChild>
+                    <Button variant="secondary">{t("cancel")}</Button>
+                  </ModalClose>
+                  <Button
+                    variant="primary"
+                    onClick={handleSave}
+                    disabled={!canSave || !hasChanges}
+                    data-testid="submit-headers"
+                  >
+                    {t("save")}
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <>
+                <div />
+                <div className="flex gap-3">
+                  <ModalClose asChild>
+                    <Button variant="secondary">{t("cancel")}</Button>
+                  </ModalClose>
+                  <Button
+                    variant="primary"
+                    onClick={handleSave}
+                    disabled={!canSave}
+                  >
+                    {tr("addHeadersBtn")}
+                  </Button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      </ModalContent>
+    </Modal>
+  );
 }
 
 type HeaderItemRowProps = {
-	item: HeaderAuthItem;
-	index: number;
-	onChange: (updates: Partial<HeaderAuthItem>) => void;
-	onRemove: () => void;
-	showRemove: boolean;
+  item: HeaderAuthItem;
+  index: number;
+  onChange: (updates: Partial<HeaderAuthItem>) => void;
+  onRemove: () => void;
+  showRemove: boolean;
 };
 
 function HeaderItemRow({
-	item,
-	index,
-	onChange,
-	onRemove,
-	showRemove,
+  item,
+  index,
+  onChange,
+  onRemove,
+  showRemove,
 }: Readonly<HeaderItemRowProps>) {
-	const t = useTranslations("common");
-	const tr = useTranslations("reverseProxy");
-	const headerTypeOptions = useHeaderTypeOptions(tr);
-	const isMaskedRef = useRef(item.existingSecret);
+  const t = useTranslations("common");
+  const tr = useTranslations("reverseProxy");
+  const headerTypeOptions = useHeaderTypeOptions(tr);
+  const isMaskedRef = useRef(item.existingSecret);
 
-	const handleHeaderTypeChange = (value: string) => {
-		const type = value as HeaderType;
-		onChange({
-			type,
-			header: type === "custom" ? "" : "Authorization",
-			value: "",
-			username: "",
-			password: "",
-		});
-	};
+  const handleHeaderTypeChange = (value: string) => {
+    const type = value as HeaderType;
+    onChange({
+      type,
+      header: type === "custom" ? "" : "Authorization",
+      value: "",
+      username: "",
+      password: "",
+    });
+  };
 
-	return (
-		<div className="rounded-md border border-nb-gray-900 bg-nb-gray-920/30 overflow-hidden">
-			<div className="flex flex-col gap-2 px-4 pt-2 pb-4 bg-nb-gray-920/30">
-				<div className="flex items-center justify-between h-6 mt-0.5">
-					<span className="text-xs font-normal text-nb-gray-200 flex items-center gap-2">
-						<FileCode2Icon size={14} />
-						{item.existingSecret
-							? tr("headerIndexNamed", {
-									index: index + 1,
-									header: item.header,
-								})
-							: tr("headerIndexLabel", { index: index + 1 })}
-					</span>
-					{showRemove && (
-						<Button variant="danger-text" size="xs" onClick={onRemove}>
-							<MinusCircleIcon size={12} />
-							{tr("removeBtn")}
-						</Button>
-					)}
-				</div>
-				{item.existingSecret ? (
-					<div>
-						<Input
-							customPrefix={
-								<span className="min-w-[38px]">{tr("fieldValue")}</span>
-							}
-							type="password"
-							showPasswordToggle={!isMaskedRef.current}
-							value={isMaskedRef.current ? MASKED_VALUE : item.value}
-							placeholder={tr("secretValuePlaceholder")}
-							{...INPUT_PROPS}
-							onChange={(e) => {
-								if (isMaskedRef.current) {
-									isMaskedRef.current = false;
-									const nativeEvent = e.nativeEvent as InputEvent;
-									onChange({ value: nativeEvent.data ?? "" });
-									return;
-								}
-								onChange({ value: e.target.value });
-							}}
-						/>
-					</div>
-				) : (
-					<>
-						<div data-testid={"header-type-select"}>
-							<SelectDropdown
-								value={item.type}
-								onChange={handleHeaderTypeChange}
-								options={headerTypeOptions}
-							/>
-						</div>
+  return (
+    <div className="rounded-md border border-nb-gray-900 bg-nb-gray-920/30 overflow-hidden">
+      <div className="flex flex-col gap-2 px-4 pt-2 pb-4 bg-nb-gray-920/30">
+        <div className="flex items-center justify-between h-6 mt-0.5">
+          <span className="text-xs font-normal text-nb-gray-200 flex items-center gap-2">
+            <FileCode2Icon size={14} />
+            {item.existingSecret
+              ? tr("headerIndexNamed", {
+                  index: index + 1,
+                  header: item.header,
+                })
+              : tr("headerIndexLabel", { index: index + 1 })}
+          </span>
+          {showRemove && (
+            <Button variant="danger-text" size="xs" onClick={onRemove}>
+              <MinusCircleIcon size={12} />
+              {tr("removeBtn")}
+            </Button>
+          )}
+        </div>
+        {item.existingSecret ? (
+          <div>
+            <Input
+              customPrefix={
+                <span className="min-w-[38px]">{tr("fieldValue")}</span>
+              }
+              type="password"
+              showPasswordToggle={!isMaskedRef.current}
+              value={isMaskedRef.current ? MASKED_VALUE : item.value}
+              placeholder={tr("secretValuePlaceholder")}
+              {...INPUT_PROPS}
+              onChange={(e) => {
+                if (isMaskedRef.current) {
+                  isMaskedRef.current = false;
+                  const nativeEvent = e.nativeEvent as InputEvent;
+                  onChange({ value: nativeEvent.data ?? "" });
+                  return;
+                }
+                onChange({ value: e.target.value });
+              }}
+            />
+          </div>
+        ) : (
+          <>
+            <div data-testid={"header-type-select"}>
+              <SelectDropdown
+                value={item.type}
+                onChange={handleHeaderTypeChange}
+                options={headerTypeOptions}
+              />
+            </div>
 
-						{item.type === "basic" && (
-							<div className="flex flex-col gap-2">
-								<Input
-									customPrefix={<UserIcon size={16} />}
-									placeholder={tr("fieldUsername")}
-									maxWidthClass="w-full"
-									value={item.username}
-									onChange={(e) => onChange({ username: e.target.value })}
-									data-testid="header-basic-username"
-									{...INPUT_PROPS}
-								/>
-								<Input
-									customPrefix={<KeyRoundIcon size={16} />}
-									placeholder={tr("fieldPasswordLabel")}
-									maxWidthClass="w-full"
-									value={item.password}
-									onChange={(e) => onChange({ password: e.target.value })}
-									type="password"
-									showPasswordToggle
-									data-testid="header-basic-password"
-									{...INPUT_PROPS}
-								/>
-							</div>
-						)}
+            {item.type === "basic" && (
+              <div className="flex flex-col gap-2">
+                <Input
+                  customPrefix={<UserIcon size={16} />}
+                  placeholder={tr("fieldUsername")}
+                  maxWidthClass="w-full"
+                  value={item.username}
+                  onChange={(e) => onChange({ username: e.target.value })}
+                  data-testid="header-basic-username"
+                  {...INPUT_PROPS}
+                />
+                <Input
+                  customPrefix={<KeyRoundIcon size={16} />}
+                  placeholder={tr("fieldPasswordLabel")}
+                  maxWidthClass="w-full"
+                  value={item.password}
+                  onChange={(e) => onChange({ password: e.target.value })}
+                  type="password"
+                  showPasswordToggle
+                  data-testid="header-basic-password"
+                  {...INPUT_PROPS}
+                />
+              </div>
+            )}
 
-						{item.type === "bearer" && (
-							<Input
-								customPrefix={"Bearer"}
-								placeholder={tr("bearerValuePlaceholder")}
-								maxWidthClass="w-full"
-								value={item.value}
-								onChange={(e) => onChange({ value: e.target.value })}
-								type="password"
-								showPasswordToggle
-								{...INPUT_PROPS}
-							/>
-						)}
+            {item.type === "bearer" && (
+              <Input
+                customPrefix={"Bearer"}
+                placeholder={tr("bearerValuePlaceholder")}
+                maxWidthClass="w-full"
+                value={item.value}
+                onChange={(e) => onChange({ value: e.target.value })}
+                type="password"
+                showPasswordToggle
+                {...INPUT_PROPS}
+              />
+            )}
 
-						{item.type === "custom" && (
-							<div className="flex flex-col gap-2">
-								<Input
-									customPrefix={
-										<span className="min-w-[38px]">{t("name")}</span>
-									}
-									placeholder={tr("headerNamePlaceholder")}
-									maxWidthClass="w-full"
-									value={item.header}
-									onChange={(e) => onChange({ header: e.target.value })}
-									{...INPUT_PROPS}
-								/>
-								<Input
-									customPrefix={
-										<span className="min-w-[38px]">{tr("fieldValue")}</span>
-									}
-									placeholder={tr("secretValuePlaceholder")}
-									maxWidthClass="w-full"
-									value={item.value}
-									onChange={(e) => onChange({ value: e.target.value })}
-									type="password"
-									showPasswordToggle
-									{...INPUT_PROPS}
-								/>
-							</div>
-						)}
-					</>
-				)}
-			</div>
-		</div>
-	);
+            {item.type === "custom" && (
+              <div className="flex flex-col gap-2">
+                <Input
+                  customPrefix={
+                    <span className="min-w-[38px]">{t("name")}</span>
+                  }
+                  placeholder={tr("headerNamePlaceholder")}
+                  maxWidthClass="w-full"
+                  value={item.header}
+                  onChange={(e) => onChange({ header: e.target.value })}
+                  {...INPUT_PROPS}
+                />
+                <Input
+                  customPrefix={
+                    <span className="min-w-[38px]">{tr("fieldValue")}</span>
+                  }
+                  placeholder={tr("secretValuePlaceholder")}
+                  maxWidthClass="w-full"
+                  value={item.value}
+                  onChange={(e) => onChange({ value: e.target.value })}
+                  type="password"
+                  showPasswordToggle
+                  {...INPUT_PROPS}
+                />
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </div>
+  );
 }

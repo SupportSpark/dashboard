@@ -18,62 +18,62 @@ import { Callout } from "@components/Callout";
 import { isNetBirdCloud } from "@utils/netbird";
 
 const ReverseProxyTable = lazy(
-	() => import("@/modules/reverse-proxy/table/ReverseProxyTable"),
+  () => import("@/modules/reverse-proxy/table/ReverseProxyTable"),
 );
 
 export default function ReverseProxyServicesPage() {
-	const t = useTranslations("reverseProxy");
-	const tCommon = useTranslations("common");
-	const { permission } = usePermissions();
+  const t = useTranslations("reverseProxy");
+  const tCommon = useTranslations("common");
+  const { permission } = usePermissions();
 
-	const { ref: headingRef, portalTarget } =
-		usePortalElement<HTMLHeadingElement>();
+  const { ref: headingRef, portalTarget } =
+    usePortalElement<HTMLHeadingElement>();
 
-	return (
-		<PageContainer>
-			<div className={"p-default py-6"}>
-				<Breadcrumbs>
-					<Breadcrumbs.Item
-						href={"/reverse-proxy/services"}
-						label={t("title")}
-						icon={<ReverseProxyIcon size={16} />}
-					/>
-					<Breadcrumbs.Item
-						href={"/reverse-proxy/services"}
-						label={t("services")}
-						active={true}
-					/>
-				</Breadcrumbs>
-				<h1 ref={headingRef}>{t("services")}</h1>
-				<Paragraph>
-					{t("servicesDescription")}{" "}
-					<InlineLink href={REVERSE_PROXY_DOCS_LINK} target={"_blank"}>
-						{tCommon("learnMore")}
-						<ExternalLinkIcon size={12} />
-					</InlineLink>
-				</Paragraph>
+  return (
+    <PageContainer>
+      <div className={"p-default py-6"}>
+        <Breadcrumbs>
+          <Breadcrumbs.Item
+            href={"/reverse-proxy/services"}
+            label={t("title")}
+            icon={<ReverseProxyIcon size={16} />}
+          />
+          <Breadcrumbs.Item
+            href={"/reverse-proxy/services"}
+            label={t("services")}
+            active={true}
+          />
+        </Breadcrumbs>
+        <h1 ref={headingRef}>{t("services")}</h1>
+        <Paragraph>
+          {t("servicesDescription")}{" "}
+          <InlineLink href={REVERSE_PROXY_DOCS_LINK} target={"_blank"}>
+            {tCommon("learnMore")}
+            <ExternalLinkIcon size={12} />
+          </InlineLink>
+        </Paragraph>
 
-{isNetBirdCloud() ? (
-					<Callout className={"max-w-2xl mt-5 mb-5"} variant={"info"}>
-						{t("betaNoticeCloud")}
-					</Callout>
-				) : (
-					<Callout className={"max-w-2xl mt-5 mb-5"} variant={"info"}>
-						{t("betaNoticeSelfHosted")}
-					</Callout>
-				)}
+        {isNetBirdCloud() ? (
+          <Callout className={"max-w-2xl mt-5 mb-5"} variant={"info"}>
+            {t("betaNoticeCloud")}
+          </Callout>
+        ) : (
+          <Callout className={"max-w-2xl mt-5 mb-5"} variant={"info"}>
+            {t("betaNoticeSelfHosted")}
+          </Callout>
+        )}
 
-				<RestrictedAccess
-					page={t("services")}
-					hasAccess={permission.services?.read}
-				>
-					<Suspense fallback={<SkeletonTable />}>
-						<ReverseProxiesProvider>
-							<ReverseProxyTable headingTarget={portalTarget} />
-						</ReverseProxiesProvider>
-					</Suspense>
-				</RestrictedAccess>
-			</div>
-		</PageContainer>
-	);
+        <RestrictedAccess
+          page={t("services")}
+          hasAccess={permission.services?.read}
+        >
+          <Suspense fallback={<SkeletonTable />}>
+            <ReverseProxiesProvider>
+              <ReverseProxyTable headingTarget={portalTarget} />
+            </ReverseProxiesProvider>
+          </Suspense>
+        </RestrictedAccess>
+      </div>
+    </PageContainer>
+  );
 }

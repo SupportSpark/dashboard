@@ -15,49 +15,49 @@ import { REVERSE_PROXY_CLUSTERS_DOCS_LINK } from "@/interfaces/ReverseProxy";
 import PageContainer from "@/layouts/PageContainer";
 
 const ClustersTable = lazy(
-	() => import("@/modules/reverse-proxy/clusters/ClustersTable"),
+  () => import("@/modules/reverse-proxy/clusters/ClustersTable"),
 );
 
 export default function ReverseProxyClustersPage() {
-	const t = useTranslations("reverseProxy");
-	const tCommon = useTranslations("common");
-	const { permission } = usePermissions();
+  const t = useTranslations("reverseProxy");
+  const tCommon = useTranslations("common");
+  const { permission } = usePermissions();
 
-	const { ref: headingRef, portalTarget } =
-		usePortalElement<HTMLHeadingElement>();
+  const { ref: headingRef, portalTarget } =
+    usePortalElement<HTMLHeadingElement>();
 
-	return (
-		<PageContainer>
-			<div className={"p-default py-6"}>
-				<Breadcrumbs>
-					<Breadcrumbs.Item
-						href={"/reverse-proxy/services"}
-						label={t("title")}
-						icon={<ReverseProxyIcon size={16} />}
-					/>
-					<Breadcrumbs.Item
-						href={"/reverse-proxy/clusters"}
-						label={t("clusters")}
-						active={true}
-					/>
-				</Breadcrumbs>
-				<h1 ref={headingRef}>{t("clusters")}</h1>
-				<Paragraph>
-					{t("clustersDescription")}{" "}
-					<InlineLink href={REVERSE_PROXY_CLUSTERS_DOCS_LINK} target={"_blank"}>
-						{tCommon("learnMore")}
-						<ExternalLinkIcon size={12} />
-					</InlineLink>
-				</Paragraph>
-				<RestrictedAccess
-					page={t("clusters")}
-					hasAccess={permission.services?.read}
-				>
-					<Suspense fallback={<SkeletonTable />}>
-						<ClustersTable headingTarget={portalTarget} />
-					</Suspense>
-				</RestrictedAccess>
-			</div>
-		</PageContainer>
-	);
+  return (
+    <PageContainer>
+      <div className={"p-default py-6"}>
+        <Breadcrumbs>
+          <Breadcrumbs.Item
+            href={"/reverse-proxy/services"}
+            label={t("title")}
+            icon={<ReverseProxyIcon size={16} />}
+          />
+          <Breadcrumbs.Item
+            href={"/reverse-proxy/clusters"}
+            label={t("clusters")}
+            active={true}
+          />
+        </Breadcrumbs>
+        <h1 ref={headingRef}>{t("clusters")}</h1>
+        <Paragraph>
+          {t("clustersDescription")}{" "}
+          <InlineLink href={REVERSE_PROXY_CLUSTERS_DOCS_LINK} target={"_blank"}>
+            {tCommon("learnMore")}
+            <ExternalLinkIcon size={12} />
+          </InlineLink>
+        </Paragraph>
+        <RestrictedAccess
+          page={t("clusters")}
+          hasAccess={permission.services?.read}
+        >
+          <Suspense fallback={<SkeletonTable />}>
+            <ClustersTable headingTarget={portalTarget} />
+          </Suspense>
+        </RestrictedAccess>
+      </div>
+    </PageContainer>
+  );
 }

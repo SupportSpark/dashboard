@@ -287,13 +287,10 @@ export default function ReverseProxyModal({
   // Access groups for NetBird-only services. Distinct from bearerGroups
   // (which gates SSO callers); these groups gate inbound peers on
   // private services and feed the auto-generated private-access policy.
-  const [
-    accessGroups,
-    setAccessGroups,
-    { save: saveAccessGroups },
-  ] = useGroupHelper({
-    initial: reverseProxy?.access_groups ?? [],
-  });
+  const [accessGroups, setAccessGroups, { save: saveAccessGroups }] =
+    useGroupHelper({
+      initial: reverseProxy?.access_groups ?? [],
+    });
 
   // Direct upstream is service-level in the UI; on save it patches the
   // (single) cluster target's options.direct_upstream. Defaults off for
@@ -301,9 +298,8 @@ export default function ReverseProxyModal({
   // effectiveDirectUpstream below since they have no WireGuard endpoint
   // to fall back to.
   const [directUpstream, setDirectUpstream] = useState<boolean>(
-    reverseProxy?.targets?.some(
-      (t) => t.options?.direct_upstream === true,
-    ) ?? false,
+    reverseProxy?.targets?.some((t) => t.options?.direct_upstream === true) ??
+      false,
   );
 
   // Cluster targets are reached over the embedded proxy's host stack —
@@ -311,10 +307,7 @@ export default function ReverseProxyModal({
   // WireGuard tunnel they have no other endpoint for, so we force the
   // toggle on and lock it whenever any target is a cluster.
   const hasClusterTarget = useMemo(
-    () =>
-      targets.some(
-        (t) => t.target_type === ReverseProxyTargetType.CLUSTER,
-      ),
+    () => targets.some((t) => t.target_type === ReverseProxyTargetType.CLUSTER),
     [targets],
   );
   const effectiveDirectUpstream = hasClusterTarget || directUpstream;
@@ -369,8 +362,7 @@ export default function ReverseProxyModal({
   // (auth, access control, advanced) — including reaching the Auth tab
   // to enable bearer auth for a private service.
   const canContinueToSettings = useMemo(() => {
-    const subdomainRequired =
-      selectedDomain?.require_subdomain === true;
+    const subdomainRequired = selectedDomain?.require_subdomain === true;
     const isSubdomainValid =
       baseDomain.length > 0 &&
       !domainAlreadyExists &&
@@ -540,8 +532,7 @@ export default function ReverseProxyModal({
         name: fullDomain,
         domain: fullDomain,
         mode: isL4Mode ? (serviceMode as ServiceMode) : undefined,
-        listen_port:
-          isL4Mode && isListenPortSupported ? listenPort : undefined,
+        listen_port: isL4Mode && isListenPortSupported ? listenPort : undefined,
         targets: submittedTargets,
         enabled: reverseProxy?.enabled ?? true,
         pass_host_header: isL4Mode ? undefined : passHostHeader,
@@ -575,10 +566,7 @@ export default function ReverseProxyModal({
   }, [reverseProxy, serviceMode, t, tCommon]);
 
   const modalDescription = useMemo(
-    () =>
-      isL4Mode
-        ? t("forwardTrafficDesc")
-        : t("exposeServicesDesc"),
+    () => (isL4Mode ? t("forwardTrafficDesc") : t("exposeServicesDesc")),
     [isL4Mode, t],
   );
 
@@ -824,18 +812,18 @@ export default function ReverseProxyModal({
             <div className={"px-8 flex-col flex gap-6"}>
               {(serviceMode === ServiceMode.TCP ||
                 serviceMode === ServiceMode.TLS) && (
-<FancyToggleSwitch
-					value={proxyProtocol}
-					onChange={setProxyProtocol}
-					data-testid="toggle-preserve-client-ip"
-					label={
-						<>
-							<MapPinned size={15} />
-							{t("preserveClientSourceIp")}
-						</>
-					}
-					helpText={t("preserveClientSourceIpHelp")}
-				/>
+                <FancyToggleSwitch
+                  value={proxyProtocol}
+                  onChange={setProxyProtocol}
+                  data-testid="toggle-preserve-client-ip"
+                  label={
+                    <>
+                      <MapPinned size={15} />
+                      {t("preserveClientSourceIp")}
+                    </>
+                  }
+                  helpText={t("preserveClientSourceIpHelp")}
+                />
               )}
 
               {isL4Mode && (
@@ -872,17 +860,17 @@ export default function ReverseProxyModal({
               {!isL4Mode && (
                 <div className={"flex flex-col gap-4"}>
                   <FancyToggleSwitch
-value={passHostHeader}
-					onChange={setPassHostHeader}
-					data-testid="toggle-pass-host-header"
-					label={
-						<>
-							<GlobeIcon size={15} />
-							{t("passHostHeader")}
-						</>
-					}
-					helpText={t("passHostHeaderHelp")}
-				/>
+                    value={passHostHeader}
+                    onChange={setPassHostHeader}
+                    data-testid="toggle-pass-host-header"
+                    label={
+                      <>
+                        <GlobeIcon size={15} />
+                        {t("passHostHeader")}
+                      </>
+                    }
+                    helpText={t("passHostHeaderHelp")}
+                  />
                   <FancyToggleSwitch
                     value={rewriteRedirects}
                     onChange={setRewriteRedirects}
@@ -1085,7 +1073,8 @@ value={passHostHeader}
           id: reverseProxy?.id || "",
           name: fullDomain,
           domain: fullDomain,
-          proxy_cluster: selectedDomain?.target_cluster || baseDomain || undefined,
+          proxy_cluster:
+            selectedDomain?.target_cluster || baseDomain || undefined,
           targets: targets,
           enabled: reverseProxy?.enabled ?? true,
           mode: serviceMode,
