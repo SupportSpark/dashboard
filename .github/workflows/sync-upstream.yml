@@ -201,6 +201,18 @@ jobs:
         if: steps.guard.outputs.up_to_date == 'false' && (steps.merge.outcome == 'success' || steps.ours.outputs.manual == 'false')
         run: npx tsc --noEmit
 
+      # `tsc` cannot see a key that resolves to nothing, an ICU string that
+      # throws at render time, or a file git can no longer merge. A merge that
+      # passes `next build` and `tsc` can still ship a page that renders raw key
+      # paths or crashes on load, so these run before anything is pushed.
+      - name: Localization checks (merge gate)
+        if: steps.guard.outputs.up_to_date == 'false' && (steps.merge.outcome == 'success' || steps.ours.outputs.manual == 'false')
+        run: |
+          node tools/check-catalog-parity.mjs .
+          node tools/check-translation-keys.mjs
+          node tools/check-message-rendering.mjs
+          node tools/check-indentation.mjs .
+
       - name: Push the merge
         id: push
         if: >-
@@ -220,10 +232,23 @@ jobs:
           git push origin "HEAD:${SYNC_BRANCH}"
 
       # ---------------------------------------------------------------------
-      # Reporting: open (or update) one issue per unresolved sync so the fork
-      # owner sees it without watching Actions.
+      # Reporting
+      # ---------
+      # The report must survive without anything external:
+      #   * the step summary is always written, so the run page says what broke
+      #     and how to fix it even though the log is buried;
+      #   * an annotation puts one line at the top of the run;
+      #   * the issue is a convenience only. When Issues are disabled on the
+      #     repo, `gh issue create` fails with "Resource not accessible by
+      #     integration" — which used to replace the real failure with a
+      #     confusing permissions error. So we ask first and never let a failed
+      #     `gh` call mask the conflict it was reporting.
+      #
+      # The heredoc bodies are indented to the block level and then stripped by
+      # `sed 's/^ *//'`: YAML ends a `run: |` block at the first unindented line,
+      # so a body written at column 1 would break the file.
       # ---------------------------------------------------------------------
-      - name: Report conflicts as an issue
+      - name: Report unresolved conflicts
         if: steps.ours.outputs.manual == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -231,7 +256,7 @@ jobs:
           TARGET_SHA: ${{ steps.fetch.outputs.sha }}
           REMAINING: ${{ steps.ours.outputs.remaining }}
         run: |
-          set -euo pipefail
+          set -uo pipefail
           git merge --abort 2>/dev/null || true
 
           TITLE="Upstream sync needs a manual merge: ${TARGET}"
@@ -257,41 +282,70 @@ jobs:
           git push origin ${SYNC_BRANCH}
           \`\`\`
 
-          See \`docs/I18N-SYNC.md\` in this repo for the resolution policy, then re-run
-          this workflow (\`workflow_dispatch\`) to confirm.
-
-          <sub>Opened automatically by \`.github/workflows/sync-upstream.yml\`.</sub>
+          See \`docs/I18N-SYNC.md\` for the resolution policy, then re-run this
+          workflow (\`workflow_dispatch\`) to confirm.
           EOF
           )
 
-          existing=$(gh issue list --state open --search "$TITLE in:title" \
-                     --json number --jq '.[0].number // empty')
-          if [[ -n "$existing" ]]; then
-            gh issue comment "$existing" --body "$BODY"
+          {
+            echo "## ${TITLE}"
+            echo
+            echo "$BODY"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          echo "::error title=Upstream sync needs a manual merge::${TARGET} conflicted on: $(printf '%s' "$REMAINING" | tr '\n' ' ')"
+          echo "$REMAINING"
+
+          if [[ "$(gh api "repos/${GITHUB_REPOSITORY}" --jq .has_issues 2>/dev/null)" == "true" ]]; then
+            existing=$(gh issue list --state open --search "$TITLE in:title" \
+                       --json number --jq '.[0].number // empty' 2>/dev/null || true)
+            if [[ -n "${existing:-}" ]]; then
+              gh issue comment "$existing" --body "$BODY" || echo "::warning::could not comment on issue #${existing}"
+            else
+              gh issue create --title "$TITLE" --body "$BODY" || echo "::warning::could not open an issue"
+            fi
           else
-            gh issue create --title "$TITLE" --body "$BODY"
+            echo "Issues are disabled on ${GITHUB_REPOSITORY}; the conflict is reported in this run's summary only."
           fi
 
-      - name: Report a failed build
+          exit 1
+
+      - name: Report a failed merge gate
         if: failure() && steps.ours.outputs.manual != 'true' && steps.guard.outputs.up_to_date == 'false'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TARGET: ${{ steps.fetch.outputs.target }}
         run: |
-          set -euo pipefail
+          set -uo pipefail
           TITLE="Upstream sync built and failed: ${TARGET}"
           BODY=$(cat <<EOF | sed 's/^ *//'
-          Merging \`${TARGET}\` into \`${SYNC_BRANCH}\` merged without conflicts, but the
-          \`npm run build\` / \`tsc --noEmit\` gate failed, so nothing was pushed.
+          Merging \`${TARGET}\` into \`${SYNC_BRANCH}\` merged without conflicts, but a gate
+          failed (\`npm run build\`, \`tsc --noEmit\`, or the localization checks), so nothing
+          was pushed.
 
           The i18n layer probably needs a call site updated for a new upstream component
           or signature. See \`docs/I18N-SYNC.md\` for the resolution policy.
           EOF
           )
-          existing=$(gh issue list --state open --search "$TITLE in:title" \
-                     --json number --jq '.[0].number // empty')
-          if [[ -n "$existing" ]]; then
-            gh issue comment "$existing" --body "$BODY"
+
+          {
+            echo "## ${TITLE}"
+            echo
+            echo "$BODY"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          echo "::error title=Upstream sync gate failed::${TARGET} merged but did not build; nothing was pushed."
+
+          if [[ "$(gh api "repos/${GITHUB_REPOSITORY}" --jq .has_issues 2>/dev/null)" == "true" ]]; then
+            existing=$(gh issue list --state open --search "$TITLE in:title" \
+                       --json number --jq '.[0].number // empty' 2>/dev/null || true)
+            if [[ -n "${existing:-}" ]]; then
+              gh issue comment "$existing" --body "$BODY" || echo "::warning::could not comment on issue #${existing}"
+            else
+              gh issue create --title "$TITLE" --body "$BODY" || echo "::warning::could not open an issue"
+            fi
           else
-            gh issue create --title "$TITLE" --body "$BODY"
+            echo "Issues are disabled on ${GITHUB_REPOSITORY}; the failure is reported in this run's summary only."
           fi
+
+          exit 1

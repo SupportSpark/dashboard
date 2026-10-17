@@ -18,11 +18,13 @@ on:
       - "tools/check-catalog-parity.mjs"
       - "tools/check-translation-keys.mjs"
       - "tools/check-message-rendering.mjs"
+      - "tools/check-indentation.mjs"
       - ".github/workflows/i18n-parity.yml"
   push:
     branches: ["i18n-zh"]
     paths:
       - "src/i18n/**"
+      - "src/**"
   workflow_dispatch:
 
 permissions:
@@ -56,6 +58,12 @@ jobs:
 
       - name: Catalog parity (en → zh)
         run: node tools/check-catalog-parity.mjs .
+
+      # A tab-indented file differs from upstream on every line, so git cannot
+      # 3-way merge it: each upstream release turns it into a whole-file
+      # conflict and the nightly sync stops. v2.95.0 hit that on 86 files.
+      - name: Indentation matches upstream (no tabs)
+        run: node tools/check-indentation.mjs .
 
       # Catches a second, distinct failure mode: a literal t("key") whose key
       # does not exist in the namespace the component binds. next-intl renders
@@ -93,5 +101,11 @@ jobs:
             echo
             echo '```'
             node tools/check-message-rendering.mjs 2>&1 | head -n 20
+            echo '```'
+            echo
+            echo "### Indentation"
+            echo
+            echo '```'
+            node tools/check-indentation.mjs . 2>&1 | head -n 12
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY" || true

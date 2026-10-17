@@ -74,10 +74,17 @@ SupportSpark/dashboard                 ▼
 | 项 | 值 |
 | --- | --- |
 | 触发 | 每天 `03:17 UTC` 定时 + 手动 `workflow_dispatch` |
-| 目标 | 默认取**最新上游 release tag**（如 `v2.94.0`），可手动指定任意 ref |
+| 目标 | 默认取**最新上游 release tag**（如 `v2.95.0`），可手动指定任意 ref |
 | 动作 | 把该 ref 合并进 `i18n-zh` |
-| 安全门 | 合并后**必须**通过 `npm run build` + `npx tsc --noEmit` 才会 push |
-| 失败处理 | 冲突 → 自动 `git merge --abort`（分支保持干净）+ 开 issue 列出冲突文件 |
+| 安全门 | 合并后**必须**通过 `npm run build` + `npx tsc --noEmit` + 四项本地化检查（目录对齐 / key 解析 / 消息渲染 / 缩进）才会 push |
+| 失败处理 | 冲突 → 自动 `git merge --abort`（分支保持干净）；报告写到**本次 run 的 Summary**（run 页面一打开就能看到）+ 一行 `::error::` 注解；仓库开启 Issues 时再额外开 issue |
+
+> 报告的写法是**先自足、后外发**：Summary 与注解一定会写，issue 只是便利项。
+> 早先的版本把「开 issue」当成唯一出口，而本仓库当时 `has_issues: false`，
+> 于是 `gh issue create` 抛 `Resource not accessible by integration`，
+> 真正的失败原因（6 个文件冲突）被这个权限报错盖掉了。现在先用
+> `gh api repos/... --jq .has_issues` 探一下，失败也只降级成 warning。
+
 
 **为什么按 release 同步而不是按 main 的每次 push**：上游 `main` 每天变动多次、
 以日常功能开发为主；每次都合会让本地化分支被冲突淹没。release 是我们真正会部署的
@@ -85,13 +92,14 @@ SupportSpark/dashboard                 ▼
 
 **冲突判归策略**（`Resolve translation-catalog conflicts in our favour` 步骤）：
 
-| 路径 | 判给 | 理由 |
-| --- | --- | --- |
-| `src/i18n/messages/**`、`src/i18n/config.ts`、`src/i18n/request.ts` | **本地化侧** | 增量式目录，自动化绝不能丢掉中文译文 |
-| 其他所有文件 | **停下开 issue** | 这是"上游改结构 + 我们改文案"的语义冲突，只有人能正确判断 |
+| 交互项 | 判给 |
+| --- | --- |
+| `src/i18n/messages/**`、`src/i18n/config.ts`、`src/i18n/request.ts` | **本地化侧** |
+| 其他所有文件 | **停下报告** |
 
 > ⚠️ 注意：这里**故意没有**用全局 `-X ours`。全局判给本地化侧会静默丢弃上游的
 > bug 修复——那正是这个流水线要防止的漂移。
+
 
 ### 3.2 `build-localized.yml` — 构建本地化镜像
 
@@ -315,6 +323,8 @@ npm run test:unit                           # 上游单测（884 项）
 npm run test:i18n                           # 语言探测断言
 node tools/check-catalog-parity.mjs .       # en/zh key 是否对齐（TS 编译级，权威）
 node tools/check-translation-keys.mjs       # 每个 t("key") 是否真的能解析
+node tools/check-message-rendering.mjs      # ICU / rich tag / 模块级 hook 是否会在渲染时炸
+node tools/check-indentation.mjs .          # 是否有 Tab 缩进（会制造整文件冲突，见 §9.3）
 node tools/classify-remaining.mjs           # 还剩多少真正需要翻译的界面文案
 node tools/find-hardcoded-english.mjs       # 硬编码英文清扫
 node tools/find-dropped-upstream-code.mjs   # 上游代码是否被静默丢弃
@@ -322,7 +332,7 @@ node tools/check-english-fidelity.mjs       # 英文目录是否与上游原文�
 pwsh -File tools/check-merge-integrity.ps1  # 冲突标记 / i18n 接线 / 目录来源
 ```
 
-`i18n-parity.yml` 已接入目录对齐与 key 解析两项。
+`i18n-parity.yml` 已接入目录对齐、key 解析、消息渲染、缩进四项（push 到 `i18n-zh` 即跑）。
 
 > ⚠️ **`tsc` 不是可信的钥匙**：next-intl 的 key **不做类型检查**，写错 key 一样编译通过，
 > 只在运行时把原始 key 渲染到界面上。而且只要有任何一个文件存在**语法错误**，
@@ -391,7 +401,31 @@ ssh root@$DEPLOY_HOST 'sh /opt/netbird/zero-downtime-deploy.sh'
 | Traefik 的 retry 选项名是 **`retry.attempts`** | 写成 `retries` 会让整个 middleware 构造失败，**整个 router 被丢弃** → 全站 404 | 改完 label 必须立刻验证 200；Traefik 日志会打 `field not found, node: retries` |
 | 先动旧容器再起新容器 | 顺序反了会出现「零后端」瞬间，实测 2 个 502 | **先起 cover，再动旧的** |
 
-### 9.3 其他
+### 9.3 Tab 缩进会制造整文件冲突（v2.95.0 实测）
+
+上游用 Prettier 默认风格（`tabWidth: 2`，空格缩进）。本分支曾有 **86 个源文件是 Tab
+缩进**，导致这些文件与上游**逐行都不同**，git 无法做三方合并：每次上游发版，这些文件
+都变成**整文件冲突**。
+
+后果很直接——`v2.95.0` 那次同步报了 17 个冲突块 / 6 个文件，定时任务连挂两晚。
+用仓库自带 Prettier 重写这 86 个文件后：
+
+- `git diff -w` 只剩我们真正的 `t()` 改动（纯空白变更，`tsc` + 910 项单测全绿）；
+- 再合 `v2.95.0`，`ActivityDescription.tsx` 与 `ClientSettingsTab.tsx` **自动合并成功**，
+  冲突从 17 块降到 4 块，且全是 import 块。
+
+避免方法：
+
+```bash
+npx prettier --write <file>     # 默认就是上游风格（仓库里 .prettierrc.json 已固定）
+node tools/check-indentation.mjs .   # 提交前自检；CI 也会跑
+```
+
+这个检查**只看代码行的行首缩进**：注释里的 Tab、以及模板字符串里作为**内容**的 Tab
+（bash 片段、PEM 块）会被跳过——那些 Tab 是给用户复制的，改掉就改变了内容。
+需要豁免某行时在该行写 `indent-ok`。
+
+### 9.4 其他
 
 - **`npm run lint` 目前是坏的**：上游改用 `eslint .`，本地化分支的部分历史提交
   仍按旧脚本调用。以 `npx tsc --noEmit` + `npm run build` 作为准入门槛。
