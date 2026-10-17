@@ -103,8 +103,18 @@ jobs:
             # A release tag names the release itself.
             VERSION="$GITHUB_REF_NAME"
           else
-            # The newest upstream release reachable from this commit. Tags are
-            # fetched above; fall back to the package version if none resolve.
+            # The newest upstream release reachable from this commit.
+            #
+            # `git describe` only sees tags that exist in THIS repo, and the
+            # release tags are mirrored here by hand — after the v2.95.0 sync the
+            # tag had not been pushed yet, so the image built as
+            # "v2.94.0+7d429c9c" and the sidebar kept offering an upgrade to the
+            # version it was already running. Ask upstream directly so the number
+            # always names the release actually merged in.
+            git remote add upstream https://github.com/netbirdio/dashboard.git 2>/dev/null \
+              || git remote set-url upstream https://github.com/netbirdio/dashboard.git
+            git fetch --tags --force upstream >/dev/null 2>&1 \
+              || echo "::warning::could not fetch upstream tags; falling back to local tags"
             BASE="$(git describe --tags --abbrev=0 --match 'v[0-9]*' 2>/dev/null || true)"
             BASE="${BASE#v}"
             if [ -z "$BASE" ]; then

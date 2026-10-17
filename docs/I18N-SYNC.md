@@ -227,10 +227,48 @@ src/components/ui/LocaleSwitcher.tsx  # 头部语言切换器
 本部署面向单节点自建环境（Debian、Traefik 反代、IP 证书；具体地址与主机名按你自己的
 环境替换，本文档不记录实例地址）。
 **已完成本地化部署**：dashboard 容器现在跑
-`ghcr.io/supportspark/dashboard:zh-latest`，回滚只需回到 `netbirdio/dashboard:v2.94.0`。
+`ghcr.io/supportspark/dashboard:zh-latest`，回滚只需回到同一主 compose 里的官方
+`netbirdio/dashboard` 镜像（主 compose 里写的是当前上游版本，`v2.95.0`）。
 
 > **占位符**：下文命令里的 `$DEPLOY_HOST` 指你的服务器地址。
 > 先 `export DEPLOY_HOST=你的地址`，再照抄命令。
+
+### 服务端容器版本（dashboard 之外的另一个升级对象）
+
+dashboard 与 server 是**两条独立的版本线**：dashboard 跟 `netbirdio/dashboard` 的
+release（`v2.95.0`），server 跟 `netbirdio/netbird` 的 release（`v0.81.2`）。升级
+server **不会**顺带更新 dashboard，反之亦然。
+
+```bash
+cd /opt/netbird
+
+# 0) 先备份：compose + 数据卷（管理库/密钥都在卷里，实测约 33MB）
+cp -a docker-compose.yml docker-compose.yml.bak-before-$(docker inspect netbird-server \
+  --format '{{.Config.Image}}' | cut -d: -f2)
+docker run --rm -v netbird_netbird_data:/data -v /opt/netbird:/backup alpine \
+  sh -c 'tar czf /backup/netbird-data-$(date +%Y%m%d-%H%M).tar.gz -C /data .'
+
+# 1) 改主 compose 里的 server 镜像 tag，然后只动这一个服务
+sed -i 's|image: netbirdio/netbird-server:.*|image: netbirdio/netbird-server:0.81.2|' docker-compose.yml
+docker compose -f docker-compose.yml up -d --no-deps netbird-server
+```
+
+`--no-deps` 很关键：不带它 compose 会顺手评估并重建依赖服务。`up -d` 会先拉镜像、
+拉成功才重建，所以拉取失败时旧容器继续服务。
+
+验证：
+
+```bash
+docker logs --tail 50 netbird-server | grep -iE 'migrat|error'   # 迁移应完成且无 error
+curl -sSk -o /dev/null -w '%{http_code}\n' https://$DEPLOY_HOST/api/users   # 期望 401
+docker ps --format '{{.Names}} {{.Image}} {{.Status}}'           # server 应为新 tag 且 healthy
+```
+
+回滚：把 tag 改回去，`docker compose -f docker-compose.yml up -d --no-deps netbird-server`；
+数据卷如需回滚，停容器后把上面的 tar 解开覆盖 `/var/lib/netbird` 再启动。
+
+> ⚠️ server 升级会重启 signal/relay，节点会短暂显示离线，客户端会自动重连
+> （WireGuard 会话恢复后重新上报）。这不是故障。
 
 ### 方案 A：拉构建好的镜像（推荐，已采用）
 
