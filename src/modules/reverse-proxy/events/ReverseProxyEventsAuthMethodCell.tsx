@@ -98,12 +98,12 @@ export const ReverseProxyEventsAuthMethodCell = ({
       case "path_bypass":
         return {
           icon: <LockOpen size={12} />,
-          label: "Auth Bypassed",
+          label: t("authBypassed"),
         };
       case "path_block":
         return {
           icon: <ShieldX size={12} />,
-          label: "Path Blocked",
+          label: t("pathBlocked"),
         };
       case "crowdsec_ban":
         return {

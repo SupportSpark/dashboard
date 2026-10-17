@@ -770,37 +770,47 @@ export default function ActivityDescription({ event }: Props) {
   }
 
   if (event.activity_code == "integration.enable") {
-    if (!event.meta.platform) return "Integration enabled";
+    if (!event.meta.platform) return t("desc_integration_enable");
     return (
       <div className={"inline"}>
-        <Value className={"capitalize"}>{event.meta.platform}</Value>{" "}
-        integration enabled
+        {t.rich("desc_integration_enable_platform", {
+          platform: event.meta.platform,
+          Value: (chunks) => <Value className={"capitalize"}>{chunks}</Value>,
+        })}
       </div>
     );
   }
 
   if (event.activity_code == "integration.disable") {
-    if (!event.meta.platform) return "Integration disabled";
+    if (!event.meta.platform) return t("desc_integration_disable");
     return (
       <div className={"inline"}>
-        <Value className={"capitalize"}>{event.meta.platform}</Value>{" "}
-        integration disabled
+        {t.rich("desc_integration_disable_platform", {
+          platform: event.meta.platform,
+          Value: (chunks) => <Value className={"capitalize"}>{chunks}</Value>,
+        })}
       </div>
     );
   }
 
   if (event.activity_code == "integration.disable-by-system") {
-    if (!event.meta.platform) return "Integration disabled by system";
+    if (!event.meta.platform) return t("desc_integration_disable_by_system");
     return (
       <div className={"inline"}>
-        <Value className={"capitalize"}>{event.meta.platform}</Value>{" "}
-        integration disabled by system
-        {event.meta.reason && (
-          <>
-            {" "}
-            due to <Value>{event.meta.reason}</Value>
-          </>
-        )}
+        {event.meta.reason
+          ? t.rich("desc_integration_disable_by_system_reason", {
+              platform: event.meta.platform,
+              reason: event.meta.reason,
+              Value: (chunks) => (
+                <Value className={"capitalize"}>{chunks}</Value>
+              ),
+            })
+          : t.rich("desc_integration_disable_by_system_platform", {
+              platform: event.meta.platform,
+              Value: (chunks) => (
+                <Value className={"capitalize"}>{chunks}</Value>
+              ),
+            })}
       </div>
     );
   }
@@ -902,27 +912,36 @@ export default function ActivityDescription({ event }: Props) {
   if (event.activity_code == "integrated-validator.api.enabled")
     return (
       <div className={"inline"}>
-        <Value>{m?.platform}</Value> integration enabled
+        {t.rich("desc_integrated_validator_api_enabled", {
+          platform: m?.platform,
+          Value: (chunks) => <Value>{chunks}</Value>,
+        })}
       </div>
     );
 
   if (event.activity_code == "integrated-validator.api.disabled")
     return (
       <div className={"inline"}>
-        <Value>{m?.platform}</Value> integration disabled
+        {t.rich("desc_integrated_validator_api_disabled", {
+          platform: m?.platform,
+          Value: (chunks) => <Value>{chunks}</Value>,
+        })}
       </div>
     );
 
   if (event.activity_code == "integrated-validator.api.disabled-by-system")
     return (
       <div className={"inline"}>
-        <Value>{m?.platform}</Value> integration disabled by system
-        {m?.reason && (
-          <>
-            {" "}
-            due to <Value>{m.reason}</Value>
-          </>
-        )}
+        {m?.reason
+          ? t.rich("desc_integrated_validator_api_disabled_by_system_reason", {
+              platform: m?.platform,
+              reason: m.reason,
+              Value: (chunks) => <Value>{chunks}</Value>,
+            })
+          : t.rich("desc_integrated_validator_api_disabled_by_system", {
+              platform: m?.platform,
+              Value: (chunks) => <Value>{chunks}</Value>,
+            })}
       </div>
     );
 

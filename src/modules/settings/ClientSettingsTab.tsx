@@ -226,10 +226,10 @@ function ClientSettingsTabContent({ account }: Readonly<Props>) {
 
   const toggleHostnameCollisionRejected = async (toggle: boolean) => {
     notify({
-      title: "Unique Peer Hostnames",
-      description: `Unique peer hostnames successfully ${
-        toggle ? "enabled" : "disabled"
-      }.`,
+      title: t("uniquePeerHostnames"),
+      description: t("uniquePeerHostnamesUpdated", {
+        state: toggle ? t("enabledState") : t("disabledState"),
+      }),
       promise: saveRequest
         .put({
           id: account.id,
@@ -242,7 +242,7 @@ function ClientSettingsTabContent({ account }: Readonly<Props>) {
           setHostnameCollisionRejected(toggle);
           mutate("/accounts");
         }),
-      loadingMessage: "Updating unique peer hostnames setting...",
+      loadingMessage: t("updatingUniquePeerHostnames"),
     });
   };
 
@@ -451,22 +451,16 @@ function ClientSettingsTabContent({ account }: Readonly<Props>) {
           <div>
             <Label>
               <TagIcon size={15} />
-              Unique Peer Hostnames
+              {t("uniquePeerHostnames")}
             </Label>
-            <HelpText>
-              By default, a peer registering or being renamed with a hostname
-              that is already in use receives an IP-based suffix on its DNS
-              label.
-            </HelpText>
+            <HelpText>{t("uniquePeerHostnamesHelp")}</HelpText>
             <FancyToggleSwitch
               className={"mt-2"}
               value={hostnameCollisionRejected}
               onChange={toggleHostnameCollisionRejected}
               data-testid="peer-hostname-collision-rejected"
-              label={"Reject Hostname Collisions"}
-              helpText={
-                "When enabled, registering or renaming a peer to a hostname that is already in use fails instead of receiving a suffix. This applies to ephemeral peers as well."
-              }
+              label={t("rejectHostnameCollisions")}
+              helpText={t("rejectHostnameCollisionsHelp")}
               disabled={!permission.settings.update}
             />
           </div>

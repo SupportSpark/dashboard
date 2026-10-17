@@ -2,6 +2,7 @@ import Badge from "@components/Badge";
 import FullTooltip from "@components/FullTooltip";
 import { ScrollArea } from "@components/ScrollArea";
 import { FileKey2Icon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { CertificateCheck } from "@/interfaces/PostureCheck";
 import { useCertificateFingerprints } from "@/modules/posture-checks/helper/CertificateHelper";
@@ -11,6 +12,7 @@ type Props = {
   children?: React.ReactNode;
 };
 export const CertificateTooltip = ({ check, children }: Props) => {
+  const t = useTranslations("postureChecks");
   const fingerprints = useCertificateFingerprints(check?.ca_certificates ?? []);
 
   return check ? (
@@ -26,8 +28,13 @@ export const CertificateTooltip = ({ check, children }: Props) => {
         >
           <div className={"px-4 pt-3"}>
             <span>
-              <span className={"text-green-500 font-semibold"}>Allow only</span>{" "}
-              peers holding a certificate issued by one of the following CAs
+              {t.rich("allowOnlyCaCertificates", {
+                allow: (chunks) => (
+                  <span className={"text-green-500 font-semibold"}>
+                    {chunks}
+                  </span>
+                ),
+              })}
             </span>
           </div>
 
@@ -55,7 +62,7 @@ export const CertificateTooltip = ({ check, children }: Props) => {
                     >
                       {fingerprint
                         ? `SHA-256 ${fingerprint}`
-                        : `CA certificate ${index + 1}`}
+                        : t("caCertificateIndex", { index: index + 1 })}
                     </span>
                   </Badge>
                 );

@@ -1476,6 +1476,14 @@ export default {
     deleteIdentityProviderTitle: "删除“{name}”？",
     idpNameDefaultOidc: "通用 OIDC",
     peerApprovalIntegrationFallback: "Integration",
+    uniquePeerHostnames: "节点主机名唯一",
+    uniquePeerHostnamesHelp:
+      "默认情况下，节点以已被占用的主机名注册或重命名时，其 DNS 标签会自动追加基于 IP 的后缀。",
+    rejectHostnameCollisions: "拒绝主机名冲突",
+    rejectHostnameCollisionsHelp:
+      "开启后，节点以已被占用的主机名注册或重命名会直接失败，而不会追加后缀。临时节点同样适用。",
+    uniquePeerHostnamesUpdated: "节点主机名唯一已成功{state}。",
+    updatingUniquePeerHostnames: "正在更新节点主机名唯一设置...",
   },
   reverseProxy: {
     title: "反向代理",
@@ -1976,6 +1984,19 @@ export default {
     urlCopied: "URL 已复制到剪贴板",
     autoLabel: "自动",
     enforce: "拦截",
+    authBypassed: "认证已绕过",
+    pathBlocked: "路径已阻断",
+    targetAccessLabel: "访问控制",
+    targetAccessHelp:
+      "沿用服务的认证设置，将此路径设为公开，或在请求抵达目标前拒绝。",
+    targetAccessUseServiceAuth: "使用服务认证",
+    targetAccessBypassAuth: "绕过认证",
+    targetAccessBlock: "阻断访问",
+    targetAccessPrivateServiceWarning: "仅 NetBird 可访问的服务无法绕过认证。",
+    targetAccessUnsupportedHelp:
+      "当前面板不支持该取值。除非您选择受支持的选项，否则会原样保留。",
+    targetAccessUnsupportedOption: "不支持的设置（{value}）",
+    targetAccessUnsupportedBadge: "不支持的访问设置（{action}）",
   },
   dns: {
     title: "DNS",
@@ -2571,6 +2592,19 @@ export default {
     postureCheckUpdated: "态势检查更新成功。",
     creatingPostureCheck: "正在创建态势检查...",
     updatingPostureCheck: "正在更新态势检查...",
+    certificate: "证书",
+    certificateHelp: "仅允许持有由您自己的 CA 签发的证书的节点访问。",
+    invalidPemCertificate: "请粘贴有效的 PEM 格式证书",
+    caCertificates: "CA 证书",
+    caCertificatesHelp:
+      "粘贴签发设备证书的根 CA 或中间 CA 的 PEM 格式公钥证书。只有持有由这些 CA 之一签发、并能证明持有对应私钥的证书的节点才允许连接。",
+    certificateMobileUnsupported:
+      "此检查不支持移动设备。运行 NetBird iOS 或 Android 应用的节点将始终无法通过此检查并被拒绝访问。",
+    addCaCertificate: "添加 CA 证书",
+    certificateCheck: "证书检查",
+    allowOnlyCaCertificates:
+      "<allow>仅允许</allow>持有由以下 CA 之一签发的证书的节点",
+    caCertificateIndex: "CA 证书 {index}",
   },
   setupKeys: {
     title: "安装密钥",
@@ -2931,6 +2965,23 @@ export default {
       "客户 <Value>{msp_name}</Value>（域名：<Value>{msp_domain}</Value>）已拒绝邀请",
     desc_reseller_msp_updated:
       "客户 <Value>{msp_name}</Value>（域名：<Value>{msp_domain}</Value>）已更新",
+    desc_integration_enable_platform: "<Value>{platform}</Value> 集成已启用",
+    desc_integration_enable: "集成已启用",
+    desc_integration_disable_platform: "<Value>{platform}</Value> 集成已停用",
+    desc_integration_disable: "集成已停用",
+    desc_integration_disable_by_system_platform:
+      "<Value>{platform}</Value> 集成已被系统停用",
+    desc_integration_disable_by_system: "集成已被系统停用",
+    desc_integration_disable_by_system_reason:
+      "<Value>{platform}</Value> 集成已被系统停用，原因：<Value>{reason}</Value>",
+    desc_integrated_validator_api_enabled:
+      "<Value>{platform}</Value> 集成已启用",
+    desc_integrated_validator_api_disabled:
+      "<Value>{platform}</Value> 集成已停用",
+    desc_integrated_validator_api_disabled_by_system:
+      "<Value>{platform}</Value> 集成已被系统停用",
+    desc_integrated_validator_api_disabled_by_system_reason:
+      "<Value>{platform}</Value> 集成已被系统停用，原因：<Value>{reason}</Value>",
   },
   controlCenter: {
     title: "控制中心",

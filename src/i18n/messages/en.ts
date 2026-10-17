@@ -1573,6 +1573,14 @@ export default {
     deleteIdentityProviderTitle: "Delete '{name}'?",
     idpNameDefaultOidc: "Generic OIDC",
     peerApprovalIntegrationFallback: "Integration",
+    uniquePeerHostnames: "Unique Peer Hostnames",
+    uniquePeerHostnamesHelp:
+      "By default, a peer registering or being renamed with a hostname that is already in use receives an IP-based suffix on its DNS label.",
+    rejectHostnameCollisions: "Reject Hostname Collisions",
+    rejectHostnameCollisionsHelp:
+      "When enabled, registering or renaming a peer to a hostname that is already in use fails instead of receiving a suffix. This applies to ephemeral peers as well.",
+    uniquePeerHostnamesUpdated: "Unique peer hostnames successfully {state}.",
+    updatingUniquePeerHostnames: "Updating unique peer hostnames setting...",
   },
   reverseProxy: {
     title: "Reverse Proxy",
@@ -2113,6 +2121,20 @@ export default {
     urlCopied: "URL has been copied to your clipboard",
     autoLabel: "Auto",
     enforce: "Enforce",
+    authBypassed: "Auth Bypassed",
+    pathBlocked: "Path Blocked",
+    targetAccessLabel: "Access",
+    targetAccessHelp:
+      "Use the service authentication settings, make this location public, or deny requests before they reach the target.",
+    targetAccessUseServiceAuth: "Use service authentication",
+    targetAccessBypassAuth: "Bypass authentication",
+    targetAccessBlock: "Block access",
+    targetAccessPrivateServiceWarning:
+      "NetBird-only services cannot bypass authentication.",
+    targetAccessUnsupportedHelp:
+      "This value is not supported by this dashboard. It will be preserved unless you select a supported option.",
+    targetAccessUnsupportedOption: "Unsupported setting ({value})",
+    targetAccessUnsupportedBadge: "Unsupported access setting ({action})",
   },
   dns: {
     title: "DNS",
@@ -2767,6 +2789,20 @@ export default {
     postureCheckUpdated: "Posture Check was updated successfully.",
     creatingPostureCheck: "Creating your posture check...",
     updatingPostureCheck: "Updating your posture check...",
+    certificate: "Certificate",
+    certificateHelp:
+      "Restrict access to peers holding a certificate issued by your own certificate authority.",
+    invalidPemCertificate: "Please paste a valid PEM encoded certificate",
+    caCertificates: "CA Certificates",
+    caCertificatesHelp:
+      "Paste the PEM encoded public certificate of the root or intermediate CA that issues your device certificates. Peers will only be allowed to connect if they hold a certificate issued by one of these CAs and prove possession of its private key.",
+    certificateMobileUnsupported:
+      "This check is not supported on mobile devices. Peers running the NetBird iOS or Android app will always fail this check and be denied access.",
+    addCaCertificate: "Add CA Certificate",
+    certificateCheck: "Certificate Check",
+    allowOnlyCaCertificates:
+      "<allow>Allow only</allow> peers holding a certificate issued by one of the following CAs",
+    caCertificateIndex: "CA certificate {index}",
   },
   setupKeys: {
     title: "Setup Keys",
@@ -3151,6 +3187,25 @@ export default {
       "Invite declined by customer <Value>{msp_name}</Value> with domain <Value>{msp_domain}</Value>",
     desc_reseller_msp_updated:
       "Customer <Value>{msp_name}</Value> with domain <Value>{msp_domain}</Value> was updated",
+    desc_integration_enable_platform:
+      "<Value>{platform}</Value> integration enabled",
+    desc_integration_enable: "Integration enabled",
+    desc_integration_disable_platform:
+      "<Value>{platform}</Value> integration disabled",
+    desc_integration_disable: "Integration disabled",
+    desc_integration_disable_by_system_platform:
+      "<Value>{platform}</Value> integration disabled by system",
+    desc_integration_disable_by_system: "Integration disabled by system",
+    desc_integration_disable_by_system_reason:
+      "<Value>{platform}</Value> integration disabled by system due to <Value>{reason}</Value>",
+    desc_integrated_validator_api_enabled:
+      "<Value>{platform}</Value> integration enabled",
+    desc_integrated_validator_api_disabled:
+      "<Value>{platform}</Value> integration disabled",
+    desc_integrated_validator_api_disabled_by_system:
+      "<Value>{platform}</Value> integration disabled by system",
+    desc_integrated_validator_api_disabled_by_system_reason:
+      "<Value>{platform}</Value> integration disabled by system due to <Value>{reason}</Value>",
   },
   controlCenter: {
     title: "Control Center",
