@@ -23,7 +23,8 @@ interface PostureCheckAction {
     | "location"
     | "os"
     | "network_range"
-    | "process_check";
+    | "process_check"
+    | "certificate_check";
   payload: any;
 }
 
@@ -77,6 +78,15 @@ const postureCheckReducer = (
         checks: {
           ...state.checks,
           process_check: action.payload,
+        },
+      };
+
+    case "certificate_check":
+      return {
+        ...state,
+        checks: {
+          ...state.checks,
+          certificate_check: action.payload,
         },
       };
 

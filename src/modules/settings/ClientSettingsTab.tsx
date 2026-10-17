@@ -25,6 +25,7 @@ import {
   ExternalLinkIcon,
   MonitorSmartphoneIcon,
   RefreshCcw,
+  TagIcon,
 } from "lucide-react";
 import React, { useMemo, useState } from "react";
 import { useSWRConfig } from "swr";
@@ -85,6 +86,10 @@ function ClientSettingsTabContent({ account }: Readonly<Props>) {
 
   const [agentNetworkOnly, setAgentNetworkOnly] = useState(
     account.settings?.agent_network_only ?? false,
+  );
+
+  const [hostnameCollisionRejected, setHostnameCollisionRejected] = useState(
+    account.settings?.peer_hostname_collision_rejected ?? false,
   );
 
   const autoUpdateSetting = account.settings?.auto_update_version;
@@ -178,6 +183,9 @@ function ClientSettingsTabContent({ account }: Readonly<Props>) {
             auto_update_always: autoUpdateAlways,
             peer_expose_enabled: peerExposeEnabled,
             peer_expose_groups: peerExposeGroupIds,
+            lazy_connection_enabled: lazyConnection,
+            agent_network_only: agentNetworkOnly,
+            peer_hostname_collision_rejected: hostnameCollisionRejected,
           },
         })
         .then(() => {
@@ -213,6 +221,28 @@ function ClientSettingsTabContent({ account }: Readonly<Props>) {
           mutate("/accounts");
         }),
       loadingMessage: t("updatingLazyConnections"),
+    });
+  };
+
+  const toggleHostnameCollisionRejected = async (toggle: boolean) => {
+    notify({
+      title: "Unique Peer Hostnames",
+      description: `Unique peer hostnames successfully ${
+        toggle ? "enabled" : "disabled"
+      }.`,
+      promise: saveRequest
+        .put({
+          id: account.id,
+          settings: {
+            ...account.settings,
+            peer_hostname_collision_rejected: toggle,
+          },
+        })
+        .then(() => {
+          setHostnameCollisionRejected(toggle);
+          mutate("/accounts");
+        }),
+      loadingMessage: "Updating unique peer hostnames setting...",
     });
   };
 
@@ -414,6 +444,29 @@ function ClientSettingsTabContent({ account }: Readonly<Props>) {
               data-testid="lazy-connections"
               label={t("enableLazyConnections")}
               helpText={<>{t("enableLazyConnectionsHelp")}</>}
+              disabled={!permission.settings.update}
+            />
+          </div>
+
+          <div>
+            <Label>
+              <TagIcon size={15} />
+              Unique Peer Hostnames
+            </Label>
+            <HelpText>
+              By default, a peer registering or being renamed with a hostname
+              that is already in use receives an IP-based suffix on its DNS
+              label.
+            </HelpText>
+            <FancyToggleSwitch
+              className={"mt-2"}
+              value={hostnameCollisionRejected}
+              onChange={toggleHostnameCollisionRejected}
+              data-testid="peer-hostname-collision-rejected"
+              label={"Reject Hostname Collisions"}
+              helpText={
+                "When enabled, registering or renaming a peer to a hostname that is already in use fails instead of receiving a suffix. This applies to ephemeral peers as well."
+              }
               disabled={!permission.settings.update}
             />
           </div>

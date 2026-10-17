@@ -7,7 +7,10 @@ import { useTranslations } from "next-intl";
 import React from "react";
 import AgentNetworkIcon from "@/assets/icons/AgentNetworkIcon";
 import PageContainer from "@/layouts/PageContainer";
-import { AgentConnectTabs } from "@/modules/agent-network/AgentConnectTabs";
+import {
+  AgentConnectTabs,
+  ConnectProvider,
+} from "@/modules/agent-network/AgentConnectTabs";
 import EndpointBadge from "@/modules/agent-network/EndpointBadge";
 import ConnectProvidersTable from "@/modules/agent-network/table/ConnectProvidersTable";
 import { useMyAgentNetworkSetup } from "@/modules/agent-network/useMyAgentNetworkSetup";
@@ -27,7 +30,12 @@ export default function ConnectAgentPage() {
   const providers = setup?.providers ?? [];
   // EndpointBadge builds https:// URLs from a bare host.
   const bareEndpoint = (setup?.endpoint ?? "").replace(/^https?:\/\//, "");
-  const providerIds = providers.map((provider) => provider.catalog_id);
+  const connectProviders: ConnectProvider[] = providers.map((p) => ({
+    name: p.name,
+    catalogId: p.catalog_id,
+    api: p.api_flavor === "anthropic" ? "anthropic" : "openai",
+    models: p.models,
+  }));
 
   return (
     <PageContainer>
@@ -80,7 +88,7 @@ export default function ConnectAgentPage() {
               className={"mt-0"}
               listClassName={"p-default"}
               contentClassName={"p-default py-2 max-w-3xl"}
-              providerIds={providerIds}
+              providers={connectProviders}
             />
           )}
 

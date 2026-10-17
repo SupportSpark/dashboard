@@ -769,6 +769,42 @@ export default function ActivityDescription({ event }: Props) {
     );
   }
 
+  if (event.activity_code == "integration.enable") {
+    if (!event.meta.platform) return "Integration enabled";
+    return (
+      <div className={"inline"}>
+        <Value className={"capitalize"}>{event.meta.platform}</Value>{" "}
+        integration enabled
+      </div>
+    );
+  }
+
+  if (event.activity_code == "integration.disable") {
+    if (!event.meta.platform) return "Integration disabled";
+    return (
+      <div className={"inline"}>
+        <Value className={"capitalize"}>{event.meta.platform}</Value>{" "}
+        integration disabled
+      </div>
+    );
+  }
+
+  if (event.activity_code == "integration.disable-by-system") {
+    if (!event.meta.platform) return "Integration disabled by system";
+    return (
+      <div className={"inline"}>
+        <Value className={"capitalize"}>{event.meta.platform}</Value>{" "}
+        integration disabled by system
+        {event.meta.reason && (
+          <>
+            {" "}
+            due to <Value>{event.meta.reason}</Value>
+          </>
+        )}
+      </div>
+    );
+  }
+
   /**
    * DNS
    */
@@ -860,6 +896,33 @@ export default function ActivityDescription({ event }: Props) {
           platform: m?.platform,
           Value: (chunks) => <Value>{chunks}</Value>,
         })}
+      </div>
+    );
+
+  if (event.activity_code == "integrated-validator.api.enabled")
+    return (
+      <div className={"inline"}>
+        <Value>{m?.platform}</Value> integration enabled
+      </div>
+    );
+
+  if (event.activity_code == "integrated-validator.api.disabled")
+    return (
+      <div className={"inline"}>
+        <Value>{m?.platform}</Value> integration disabled
+      </div>
+    );
+
+  if (event.activity_code == "integrated-validator.api.disabled-by-system")
+    return (
+      <div className={"inline"}>
+        <Value>{m?.platform}</Value> integration disabled by system
+        {m?.reason && (
+          <>
+            {" "}
+            due to <Value>{m.reason}</Value>
+          </>
+        )}
       </div>
     );
 

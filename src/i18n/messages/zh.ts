@@ -217,20 +217,23 @@ export default {
     somethingWentWrong: "出现问题...",
     refreshCooldown: "5 秒后可再次刷新",
     addGroupByPressingEnter: "按 <key>''Enter''</key> 添加此组",
-    noProxyClustersGoToCustomDomains: "暂无代理集群。前往 <link>自定义域名</link> 配置一个支持私有服务的集群。",
+    noProxyClustersGoToCustomDomains:
+      "暂无代理集群。前往 <link>自定义域名</link> 配置一个支持私有服务的集群。",
     searchNetworkByNameOrCidr: "按名称或 CIDR 搜索网络...",
     noNetworkRoutesCreatedYet: "看起来你还没有创建任何网络路由。",
     noNetworksMatchingSearch: "没有匹配搜索条件的网络。",
     dontHaveRoutingPeer: "还没有路由节点？",
     parametersCount: "{count, plural, one {# 个参数} other {# 个参数}}",
     enable: "启用",
-    metaDescription: "NetBird 将免配置的点对点私有网络与集中式访问控制系统整合在一个开源平台中",
+    metaDescription:
+      "NetBird 将免配置的点对点私有网络与集中式访问控制系统整合在一个开源平台中",
     users: "用户",
     goToNetworks: "前往网络",
     deleteTokenTitle: "删除“{name}”？",
     accessTokenCopied: "访问令牌已复制到剪贴板！",
     accessTokenCreatedSuccess: "访问令牌创建成功！",
-    accessTokenCopyWarning: "此令牌将不会再次显示，请务必复制并保存到安全位置。",
+    accessTokenCopyWarning:
+      "此令牌将不会再次显示，请务必复制并保存到安全位置。",
     accessTokenNamePlaceholder: "例如：基础设施令牌",
     createAccessTokenDescription: "使用此令牌访问 NetBird 的公共 API",
     or: "或",
@@ -372,13 +375,11 @@ export default {
       "您的账户正在等待管理员审批。请在访问仪表板前等待审批。",
     accessGenericDescription:
       "尝试访问仪表板时发生错误。请重试或联系您的管理员。",
-    contactAdminDescription:
-      "如果您认为这是一个错误，请联系您的管理员。",
+    contactAdminDescription: "如果您认为这是一个错误，请联系您的管理员。",
   },
   pageNotFound: {
     title: "请求的页面不存在",
-    description:
-      "您尝试访问的页面无法找到。请验证 URL 或返回仪表板继续浏览。",
+    description: "您尝试访问的页面无法找到。请验证 URL 或返回仪表板继续浏览。",
   },
   peers: {
     title: "节点",
@@ -437,8 +438,7 @@ export default {
     loginExpirationUpdateDescription: "节点 {name} 的会话过期已成功{state}。",
     loginExpirationUpdating: "正在更新会话过期...",
     loginRequired: "需要登录",
-    loginExpiredTooltip:
-      "此节点已离线，由于其登录已过期，需要重新认证。",
+    loginExpiredTooltip: "此节点已离线，由于其登录已过期，需要重新认证。",
     enableSSH: "启用 SSH 访问",
     disableSSH: "禁用 SSH 访问",
     disableSSHConfirmation: "禁用 SSH 访问？",
@@ -609,8 +609,7 @@ export default {
     revokeBypassConfirmDescription:
       "此节点将接受正常的合规验证。如果仍然不合规，它将失去网络访问权限。",
     revokeBypassSuccess: "合规绕过已撤销",
-    revokeBypassSuccessDescription:
-      "节点 {name} 现在接受正常的合规验证。",
+    revokeBypassSuccessDescription: "节点 {name} 现在接受正常的合规验证。",
     revokeBypassLoading: "正在撤销合规绕过...",
     bypassTooltip:
       "绕过 {integrationName} 合规检查并允许此节点连接。当设备恢复合规时，绕过将自动移除。",
@@ -619,12 +618,14 @@ export default {
     bypassComplianceCount: "绕过合规检查（{count}）",
     revokeBypassCount: "撤销合规绕过（{count}）",
     bypassComplianceConfirmBatch: "为 {count} 个节点绕过合规检查？",
-    bypassComplianceBatchDescription: "这将覆盖合规检查并允许这些节点接入网络。设备恢复合规后，绕行设置会自动移除。",
+    bypassComplianceBatchDescription:
+      "这将覆盖合规检查并允许这些节点接入网络。设备恢复合规后，绕行设置会自动移除。",
     bypassComplianceBatchSuccess: "已成功为所选节点绕过合规检查",
     bypassComplianceBatchLoading: "正在为所选节点绕过合规检查...",
     revokeBypassTitle: "撤销合规绕过",
     revokeBypassConfirmBatch: "撤销 {count} 个节点的合规绕过？",
-    revokeBypassBatchDescription: "这些节点将恢复常规合规校验。若不合规，将失去网络访问权限。",
+    revokeBypassBatchDescription:
+      "这些节点将恢复常规合规校验。若不合规，将失去网络访问权限。",
     revokeBypassBatchSuccess: "合规绕过已成功撤销",
     overwriteGroupsButton: "覆盖",
     addGroupsButton: "添加",
@@ -637,9 +638,11 @@ export default {
     bypassedTooltip: "合规检查已被管理员绕过的节点",
     searchPlaceholderExtended: "按名称、IP、MAC、所有者或组搜索...",
     addNewDeviceTitleLabel: "向网络添加新设备",
-    removePeerFromRouteConfirm: "确定要从该路由中删除此节点吗？此操作无法撤销。",
+    removePeerFromRouteConfirm:
+      "确定要从该路由中删除此节点吗？此操作无法撤销。",
     settingsAdvancedSettings: "设置 > 高级设置",
-    peersPageDescription: "连接到您网络的用户设备与无头机器，例如服务器和自主智能体。",
+    peersPageDescription:
+      "连接到您网络的用户设备与无头机器，例如服务器和自主智能体。",
     confirmDeletePeerTitle: "删除“{name}”？",
     deletePeerConfirmDescription: "确定要删除此节点吗？此操作无法撤销。",
     peerDeletedDescription: "节点已成功删除",
@@ -647,13 +650,19 @@ export default {
     filters: "筛选",
     agent: "Agent",
     lastSeenLower: "最后上线",
-    sshPolicyRequired: "从 NetBird v0.61.0 开始，SSH 需要明确的访问控制策略，才能允许连接到此计算机。",
-    ephemeralPeerTooltip: "此节点为临时节点。如果断开连接超过 10 分钟，它将被自动移除。",
+    sshPolicyRequired:
+      "从 NetBird v0.61.0 开始，SSH 需要明确的访问控制策略，才能允许连接到此计算机。",
+    ephemeralPeerTooltip:
+      "此节点为临时节点。如果断开连接超过 10 分钟，它将被自动移除。",
     expirationDisabledPeerTooltip: "此节点的过期时间已禁用。",
-    bypassedIssueTooltip: "此节点的合规检查已被管理员绕过。当设备恢复合规时，绕过将自动移除。",
-    loginExpiredIssueTooltip: "此节点的登录已过期。请在设备上重新登录 NetBird 客户端，使其恢复在线。",
-    notCompliantIssueTooltip: "此节点不符合 {integrationName} 的要求，在恢复合规或绕过检查之前无法连接。",
-    approvalRequiredIssueTooltip: "此节点需要管理员批准后才能连接。请在所在行的操作菜单中批准。",
+    bypassedIssueTooltip:
+      "此节点的合规检查已被管理员绕过。当设备恢复合规时，绕过将自动移除。",
+    loginExpiredIssueTooltip:
+      "此节点的登录已过期。请在设备上重新登录 NetBird 客户端，使其恢复在线。",
+    notCompliantIssueTooltip:
+      "此节点不符合 {integrationName} 的要求，在恢复合规或绕过检查之前无法连接。",
+    approvalRequiredIssueTooltip:
+      "此节点需要管理员批准后才能连接。请在所在行的操作菜单中批准。",
     thisPeerCanConnect: "此节点现在可以连接到其他节点。",
     deletePeerFromRouteTitle: "从“{network_id}”网络中删除节点 {name}？",
   },
@@ -770,7 +779,8 @@ export default {
     sshAccessPlaceholder: "选择 SSH 访问类型...",
 
     // SSH 授权组
-    sshNoSourceGroups: "您尚未添加任何源组。请添加源组以指定哪些用户组可以访问目标机器上的哪些系统用户。",
+    sshNoSourceGroups:
+      "您尚未添加任何源组。请添加源组以指定哪些用户组可以访问目标机器上的哪些系统用户。",
 
     // SSH 用户名选择器
     sshAllLocalUsers: "所有本地用户",
@@ -877,8 +887,10 @@ export default {
     renamingGroup: "正在重命名组...",
     confirmRemovePeerFromGroupTitle: "从“{group}”中移除节点“{peer}”？",
     confirmRemovePeersFromGroupTitle: "从“{group}”中移除节点？",
-    confirmRemovePeerFromGroupDescription: "确定要将此节点从组中移除吗？如有需要，之后可以重新添加。",
-    confirmRemovePeersFromGroupDescription: "确定要将这些节点从组中移除吗？如有需要，之后可以重新添加。",
+    confirmRemovePeerFromGroupDescription:
+      "确定要将此节点从组中移除吗？如有需要，之后可以重新添加。",
+    confirmRemovePeersFromGroupDescription:
+      "确定要将这些节点从组中移除吗？如有需要，之后可以重新添加。",
     removePeerFromGroupTitle: "从组中移除节点",
     peerRemovedFromGroup: "节点“{peer}”已成功从组“{group}”中移除",
     peersRemovedFromGroup: "节点已成功从组“{group}”中移除",
@@ -892,8 +904,10 @@ export default {
     removingUserFromGroup: "正在从组中移除用户...",
     confirmRemoveUserFromGroupTitle: "从“{group}”中移除用户“{user}”？",
     confirmRemoveUsersFromGroupTitle: "从“{group}”中移除用户？",
-    confirmRemoveUserFromGroupDescription: "确定要将此用户从组中移除吗？如有需要，之后可以重新添加。",
-    confirmRemoveUsersFromGroupDescription: "确定要将这些用户从组中移除吗？如有需要，之后可以重新添加。",
+    confirmRemoveUserFromGroupDescription:
+      "确定要将此用户从组中移除吗？如有需要，之后可以重新添加。",
+    confirmRemoveUsersFromGroupDescription:
+      "确定要将这些用户从组中移除吗？如有需要，之后可以重新添加。",
     removeUsersFromGroupTitle: "从组 {group} 中移除用户",
     usersRemovedFromGroup: "用户已成功从组“{group}”中移除。",
     removingUsersFromGroup: "正在从组中移除用户...",
@@ -921,7 +935,8 @@ export default {
     noAssignedPeersDescription: "将节点分配到此组，以控制该组适用于哪些节点。",
     noAssignedUsers: "尚未分配用户",
     noAssignedUsersDescription: "将用户分配到此组，以控制该组适用于哪些人员。",
-    noAssignedResourcesDescription: "将资源分配到此组，以控制该组适用于哪些资源。",
+    noAssignedResourcesDescription:
+      "将资源分配到此组，以控制该组适用于哪些资源。",
     noPeersToAssign: "没有可分配的节点",
     noPeersToAssignDescription: "所有节点都已是该组的成员。",
     noUsersToAssign: "没有可分配的用户",
@@ -943,8 +958,7 @@ export default {
     accessTokens: "访问令牌",
     accessTokensDescription: "访问令牌提供对 NetBird API 的访问权限。",
     selectUser: "选择用户...",
-    noUsersToSelect:
-      "没有可选择的用户。请先邀请该租户的用户，再执行解除关联。",
+    noUsersToSelect: "没有可选择的用户。请先邀请该租户的用户，再执行解除关联。",
     noUsersMatchingSearch: "没有与搜索匹配的用户。",
     invite: "邀请用户",
     edit: "编辑用户",
@@ -1019,9 +1033,9 @@ export default {
     // UserInviteModal
     userCreatedSuccess: "用户创建成功！",
     inviteLinkCreated: "邀请链接已创建！",
-    passwordCopyWarning:
-      "此密码将不会再次显示，请务必复制并保存到安全位置。",
-    inviteLinkShareInfo: "将此链接分享给用户。用户可以通过此链接设置自己的密码。",
+    passwordCopyWarning: "此密码将不会再次显示，请务必复制并保存到安全位置。",
+    inviteLinkShareInfo:
+      "将此链接分享给用户。用户可以通过此链接设置自己的密码。",
     passwordCopied: "密码已复制到剪贴板！",
     inviteLinkCopied: "邀请链接已复制到剪贴板！",
     expiresOn: "过期时间",
@@ -1030,7 +1044,8 @@ export default {
     inviteUserTitle: "邀请用户",
     createUserDescription: "创建一个使用邮箱和密码的 NetBird 用户账户。",
     inviteUserDescription2: "邀请用户加入您的网络并设置其权限。",
-    generateInviteLinkDesc: "生成一个邀请链接，用户可以通过此链接设置自己的密码。",
+    generateInviteLinkDesc:
+      "生成一个邀请链接，用户可以通过此链接设置自己的密码。",
     sendInvitation: "发送邀请",
     createInviteLink: "创建邀请链接",
     inviteUserTab: "邀请用户",
@@ -1070,7 +1085,8 @@ export default {
     userRejectedDesc: "用户已成功拒绝并移除。",
     rejectingUser: "正在拒绝用户...",
     deleteUserTitle: "删除 '{name}'？",
-    deleteUserDesc: "删除此用户将移除其设备并取消仪表板访问权限。此操作无法撤销。",
+    deleteUserDesc:
+      "删除此用户将移除其设备并取消仪表板访问权限。此操作无法撤销。",
     blockUserTitle: "阻止 '{name}'？",
     blockUserDesc: "此操作将立即撤销用户的访问权限并断开其所有活动节点的连接。",
     blockButton: "阻止",
@@ -1137,7 +1153,8 @@ export default {
     deleteInviteTitle: "删除 '{name}' 的邀请？",
     deleteInviteDesc: "删除此邀请将撤销邀请链接。用户将无法再使用此邀请加入。",
     inviteLinkRegenerated: "邀请链接已重新生成！",
-    inviteLinkRegenShareInfo: "将此链接分享给用户。用户可以通过此链接设置自己的密码。",
+    inviteLinkRegenShareInfo:
+      "将此链接分享给用户。用户可以通过此链接设置自己的密码。",
     inviteActions: "邀请操作",
     regenerateButton: "重新生成",
     expires: "过期时间",
@@ -1166,7 +1183,8 @@ export default {
     userId: "用户 ID",
     pendingApprovalOwner:
       "您的组织要求新用户加入前必须经过手动审批。请联系账户所有者 <owner>{email}</owner> 审批您的访问权限。",
-    pendingApprovalNoOwner: "您的组织要求新用户加入前必须经过手动审批。请联系账户所有者审批您的访问权限。",
+    pendingApprovalNoOwner:
+      "您的组织要求新用户加入前必须经过手动审批。请联系账户所有者审批您的访问权限。",
     needHelp: "需要帮助？",
     readTheDocs: "查阅文档",
     or: "或",
@@ -1410,28 +1428,33 @@ export default {
     permissionSettings: "权限设置",
     permissionsUpdated: "权限已成功更新。",
     updatingPermissions: "正在更新权限...",
-    deleteIdentityProviderConfirm: "确定要删除此 Identity Provider 吗？此操作无法撤销。",
+    deleteIdentityProviderConfirm:
+      "确定要删除此 Identity Provider 吗？此操作无法撤销。",
     settingsAuthenticationDescription: "控制节点和用户的身份验证方式。",
     peerApprovalDisabledByIntegration:
       "由于已启用 {integration} Integration，节点审批已禁用。如需启用节点审批，请先禁用 {integration} Integration。",
     peerApprovalLabel: "节点审批",
     peerApprovalHelp: "要求节点必须由管理员审批。",
     userApprovalRequiredLabel: "需要用户审批",
-    userApprovalRequiredHelp: "通过 <br></br>域名匹配加入的新用户需要手动审批。用户在被审批前将被阻止访问。",
+    userApprovalRequiredHelp:
+      "通过 <br></br>域名匹配加入的新用户需要手动审批。用户在被审批前将被阻止访问。",
     enableLocalMfa: "启用本地 MFA",
-    enableLocalMfaHelp: "要求使用本地凭据<br></br>进行身份验证的用户使用多因素认证。",
+    enableLocalMfaHelp:
+      "要求使用本地凭据<br></br>进行身份验证的用户使用多因素认证。",
     selectIntervalPlaceholder: "选择间隔...",
     metricsDescription: "分享客户端性能指标，帮助我们改进 NetBird。",
     metricsPushUpdated: "指标推送已成功{state}。",
     sharePerformanceMetrics: "分享性能指标",
-    sharePerformanceMetricsHelp: "启用后，客户端将定期发送性能数据，帮助我们定位并修复问题。",
+    sharePerformanceMetricsHelp:
+      "启用后，客户端将定期发送性能数据，帮助我们定位并修复问题。",
     invalidVersionError: "请输入有效的版本号，例如 0.2、0.2.0、0.2.0-alpha.1",
     clientSettingsSaved: "客户端设置已成功更新。",
     lazyConnectionsUpdated: "延迟连接已成功{state}。",
     enabledState: "启用",
     disabledState: "禁用",
     agentNetworkFocusedViewUpdated: "Agent Network 聚焦视图已成功{state}。",
-    onlyUsersInGroupCanAccess: "只有属于 {group} 组的用户才能访问 NetBird。确定要保存更改吗？",
+    onlyUsersInGroupCanAccess:
+      "只有属于 {group} 组的用户才能访问 NetBird。确定要保存更改吗？",
     preventLosingAccessNotice: "为避免失去访问权限，请确保您属于该组。",
     manageGroupsHint: "想要查看和管理您的组？组管理功能位于 <link></link>",
     accessControlGroups: "访问控制 › 组",
@@ -1448,7 +1471,8 @@ export default {
     saveChangesButton: "保存更改",
     addProviderButton: "添加提供商",
     searchIdpPlaceholder: "按名称或类型搜索...",
-    addIdentityProviderCardDescription: "配置 Identity Provider，为您的用户启用 SSO 身份验证。",
+    addIdentityProviderCardDescription:
+      "配置 Identity Provider，为您的用户启用 SSO 身份验证。",
     deleteIdentityProviderTitle: "删除“{name}”？",
     idpNameDefaultOidc: "通用 OIDC",
     peerApprovalIntegrationFallback: "Integration",
@@ -1572,20 +1596,26 @@ export default {
     udpService: "UDP 服务",
     forwardTrafficDesc: "将流量直接转发到您的后端服务。",
     exposeServicesDesc: "通过 NetBird 的反向代理安全地暴露服务。",
-    terminatedService: "此服务已被 NetBird 团队终止，因为它违反了服务条款。如有问题，请联系",
+    terminatedService:
+      "此服务已被 NetBird 团队终止，因为它违反了服务条款。如有问题，请联系",
     terminated: "已终止",
     crowdSecIpReputation: "CrowdSec IP 信誉",
-    crowdSecIpReputationHelp: "使用 CrowdSec 检测恶意 IP。<b>拦截</b>会直接阻止访问，<b>观察</b>仅记录日志而不拦截。",
+    crowdSecIpReputationHelp:
+      "使用 CrowdSec 检测恶意 IP。<b>拦截</b>会直接阻止访问，<b>观察</b>仅记录日志而不拦截。",
     crowdSecModeEnforce: "拦截",
     crowdSecModeObserve: "观察",
-    crowdSecEnforceDescription: "被拦截的 IP 会立即被拒绝。若 bouncer 尚未同步，连接也会被拒绝（故障关闭）。",
-    crowdSecObserveDescription: "被拦截的 IP 仅记录日志而不拒绝。可在启用拦截前用它评估 CrowdSec。",
+    crowdSecEnforceDescription:
+      "被拦截的 IP 会立即被拒绝。若 bouncer 尚未同步，连接也会被拒绝（故障关闭）。",
+    crowdSecObserveDescription:
+      "被拦截的 IP 仅记录日志而不拒绝。可在启用拦截前用它评估 CrowdSec。",
     httpsTargetsTitle: "HTTPS 目标",
-    httpsTargetsHelp: "添加一台或多台运行您的服务或资源的设备，使其可被公开访问。",
+    httpsTargetsHelp:
+      "添加一台或多台运行您的服务或资源的设备，使其可被公开访问。",
     editTargetBtn: "编辑目标",
     removeTargetBtn: "移除目标",
     addTargetBtn: "添加目标",
-    noResourcesCallout: "您的网络 <net>{name}</net> 中暂无资源。请先向网络添加资源，再将其作为服务暴露。",
+    noResourcesCallout:
+      "您的网络 <net>{name}</net> 中暂无资源。请先向网络添加资源，再将其作为服务暴露。",
     goToResourcesBtn: "前往资源",
     serviceTypeLabel: "服务类型",
     selectTypePlaceholder: "选择类型...",
@@ -1600,18 +1630,24 @@ export default {
     staticIpKind: "静态 IP",
     ipKind: "IP",
     serviceTypeHelp: "选择类型，以定义代理如何处理并转发流量到您的后端服务。",
-    httpsServiceDescription: "带路径路由和内置身份验证（SSO、PIN、密码）的反向代理。通常用于 Web 应用和 API。",
-    tlsPassthroughDescription: "将加密的 TLS 流量直接透传到后端。通常用于自行管理 TLS 证书的服务。",
-    tcpServiceDescription: "通过专用端口将原始 TCP 流量转发到您的后端。通常用于数据库、自定义协议或任何基于 TCP 的服务。",
-    udpServiceDescription: "通过专用端口将原始 UDP 流量转发到您的后端。通常用于语音、视频或流媒体等实时服务。",
-    accessControlRulesHelp: "按国家、IP 地址或 CIDR 段定义允许或拦截流量的规则。<br />拦截规则始终优先于允许规则。",
+    httpsServiceDescription:
+      "带路径路由和内置身份验证（SSO、PIN、密码）的反向代理。通常用于 Web 应用和 API。",
+    tlsPassthroughDescription:
+      "将加密的 TLS 流量直接透传到后端。通常用于自行管理 TLS 证书的服务。",
+    tcpServiceDescription:
+      "通过专用端口将原始 TCP 流量转发到您的后端。通常用于数据库、自定义协议或任何基于 TCP 的服务。",
+    udpServiceDescription:
+      "通过专用端口将原始 UDP 流量转发到您的后端。通常用于语音、视频或流媒体等实时服务。",
+    accessControlRulesHelp:
+      "按国家、IP 地址或 CIDR 段定义允许或拦截流量的规则。<br />拦截规则始终优先于允许规则。",
     actionAllowOnly: "仅允许",
     actionBlockOnly: "仅拦截",
     typeCountry: "国家",
     typeIpAddress: "IP 地址",
     typeCidrBlock: "CIDR 段",
     invalidIpAddress: "请输入有效的 IP 地址，例如 85.203.15.42 或 2001:db8::1",
-    invalidCidrBlock: "请输入有效的 CIDR 段，例如 74.125.0.0/16 或 2001:db8::/64",
+    invalidCidrBlock:
+      "请输入有效的 CIDR 段，例如 74.125.0.0/16 或 2001:db8::/64",
     ipAddressPlaceholder: "例如 85.203.15.42 或 2001:db8::1",
     cidrBlockPlaceholder: "例如 74.125.0.0/16 或 2001:db8::/64",
     listenPortLabel: "监听端口",
@@ -1619,14 +1655,16 @@ export default {
     listenPortAutoHelp: "创建服务后将自动分配监听端口。",
     hostIpLabel: "主机 / IP",
     portHelpShort: "输入您的服务（例如 Web 服务器、应用、API）当前监听的端口。",
-    netBirdOnlyNoGroupsWarning: "已开启仅 NetBird 访问，但未设置访问组。请在身份验证标签页中设置，并至少选择一个组。",
+    netBirdOnlyNoGroupsWarning:
+      "已开启仅 NetBird 访问，但未设置访问组。请在身份验证标签页中设置，并至少选择一个组。",
     basicAuth: "Basic 认证",
     bearerToken: "Bearer 令牌",
     customHeader: "自定义请求头",
     addHeaderBtn: "添加请求头",
     addHeadersBtn: "添加请求头",
     removeAllBtn: "全部移除",
-    matchedHeadersCallout: "任何匹配其中任一请求头的请求都将获得访问权限。<br />匹配的请求头在到达后端前会被移除。",
+    matchedHeadersCallout:
+      "任何匹配其中任一请求头的请求都将获得访问权限。<br />匹配的请求头在到达后端前会被移除。",
     headerIndexLabel: "请求头 {index}",
     headerIndexNamed: "请求头 {index} - {header}",
     secretValuePlaceholder: "例如 AIiaSyDaGmWKa4JsXZ-HjGw7ISLn_3namBGewQe",
@@ -1644,7 +1682,8 @@ export default {
     contentColumn: "内容",
     locationField: "位置",
     regionField: "地区",
-    createDnsRecordsHelp: "将这些记录指向新的{resource}。记录解析后，代理即可获取证书。",
+    createDnsRecordsHelp:
+      "将这些记录指向新的{resource}。记录解析后，代理即可获取证书。",
     hetznerDeploymentTitle: "Hetzner 部署",
     hetznerDeployFailed: "创建 Hetzner 服务器失败",
     hetznerDeployCreating: "正在创建 Hetzner 服务器...",
@@ -1661,17 +1700,21 @@ export default {
     resourceTypeServer: "服务器",
     resourceTypeDroplet: "Droplet",
     dropletProvisioningNote: "，正在初始化，等待其公网 IP...",
-    dropletIpTimeoutNote: "，但等待公网 IP 超时，请在 DigitalOcean 控制台中查找该 IP。",
+    dropletIpTimeoutNote:
+      "，但等待公网 IP 超时，请在 DigitalOcean 控制台中查找该 IP。",
     hetznerApiToken: "Hetzner API 令牌",
     hetznerTokenTooltip:
       "令牌会直接从浏览器发送到 Hetzner，不会经过 NetBird 的服务器，设置成功后可将其删除。<link>如何创建令牌</link>",
     hetznerTokenHelp: "创建具有读写权限的 API 令牌。NetBird 不会存储它。",
     hetznerTokenPlaceholder: "在此粘贴您的 Hetzner Cloud API 令牌",
     hetznerCatalogError: "加载 Hetzner 选项失败：{error}",
-    noSshKeysHelp: "此 Hetzner 项目中未找到 SSH 密钥。如需通过 SSH 访问服务器，请先在 Hetzner 控制台中添加。",
+    noSshKeysHelp:
+      "此 Hetzner 项目中未找到 SSH 密钥。如需通过 SSH 访问服务器，请先在 Hetzner 控制台中添加。",
     staticIpLabel: "静态 IP",
-    hetznerStaticIpHelp: "服务器被删除或重建时保留其 IP，使 DNS 记录持续有效。Hetzner 会对未分配的 IP 计费。",
-    digitalOceanStaticIpHelp: "预留静态 IP，以便重建后 DNS 记录仍然有效。分配给 Droplet 期间免费。",
+    hetznerStaticIpHelp:
+      "服务器被删除或重建时保留其 IP，使 DNS 记录持续有效。Hetzner 会对未分配的 IP 计费。",
+    digitalOceanStaticIpHelp:
+      "预留静态 IP，以便重建后 DNS 记录仍然有效。分配给 Droplet 期间免费。",
     loadingHetznerCatalog: "正在加载可用的位置和服务器类型...",
     enterTokenToLoadCatalog: "输入 API 令牌以加载可用的位置和服务器类型。",
     preparingProxyToken: "正在准备代理令牌...",
@@ -1682,12 +1725,17 @@ export default {
       "为缩小权限范围，只需授予 <code>tag</code>、<code>droplet</code> 和 <code>reserved_ip</code> 的完全访问权限。令牌会直接从浏览器发送到 DigitalOcean，不会经过 NetBird 的服务器，设置成功后可将其删除。<link>如何创建令牌</link>",
     digitalOceanTokenHelp: "创建具有写入权限的令牌。NetBird 不会存储它。",
     digitalOceanTokenPlaceholder: "在此粘贴您的 DigitalOcean API 令牌",
-    dropletRootPasswordHelp: "在 Droplet Web 控制台中使用它。请立即复制，它不会被存储。",
-    proxyAccessTokenHelp: "复制此令牌用于创建 AWS 堆栈。它不会出现在输出和日志中。",
-    awsConsoleHelp: "AWS 控制台会打开并预填表单。粘贴令牌、创建堆栈，然后将 DNS 记录指向 PublicIP 输出。",
+    dropletRootPasswordHelp:
+      "在 Droplet Web 控制台中使用它。请立即复制，它不会被存储。",
+    proxyAccessTokenHelp:
+      "复制此令牌用于创建 AWS 堆栈。它不会出现在输出和日志中。",
+    awsConsoleHelp:
+      "AWS 控制台会打开并预填表单。粘贴令牌、创建堆栈，然后将 DNS 记录指向 PublicIP 输出。",
     launchStackBtn: "在 AWS 控制台中启动堆栈",
-    accountClusterTooltip: "<b>账户集群。</b>自行托管在您自己的基础设施上，由您运维代理节点并决定流量终止位置。",
-    sharedClusterTooltip: "<b>共享集群。</b>部署在服务器级别，此实例上的每个账户都可用。",
+    accountClusterTooltip:
+      "<b>账户集群。</b>自行托管在您自己的基础设施上，由您运维代理节点并决定流量终止位置。",
+    sharedClusterTooltip:
+      "<b>共享集群。</b>部署在服务器级别，此实例上的每个账户都可用。",
     deleteClusterConfirmTitle: "删除“{address}”？",
     deleteClusterConfirmDescription: "确定要删除此代理集群吗？此操作不可撤销。",
     clusterDeleted: "代理集群已成功删除",
@@ -1696,7 +1744,8 @@ export default {
     featureCustomPorts: "自定义端口",
     featureCustomPortsDescription: "集群可为服务绑定任意 TCP/UDP 端口。",
     featureSubdomainRequired: "需要子域名",
-    featureSubdomainRequiredDescription: "此集群上的服务必须使用子域名，仅集群域名本身不可寻址。",
+    featureSubdomainRequiredDescription:
+      "此集群上的服务必须使用子域名，仅集群域名本身不可寻址。",
     featureCrowdSecDescription: "集群已在所有活跃代理上配置 CrowdSec IP 信誉。",
     featurePrivate: "私有",
     featurePrivateDescription:
@@ -1732,7 +1781,8 @@ export default {
     configureDns: "配置 DNS",
     configureDnsHelp: "添加以下 DNS 记录，指向您机器的公网 IP 地址。",
     yourMachineIp: "您机器的 IP",
-    selfHostedRoutingNotice: "自托管部署时，请先确保已在 NetBird 管理服务器上配置好代理服务路由，再启动代理。",
+    selfHostedRoutingNotice:
+      "自托管部署时，请先确保已在 NetBird 管理服务器上配置好代理服务路由，再启动代理。",
     requiredRoutingEndpoints: "必需的路由端点",
     proxyEnvVarsHelp: "需要微调代理？查看所有可用的<link>环境变量</link>",
     finishSetupBtn: "完成设置",
@@ -1764,18 +1814,23 @@ export default {
     selectDomainPlaceholder: "选择域名...",
     searchDomainsPlaceholder: "搜索域名...",
     verifyDomain: "验证域名",
-    verifyDomainStep1: "登录您的域名服务商（例如 cloudflare.com 或 godaddy.com）",
-    verifyDomainStep2: "将下面的<mark>CNAME 记录</mark>添加到 <mark>{domain}</mark> 的 DNS 配置中",
+    verifyDomainStep1:
+      "登录您的域名服务商（例如 cloudflare.com 或 godaddy.com）",
+    verifyDomainStep2:
+      "将下面的<mark>CNAME 记录</mark>添加到 <mark>{domain}</mark> 的 DNS 配置中",
     cnameRecordLabel: "CNAME 记录",
     cnameContentLabel: "CNAME 内容",
-    availableProxyClusters: "<b>可用的代理集群：</b>{clusters}。请选择离用户最近的集群以获得最佳性能。",
-    dnsPropagationNotice: "DNS 变更可能需要一些时间生效。如果 NetBird 未立即找到该记录，请等待最多 24 小时后重试。",
+    availableProxyClusters:
+      "<b>可用的代理集群：</b>{clusters}。请选择离用户最近的集群以获得最佳性能。",
+    dnsPropagationNotice:
+      "DNS 变更可能需要一些时间生效。如果 NetBird 未立即找到该记录，请等待最多 24 小时后重试。",
     domainVerificationLabel: "域名验证",
     verifyLaterBtn: "稍后验证",
     startVerificationBtn: "开始验证",
     searchDomainsTablePlaceholder: "按域名搜索...",
     addCustomDomainsTitle: "添加自定义域名",
-    addCustomDomainsDescription: "在 NetBird 的反向代理中使用您自己的域名。开始前，请添加指向集群的 CNAME 记录并验证域名所有权。",
+    addCustomDomainsDescription:
+      "在 NetBird 的反向代理中使用您自己的域名。开始前，请添加指向集群的 CNAME 记录并验证域名所有权。",
     customDomainStatusPending: "待验证",
     domainsTableTitle: "域名",
     pendingVerification: "待验证",
@@ -1786,28 +1841,35 @@ export default {
     subdomainOptionalPlaceholder: "myapp（可选）",
     clusterOfflineCloud:
       "集群 {cluster} 离线。请几分钟后重试。若问题持续，请查看<status>NetBird 状态</status>或联系 <support>support@netbird.io</support>",
-    clusterOfflineSelfHosted: "集群 {cluster} 离线。请确认代理服务器正在运行，并连接到正确的管理地址。",
+    clusterOfflineSelfHosted:
+      "集群 {cluster} 离线。请确认代理服务器正在运行，并连接到正确的管理地址。",
     targetsColumn: "目标",
     authAndAccessColumn: "身份验证与访问控制",
     searchServicesPlaceholder: "按 URL、域名或目标搜索...",
     createServicesTitle: "创建服务",
-    createServicesDescription: "通过 NetBird 的反向代理安全地暴露内部服务，自动配置 TLS，并可选用身份验证保护您的服务。",
+    createServicesDescription:
+      "通过 NetBird 的反向代理安全地暴露内部服务，自动配置 TLS，并可选用身份验证保护您的服务。",
     clusterTooltipPrefix: "集群：",
-    serviceSetupErrorHelp: "设置此服务时出现问题。详情请参阅我们的<link>排查文档</link>。",
-    tunnelNotCreatedHelp: "与目标节点之间的隧道建立失败。详情请参阅我们的<link>排查文档</link>。",
+    serviceSetupErrorHelp:
+      "设置此服务时出现问题。详情请参阅我们的<link>排查文档</link>。",
+    tunnelNotCreatedHelp:
+      "与目标节点之间的隧道建立失败。详情请参阅我们的<link>排查文档</link>。",
     tunnelNotCreated: "隧道未创建",
     issuingCertificate: "正在签发证书...",
     settingUpService: "正在设置服务...",
     allowedCountries: "{count, plural, one {允许的国家} other {允许的国家}}",
     blockedCountries: "{count, plural, one {拦截的国家} other {拦截的国家}}",
     allowedIps: "{count, plural, one {允许的 IP} other {允许的 IP}}",
-    allowedCidrs: "{count, plural, one {允许的 CIDR 段} other {允许的 CIDR 段}}",
+    allowedCidrs:
+      "{count, plural, one {允许的 CIDR 段} other {允许的 CIDR 段}}",
     blockedIps: "{count, plural, one {拦截的 IP} other {拦截的 IP}}",
-    blockedCidrs: "{count, plural, one {拦截的 CIDR 段} other {拦截的 CIDR 段}}",
+    blockedCidrs:
+      "{count, plural, one {拦截的 CIDR 段} other {拦截的 CIDR 段}}",
     actionEnable: "启用",
     actionDisable: "禁用",
     l4SingleTargetNotice: "L4 服务 (TCP / UDP / TLS) 仅支持单个目标。",
-    l4AuthNotSupported: "TCP/UDP 和 TLS 直通服务在网络层工作，因此不支持身份验证方式。",
+    l4AuthNotSupported:
+      "TCP/UDP 和 TLS 直通服务在网络层工作，因此不支持身份验证方式。",
     noGroups: "无组",
     regionFra1: "德国 法兰克福 (fra1)",
     regionAms3: "荷兰 阿姆斯特丹 (ams3)",
@@ -1834,7 +1896,8 @@ export default {
     urlColumn: "URL",
     searchFlatTargetsPlaceholder: "按 URL、目标地址或目标搜索...",
     networkNoServices: "此网络暂无服务",
-    networkNoServicesDescription: "创建资源，并通过 NetBird 的反向代理安全地暴露服务。",
+    networkNoServicesDescription:
+      "创建资源，并通过 NetBird 的反向代理安全地暴露服务。",
     selectResourceLabel: "选择资源",
     selectTargetPrefix: "选择",
     targetSeparatorOr: "或",
@@ -1845,7 +1908,8 @@ export default {
     peerTooltipPart2: "如果还没有节点，您可以<install>安装 NetBird</install>。",
     resourceTooltipPart1:
       "一个<name>资源</name>是指本身不运行 NetBird 的目标（IP、子网或域名）。资源属于某个网络，通过路由节点转发流量到达。",
-    resourceTooltipPart2: "如果还没有资源，请前往<networks>网络</networks>创建。",
+    resourceTooltipPart2:
+      "如果还没有资源，请前往<networks>网络</networks>创建。",
     proxyClusterTooltip:
       "一个<name>代理集群</name>会将入站流量转发到代理可在无 WireGuard 的情况下到达的上游。适用于外部 API 以及与代理同址部署的服务。",
     selectResourceHelp: "选择要暴露的网络资源。",
@@ -1858,24 +1922,30 @@ export default {
     locationOptionalHelp: "可选：指定请求路由到您的服务的路径。",
     duplicateLocationNotice: "该位置已被其他目标使用，请改用其他位置。",
     preserveFullPath: "保留完整路径",
-    preservePathDisabledHelp: "关闭时，对例如 {path}/users 的请求会转发为 /users。",
-    preservePathEnabledHelp: "开启时，对例如 {path}/users 的请求会转发为 {path}/users。",
-    preserveFullPathHelp: "转发时保留完整的原始请求路径。<br />关闭时会去除匹配的前缀路径。",
+    preservePathDisabledHelp:
+      "关闭时，对例如 {path}/users 的请求会转发为 /users。",
+    preservePathEnabledHelp:
+      "开启时，对例如 {path}/users 的请求会转发为 {path}/users。",
+    preserveFullPathHelp:
+      "转发时保留完整的原始请求路径。<br />关闭时会去除匹配的前缀路径。",
     protocolAndHost: "协议与主机 / IP",
     portTooltip:
       "输入您的服务（例如 Web 服务器、应用、API）当前监听的端口。留空时，HTTP 默认为 80，HTTPS 默认为 443。",
     skipTlsVerification: "跳过 TLS 验证",
-    skipTlsVerificationHelp: "连接此目标时跳过证书验证。适用于您的服务已使用自签名证书的情况。",
+    skipTlsVerificationHelp:
+      "连接此目标时跳过证书验证。适用于您的服务已使用自签名证书的情况。",
     requestTimeout: "请求超时",
     optionalSettings: "可选设置",
     portLabel: "端口",
-    requestTimeoutHelp: "等待响应的最长时间，使用时长格式（例如 30s、2m）。<br />留空表示无超时。",
-    udpSessionIdleTimeoutHelp: "UDP 会话在无流量时保持存活的时长（例如 30s、2m）。<br />留空时默认为 30s。",
+    requestTimeoutHelp:
+      "等待响应的最长时间，使用时长格式（例如 30s、2m）。<br />留空表示无超时。",
+    udpSessionIdleTimeoutHelp:
+      "UDP 会话在无流量时保持存活的时长（例如 30s、2m）。<br />留空时默认为 30s。",
     timeoutPlaceholderShort: "例如 30s、2m、5m",
     targetsDocLabel: "目标",
     destinationColumn: "目标",
-    invalidTimeoutDuration: "时长格式无效，请使用例如 \"10s\"、\"30s\"、\"1m\"",
-    invalidSessionTimeoutDuration: "时长格式无效，请使用例如 \"30s\"、\"2m\"、\"5m\"",
+    invalidTimeoutDuration: '时长格式无效，请使用例如 "10s"、"30s"、"1m"',
+    invalidSessionTimeoutDuration: '时长格式无效，请使用例如 "30s"、"2m"、"5m"',
     hostPlaceholder: "例如 127.0.0.1 或 backend.lan",
     ipAddressPlaceholderOnly: "例如 192.168.0.10",
     cidrHostHelp: "输入 {address} 范围内的 IP 地址",
@@ -2024,8 +2094,10 @@ export default {
     // NameserverGroupTable
     searchNameserverPlaceholder: "按名称、域名或名称服务器搜索...",
     noNameserversGroupTitle: "此组尚未在任何名称服务器中使用",
-    noNameserversGroupDesc: "将此组分配为名称服务器中的分发组，即可在此处查看。",
-    noNameserversGetStartedDesc: "看起来您还没有任何名称服务器。添加一个到您的网络即可开始使用。选择预定义的或添加自定义名称服务器。",
+    noNameserversGroupDesc:
+      "将此组分配为名称服务器中的分发组，即可在此处查看。",
+    noNameserversGetStartedDesc:
+      "看起来您还没有任何名称服务器。添加一个到您的网络即可开始使用。选择预定义的或添加自定义名称服务器。",
     // NameserverNameserversCell
     serverCount: "{count} 个服务器",
     // DNSZonesProvider - Zone notifications
@@ -2056,10 +2128,12 @@ export default {
     askForRecordDesc: "添加 A、AAAA 或 CNAME 记录以控制网络的域名解析。",
     askForRecordCancel: "稍后",
     // DNSZoneModal
-    validDomainErrorZone: "请输入有效域名，例如 internal, company.internal 或 intra.example.com",
+    validDomainErrorZone:
+      "请输入有效域名，例如 internal, company.internal 或 intra.example.com",
     // DNSRecordModal
     validIPv4Error: "请输入有效的 IPv4 地址，例如 192.168.1.1",
-    validIPv6Error: "请输入有效的 IPv6 地址，例如 2001:0db8:85a3::8a2e:0370:7334",
+    validIPv6Error:
+      "请输入有效的 IPv6 地址，例如 2001:0db8:85a3::8a2e:0370:7334",
     validCnameError: "请输入有效域名，例如 example.com 或 server.example.com",
     updateRecordDesc: "更新 '{zone}' 区域的记录",
     addRecordDesc: "向 '{zone}' 区域添加新记录",
@@ -2076,7 +2150,8 @@ export default {
     searchZonePlaceholder: "按域名、IP、内容或组搜索...",
     noZonesGroupTitle: "此组尚未在任何区域中使用",
     noZonesGroupDesc: "将此组分配为区域中的分发组，即可在此处查看。",
-    noZonesGetStartedDesc: "看起来您还没有任何区域。添加一个区域来控制网络的域名解析。",
+    noZonesGetStartedDesc:
+      "看起来您还没有任何区域。添加一个区域来控制网络的域名解析。",
     addZone: "添加区域",
     // DNSZonesActionCell
     zoneActionsAria: "区域操作",
@@ -2085,11 +2160,14 @@ export default {
     // DNSRecordsTable
     contentColumn: "内容",
     presetGoogleTitle: "Google DNS",
-    presetGoogleDescription: "由 Google 提供的免费全球 DNS 解析服务，在安全性、性能和合规性方面做了多项改进。",
+    presetGoogleDescription:
+      "由 Google 提供的免费全球 DNS 解析服务，在安全性、性能和合规性方面做了多项改进。",
     presetCloudflareTitle: "Cloudflare DNS",
-    presetCloudflareDescription: "企业级 DNS 服务，响应速度最快、冗余能力出色，并内置 DDoS 防护与 DNSSEC 等高级安全能力。",
+    presetCloudflareDescription:
+      "企业级 DNS 服务，响应速度最快、冗余能力出色，并内置 DDoS 防护与 DNSSEC 等高级安全能力。",
     presetQuad9Title: "Quad9 DNS",
-    presetQuad9Description: "Quad9 DNS 服务由总部位于瑞士的 Quad9 基金会运营，其使命是为所有人提供更安全、更稳健的互联网。",
+    presetQuad9Description:
+      "Quad9 DNS 服务由总部位于瑞士的 Quad9 基金会运营，其使命是为所有人提供更安全、更稳健的互联网。",
   },
   networks: {
     title: "网络",
@@ -2200,13 +2278,11 @@ export default {
     networkDeleted: "网络已成功删除。",
     networkDeleting: "正在删除网络...",
     confirmDeleteResourceTitle: "删除资源「{name}」？",
-    confirmDeleteResourceDesc:
-      "确定要删除此资源吗？此操作无法撤销。",
+    confirmDeleteResourceDesc: "确定要删除此资源吗？此操作无法撤销。",
     resourceDeleted: "资源已成功删除。",
     resourceDeleting: "正在删除资源...",
     confirmRemoveRouterTitle: "移除此路由节点？",
-    confirmRemoveRouterDesc:
-      "确定要移除此路由节点吗？",
+    confirmRemoveRouterDesc: "确定要移除此路由节点吗？",
     removeRouter: "移除 {name}",
     routerRemoved: "路由节点已成功删除。",
     routerRemoving: "正在删除路由节点...",
@@ -2215,14 +2291,11 @@ export default {
       "如果没有路由节点，此网络内的资源将无法被任何节点访问。",
     later: "稍后",
     confirmAddResourceTitle: "为「{name}」添加资源？",
-    confirmAddResourceDesc:
-      "添加资源后，节点即可访问您的网络资源。",
-    multiResourceTitle:
-      "此策略被多个资源使用",
+    confirmAddResourceDesc: "添加资源后，节点即可访问您的网络资源。",
+    multiResourceTitle: "此策略被多个资源使用",
     multiResourceDesc:
       "此策略将一个或多个资源组作为目标。{action}此策略也将影响以下资源：",
-    deletePolicyDesc:
-      "确定要删除此策略吗？此操作无法撤销。",
+    deletePolicyDesc: "确定要删除此策略吗？此操作无法撤销。",
     remainingMore: "+ 其余 {count} 个",
 
     // NetworkRangeCell.tsx
@@ -2236,12 +2309,9 @@ export default {
     accessPolicies: "个访问策略",
 
     // NetworkRoutingPeerCell.tsx + network/page.tsx
-    highAvailabilityInactiveText:
-      "此网络的高可用性当前{status}。",
-    highAvailabilityActiveText:
-      "此网络的高可用性{status}。",
-    highAvailabilityHelpActive:
-      "您可以添加更多路由节点来提高此网络的可用性。",
+    highAvailabilityInactiveText: "此网络的高可用性当前{status}。",
+    highAvailabilityActiveText: "此网络的高可用性{status}。",
+    highAvailabilityHelpActive: "您可以添加更多路由节点来提高此网络的可用性。",
     highAvailabilityHelpInactive:
       "请添加更多路由节点或包含路由节点的组，以启用此网络的高可用性。",
     highAvailability: "高可用性",
@@ -2253,8 +2323,7 @@ export default {
     exposed: "已暴露",
     notExposed: "未暴露",
     noAssignedResources: "此组没有已分配的资源",
-    noAssignedResourcesDesc:
-      "将此组分配给网络中的资源，即可在此处查看。",
+    noAssignedResourcesDesc: "将此组分配给网络中的资源，即可在此处查看。",
     noNetworkResources: "此网络没有资源",
     noNetworkResourcesDesc:
       "向此网络添加资源以控制节点可访问的内容。资源可以是单个 IP、子网或域名。",
@@ -2308,8 +2377,7 @@ export default {
     peer: "节点",
     searchRoutingPeers: "按节点名称或组名称搜索...",
     noRoutingPeers: "此网络没有路由节点",
-    noRoutingPeersDesc:
-      "向此网络添加路由节点以访问此网络内的资源。",
+    noRoutingPeersDesc: "向此网络添加路由节点以访问此网络内的资源。",
 
     // RoutingPeersActionCell.tsx
     routerEdit: "编辑",
@@ -2322,8 +2390,7 @@ export default {
     masquerade: "Masquerade",
     masqueradeHelp:
       "允许访问您的私有网络，无需在本地路由器或其他设备上配置路由。",
-    masqueradeTooltip:
-      "非 Linux 路由节点需要启用 Masquerade。",
+    masqueradeTooltip: "非 Linux 路由节点需要启用 Masquerade。",
     masqueradeEnabled: "Masquerade 已启用",
     masqueradeDisabled: "Masquerade 已禁用",
     updatingMasquerade: "正在更新 Masquerade...",
@@ -2331,12 +2398,10 @@ export default {
       "组 <important>{groupName}</important> 包含至少一个非 Linux 节点。禁用的 Masquerade 对非 Linux 路由节点无效。",
 
     // NetworkRoutesDeprecationInfo.tsx
-    routesDeprecationInfo:
-      "网络路由将被弃用，并由网络功能替代。",
+    routesDeprecationInfo: "网络路由将被弃用，并由网络功能替代。",
 
     // NetworkModal.tsx
-    modalAccessDescription:
-      "通过添加网络来访问局域网和 VPC 中的内部资源。",
+    modalAccessDescription: "通过添加网络来访问局域网和 VPC 中的内部资源。",
     networkCreated: "网络创建成功。",
     networkCreating: "正在创建网络...",
     networkUpdated: "网络更新成功。",
@@ -2344,22 +2409,17 @@ export default {
 
     // NetworkResourceModal.tsx
     resourceCreated: "资源已创建",
-    resourceCreatedDesc:
-      "资源「{name}」已成功创建。",
+    resourceCreatedDesc: "资源「{name}」已成功创建。",
     resourceCreating: "正在创建资源...",
     resourceUpdated: "资源已更新",
-    resourceUpdatedDesc:
-      "资源「{name}」已成功更新。",
+    resourceUpdatedDesc: "资源「{name}」已成功更新。",
     resourceUpdating: "正在更新资源...",
-    nameAlreadyExists:
-      "此名称的资源已存在，请使用其他名称。",
-    noPoliciesConfirmTitle:
-      "未配置访问控制策略",
+    nameAlreadyExists: "此名称的资源已存在，请使用其他名称。",
+    noPoliciesConfirmTitle: "未配置访问控制策略",
     noPoliciesConfirmDesc:
       "如果没有访问控制策略，此资源将无法被任何节点访问。您也可以稍后创建策略。确定要继续吗？",
     resourceAddNewDesc: '向"{networkName}"添加新资源',
-    resourceGroupsLearnMore:
-      "了解关于<link>资源</link>的更多信息",
+    resourceGroupsLearnMore: "了解关于<link>资源</link>的更多信息",
 
     // NetworkResourceAccessControl.tsx
     editPolicy: "编辑策略",
@@ -2383,19 +2443,22 @@ export default {
     routingPeersAssignHelp: "为该网络指派一个或多个节点作为路由节点。",
     routingPeerGroupAssignHelp: "指派一个包含机器的节点组作为路由节点。",
     peerAlreadyRoutingPeer: "该节点已是此网络的路由节点，不能重复指派。",
-    dontHaveRoutingPeerHelp: "你可以用安装密钥在一台或多台机器上安装 NetBird，使其充当路由节点。",
+    dontHaveRoutingPeerHelp:
+      "你可以用安装密钥在一台或多台机器上安装 NetBird，使其充当路由节点。",
     enableRoutingPeer: "启用路由节点",
     enableRoutingPeerHelp: "用此开关启用或禁用该路由节点。",
     resourceGroupsUsedInPolicies:
       "你选择的资源组已用于 <policies>{count, plural, one {# 个访问控制策略} other {# 个访问控制策略}}</policies>。此资源将继承{count, plural, one {该策略} other {这些策略}}的访问权限。",
-    reviewThemInAccessControlTab: "请在 <link>访问控制</link>标签页中检查它们。",
+    reviewThemInAccessControlTab:
+      "请在 <link>访问控制</link>标签页中检查它们。",
     resourceReviewInAccessControlTab: "请在访问控制标签页中检查它们。",
     resourceReviewOnCanvasBeforeDeploy: "部署前请在画布上检查它们。",
     searchResourcesPlaceholder: "按名称或地址搜索资源...",
     resourceAddNewFallback: "添加新资源",
     enterSingle: "输入单个",
     createSetupKeyConfirmTitle: "创建安装密钥？",
-    createSetupKeyConfirmDescription: "继续后，系统将自动创建一个一次性安装密钥，您随后即可安装 NetBird。",
+    createSetupKeyConfirmDescription:
+      "继续后，系统将自动创建一个一次性安装密钥，您随后即可安装 NetBird。",
   },
   postureChecks: {
     title: "姿态检查",
@@ -2489,19 +2552,16 @@ export default {
     newPostureCheck: "新建态势检查",
     postureCheck: "态势检查",
     addPostureChecks: "添加态势检查（{count, number}）",
-    usePostureChecks:
-      "使用态势检查进一步限制网络中的访问。",
+    usePostureChecks: "使用态势检查进一步限制网络中的访问。",
     removePostureCheck: "移除态势检查",
     confirmDeleteTitle: "删除「{name}」？",
-    confirmDeleteDescription:
-      "确定要删除此态势检查吗？此操作无法撤销。",
+    confirmDeleteDescription: "确定要删除此态势检查吗？此操作无法撤销。",
     assignedToPolicyCannotDelete:
       "此态势检查已分配给策略，无法删除。请先从所有策略中移除该态势检查后再删除。",
     postureCheckDeleted: "态势检查已成功删除",
     deletingPostureCheck: "正在删除态势检查...",
     disableThisCheck: "禁用此检查？",
-    disableCheckConfirm:
-      "确定要禁用此检查吗？该检查的所有设置都将丢失。",
+    disableCheckConfirm: "确定要禁用此检查吗？该检查的所有设置都将丢失。",
     on: "开启",
     off: "关闭",
     removeChecks: "移除检查",
@@ -2569,23 +2629,21 @@ export default {
     revoke: "撤销",
     openActionsMenu: "打开操作菜单",
     revokeConfirmTitle: "撤销安装密钥「{name}」？",
-    revokeConfirmDescription:
-      "确定要撤销此安装密钥吗？此操作无法撤销。",
+    revokeConfirmDescription: "确定要撤销此安装密钥吗？此操作无法撤销。",
     revokeSuccessDescription: "安装密钥已成功撤销",
     revokeLoading: "正在撤销安装密钥...",
     deleteConfirmTitle: "删除安装密钥「{name}」？",
-    deleteConfirmDescription:
-      "确定要删除此安装密钥吗？此操作无法撤销。",
+    deleteConfirmDescription: "确定要删除此安装密钥吗？此操作无法撤销。",
     deleteSuccessDescription: "安装密钥已成功删除",
     deleteLoading: "正在删除安装密钥...",
     // SetupKeyGroupsCell
     autoAssignedGroups: "自动分配的组",
-    autoAssignedGroupsDescription:
-      "使用此密钥注册的节点将自动分配这些组",
+    autoAssignedGroupsDescription: "使用此密钥注册的节点将自动分配这些组",
     groupsSavedDescription: "安装密钥的组已成功保存",
     groupsSaving: "正在保存安装密钥的组...",
     creatingYourSetupKey: "正在创建安装密钥...",
-    setupKeyCreatedDescriptionText: "安装密钥创建成功，现在可以使用新密钥注册节点。",
+    setupKeyCreatedDescriptionText:
+      "安装密钥创建成功，现在可以使用新密钥注册节点。",
     setupKeyCreatedSuccess: "安装密钥创建成功！",
     setupKeyCopyWarning: "此密钥将不会再次显示，请务必复制并保存到安全位置。",
     makeReusable: "使此密钥可重复使用",
@@ -2593,8 +2651,10 @@ export default {
     ephemeralPeers: "临时节点",
     ephemeralPeersHelp: "离线超过 10 分钟的节点将被自动移除。",
     allowExtraDnsLabels: "允许额外的 DNS 标签",
-    allowExtraDnsLabelsHelp: "注册节点时允许多级子域名标签（例如 host.dev.example.com）。",
-    allowExtraDnsLabelsTooltip: "允许节点名称中包含多个 DNS 标签（例如 host.europe.netbird.io.）",
+    allowExtraDnsLabelsHelp:
+      "注册节点时允许多级子域名标签（例如 host.dev.example.com）。",
+    allowExtraDnsLabelsTooltip:
+      "允许节点名称中包含多个 DNS 标签（例如 host.europe.netbird.io.）",
     usageOfLimit: "{current} / {limit} 个节点",
   },
   activity: {
@@ -2650,8 +2710,7 @@ export default {
       "组 <Value>{group}</Value> 已添加到安装密钥 <Value>{setupkey}</Value>",
 
     // Dashboard
-    desc_dashboard_login:
-      "<Value>{username}</Value> 登录到仪表板",
+    desc_dashboard_login: "<Value>{username}</Value> 登录到仪表板",
 
     // Policy
     desc_policy_update: "策略 <Value>{name}</Value> 已更新",
@@ -2722,22 +2781,18 @@ export default {
       "组 <Value>{group}</Value> 已从 NetBird IP 为 <Value>{peer_ip}</Value> 的节点中移除",
     desc_peer_group_add:
       "组 <Value>{group}</Value> 已添加到 NetBird IP 为 <Value>{peer_ip}</Value> 的节点",
-    desc_peer_login_expire:
-      "节点 <Value>{name}</Value> 的登录已过期",
+    desc_peer_login_expire: "节点 <Value>{name}</Value> 的登录已过期",
     desc_peer_login_expire_with_reason:
       "节点 <Value>{name}</Value> 的登录已过期，原因是 <Value>{reason}</Value>",
-    desc_peer_ssh_disable:
-      "节点 <Value>{name}</Value> 的 SSH 服务器已禁用",
-    desc_peer_ssh_enable:
-      "节点 <Value>{name}</Value> 的 SSH 服务器已启用",
+    desc_peer_ssh_disable: "节点 <Value>{name}</Value> 的 SSH 服务器已禁用",
+    desc_peer_ssh_enable: "节点 <Value>{name}</Value> 的 SSH 服务器已启用",
     desc_peer_login_expiration_disable:
       "节点 <Value>{name}</Value> 的登录过期已禁用",
     desc_peer_login_expiration_enable:
       "节点 <Value>{name}</Value> 的登录过期已启用",
     desc_peer_rename:
       "NetBird IP 为 <Value>{ip}</Value> 的节点已重命名为 <Value>{name}</Value>",
-    desc_peer_approve:
-      "NetBird IP 为 <Value>{ip}</Value> 的节点已获批准",
+    desc_peer_approve: "NetBird IP 为 <Value>{ip}</Value> 的节点已获批准",
     desc_peer_ip_update:
       "节点 <Value>{name}</Value> 的 IP 地址已从 <Value>{old_ip}</Value> 更新为 <Value>{ip}</Value>",
     desc_peer_user_add:
@@ -2751,12 +2806,9 @@ export default {
 
     // Account
     desc_account_create: "<Value>{initiator}</Value> 创建了账户",
-    desc_account_setting_peer_login_expiration_update:
-      "全局登录过期已更新",
-    desc_account_setting_peer_login_expiration_enable:
-      "全局登录过期已启用",
-    desc_account_setting_peer_login_expiration_disable:
-      "全局登录过期已禁用",
+    desc_account_setting_peer_login_expiration_update: "全局登录过期已更新",
+    desc_account_setting_peer_login_expiration_enable: "全局登录过期已启用",
+    desc_account_setting_peer_login_expiration_disable: "全局登录过期已禁用",
     desc_account_network_range_update:
       "账户网络范围已从 <Value>{old_network_range}</Value> 更新为 <Value>{new_network_range}</Value>",
 
@@ -2772,14 +2824,11 @@ export default {
       "用户 <Value>{username}</Value> 的访问令牌 <Value>{name}</Value> 已被删除",
 
     // Integration
-    desc_integration_create_platform:
-      "<Value>{platform}</Value> 集成已创建",
+    desc_integration_create_platform: "<Value>{platform}</Value> 集成已创建",
     desc_integration_create: "集成已创建",
-    desc_integration_delete_platform:
-      "<Value>{platform}</Value> 集成已被删除",
+    desc_integration_delete_platform: "<Value>{platform}</Value> 集成已被删除",
     desc_integration_delete: "集成已被删除",
-    desc_integration_update_platform:
-      "<Value>{platform}</Value> 集成已更新",
+    desc_integration_update_platform: "<Value>{platform}</Value> 集成已更新",
     desc_integration_update: "集成已更新",
 
     // DNS
@@ -2789,12 +2838,9 @@ export default {
       "组 <Value>{group}</Value> 已从禁用的 DNS 组设置中移除",
 
     // Posture Checks
-    desc_posture_check_updated:
-      "姿态检查 <Value>{name}</Value> 已更新",
-    desc_posture_check_created:
-      "姿态检查 <Value>{name}</Value> 已创建",
-    desc_posture_check_deleted:
-      "姿态检查 <Value>{name}</Value> 已被删除",
+    desc_posture_check_updated: "姿态检查 <Value>{name}</Value> 已更新",
+    desc_posture_check_created: "姿态检查 <Value>{name}</Value> 已创建",
+    desc_posture_check_deleted: "姿态检查 <Value>{name}</Value> 已被删除",
     desc_transferred_owner_role: "所有者角色已转让",
 
     // EDR / Integrated Validator
@@ -2842,12 +2888,9 @@ export default {
       "已从网络 <Value>{network_name}</Value> 中删除路由节点",
     desc_network_router_update:
       "已更新网络 <Value>{network_name}</Value> 的路由节点",
-    desc_network_create:
-      "名为 <Value>{name}</Value> 的网络已创建",
-    desc_network_delete:
-      "名为 <Value>{name}</Value> 的网络已被删除",
-    desc_network_update:
-      "名为 <Value>{name}</Value> 的网络已更新",
+    desc_network_create: "名为 <Value>{name}</Value> 的网络已创建",
+    desc_network_delete: "名为 <Value>{name}</Value> 的网络已被删除",
+    desc_network_update: "名为 <Value>{name}</Value> 的网络已更新",
 
     // Jobs
     desc_peer_job_create:
@@ -2860,12 +2903,9 @@ export default {
       "流量事件限制组 <Value>{group_name}</Value> 已添加",
 
     // Identity Provider
-    desc_identityprovider_create:
-      "身份提供者 <Value>{name}</Value> 已创建",
-    desc_identityprovider_update:
-      "身份提供者 <Value>{name}</Value> 已更新",
-    desc_identityprovider_delete:
-      "身份提供者 <Value>{name}</Value> 已被删除",
+    desc_identityprovider_create: "身份提供者 <Value>{name}</Value> 已创建",
+    desc_identityprovider_update: "身份提供者 <Value>{name}</Value> 已更新",
+    desc_identityprovider_delete: "身份提供者 <Value>{name}</Value> 已被删除",
 
     // Service (proxy cluster)
     desc_service_create:
@@ -2945,7 +2985,8 @@ export default {
     draft: "草稿",
     copiedAsCurl: "已复制为 cURL 请求",
     copyCurl: "复制 cURL",
-    removeChangeDescription: "这会在画布上还原该更改并将其从变更集中移除，不会被部署。",
+    removeChangeDescription:
+      "这会在画布上还原该更改并将其从变更集中移除，不会被部署。",
     modify: "修改",
     connect: "连接",
     createNewNetwork: "创建新网络",
@@ -2958,8 +2999,10 @@ export default {
     approveAndDeploy: "批准并部署",
     addNetwork: "添加网络",
     feedback: "反馈",
-    itsResourcesRemoved: "其资源和路由节点也会一并移除。它会被标记为待删除，并在你检查并部署时删除。",
-    deleteNetworkConfirm: "确定要删除该网络吗？该网络中的所有资源和路由节点都会被移除。此操作不可撤销。",
+    itsResourcesRemoved:
+      "其资源和路由节点也会一并移除。它会被标记为待删除，并在你检查并部署时删除。",
+    deleteNetworkConfirm:
+      "确定要删除该网络吗？该网络中的所有资源和路由节点都会被移除。此操作不可撤销。",
     networkDeleted: "网络删除成功。",
     deletingNetwork: "正在删除网络...",
     resourceNetworkUnknown: "无法确定该资源所属的网络，因此未保存此次编辑。",
@@ -3019,11 +3062,14 @@ export default {
     installOrAssign: "安装或分配",
     deviceLabel: "设备",
     agentPolicyLabel: "Agent 策略",
-    policyDeployConflict: "策略“{name}”同时被标记为更新和删除。请移除其中一个更改后重试。",
+    policyDeployConflict:
+      "策略“{name}”同时被标记为更新和删除。请移除其中一个更改后重试。",
     editResourceTitle: "编辑资源“{name}”？",
     createResourcesTitle: "创建资源",
-    createResourcesDescription: "您还没有任何资源。添加主机、子网或域名等内部服务，让您的节点可以访问它们。",
-    createNetworkDescription: "您还没有任何网络。添加网络即可访问 LAN 和 VPC 中的内部资源。",
+    createResourcesDescription:
+      "您还没有任何资源。添加主机、子网或域名等内部服务，让您的节点可以访问它们。",
+    createNetworkDescription:
+      "您还没有任何网络。添加网络即可访问 LAN 和 VPC 中的内部资源。",
     selectNodeToFocus: "选择一个节点以聚焦",
     focusingOnNode: "正在聚焦“{name}”",
     nodeLabel: "节点",
@@ -3042,7 +3088,8 @@ export default {
     assignNetworkTitle: "分配网络",
     assignNetworkDescription: "为此资源选择网络，或创建一个新网络。",
     routingPeerNotInstalled: "路由节点尚未安装",
-    routingPeerNotInstalledDescription: "此路由节点使用的节点尚未安装。请先安装该节点再编辑这些设置，或移除此更改后重新添加路由节点。",
+    routingPeerNotInstalledDescription:
+      "此路由节点使用的节点尚未安装。请先安装该节点再编辑这些设置，或移除此更改后重新添加路由节点。",
     resolveIssuesBeforeDeploying: "请先解决问题再部署",
     policyTemplateDescription: "控制来源与目标之间的访问",
     providerTemplateDescription: "连接 AI 提供商或网关",
@@ -3117,10 +3164,14 @@ export default {
     changeInstallPeer: "安装节点“{name}”",
     changeInstallPeerUserDeviceDetail: "选择一个现有节点或安装新节点",
     changeInstallPeerDetail: "安装以完成引用该节点的草稿更改",
-    cascadeRemovesFromPolicies: "{count, plural, other {将其从 # 个策略中移除}}",
-    cascadeRemovesFromResources: "{count, plural, other {将其从 # 个资源中移除}}",
-    cascadeDropsRoutingPeerChanges: "{count, plural, other {丢弃 # 个路由节点更改}}",
-    cascadeDetachesResources: "{count, plural, other {将 # 个资源分离至“{network}”}}",
+    cascadeRemovesFromPolicies:
+      "{count, plural, other {将其从 # 个策略中移除}}",
+    cascadeRemovesFromResources:
+      "{count, plural, other {将其从 # 个资源中移除}}",
+    cascadeDropsRoutingPeerChanges:
+      "{count, plural, other {丢弃 # 个路由节点更改}}",
+    cascadeDetachesResources:
+      "{count, plural, other {将 # 个资源分离至“{network}”}}",
     cascadeRemoveNewGroup: "移除新建的组“{name}”？",
     cascadeRemoveNewNetwork: "移除新建的网络“{name}”？",
     cascadeRemoveNewResource: "移除新建的资源“{name}”？",
@@ -3145,22 +3196,28 @@ export default {
     subjectRoutingPeer: "“{network}”中的路由节点",
     subjectAgentPolicy: "Agent 策略“{name}”",
     subjectThisChange: "此更改",
-    issuePolicyLostSide: "策略“{name}”因组被删除而失去了一侧。请为它指定来源和目标，或移除该策略。",
-    issuePolicyOneSided: "策略“{name}”缺少来源或目标。请补全两者，或移除此更改以恢复为实时策略。",
-    issueResourceNoNetwork: "资源“{name}”未分配网络。请在部署前将其分配到某个网络。",
+    issuePolicyLostSide:
+      "策略“{name}”因组被删除而失去了一侧。请为它指定来源和目标，或移除该策略。",
+    issuePolicyOneSided:
+      "策略“{name}”缺少来源或目标。请补全两者，或移除此更改以恢复为实时策略。",
+    issueResourceNoNetwork:
+      "资源“{name}”未分配网络。请在部署前将其分配到某个网络。",
     issueReferencesDeletedGroups:
       "{subject} 引用了已在本草稿中标记为删除的组 {groups}。只要仍有内容引用该组，删除就会被拒绝 — 请将该组从此更改中移除，或放弃该删除。",
-    issueAgentPolicyNeedsSides: "Agent 策略“{name}”至少需要一个来源组和一个提供商。",
+    issueAgentPolicyNeedsSides:
+      "Agent 策略“{name}”至少需要一个来源组和一个提供商。",
     issueReferencesDeletedProviders:
       "Agent 策略“{name}”引用了已在本草稿中标记为删除的提供商 {providers}。请将其从策略中移除，或放弃该删除。",
-    issueProviderMissing: "Agent 策略“{name}”引用的提供商已不在此草稿中。请为它选择其他提供商。",
+    issueProviderMissing:
+      "Agent 策略“{name}”引用的提供商已不在此草稿中。请为它选择其他提供商。",
     issuePeerWaitingToRegister: "正在等待“{name}”在安装后注册。",
     issuePeerInstallOrSelect: "节点“{name}”必须在部署前安装或选择。",
     issuePeerInstall: "节点“{name}”必须在部署前安装。",
     deleteGroupTitle: "删除{group}{names}？",
     deleteGroupTitleGroups: "{count, plural, other {# 个组}}",
     deleteGroupDescription: "它将被标记为删除，并在您审查和部署时删除。",
-    deleteGroupEmptiedPolicies: "{count, plural, other {这还会删除 # 个策略 {policies}，它们将不再授权任何内容。}}",
+    deleteGroupEmptiedPolicies:
+      "{count, plural, other {这还会删除 # 个策略 {policies}，它们将不再授权任何内容。}}",
     deleteGroupEmptiedDraftPolicies:
       "{count, plural, other {# 个新策略 {policies} 将没有来源或目标，在您完成之前不会部署。}}",
     deleteGroupEmptiedAgentPolicies:
@@ -3202,7 +3259,8 @@ export default {
     emailPlaceholder: "例如 hello@company.com",
     add: "添加",
     connectNetBirdWithSlack: "将 NetBird 与 Slack 连接",
-    slackDescription: "通过传入 Webhook 直接在您的 Slack 频道中接收 NetBird 通知事件。",
+    slackDescription:
+      "通过传入 Webhook 直接在您的 Slack 频道中接收 NetBird 通知事件。",
     createSlackApp: "创建 Slack 应用",
     open: "打开",
     slackAppManagement: "Slack 应用管理",
@@ -3248,7 +3306,8 @@ export default {
     disconnecting: "正在断开连接",
     deleting: "正在删除",
     disconnectSlack: "断开 Slack 连接",
-    disconnectSlackConfirm: "您确定要断开 Slack 连接吗？您将不再在 Slack 频道中接收通知。",
+    disconnectSlackConfirm:
+      "您确定要断开 Slack 连接吗？您将不再在 Slack 频道中接收通知。",
     deleteWebhookConnection: "删除 Webhook 连接",
     deleteWebhookConfirm: "您确定要删除此 Webhook 连接吗？此操作无法撤消。",
     notConnected: "未连接",
@@ -3283,7 +3342,8 @@ export default {
     edrSyncTokenExpiredHelp: "当 EDR 同步令牌过期且需要续期时通知",
     channelSlack: "Slack",
     webhookUrlLabel: "Webhook URL",
-    invalidWebhookUrl: "请输入有效的 URL，例如 https://hooks.slack.com/services/...",
+    invalidWebhookUrl:
+      "请输入有效的 URL，例如 https://hooks.slack.com/services/...",
   },
   invoices: {
     title: "发票",
@@ -3292,7 +3352,8 @@ export default {
     type: "类型",
     searchPlaceholder: "按发票编号或日期搜索...",
     noInvoicesTitle: "您没有任何发票",
-    noInvoicesDescription: "发票在每个计费周期结束时创建。一旦可用，您将在此处看到它们。",
+    noInvoicesDescription:
+      "发票在每个计费周期结束时创建。一旦可用，您将在此处看到它们。",
     downloadPDF: "下载为 PDF",
     downloadCSV: "下载为 CSV",
     downloadInvoicePDF: "下载发票 (PDF)",
@@ -3316,10 +3377,12 @@ export default {
     headerName: "名称",
     headerValue: "值",
     headerNamePlaceholder: "例如：Authorization",
-    headerValuePlaceholder: "例如：Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InVURWw0SmJieUU4S00zY3NwcmdUSSJ9",
+    headerValuePlaceholder:
+      "例如：Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InVURWw0SmJieUU4S00zY3NwcmdUSSJ9",
     headerKeyRequired: "提供值时，请求头键是必需的",
     headerNameRequired: "提供值时，请求头名称是必需的",
-    authHeaderConflict: "警告：您已添加 'Authorization' 请求头。这将覆盖上一步中的 {authType} 身份验证。请移除 'Authorization' 请求头。",
+    authHeaderConflict:
+      "警告：您已添加 'Authorization' 请求头。这将覆盖上一步中的 {authType} 身份验证。请移除 'Authorization' 请求头。",
     basicAuth: "基本身份验证",
     bearerToken: "Bearer 令牌",
     noAuthentication: "无身份验证",
@@ -3335,15 +3398,18 @@ export default {
   },
   survey: {
     loveToHear: "我们期待您的反馈",
-    improveHelp: "通过分享您如何发现 NetBird 来帮助我们改进。您的反馈对我们至关重要。",
+    improveHelp:
+      "通过分享您如何发现 NetBird 来帮助我们改进。您的反馈对我们至关重要。",
     howDidYouHear: "您是如何了解到 NetBird 的？",
     selectOption: "请选择一个选项...",
     submitContinue: "提交并继续",
   },
   awsMarketplace: {
     thanksRegistering: "感谢您通过 AWS Marketplace 注册！",
-    activeStripePlan: "您似乎已经有一个活跃的订阅。要使用 AWS 作为账单提供商，请联系我们的支持团队。",
-    flexiblePricing: "通过我们的灵活定价，您只需为 AWS 账户中的活跃用户和活动节点付费。请选择适合您需求的计划。",
+    activeStripePlan:
+      "您似乎已经有一个活跃的订阅。要使用 AWS 作为账单提供商，请联系我们的支持团队。",
+    flexiblePricing:
+      "通过我们的灵活定价，您只需为 AWS 账户中的活跃用户和活动节点付费。请选择适合您需求的计划。",
     changePlanLater: "您随时可以更改计划。",
     getSupport: "获取支持",
     continueDashboard: "继续到仪表板",
@@ -3370,8 +3436,7 @@ export default {
     createDescription: "添加网络路由以访问局域网和 VPC。",
 
     // Create route modal - create policy prompt
-    createPolicyConfirm:
-      "是否要为路由 '{name}' 创建新的访问控制策略？",
+    createPolicyConfirm: "是否要为路由 '{name}' 创建新的访问控制策略？",
     createPolicyDescription:
       "您已为此路由添加了一个或多个访问控制组。这些组允许您通过在访问策略中使用它们来限制对此路由的访问。",
     createPolicyConfirmText: "创建策略",
@@ -3390,26 +3455,20 @@ export default {
     keepRoutesTooltip:
       "负载均衡系统的 DNS 记录经常变化。保留已解析的地址可确保与活跃资源的持续连接不受中断。",
     keepRoutes: "保留路由",
-    keepRoutesHelp:
-      "在 IP 地址更新后保留之前已解析的路由，以维持稳定的连接。",
+    keepRoutesHelp: "在 IP 地址更新后保留之前已解析的路由，以维持稳定的连接。",
 
     // Routing peer section
-    assignSinglePeer:
-      "指定单个节点作为{type}的路由节点",
-    assignPeerGroup:
-      "指定一个节点组作为{type}",
+    assignSinglePeer: "指定单个节点作为{type}的路由节点",
+    assignPeerGroup: "指定一个节点组作为{type}",
     exitNode: "出口节点",
     exitNodes: "出口节点",
     networkRoute: "网络路由",
     routingPeers: "路由节点",
 
     // Distribution groups help
-    routeAllTrafficPeer:
-      "通过此节点为以下组路由所有互联网流量",
-    routeAllTrafficPeers:
-      "通过节点为以下组路由所有互联网流量",
-    advertiseRouteToGroups:
-      "将此路由广播给属于以下组的节点",
+    routeAllTrafficPeer: "通过此节点为以下组路由所有互联网流量",
+    routeAllTrafficPeers: "通过节点为以下组路由所有互联网流量",
+    advertiseRouteToGroups: "将此路由广播给属于以下组的节点",
 
     // Access control groups
     accessControlGroupsOptional: "访问控制组（可选）",
@@ -3419,18 +3478,15 @@ export default {
       "这些组可对网络中的内部服务进行更精细的控制。它们可在访问控制策略中用于限制和控制对此路由的访问。",
 
     // General / Name & Description
-    networkIdentifierHelp:
-      "添加将分配给每个设备的唯一网络标识符。",
+    networkIdentifierHelp: "添加将分配给每个设备的唯一网络标识符。",
     networkIdentifierPlaceholder: "例如：aws-eu-central-1-vpc",
-    descriptionHelp:
-      "写一个简短的描述为此路由添加更多上下文。",
+    descriptionHelp: "写一个简短的描述为此路由添加更多上下文。",
     descriptionPlaceholder:
       "例如：用于访问 AWS VPC 中所有设备（位于法兰克福）的路由。",
 
     // Settings
     enableRoute: "启用路由",
-    enableRouteHelp:
-      "使用此开关启用或禁用路由。",
+    enableRouteHelp: "使用此开关启用或禁用路由。",
     autoApplyRoute: "自动应用路由",
     autoApplyRouteHelp:
       "自动将出口节点应用于您的分发组。这需要 NetBird 客户端 v0.55.0 或更高版本。",
@@ -3456,8 +3512,7 @@ export default {
     routeRemoved: "路由已成功移除",
     deletingRoute: "正在删除路由...",
     deleteDialogTitle: "删除 '{name}'？",
-    deleteDialogDescription:
-      "确定要删除此路由吗？此操作无法撤销。",
+    deleteDialogDescription: "确定要删除此路由吗？此操作无法撤销。",
     deleteDialogConfirm: "删除",
     routeEnabledSuccess: "网络路由已成功启用",
     routeDisabledSuccess: "网络路由已成功禁用",
@@ -3474,10 +3529,8 @@ export default {
     // Add routing peer modal
     addRoutingPeerDescription:
       "添加多个路由节点后，NetBird 可实现此网络的高可用性。",
-    routeSelectorHelp:
-      "您要添加路由的网络名称和 CIDR。",
-    assignSinglePeerRoute:
-      "指定单个节点作为网络路由的路由节点。",
+    routeSelectorHelp: "您要添加路由的网络名称和 CIDR。",
+    assignSinglePeerRoute: "指定单个节点作为网络路由的路由节点。",
     peerAddedToRoute: "节点已成功添加到路由",
 
     // NetworkRoutesTable column headers
@@ -3486,20 +3539,16 @@ export default {
     colHighAvailability: "高可用性",
     filterStatus: "状态",
     searchRoutes: "按网络、范围、名称或组搜索...",
-    groupNoRoutesTitle:
-      "此组尚未在任何网络路由中使用",
-    groupNoRoutesDescription:
-      "创建新路由时分配此组，即可在此处看到它们。",
+    groupNoRoutesTitle: "此组尚未在任何网络路由中使用",
+    groupNoRoutesDescription: "创建新路由时分配此组，即可在此处看到它们。",
     getStartedDescription:
       "看起来您还没有任何路由。添加网络路由以访问局域网和 VPC。",
 
     // High availability cell
     haDisabled: "此路由的高可用性当前已禁用。",
     haEnabled: "此路由的高可用性已启用。",
-    haAddMorePeersTooltip:
-      "添加更多路由节点以启用此网络路由的高可用性。",
-    haIncreasePeersTooltip:
-      "您可以添加更多节点以提高此网络路由的可用性。",
+    haAddMorePeersTooltip: "添加更多路由节点以启用此网络路由的高可用性。",
+    haIncreasePeersTooltip: "您可以添加更多节点以提高此网络路由的可用性。",
     haAddToGroupTooltip:
       "要配置，您必须在此路由的组中添加更多节点。可以在节点菜单中操作。",
     haAddFromPeersTooltip:
@@ -3524,8 +3573,10 @@ export default {
     routeCreatedSuccess: "网络路由已成功创建",
     routeUpdatedSuccess: "网络路由已成功更新",
     updatingRoute: "正在更新路由...",
-    exitNodeIntro: "出口节点是一种网络路由，它会将您的全部互联网流量经由其中一个节点转发。",
-    exitNodeDocsLine: "了解更多关于<link>出口节点</link>的信息，请参阅我们的文档。",
+    exitNodeIntro:
+      "出口节点是一种网络路由，它会将您的全部互联网流量经由其中一个节点转发。",
+    exitNodeDocsLine:
+      "了解更多关于<link>出口节点</link>的信息，请参阅我们的文档。",
     exitNodesLink: "出口节点",
   },
   onboarding: {
@@ -3671,7 +3722,8 @@ export default {
     networkAndResourceCreated: "网络与资源已成功创建",
     creatingYourResource: "正在创建您的资源...",
     installOnAnotherDevice: "使用此链接在另一台设备上安装 NetBird。",
-    continueCreatesSetupKey: "如果继续，将自动创建一次性安装密钥，随后即可安装 NetBird。",
+    continueCreatesSetupKey:
+      "如果继续，将自动创建一次性安装密钥，随后即可安装 NetBird。",
     endPolicies: "策略",
     endUsage: "用量",
     endAccessLogs: "访问日志",
@@ -3701,19 +3753,24 @@ export default {
     proxyAlreadySetUpTitle: "您的代理已设置完成",
     proxyAlreadySetUpDescription: "此账户已有 Agent Network 端点。",
     setUpYourProxy: "设置您的代理",
-    gatewayChoiceDescription: "您的 Agent 通过只有您网络可访问的私有代理与提供商通信。可使用托管代理或您自己的代理。",
+    gatewayChoiceDescription:
+      "您的 Agent 通过只有您网络可访问的私有代理与提供商通信。可使用托管代理或您自己的代理。",
     managedProxy: "托管代理",
     managedProxyDescription: "NetBird 为您的账户运行一个专用的私有代理。",
-    managedProxyUnavailable: "此账户无法使用托管代理，因此 Agent Network 将运行在您自己的代理上。",
+    managedProxyUnavailable:
+      "此账户无法使用托管代理，因此 Agent Network 将运行在您自己的代理上。",
     deployNewProxy: "部署新代理",
     onYourOwnInfrastructure: "在您自己的基础设施上",
     orUseOwnProxyInstead: "或改用您自己的代理",
-    proxyCountConnected: "{count, plural, one {# 个代理} other {# 个代理}}已连接",
-    privateProxyCount: "{count, plural, one {# 个私有代理} other {# 个私有代理}}",
+    proxyCountConnected:
+      "{count, plural, one {# 个代理} other {# 个代理}}已连接",
+    privateProxyCount:
+      "{count, plural, one {# 个私有代理} other {# 个私有代理}}",
     reservingYourEndpoint: "正在预留您的端点",
     deployingYourProxy: "正在部署您的代理",
     connectingToYourNetwork: "正在连接到您的网络",
-    managedSlowHint: "耗时比平时更长。我们会继续检查。您可以留在本页面，或先跳到仪表盘稍后再回来。",
+    managedSlowHint:
+      "耗时比平时更长。我们会继续检查。您可以留在本页面，或先跳到仪表盘稍后再回来。",
     proxyRolloutFailure: "代理部署报告了失败。",
     deployOwnProxyInstead: "改为部署我自己的代理",
     settingUpManagedProxyTitle: "正在设置您的托管代理...",
@@ -3726,10 +3783,12 @@ export default {
     finishingUpTitle: "正在完成...",
     finishingUp: "正在完成",
     checkingProxyStatusTitle: "正在检查代理状态...",
-    checkingProxyStatusDescription: "代理报告了本页面尚未识别的状态。我们会继续检查。",
+    checkingProxyStatusDescription:
+      "代理报告了本页面尚未识别的状态。我们会继续检查。",
     checkingProxyStatus: "正在检查代理状态",
     managedProxiesUnavailable: "托管代理暂时不可用。请稍后重试。",
-    managedProxyForbidden: "设置托管代理需要 Agent Network 创建权限。请联系账户所有者授予该权限。",
+    managedProxyForbidden:
+      "设置托管代理需要 Agent Network 创建权限。请联系账户所有者授予该权限。",
     yourProxyIsConnected: "您的代理已连接",
     connectingYourProxy: "正在连接您的代理",
     waitingForProxyToConnect: "正在等待您的代理连接到 NetBird...",
@@ -3750,26 +3809,34 @@ export default {
     endpointNotServedByProxy: "，此代理不会为其提供服务。",
     reservingEndpointFailedPeriod: "预留您的端点失败。",
     endpointReserved: "端点已预留",
-    newProxyDescription: "您的代理连接到 NetBird 后，Agent Network 将通过 {domain} 提供服务。",
-    privateClusterDescription: "Agent Network 将通过您的私有代理 {address} 提供服务。",
+    newProxyDescription:
+      "您的代理连接到 NetBird 后，Agent Network 将通过 {domain} 提供服务。",
+    privateClusterDescription:
+      "Agent Network 将通过您的私有代理 {address} 提供服务。",
     retry: "重试",
     policyNameSuffix: "{name} 策略",
     networkLabel: "网络",
     createSetupKeyQuestion: "创建安装密钥？",
     timeToBringInSecondDevice: "该添加第二台设备了",
-    eachDeviceGetsOwnIp: "您的 NetBird 网络中的每台设备（即节点）都会获得自己的私有 IP 和名称，以便在网络中安全通信。",
-    shareLinkToCompleteSetup: "要完成设置，只需分享此链接或发送给自己，即可轻松配置下一台设备。",
-    useHeadlessSetupHint: "使用无界面安装方式，无需浏览器或用户交互即可注册节点。",
+    eachDeviceGetsOwnIp:
+      "您的 NetBird 网络中的每台设备（即节点）都会获得自己的私有 IP 和名称，以便在网络中安全通信。",
+    shareLinkToCompleteSetup:
+      "要完成设置，只需分享此链接或发送给自己，即可轻松配置下一台设备。",
+    useHeadlessSetupHint:
+      "使用无界面安装方式，无需浏览器或用户交互即可注册节点。",
     installWithSetupKey: "使用安装密钥安装",
     testConnectionTitle: "来测试一下这条连接",
-    testConnectionIntro: "设备连接成功！现在我们来轻松测试一下它们能否互相通信。",
+    testConnectionIntro:
+      "设备连接成功！现在我们来轻松测试一下它们能否互相通信。",
     pingHint:
       "在 <span>{first}</span> 上运行此命令来 ping <span>{second}</span>。如果连接正常，您应该会收到响应。",
-    everythingWorkingHint: "一切正常？很好！您可以继续入门引导了。如果出现问题，请查看我们的",
+    everythingWorkingHint:
+      "一切正常？很好！您可以继续入门引导了。如果出现问题，请查看我们的",
     troubleshootingGuide: "故障排查指南",
     itWorksContinue: "可以了！- 继续",
     resourcesIntro: "资源是您网络中的子网、服务或机器。请选择您要连接的类型。",
-    domainTypeHint: "类似 service.internal 的域名，或类似 *.services.internal 的通配符域名",
+    domainTypeHint:
+      "类似 service.internal 的域名，或类似 *.services.internal 的通配符域名",
     resourceIpDescription: "输入资源的单个 IPv4 或 IPv6 地址",
     resourceSubnetDescription: "输入您网络的 CIDR 范围",
     resourceDomainDescription: "输入资源的域名",
@@ -3780,7 +3847,8 @@ export default {
     createResource: "创建资源",
     domain: "域名",
     addRoutingPeerTitle: "添加路由节点，让流量流动起来",
-    routingPeerIntro: "可以把路由节点看作通往您内部网络的连接器。它运行 NetBird，让您的远程设备访问内部资源，同时执行访问控制策略。",
+    routingPeerIntro:
+      "可以把路由节点看作通往您内部网络的连接器。它运行 NetBird，让您的远程设备访问内部资源，同时执行访问控制策略。",
     generateSetupKeyHint: "生成一个安装密钥，并在该机器上安装 NetBird。",
     setupKeyLabel: "安装密钥",
     generateSetupKey: "生成安装密钥",
@@ -3789,14 +3857,17 @@ export default {
       "Agent Network 端点是私有的，只能通过 NetBird 叠加网络访问。安装客户端并登录，即可通过无密钥的加密访问加入网络。",
     deviceConnectedToNetwork: "您的设备已连接到网络。",
     lastRequestDenied: "您上一次请求{forModel}被拒绝：{reason}。",
-    lastRequestStatus: "您上一次请求{forModel}已到达提供商，返回状态 {status}。",
+    lastRequestStatus:
+      "您上一次请求{forModel}已到达提供商，返回状态 {status}。",
     noReasonGiven: "未给出原因",
     learnMoreInThe: "在以下位置了解更多：",
     accessLogs: "访问日志",
     orThe: "或",
     docs: "文档",
-    addUserDeviceIntro: "您的第一个资源和路由节点已就绪。现在拿起您的设备，安装 NetBird，让我们连接起来。",
-    testResourceIntro: "客户端设备连接成功！现在我们来轻松测试一下它能否访问您的资源。",
+    addUserDeviceIntro:
+      "您的第一个资源和路由节点已就绪。现在拿起您的设备，安装 NetBird，让我们连接起来。",
+    testResourceIntro:
+      "客户端设备连接成功！现在我们来轻松测试一下它能否访问您的资源。",
     pingResourceHint: "打开命令行，在 {device} 上运行此命令来 ping 您的资源。",
     yourDevice: "您的设备",
     anySubdomainOf: "（{address} 的任意子域名）",
@@ -3815,13 +3886,18 @@ export default {
     alreadyKnowHowNetBirdWorks: "已经了解 NetBird 的工作方式？",
     alreadyKnowHowAgentNetworkWorks: "已经了解 Agent Network 的工作方式？",
     setTheRules: "设定规则，由您掌控",
-    explainPolicyIntro: "借助访问控制策略，NetBird 让管理员可以轻松实施最小权限访问。引导过程中，我们已为您的资源创建了一条策略。",
-    explainDefaultPolicyIntro: "在 NetBird 中，由您决定谁可以访问什么。我们已为您的设备设置了一条访问策略。",
-    flipSwitchResourceHint: "切换这个开关，然后再次 ping 您的资源，看看连接会受到什么影响。",
-    flipSwitchDeviceHint: "切换这个开关，然后再次 ping 您的另一台设备，看看连接会受到什么影响。",
+    explainPolicyIntro:
+      "借助访问控制策略，NetBird 让管理员可以轻松实施最小权限访问。引导过程中，我们已为您的资源创建了一条策略。",
+    explainDefaultPolicyIntro:
+      "在 NetBird 中，由您决定谁可以访问什么。我们已为您的设备设置了一条访问策略。",
+    flipSwitchResourceHint:
+      "切换这个开关，然后再次 ping 您的资源，看看连接会受到什么影响。",
+    flipSwitchDeviceHint:
+      "切换这个开关，然后再次 ping 您的另一台设备，看看连接会受到什么影响。",
     agentConfigureIntro:
       "将您的智能体指向 NetBird 基础 URL。无需客户端 API 密钥，NetBird 会授权每个请求，并在服务端注入上游密钥。",
-    agentConfigureNoProvider: "连接提供商以生成您的端点，随后您的智能体配置会显示在这里。",
+    agentConfigureNoProvider:
+      "连接提供商以生成您的端点，随后您的智能体配置会显示在这里。",
     agentPolicyIntro:
       "默认情况下，Agent Network 会拒绝每个请求。策略将来源组（您的用户或智能体）连接到提供商，并可选用 Token 与预算限额以及护栏。",
     policyCreated: "策略已创建。",
@@ -3842,15 +3918,12 @@ export default {
     timeToAddFirstDevice: "是时候添加您的第一台设备了。",
     installNetBirdWithSetupKey: "使用安装密钥安装 NetBird",
     installNetBird: "安装 NetBird",
-    getStartedWithSetupKey:
-      "首先，安装并使用安装密钥作为参数运行 NetBird。",
-    getStartedWithEmail:
-      "首先，安装 NetBird 并使用您的电子邮件账户登录。",
+    getStartedWithSetupKey: "首先，安装并使用安装密钥作为参数运行 NetBird。",
+    getStartedWithEmail: "首先，安装 NetBird 并使用您的电子邮件账户登录。",
     footerDescription:
       "之后您应该已连接。向您的网络添加更多设备或在管理面板中管理现有设备。如有其他问题，请查看我们的",
     installationGuide: "安装指南",
-    setupKeyOnceMessage:
-      "此安装密钥只能在接下来的 24 小时内使用一次。",
+    setupKeyOnceMessage: "此安装密钥只能在接下来的 24 小时内使用一次。",
     setupKeyExpiredMessage: "过期后，同一密钥将无法再次使用。",
     setupKeyCreated: "安装密钥已创建",
     setupKeyCreatedDescription: "已为此安装生成一次性安装密钥。",
@@ -3869,9 +3942,9 @@ export default {
     installOnMacos: "在 macOS 上安装",
     downloadMacInstaller: "下载并运行 macOS 安装程序",
     managementUrlInstruction:
-      "点击系统托盘中 NetBird 图标的\"设置\"然后\"高级设置\"，并输入以下\"管理 URL\"",
+      '点击系统托盘中 NetBird 图标的"设置"然后"高级设置"，并输入以下"管理 URL"',
     openTerminalAndRun: "打开终端并运行 NetBird",
-    clickConnectTray: "点击系统托盘中 NetBird 图标的\"连接\"",
+    clickConnectTray: '点击系统托盘中 NetBird 图标的"连接"',
     signUpWithEmail: "使用您的电子邮件地址注册",
     installWithTerminal: "通过终端手动安装",
     installWithHomebrew: "通过 HomeBrew 手动安装",
@@ -3891,8 +3964,8 @@ export default {
     installOnAndroid: "在 Android 上安装",
     downloadFromGooglePlay: "从 Google Play 商店下载并安装应用：",
     googlePlayAlt: "从 Google Play 下载 NetBird",
-    changeServer: "点击\"更改服务器\"并输入以下\"服务器\"",
-    clickConnectButton: "点击屏幕中央的\"连接\"按钮",
+    changeServer: '点击"更改服务器"并输入以下"服务器"',
+    clickConnectButton: '点击屏幕中央的"连接"按钮',
     installOnIos: "在 iOS 上安装",
     downloadFromAppStore: "从 App Store 下载并安装应用：",
     appStoreAlt: "从 App Store 下载 NetBird",
@@ -3908,7 +3981,8 @@ export default {
     selectDistribution: "选择发行版",
     firstLaunchHintBefore: "首次启动时，NetBird 会询问要连接到何处。请选择",
     firstLaunchHintMiddle: "并填写以下",
-    alreadyPastScreen: "已经跳过该界面？点击 {trayName} 中的 NetBird 图标，打开",
+    alreadyPastScreen:
+      "已经跳过该界面？点击 {trayName} 中的 NetBird 图标，打开",
     andSet: "并将",
     to: "设为",
     under: "，位于",
@@ -3920,7 +3994,8 @@ export default {
     customers_2: "Customers",
     integrations_3: "Integrations -",
     processing_your_invitation_4: "Processing your invitation...",
-    successfully_joined_as_an_managed_service_provider_5: "Successfully joined as an Managed Service Provider",
+    successfully_joined_as_an_managed_service_provider_5:
+      "Successfully joined as an Managed Service Provider",
     plans_6: "Plans -",
     tenants_7: "Tenants -",
     tenants_8: "Tenants",
@@ -3971,8 +4046,10 @@ export default {
     customer_id__optional_4: "Customer ID (optional)",
     domain_5: "Domain",
     update_6: "Update",
-    select_the_plan_that_best_fits_your_customer_s_nee_7: "Select the plan that best fits your customer's needs.",
-    are_you_sure_you_want_to_grant_access__this_action_8: "Are you sure you want to grant access? This action cannot be undone.",
+    select_the_plan_that_best_fits_your_customer_s_nee_7:
+      "Select the plan that best fits your customer's needs.",
+    are_you_sure_you_want_to_grant_access__this_action_8:
+      "Are you sure you want to grant access? This action cannot be undone.",
     grant_access_to_distributor_9: "Grant access to distributor?",
     request_account_access_10: "Request Account Access",
     successfully_unlinked_11: "Successfully unlinked  ()",
@@ -3981,7 +4058,8 @@ export default {
     unlinking_14: "Unlinking ...",
     subscribing_to_15: "Subscribing to ...",
     subscription_plan_16: "Subscription Plan",
-    successfully_subscribed_to_the__plan_17: "Successfully subscribed to the  plan.",
+    successfully_subscribed_to_the__plan_17:
+      "Successfully subscribed to the  plan.",
     customer_18: "Customer",
     customer_id_19: "Customer ID",
     customer_id_copied_to_clipboard_20: "Customer ID copied to clipboard",
@@ -3992,7 +4070,8 @@ export default {
     reset_multi_factor_authentication_25: "Reset Multi-factor Authentication?",
     txt_record_26: "TXT record",
     add__account_27: "Add  account",
-    enter_the_primary_domain_of_the_tenant_28: "Enter the primary domain of the tenant.",
+    enter_the_primary_domain_of_the_tenant_28:
+      "Enter the primary domain of the tenant.",
     name_29: "Name",
     primary_domain_of_the_tenant_30: "Primary domain of the tenant.",
     update__account_31: "Update  account",
@@ -4034,7 +4113,8 @@ export default {
     time_67: "Time",
     traffic_68: "Traffic",
     access_control_policy_xyz_passed_69: "Access Control Policy XYZ passed",
-    peer_2_accepted_the_connection_request_70: "Peer 2 accepted the connection request",
+    peer_2_accepted_the_connection_request_70:
+      "Peer 2 accepted the connection request",
     posture_check_xyz_passed_71: "Posture Check XYZ passed",
     unknown_72: "Unknown",
     bearer_73: "Bearer",
@@ -4052,38 +4132,48 @@ export default {
     next_locale_11: "NEXT_LOCALE",
     // contexts
     subscription__to_1: "Subscription  to  ()",
-    successfully_subscribed_to_the__plan_2: "Successfully subscribed to the  plan",
+    successfully_subscribed_to_the__plan_2:
+      "Successfully subscribed to the  plan",
     request_failed_with_status_code_3: "Request failed with status code",
     add_user_to_group_4: "Add User to Group",
     add_users_to_group_5: "Add Users to Group",
     delete_6: "Delete ''?",
     peers_were_successfully_added_to_7: "Peers were successfully added to .",
     rename_group_8: "Rename Group",
-    user____was_successfully_added_to_group_9: "User '' was successfully added to group ''.",
-    users_were_successfully_added_to_group_10: "Users were successfully added to group ''.",
+    user____was_successfully_added_to_group_9:
+      "User '' was successfully added to group ''.",
+    users_were_successfully_added_to_group_10:
+      "Users were successfully added to group ''.",
     delete_target_11: "Delete target?",
     reverse_proxy_12: "Reverse proxy",
     target_13: "Target",
     // hooks
     error_reading_localstorage_key_1: "Error reading localStorage key “”:",
     error_setting_localstorage_key_2: "Error setting localStorage key “”:",
-    tried_setting_localstorage_key____even_though_envi_3: "Tried setting localStorage key “” even though environment is not a client",
+    tried_setting_localstorage_key____even_though_envi_3:
+      "Tried setting localStorage key “” even though environment is not a client",
     invalid_time_unit_4: "Invalid time unit:",
     // modules
     delete_1: "Delete ''?",
     trial_ends_in__days_2: "Trial ends in  days",
     select_currency_3: "Select currency...",
-    upgrade_your__plan_to_access_this_feature_4: "Upgrade your  plan to access this feature.",
+    upgrade_your__plan_to_access_this_feature_4:
+      "Upgrade your  plan to access this feature.",
     free_trial_5: "Free Trial",
     what_s_next_6: "What's next?",
-    smart_firewall_translates_natural_language_prompts_7: "Smart Firewall translates natural language prompts into network\n            policies. You can describe your access needs in plain language, and\n            AI will handle the rest. If you're interested in early access,\n            please fill out the form below.",
+    smart_firewall_translates_natural_language_prompts_7:
+      "Smart Firewall translates natural language prompts into network\n            policies. You can describe your access needs in plain language, and\n            AI will handle the rest. If you're interested in early access,\n            please fill out the form below.",
     thank_you_for_signing_up_8: "Thank you for signing up!",
-    hello___i_m_here_to_help_you_configure_your_access_9: "Hello , I'm here to help you configure your access control rules securely and efficiently. How can I assist you today?",
-    we_will_notify_you_by_email_as_soon_as_it_s_availa_10: "We will notify you by email as soon as it's available for your account.",
+    hello___i_m_here_to_help_you_configure_your_access_9:
+      "Hello , I'm here to help you configure your access control rules securely and efficiently. How can I assist you today?",
+    we_will_notify_you_by_email_as_soon_as_it_s_availa_10:
+      "We will notify you by email as soon as it's available for your account.",
     policy__was_successfully_created_11: "Policy  was successfully created.",
     posture_check_failed_to_create_12: "Posture Check failed to create.",
-    it_s_configured_to_allow_connections_13: "It's configured to allow connections",
-    it_s_configured_to_allow_connections_through_14: "It's configured to allow connections through",
+    it_s_configured_to_allow_connections_13:
+      "It's configured to allow connections",
+    it_s_configured_to_allow_connections_through_14:
+      "It's configured to allow connections through",
     address_15: "Address",
     name_16: "Name",
     role_17: "Role",
@@ -4096,11 +4186,14 @@ export default {
     enter_a_strong_password_24: "Enter a strong password",
     password_25: "Password",
     your_name_26: "Your name",
-    crowdstrike_is_a_cloud_native_platform_for_protect_27: "CrowdStrike is a cloud-native platform for protecting endpoints, cloud workloads, identities and data.",
+    crowdstrike_is_a_cloud_native_platform_for_protect_27:
+      "CrowdStrike is a cloud-native platform for protecting endpoints, cloud workloads, identities and data.",
     crowdstrike_was_successfully_28: "CrowdStrike was successfully",
     disable_crowdstrike_29: "Disable CrowdStrike?",
-    crowdstrike_integration_was_successfully_deleted_30: "CrowdStrike Integration was successfully deleted",
-    crowdstrike_integration_was_successfully_updated_31: "CrowdStrike Integration was successfully updated",
+    crowdstrike_integration_was_successfully_deleted_30:
+      "CrowdStrike Integration was successfully deleted",
+    crowdstrike_integration_was_successfully_updated_31:
+      "CrowdStrike Integration was successfully updated",
     delete_integration_32: "Delete integration?",
     client_id_33: "Client ID",
     create_34: "Create",
@@ -4109,14 +4202,18 @@ export default {
     secret_37: "Secret",
     zero_trust_assessment__read_38: "Zero Trust Assessment (Read)",
     score_threshold_39: "Score Threshold",
-    are_you_sure_you_want_to_disable_the_fleetdm_integ_40: "Are you sure you want to disable the FleetDM integration?",
+    are_you_sure_you_want_to_disable_the_fleetdm_integ_40:
+      "Are you sure you want to disable the FleetDM integration?",
     disable_fleetdm_41: "Disable FleetDM?",
     fleetdm_was_successfully_42: "FleetDM was successfully",
-    open_source_device_management_platform_for_macos_43: "Open-source device management platform for macOS, Windows, and Linux with osquery-based compliance policies.",
+    open_source_device_management_platform_for_macos_43:
+      "Open-source device management platform for macOS, Windows, and Linux with osquery-based compliance policies.",
     fleetdm_was_successfully_deleted_44: "FleetDM was successfully deleted",
     fleetdm_was_successfully_updated_45: "FleetDM was successfully updated",
-    navigate_to_your_fleetdm_management_console_46: "Navigate to your FleetDM Management Console.",
-    are_you_sure_you_want_to_disable_the_huntress_inte_47: "Are you sure you want to disable the Huntress integration?",
+    navigate_to_your_fleetdm_management_console_46:
+      "Navigate to your FleetDM Management Console.",
+    are_you_sure_you_want_to_disable_the_huntress_inte_47:
+      "Are you sure you want to disable the Huntress integration?",
     disable_huntress_48: "Disable Huntress?",
     huntress_was_successfully_49: "Huntress was successfully",
     huntress_was_successfully_deleted_50: "Huntress was successfully deleted",
@@ -4127,7 +4224,8 @@ export default {
     enter_your_api_credentials_55: "Enter your API Credentials",
     disable_intune_56: "Disable Intune?",
     intune_was_successfully_57: "Intune was successfully",
-    microsoft_intune_is_a_cloud_based_unified_endpoint_58: "Microsoft Intune is a cloud-based unified endpoint management for your organization.",
+    microsoft_intune_is_a_cloud_based_unified_endpoint_58:
+      "Microsoft Intune is a cloud-based unified endpoint management for your organization.",
     intune_was_successfully_deleted_59: "Intune was successfully deleted",
     intune_was_successfully_updated_60: "Intune was successfully updated",
     api_permissions_61: "API permissions",
@@ -4136,25 +4234,32 @@ export default {
     app_registrations_64: "App Registrations",
     application__client__id_65: "Application (client) ID",
     application_permissions_66: "Application permissions",
-    devicemanagementmanageddevices_read_all_67: "DeviceManagementManagedDevices.Read.All",
+    devicemanagementmanageddevices_read_all_67:
+      "DeviceManagementManagedDevices.Read.All",
     directory__tenant__id_68: "Directory (tenant) ID",
     microsoft_graph_69: "Microsoft Graph",
     register_70: "Register",
     select_permissions_71: "Select permissions",
     value_72: "Value",
-    ai_powered_endpoint_protection_platform_for_real_t_73: "AI-powered endpoint protection platform for real-time threat detection and automated response.",
-    are_you_sure_you_want_to_disable_the_sentinelone_i_74: "Are you sure you want to disable the SentinelOne integration?",
+    ai_powered_endpoint_protection_platform_for_real_t_73:
+      "AI-powered endpoint protection platform for real-time threat detection and automated response.",
+    are_you_sure_you_want_to_disable_the_sentinelone_i_74:
+      "Are you sure you want to disable the SentinelOne integration?",
     disable_sentinelone_75: "Disable SentinelOne?",
     sentinelone_was_successfully_76: "SentinelOne was successfully",
-    sentinelone_was_successfully_deleted_77: "SentinelOne was successfully deleted",
-    sentinelone_was_successfully_updated_78: "SentinelOne was successfully updated",
+    sentinelone_was_successfully_deleted_77:
+      "SentinelOne was successfully deleted",
+    sentinelone_was_successfully_updated_78:
+      "SentinelOne was successfully updated",
     create_service_user_79: "Create Service User",
     create_user_80: "Create User",
-    navigate_to_your_sentinelone_management_console_81: "Navigate to your SentinelOne Management Console.",
+    navigate_to_your_sentinelone_management_console_81:
+      "Navigate to your SentinelOne Management Console.",
     next_82: "Next",
     viewer_83: "Viewer",
     event_streaming_84: "Event Streaming",
-    amazon_data_firehose_was_successfully_disconnected_85: "Amazon Data Firehose was successfully disconnected",
+    amazon_data_firehose_was_successfully_disconnected_85:
+      "Amazon Data Firehose was successfully disconnected",
     disconnect_amazon_data_firehose_86: "Disconnect Amazon Data Firehose?",
     create_firehose_stream_87: "Create Firehose stream",
     create_access_key_88: "Create access key",
@@ -4165,23 +4270,31 @@ export default {
     enter_your_secret_key_93: "Enter your Secret-Key",
     security_credentials_94: "Security Credentials",
     source_95: "Source",
-    you_can_transform_and_convert_the_event_messages_t_96: "You can transform and convert the event messages to fit your needs.",
-    amazon_s3_is_a_scalable_storage_in_the_cloud_97: "Amazon S3 is a scalable storage in the cloud.",
+    you_can_transform_and_convert_the_event_messages_t_96:
+      "You can transform and convert the event messages to fit your needs.",
+    amazon_s3_is_a_scalable_storage_in_the_cloud_97:
+      "Amazon S3 is a scalable storage in the cloud.",
     disconnect_s3_98: "Disconnect S3?",
     create_bucket_99: "Create bucket",
     enter_your_s3_bucket_name_100: "Enter your S3 Bucket name",
-    datadog_is_a_monitoring_service_for_cloud_scale_ap_101: "Datadog is a monitoring service for cloud-scale applications.",
-    datadog_was_successfully_disconnected_102: "Datadog was successfully disconnected",
+    datadog_is_a_monitoring_service_for_cloud_scale_ap_101:
+      "Datadog is a monitoring service for cloud-scale applications.",
+    datadog_was_successfully_disconnected_102:
+      "Datadog was successfully disconnected",
     disconnect_datadog_103: "Disconnect Datadog?",
     create_key_104: "Create Key",
     enter_your_api_key_105: "Enter your API-Key",
-    navigate_to_datadogs_api_keys_page_106: "Navigate to Datadogs API Keys page",
-    when_creating_a_new_datadog_api_key__it_could_take_107: "When creating a new Datadog API key, it could take up to 5 minutes for the key to be available for use.",
+    navigate_to_datadogs_api_keys_page_106:
+      "Navigate to Datadogs API Keys page",
+    when_creating_a_new_datadog_api_key__it_could_take_107:
+      "When creating a new Datadog API key, it could take up to 5 minutes for the key to be available for use.",
     generic_http_integration_108: "Generic HTTP Integration",
-    http_integration_was_successfully_109: "HTTP Integration was successfully .",
+    http_integration_was_successfully_109:
+      "HTTP Integration was successfully .",
     cancel_110: "Cancel",
     delete_generic_http_integration_111: "Delete Generic HTTP Integration?",
-    generic_http_was_successfully_deleted_112: "Generic HTTP was successfully deleted",
+    generic_http_was_successfully_deleted_112:
+      "Generic HTTP was successfully deleted",
     identity_provider_113: "Identity Provider",
     select_your_identity_provider_114: "Select your identity provider...",
     settings___identity_providers_115: "Settings › Identity Providers",
@@ -4189,10 +4302,14 @@ export default {
     all_users_117: "All Users",
     identity_provider_sync_118: "Identity Provider Sync",
     entra_id__api__was_successfully_119: "Entra ID (API) was successfully",
-    entra_id__api__was_successfully_synced_120: "Entra ID (API) was successfully synced",
-    microsoft_entra_id_is_a_cloud_based_identity_and_a_121: "Microsoft Entra ID is a cloud-based identity and access management solution.",
-    entra_id__api__was_successfully_deleted_122: "Entra ID (API) was successfully deleted",
-    entra_id__api__was_successfully_updated_123: "Entra ID (API) was successfully updated",
+    entra_id__api__was_successfully_synced_120:
+      "Entra ID (API) was successfully synced",
+    microsoft_entra_id_is_a_cloud_based_identity_and_a_121:
+      "Microsoft Entra ID is a cloud-based identity and access management solution.",
+    entra_id__api__was_successfully_deleted_122:
+      "Entra ID (API) was successfully deleted",
+    entra_id__api__was_successfully_updated_123:
+      "Entra ID (API) was successfully updated",
     sync_interval_124: "Sync Interval",
     group_read_all_125: "Group.Read.All",
     user_read_all_126: "User.Read.All",
@@ -4205,21 +4322,28 @@ export default {
     enterprise_applications_133: "Enterprise applications",
     finish_setup_134: "Finish Setup",
     get_started_135: "Get started",
-    provision_microsoft_entra_id_groups_136: "Provision Microsoft Entra ID Groups",
-    provision_microsoft_entra_id_users_137: "Provision Microsoft Entra ID Users",
+    provision_microsoft_entra_id_groups_136:
+      "Provision Microsoft Entra ID Groups",
+    provision_microsoft_entra_id_users_137:
+      "Provision Microsoft Entra ID Users",
     provision_user_accounts_138: "Provision User Accounts",
     save_139: "Save",
     source_attribute_140: "Source attribute",
     start_provisioning_141: "Start provisioning",
     test_connection_142: "Test Connection",
     users_and_groups_143: "Users and groups",
-    auth_token_was_successfully_regenerated_144: "Auth token was successfully regenerated",
+    auth_token_was_successfully_regenerated_144:
+      "Auth token was successfully regenerated",
     regenerate_auth_token_145: "Regenerate Auth Token?",
-    a_flexible__innovative_solution_for_people_and_org_146: "A flexible, innovative solution for people and organizations to achieve more.",
+    a_flexible__innovative_solution_for_people_and_org_146:
+      "A flexible, innovative solution for people and organizations to achieve more.",
     google_workspace_was_successfully_147: "Google Workspace was successfully",
-    google_workspace_was_successfully_synced_148: "Google Workspace was successfully synced",
-    google_workspace_was_successfully_deleted_149: "Google Workspace was successfully deleted",
-    google_workspace_was_successfully_updated_150: "Google Workspace was successfully updated",
+    google_workspace_was_successfully_synced_148:
+      "Google Workspace was successfully synced",
+    google_workspace_was_successfully_deleted_149:
+      "Google Workspace was successfully deleted",
+    google_workspace_was_successfully_updated_150:
+      "Google Workspace was successfully updated",
     assign_role_151: "ASSIGN ROLE",
     account_152: "Account",
     add_key_153: "Add key",
@@ -4234,18 +4358,24 @@ export default {
     json_162: "JSON",
     keys_163: "Keys",
     service_account_164: "Service account",
-    jumpcloud_is_a_unified_identity__device__and_acces_165: "Jumpcloud is a unified identity, device, and access management platform.",
+    jumpcloud_is_a_unified_identity__device__and_acces_165:
+      "Jumpcloud is a unified identity, device, and access management platform.",
     jumpcloud_was_successfully_166: "Jumpcloud was successfully",
-    auth_token_for_jumpcloud_was_successfully_regenera_167: "Auth token for Jumpcloud was successfully regenerated",
-    jumpcloud_was_successfully_deleted_168: "Jumpcloud was successfully deleted",
-    jumpcloud_was_successfully_updated_169: "Jumpcloud was successfully updated",
+    auth_token_for_jumpcloud_was_successfully_regenera_167:
+      "Auth token for Jumpcloud was successfully regenerated",
+    jumpcloud_was_successfully_deleted_168:
+      "Jumpcloud was successfully deleted",
+    jumpcloud_was_successfully_updated_169:
+      "Jumpcloud was successfully updated",
     activate_170: "Activate",
     credentials_details_171: "Credentials Details",
     identity_management_172: "Identity Management",
     jumpcloud_was_successfully_set_up_173: "Jumpcloud was successfully set up",
-    okta_is_a_platform_to_provision_and_manage_user_ac_174: "Okta is a platform to provision and manage user accounts in cloud-based applications.",
+    okta_is_a_platform_to_provision_and_manage_user_ac_174:
+      "Okta is a platform to provision and manage user accounts in cloud-based applications.",
     okta_was_successfully_175: "Okta was successfully",
-    auth_token_for_okta_was_successfully_regenerated_176: "Auth token for Okta was successfully regenerated",
+    auth_token_for_okta_was_successfully_regenerated_176:
+      "Auth token for Okta was successfully regenerated",
     okta_was_successfully_deleted_177: "Okta was successfully deleted",
     okta_was_successfully_updated_178: "Okta was successfully updated",
     api_token_179: "API Token",
@@ -4275,12 +4405,14 @@ export default {
     client_secret_203: "Client Secret",
     openid_connect_discovery_204: "OpenID Connect Discovery",
     primary_e_mail_domain_205: "Primary E-Mail Domain",
-    use__as_a_single_sign_on_provider_to_authenticate_206: "Use  as a Single Sign-On provider to authenticate users. Follow the steps below to get started.",
+    use__as_a_single_sign_on_provider_to_authenticate_206:
+      "Use  as a Single Sign-On provider to authenticate users. Follow the steps below to get started.",
     domain_207: "Domain",
     last_check_208: "Last Check",
     delete_integration_209: "Delete Integration?",
     debug_bundle_210: "Debug Bundle",
-    generate_a_debug_bundle_on_this_peer_with_logs_and_211: "Generate a debug bundle on this peer with logs and diagnostics. Useful for troubleshooting without CLI access.",
+    generate_a_debug_bundle_on_this_peer_with_logs_and_211:
+      "Generate a debug bundle on this peer with logs and diagnostics. Useful for troubleshooting without CLI access.",
     completed_212: "Completed",
     completed_at_213: "Completed at",
     created_214: "Created",
@@ -4298,18 +4430,25 @@ export default {
     congratulations_226: "Congratulations, !",
     skipped_onboarding_____step_227: "Skipped Onboarding -  (Step )",
     troubleshooting_228: "Troubleshooting -",
-    allows_access_to_this________issubnet_229: "Allows access to this ${\n				isSubnet ?",
+    allows_access_to_this________issubnet_229:
+      "Allows access to this ${\n				isSubnet ?",
     users_to_230: "Users to",
     set_the_rules__you_re_in_control_231: "Set the rules. You're in control",
-    let_s_put_that_connection_to_the_test_232: "Let's put that connection to the test",
-    nice_work_connecting_your_client_device__now__let_233: "Nice work connecting your client device! Now, let’s have a little fun and test if it can reach your resource.",
-    let_s_get_your_first_device_online_234: "Let's get your first device online",
+    let_s_put_that_connection_to_the_test_232:
+      "Let's put that connection to the test",
+    nice_work_connecting_your_client_device__now__let_233:
+      "Nice work connecting your client device! Now, let’s have a little fun and test if it can reach your resource.",
+    let_s_get_your_first_device_online_234:
+      "Let's get your first device online",
     share_link_235: "Share Link",
-    time_to_bring_in_your_second_device_236: "Time to bring in your second device",
+    time_to_bring_in_your_second_device_236:
+      "Time to bring in your second device",
     allow_ssh_237: "Allow SSH",
     settings_238: "Settings",
-    are_you_sure_you_want_to_delete_these_peers__this_239: "Are you sure you want to delete these peers? This action cannot be undone.",
-    are_you_sure_you_want_to_overwrite_the_existing_gr_240: "Are you sure you want to overwrite the existing groups of your  selected peer(s)? This action cannot be undone.",
+    are_you_sure_you_want_to_delete_these_peers__this_239:
+      "Are you sure you want to delete these peers? This action cannot be undone.",
+    are_you_sure_you_want_to_overwrite_the_existing_gr_240:
+      "Are you sure you want to overwrite the existing groups of your  selected peer(s)? This action cannot be undone.",
     delete_241: "Delete '' ?",
     delete_all_242: "Delete All",
     overwrite_existing_groups_243: "Overwrite existing groups?",
@@ -4323,7 +4462,8 @@ export default {
     certificate_details_251: "Certificate Details",
     connect_to__via_rdp_252: "Connect to  via RDP",
     port_253: "Port",
-    this_peer_is_offline_and_cannot_be_accessed_via_rd_254: "This peer is offline and cannot be accessed via RDP.",
+    this_peer_is_offline_and_cannot_be_accessed_via_rd_254:
+      "This peer is offline and cannot be accessed via RDP.",
     connection_failed____wsa_255: "Connection failed:  (WSA )",
     connection_failed__http_256: "Connection failed: HTTP",
     ironrdp_connection_failed_257: "IronRDP connection failed:",
@@ -4331,16 +4471,19 @@ export default {
     certificate_for__has_changed_259: "Certificate for  has changed!",
     do_you_trust_this_certificate_260: "Do you trust this certificate?",
     issuer_261: "Issuer:",
-    new_certificate_for____requesting_user_acceptance_262: "New certificate for  - requesting user acceptance",
+    new_certificate_for____requesting_user_acceptance_262:
+      "New certificate for  - requesting user acceptance",
     rdp_certificate_verification_263: "RDP Certificate Verification",
     reject_264: "Reject",
     sha_256_265: "SHA-256:",
     serial_266: "Serial:",
     subject_267: "Subject:",
     the_server_268: "The server",
-    rdcleanpath_websocket_handler_not_available_for_pr_269: "RDCleanPath WebSocket handler not available for proxy",
+    rdcleanpath_websocket_handler_not_available_for_pr_269:
+      "RDCleanPath WebSocket handler not available for proxy",
     connect_to__via_ssh_270: "Connect to  via SSH",
-    connecting_via_ssh_is_only_available_when_the_peer_271: "Connecting via SSH is only available when the peer is online.",
+    connecting_via_ssh_is_only_available_when_the_peer_271:
+      "Connecting via SSH is only available when the peer is online.",
     crowdsec_ip_reputation_272: "CrowdSec IP Reputation",
     enforce_273: "Enforce",
     observe_274: "Observe",
@@ -4351,13 +4494,17 @@ export default {
     http_headers_279: "HTTP Headers",
     header_280: "Header",
     header_281: "Header  -",
-    require_specific_http_headers_to_access_this_servi_282: "Require specific HTTP headers to access this service.",
+    require_specific_http_headers_to_access_this_servi_282:
+      "Require specific HTTP headers to access this service.",
     username_283: "Username",
     enter_password_284: "Enter password...",
-    require_a_password_to_access_this_service_285: "Require a password to access this service.",
+    require_a_password_to_access_this_service_285:
+      "Require a password to access this service.",
     pin_code_286: "PIN Code",
-    require_a_numeric_pin_code_to_access_this_service_287: "Require a numeric PIN code to access this service.",
-    require_users_to_authenticate_via_sso_to_access_th_288: "Require users to authenticate via SSO to access this service.",
+    require_a_numeric_pin_code_to_access_this_service_287:
+      "Require a numeric PIN code to access this service.",
+    require_users_to_authenticate_via_sso_to_access_th_288:
+      "Require users to authenticate via SSO to access this service.",
     sso__single_sign_on_289: "SSO (Single Sign-On)",
     account_cluster_290: "Account cluster.",
     shared_cluster_291: "Shared cluster.",
@@ -4384,7 +4531,8 @@ export default {
     enter_an_ip_address_within_312: "Enter an IP address within",
     header__e_g___authorization_313: "Header, e.g., Authorization",
     value__e_g___bearer_eyjhbgci_314: "Value, e.g., Bearer eyJhbGci...",
-    configure_the_target_for_your_reverse_proxy_315: "Configure the target for your reverse proxy.",
+    configure_the_target_for_your_reverse_proxy_315:
+      "Configure the target for your reverse proxy.",
     location__optional_316: "Location (Optional)",
     request_timeout_317: "Request Timeout",
     session_idle_timeout_318: "Session Idle Timeout",
@@ -4398,12 +4546,15 @@ export default {
     resources_326: "Resources ()",
     authentication_327: "Authentication",
     select_interval_328: "Select interval...",
-    client_settings_successfully_updated_329: "Client settings successfully updated.",
+    client_settings_successfully_updated_329:
+      "Client settings successfully updated.",
     lazy_connections_successfully_330: "Lazy Connections successfully .",
     access_control___groups_331: "Access Control › Groups",
     select_provider_type_332: "Select provider type...",
-    dns_wildcard_routing_successfully_333: "DNS Wildcard Routing successfully .",
-    network_settings_successfully_updated_334: "Network settings successfully updated.",
+    dns_wildcard_routing_successfully_333:
+      "DNS Wildcard Routing successfully .",
+    network_settings_successfully_updated_334:
+      "Network settings successfully updated.",
     auto_assigned_groups_335: "Auto-assigned groups",
     unlimited_336: "Unlimited",
   },
@@ -4412,7 +4563,8 @@ export default {
     createDebugJobTitle: "创建调试任务",
     debugJobTriggered: "调试任务已成功触发。",
     creatingJob: "正在创建任务...",
-    debugBundleDescription: "在此节点上生成包含日志与诊断信息的调试包，便于在没有 CLI 访问权限时排查问题。",
+    debugBundleDescription:
+      "在此节点上生成包含日志与诊断信息的调试包，便于在没有 CLI 访问权限时排查问题。",
     logFileCountHelp: "设置调试包中包含的单个日志文件数量上限。",
     enableBundleDuration: "启用收集时长",
     bundleDurationHelp: "启用后，可在生成调试包前指定日志收集的时间范围。",
@@ -4420,12 +4572,14 @@ export default {
     anonymizeLogData: "匿名化日志数据",
     anonymizeLogDataHelp: "在创建调试包前移除敏感信息（IP 地址、域名等）。",
     anonymizationLevel: "匿名化级别",
-    anonymizationLevelHelp: "默认保留内部（私有）IP 段可读；严格模式会一并匿名化私有、CGNAT 与链路本地地址。",
+    anonymizationLevelHelp:
+      "默认保留内部（私有）IP 段可读；严格模式会一并匿名化私有、CGNAT 与链路本地地址。",
     selectLevelPlaceholder: "选择级别...",
     levelDefault: "默认",
     levelStrict: "严格",
     uploadUrlOptional: "上传 URL（可选）",
-    uploadUrlHelp: "节点用于获取上传 URL 的服务地址。留空则使用默认上传服务器，必须为 https URL。",
+    uploadUrlHelp:
+      "节点用于获取上传 URL 的服务地址。留空则使用默认上传服务器，必须为 https URL。",
     createDebugBundle: "创建调试包",
     created: "已创建",
     createdAt: "创建时间",
@@ -4664,7 +4818,8 @@ export default {
     newOwner: "新所有者",
     txtRecord: "TXT 记录",
     permissionGroups: "权限组",
-    tenantDeleteDescription: "删除该租户将永久移除其所有关联数据，包括节点、用户、组等全部内容。请注意此操作不可逆，且无法撤销。",
+    tenantDeleteDescription:
+      "删除该租户将永久移除其所有关联数据，包括节点、用户、组等全部内容。请注意此操作不可逆，且无法撤销。",
     domainVerified: "域名所有权已验证成功。",
     verifyingDomainOwnership: "正在验证域名所有权，请稍候...",
     dnsRecordNotFound: "未找到 DNS 记录，请重试...",
@@ -4678,24 +4833,29 @@ export default {
     youDeniedAccess: "您已拒绝该访问请求。",
     decliningAccess: "正在拒绝访问...",
     tenantsLabel: "租户",
-    tenantsPageDescription: "所有租户及其订阅详情的列表。可在此管理账户、套餐与权限。",
+    tenantsPageDescription:
+      "所有租户及其订阅详情的列表。可在此管理账户、套餐与权限。",
     tenantsDocsSuffix: "请参阅我们的文档。",
     trialExpiredTenant: "14 天试用期已结束！",
     trialExpiredOwn: "您的 14 天试用期已结束！",
-    tenantTrialEndedPrefix: "已到达免费试用期结束时间。要继续使用 NetBird，请为此租户升级套餐。",
+    tenantTrialEndedPrefix:
+      "已到达免费试用期结束时间。要继续使用 NetBird，请为此租户升级套餐。",
     ownTrialEndedBeforeContact: "您的账户已到达免费试用期结束时间。",
     ownTrialEndedContactDistributor: "要继续使用 NetBird，请联系您的分销商。",
     unlinkTenant: "解除租户关联",
     newOwnerHelp: "要解除此租户的关联，您需要指定新的所有者。",
     selectNewOwnerPlaceholder: "选择新的所有者...",
-    unlinkWarning: "解除关联后，此租户现有的订阅将被取消，新所有者需要设置自己的账单信息。",
+    unlinkWarning:
+      "解除关联后，此租户现有的订阅将被取消，新所有者需要设置自己的账单信息。",
     learnMoreAbout: "了解更多关于",
     unlinkingTenants: "解除租户关联",
     addTenant: "添加租户",
     updateTenant: "更新租户",
     continueWith: "继续使用",
-    signInToDomainProvider: "登录您的域名服务商（例如 cloudflare.com 或 godaddy.com）",
-    domainOwnershipTxtHint: "复制下方的 <mark>TXT 记录</mark>，并将其添加到以下域名的 DNS 配置中",
+    signInToDomainProvider:
+      "登录您的域名服务商（例如 cloudflare.com 或 godaddy.com）",
+    domainOwnershipTxtHint:
+      "复制下方的 <mark>TXT 记录</mark>，并将其添加到以下域名的 DNS 配置中",
     domainVerificationCancel: "取消",
     addNewTenant: "添加新租户",
     noTenantsYet: "看起来您还没有任何租户。添加一个新租户即可开始。",
@@ -4724,7 +4884,8 @@ export default {
     invalidDomainError: "请输入有效的域名，例如 netbird.io",
     invitationAlreadyAccepted: "该邀请已被接受",
     joinedAsMsp: "已成功加入为托管服务提供商 (MSP)",
-    mspInviteDescription: "您将获得 NetBird MSP 门户的访问权限，可在一个地方管理多个客户及其网络。",
+    mspInviteDescription:
+      "您将获得 NetBird MSP 门户的访问权限，可在一个地方管理多个客户及其网络。",
     mspInviteTitle: "NetBird 邀请您加入为托管服务提供商 (MSP)",
     mspNotifyTitle: "NetBird 托管服务提供商",
     noCustomersMatchingSearch: "没有与搜索匹配的客户。请尝试其他搜索词。",
@@ -4740,10 +4901,13 @@ export default {
     pricingAndPlans: "定价与套餐",
     processingInvitation: "正在处理您的邀请...",
     requestAccountAccess: "请求账户访问权限",
-    requestDescription: "有托管服务提供商 (MSP) 请求访问权限，以管理您的账户及其所有关联资源。",
+    requestDescription:
+      "有托管服务提供商 (MSP) 请求访问权限，以管理您的账户及其所有关联资源。",
     requestHeading: "<tenant>{name}</tenant> 请求访问您的账户",
-    requestHeadingWithOwner: "来自 {owner} 的 <tenant>{name}</tenant> 请求访问您的账户",
-    reviewRequestNotice: "请仔细查看该请求后再继续。授予访问权限后，他们将可以：",
+    requestHeadingWithOwner:
+      "来自 {owner} 的 <tenant>{name}</tenant> 请求访问您的账户",
+    reviewRequestNotice:
+      "请仔细查看该请求后再继续。授予访问权限后，他们将可以：",
     saveChanges: "保存更改",
     searchTenantsPlaceholder: "按名称、邮箱或组搜索...",
     searchTenantsSwitcherPlaceholder: "按名称或域名搜索...",
@@ -4766,17 +4930,22 @@ export default {
     verifyingOwnershipOf: "正在验证 {domain} 的所有权",
     requestAccess: "申请访问",
     pendingAccessRequest: "待处理的访问申请",
-    accountOwnerMustLogIn: "账户所有者必须登录仪表板才能接受或拒绝您的申请。请在提交申请后通知对方。",
-    accountOwnerMustLogInShort: "账户所有者必须登录仪表板才能接受或拒绝您的申请。",
+    accountOwnerMustLogIn:
+      "账户所有者必须登录仪表板才能接受或拒绝您的申请。请在提交申请后通知对方。",
+    accountOwnerMustLogInShort:
+      "账户所有者必须登录仪表板才能接受或拒绝您的申请。",
     mspPortal: "MSP 门户",
     trialExpired: "试用已过期",
     upgradePlan: "升级套餐",
-    trialExpiredTenantTooltip: "该租户的试用已过期。请升级套餐以继续使用此租户。",
+    trialExpiredTenantTooltip:
+      "该租户的试用已过期。请升级套餐以继续使用此租户。",
     permissionsLabel: "权限（必填）",
     addUserGroupsHelp: "添加用户组以授予其访问此租户的权限。",
     accountExistsTitle: "此 NetBird 账户已存在于我们的系统中",
-    accountExistsDescription: "要管理账户 <b>{domain}</b>，您必须先向账户所有者申请访问权限。",
-    ownTrialEndedContactAdmin: "您的账户已结束免费试用期。要继续使用 NetBird，请联系您的账户管理员。",
+    accountExistsDescription:
+      "要管理账户 <b>{domain}</b>，您必须先向账户所有者申请访问权限。",
+    ownTrialEndedContactAdmin:
+      "您的账户已结束免费试用期。要继续使用 NetBird，请联系您的账户管理员。",
     getSupport: "获取支持",
     switchToTenantAccount: "切换到 {name} 的账户",
   },
@@ -4789,7 +4958,8 @@ export default {
     customerUpdated: "客户已成功更新。",
     updatingCustomer: "正在更新客户...",
     unlink: "取消关联",
-    unlinkDescription: "取消关联后，该客户将从您的分销商账户中移除，其账户本身将继续独立存在。",
+    unlinkDescription:
+      "取消关联后，该客户将从您的分销商账户中移除，其账户本身将继续独立存在。",
     requestSent: "请求已成功发送。",
     sendingRequest: "正在发送请求...",
     grantAccess: "授予访问权限",
@@ -4811,7 +4981,8 @@ export default {
     continueWith: "继续使用",
     continueWithTrial: "继续试用",
     customerIdCopied: "客户 ID 已复制到剪贴板",
-    customerIdHelp: "可选标识符，便于将客户对应到您的<systems>内部系统</systems>。",
+    customerIdHelp:
+      "可选标识符，便于将客户对应到您的<systems>内部系统</systems>。",
     customerIdOptional: "客户 ID（可选）",
     customerUnlinkedSuccess: "已成功取消关联 {name}（{domain}）",
     deny: "拒绝",
@@ -4852,22 +5023,29 @@ export default {
     noSignInDomainsYet: "暂无登录域名",
     domainsTableTitle: "域名",
     primaryDomainCannotBeRemoved: "这是您账户的主域名，无法移除。",
-    domainUsedBySso: "此域名正被某个 SSO Integration 使用。请先在对应位置移除，然后再删除此域名。",
-    domainOwnershipTxtHint: "复制下方的 <mark>TXT 记录</mark>，并将其添加到以下域名的 DNS 配置中",
-    signInToDomainProvider: "登录您的域名服务商（例如 cloudflare.com 或 godaddy.com）",
-    dnsChangesNote: "注意：DNS 变更可能需要一些时间才能生效。如果 NetBird 未能立即找到该记录，请等待一天后重试。",
-    noDnsAccessHint: "如果您无法访问自己的 DNS 配置，也可以通过发送邮件至以下地址来验证域名",
+    domainUsedBySso:
+      "此域名正被某个 SSO Integration 使用。请先在对应位置移除，然后再删除此域名。",
+    domainOwnershipTxtHint:
+      "复制下方的 <mark>TXT 记录</mark>，并将其添加到以下域名的 DNS 配置中",
+    signInToDomainProvider:
+      "登录您的域名服务商（例如 cloudflare.com 或 godaddy.com）",
+    dnsChangesNote:
+      "注意：DNS 变更可能需要一些时间才能生效。如果 NetBird 未能立即找到该记录，请等待一天后重试。",
+    noDnsAccessHint:
+      "如果您无法访问自己的 DNS 配置，也可以通过发送邮件至以下地址来验证域名",
     txtHostCopyText: "TXT 主机",
     txtValueCopyText: "TXT 值",
     hostLabel: "主机",
     valueLabel: "值",
     domainColumn: "域名",
-    noDomainsDescription: "添加域名，然后通过 DNS 记录验证所有权，即可开始将用户匹配到该账户。",
+    noDomainsDescription:
+      "添加域名，然后通过 DNS 记录验证所有权，即可开始将用户匹配到该账户。",
   },
   trafficEvents: {
     updatingTrafficEventsSetting: "正在更新流量事件设置...",
     enableTrafficReportingKernel: "启用流量上报（内核）？",
-    enableTrafficReportingWarning: "注意：启用此设置会使 NetBird 客户端的 CPU 占用高于平时。",
+    enableTrafficReportingWarning:
+      "注意：启用此设置会使 NetBird 客户端的 CPU 占用高于平时。",
     trafficReporting: "流量上报",
     updatingTrafficReportingSetting: "正在更新流量上报设置...",
     limitToSpecificGroups: "限制到特定组",
@@ -4878,7 +5056,8 @@ export default {
     traffic: "流量",
     router: "路由器",
     protocolAndPort: "协议与端口",
-    pageDescription: "流量事件是实验性功能。其功能与行为可能变化，包括数据采集或上报方式的调整。",
+    pageDescription:
+      "流量事件是实验性功能。其功能与行为可能变化，包括数据采集或上报方式的调整。",
     learnMoreAboutPrefix: "了解更多关于",
     inOurDocumentation: "请参阅我们的文档。",
     routed: "路由转发",
@@ -4896,18 +5075,24 @@ export default {
     userEmail: "用户邮箱",
     emailCopied: "邮箱已复制到剪贴板",
     exitNodeLabel: "出口节点",
-    gettingStartedDescription: "流量事件帮助您了解组织内的网络活动。您可以查看哪些机器在互相连接，以及它们之间流动的是什么流量。",
+    gettingStartedDescription:
+      "流量事件帮助您了解组织内的网络活动。您可以查看哪些机器在互相连接，以及它们之间流动的是什么流量。",
     enableTrafficEvents: "启用流量事件",
-    emptyDescription: "我们尚未检测到任何流量事件。这可能是因为您刚刚启用该功能，或者还没有任何网络活动。",
+    emptyDescription:
+      "我们尚未检测到任何流量事件。这可能是因为您刚刚启用该功能，或者还没有任何网络活动。",
     machinePrefixPeer: "节点 ",
     machinePrefixRoute: "路由 ",
     machinePrefixResource: "资源 ",
-    peerTabEmptyDescription: "看起来您还没有任何流量事件。客户端开始连接到您的网络后，流量事件会显示在这里。",
-    peerTabDisabledDescription: "看起来您还没有任何流量事件。要开始接收流量事件，需要在账户设置中启用该功能。",
+    peerTabEmptyDescription:
+      "看起来您还没有任何流量事件。客户端开始连接到您的网络后，流量事件会显示在这里。",
+    peerTabDisabledDescription:
+      "看起来您还没有任何流量事件。要开始接收流量事件，需要在账户设置中启用该功能。",
     searchPlaceholder: "按 IP、端口、节点或资源搜索...",
     combinedFilterLabel: "连接{type}{direction}",
-    enableTrafficEventsHelp: "为所有节点启用流量事件。需要 NetBird 客户端 v0.39 或更高版本。",
-    enableTrafficReportingHelp: "用户态始终启用流量上报，此设置仅适用于内核态。启用后，将统计并上报网络数据包及其大小。",
+    enableTrafficEventsHelp:
+      "为所有节点启用流量事件。需要 NetBird 客户端 v0.39 或更高版本。",
+    enableTrafficReportingHelp:
+      "用户态始终启用流量上报，此设置仅适用于内核态。启用后，将统计并上报网络数据包及其大小。",
     experimentalDescription:
       "流量事件是实验性功能。其功能与行为可能变化，包括数据采集或上报方式的调整。流量事件数据仅保留 48 小时，且最多记录 50,000 条事件。",
     experimentalHeading: "实验性",
@@ -4915,7 +5100,8 @@ export default {
     filterStarted: "已开始",
     filterStopped: "已停止",
     filterSuffix: " 项筛选",
-    limitToGroupsHelp: "选择要记录流量事件的节点组。<br />如果未选择任何组，则对所有节点记录。",
+    limitToGroupsHelp:
+      "选择要记录流量事件的节点组。<br />如果未选择任何组，则对所有节点记录。",
     reportingDisabled: "流量上报已成功禁用。",
     reportingEnabled: "流量上报已成功启用。",
     saveGroups: "保存组",
@@ -4930,7 +5116,8 @@ export default {
     updatingMfaSettings: "正在更新 MFA 设置...",
     mfaReset: "MFA 设置已重置",
     resettingMfa: "正在重置用户的 MFA...",
-    resetMfaDescription: "确定要重置该用户当前的 MFA 方式吗？该用户下次登录时将被要求重新设置 MFA。",
+    resetMfaDescription:
+      "确定要重置该用户当前的 MFA 方式吗？该用户下次登录时将被要求重新设置 MFA。",
     activate: "激活",
     active: "已启用",
     enableMfaDescription: "如果您的 IdP 中未配置 MFA，可在此启用 NetBird MFA",
@@ -4945,8 +5132,10 @@ export default {
     agentNetworkLabel: "Agent Network",
     accessLogsTab: "访问日志",
     agentNetworkEnabled: "已为您的账户启用 Agent Network。",
-    clustersDescriptionDefault: "代理集群将入站流量路由到您的服务。共享集群由平台运行；账户集群（自托管）运行在您自己的基础设施上。",
-    clustersDescriptionFocused: "代理集群将您的智能体流量路由到 AI 提供商，并运行在您自己的基础设施上。添加多个集群即可扩展您的环境。",
+    clustersDescriptionDefault:
+      "代理集群将入站流量路由到您的服务。共享集群由平台运行；账户集群（自托管）运行在您自己的基础设施上。",
+    clustersDescriptionFocused:
+      "代理集群将您的智能体流量路由到 AI 提供商，并运行在您自己的基础设施上。添加多个集群即可扩展您的环境。",
     configurationPage: "配置",
     connectAgentDescription:
       "将您的智能体指向 NetBird 端点作为其基础 URL，客户端无需提供商 API 密钥。<br />NetBird 会通过您的身份提供商验证您的身份，并根据您的访问策略授权每个请求。",
@@ -4954,12 +5143,15 @@ export default {
     enablingAgentNetwork: "正在启用 Agent Network...",
     enablingFocusedView: "正在启用 Agent Network 聚焦视图...",
     focusedViewEnabled: "已为您的账户启用 Agent Network 聚焦视图。",
-    globalLimitsDescription: "适用于整个账户的令牌用量与支出上限，对每条策略生效。可将上限限定到特定组或用户，也可保持为账户级。",
+    globalLimitsDescription:
+      "适用于整个账户的令牌用量与支出上限，对每条策略生效。可将上限限定到特定组或用户，也可保持为账户级。",
     globalLimitsTab: "全局上限",
     logCollectionTab: "日志收集",
-    policiesDescription: "将 IdP 组绑定到提供商：工程团队可用 Claude，财务团队则不可。可强制执行令牌上限、预算与护栏。",
+    policiesDescription:
+      "将 IdP 组绑定到提供商：工程团队可用 Claude，财务团队则不可。可强制执行令牌上限、预算与护栏。",
     providersAndModels: "您的提供商与模型",
-    usageAndLogsDescription: "按请求审计，包含真实调用者身份、成本归属与预算控制。",
+    usageAndLogsDescription:
+      "按请求审计，包含真实调用者身份、成本归属与预算控制。",
     usageTab: "用量",
   },
   instanceSetup: {
@@ -4990,12 +5182,14 @@ export default {
     oneSpecialCharacter: "一个特殊字符 (!@#$%^&*)",
     confirmPassword: "确认密码",
     passwordsDoNotMatch: "两次输入的密码不一致",
-    accountCreatedDescription: "您的账户已创建成功。现在可以使用邮箱和密码登录。",
+    accountCreatedDescription:
+      "您的账户已创建成功。现在可以使用邮箱和密码登录。",
     accountCreatedTitle: "账户已创建！",
     creatingAccount: "正在创建账户...",
     failedToAccept: "接受邀请失败",
     goToLogin: "前往登录",
-    invalidInviteDescription: "该邀请链接无效或已过期。请联系管理员获取新的邀请。",
+    invalidInviteDescription:
+      "该邀请链接无效或已过期。请联系管理员获取新的邀请。",
     invalidInviteTitle: "邀请无效",
     invalidOrExpired: "邀请链接无效或已过期",
     inviteExpiredDescription: "该邀请链接已过期。请联系管理员获取新的邀请。",
@@ -5005,7 +5199,8 @@ export default {
     tooManyAttempts: "尝试次数过多。请稍候再试。",
     tooManyRequestsDescription: "您的请求过于频繁。请稍候再试。",
     tooManyRequestsTitle: "请求过于频繁",
-    welcomeDescription: "您已被 <name>{inviter}</name> 邀请加入网络。请设置密码以完成账户设置。",
+    welcomeDescription:
+      "您已被 <name>{inviter}</name> 邀请加入网络。请设置密码以完成账户设置。",
     welcomeTitle: "欢迎使用 NetBird",
   },
   agentNetwork: {
@@ -5043,7 +5238,8 @@ export default {
     modelsWithoutRatesNotice: "未设置费率的模型按 $0 统计，且不计入 ",
     modelsWithoutRates: "未设置费率的模型按 $0 统计，且不计入",
     customModel: "自定义模型...",
-    reverseProxyClusterRequired: "要启用 Agent Network，需要一个具备私有能力的反向代理集群。请在以下位置连接：",
+    reverseProxyClusterRequired:
+      "要启用 Agent Network，需要一个具备私有能力的反向代理集群。请在以下位置连接：",
     noActiveProxyClusters: "没有可用的活跃代理集群。请至少连接一个代理：",
     providerConnected: "已连接 AI 提供商",
     providerNotUpdated: "提供商未更新",
@@ -5130,13 +5326,15 @@ export default {
     policy: "策略",
     guardrails: "护栏",
     source: "来源",
-    deleteProviderConfirm: "确定要删除该提供商吗？为其提供入口的反向代理服务也会一并移除。此操作不可撤销。",
+    deleteProviderConfirm:
+      "确定要删除该提供商吗？为其提供入口的反向代理服务也会一并移除。此操作不可撤销。",
     connectProvider: "连接提供商",
     agentNetworkProviders: "Agent Network 提供商",
     goToPolicies: "前往策略",
     addTo: "添加到",
     apiBaseUrl: "API 基础 URL",
-    apiBaseUrlDescription: "配置 AI Agent 或 LLM SDK 客户端时，请将此 URL 作为基础 URL（例如 OpenAI 的",
+    apiBaseUrlDescription:
+      "配置 AI Agent 或 LLM SDK 客户端时，请将此 URL 作为基础 URL（例如 OpenAI 的",
     time: "时间",
     user: "用户",
     userOrAgent: "用户 / Agent",
@@ -5186,13 +5384,16 @@ export default {
     discoveryEnterEndpointFirst: "请先输入端点 URL。",
     discoveryEnterEndpointAndKeyFirst: "请先输入端点 URL 与 API 密钥。",
     discoveryNotSupported: "此提供商没有模型列表端点，将改用目录列表。",
-    discoveryModelsLoaded: "已加载 {count} 个模型。使用<strong>{addMore}</strong>按钮搜索并选择模型。",
+    discoveryModelsLoaded:
+      "已加载 {count} 个模型。使用<strong>{addMore}</strong>按钮搜索并选择模型。",
     editProviderTitle: "编辑提供商",
     updateProviderDescription: "更新此提供商的配置。",
-    connectProviderDescription: "将 AI 模型提供商或网关连接到您的 Agent Network。",
+    connectProviderDescription:
+      "将 AI 模型提供商或网关连接到您的 Agent Network。",
     configurationClustersLink: "配置 → 集群",
     beforeAddingProvider: "，然后才能添加提供商。",
-    agentNetworkNotSetUp: "此账户尚未设置 Agent Network。请联系账户管理员先连接代理，然后再添加提供商。",
+    agentNetworkNotSetUp:
+      "此账户尚未设置 Agent Network。请联系账户管理员先连接代理，然后再添加提供商。",
     throughNetBird: "经由 NetBird 转发。",
     searchProvidersPlaceholder: "搜索提供商...",
     selectProviderPlaceholder: "选择提供商...",
@@ -5208,7 +5409,8 @@ export default {
     noFileSelected: "未选择文件",
     virtualApiKey: "虚拟 API 密钥",
     providerApiKey: "提供商 API 密钥",
-    virtualApiKeyHelp: "为 agentgateway 的严格 API 密钥认证配置的原始虚拟密钥。",
+    virtualApiKeyHelp:
+      "为 agentgateway 的严格 API 密钥认证配置的原始虚拟密钥。",
     providerApiKeyHelp: "由提供商签发的 API 密钥。",
     apiKeyInjectionHelp:
       "NetBird 会将其作为<code>{header}</code>注入每个上游请求，因此 Agent 永远看不到该密钥。",
@@ -5221,20 +5423,27 @@ export default {
     liteLlmTagsHelp:
       "组会写入 JSON 正文中的<tags>metadata.tags</tags>，以便 LiteLLM 执行标签预算与速率限制。用户身份通过<header>x-litellm-end-user-id</header>请求头发送。代理会先移除客户端提供的值，因此应用无法伪造身份。所配置的 API 密钥必须是具备<allowTags>metadata.allow_client_tags: true</allowTags>的 LiteLLM 虚拟密钥，否则 LiteLLM 会静默丢弃这些标签。",
     userIdentityHeaderLabel: "用户身份请求头",
-    userIdentityHeaderHelp: "接收调用方用户邮箱（未关联时为节点名称）的报文请求头名称。留空则跳过。",
+    userIdentityHeaderHelp:
+      "接收调用方用户邮箱（未关联时为节点名称）的报文请求头名称。留空则跳过。",
     groupsHeaderLabel: "组请求头",
-    groupsHeaderHelp: "以逗号分隔列表接收调用方 NetBird 组的报文请求头名称。留空则跳过。",
+    groupsHeaderHelp:
+      "以逗号分隔列表接收调用方 NetBird 组的报文请求头名称。留空则跳过。",
     identityHeadersHelp:
       "选择在每个上游请求中携带调用方身份的报文请求头。代理会先移除客户端提供的值，因此应用无法伪造身份。留空某个字段即可关闭该维度的写入。占位符中显示的默认值使用<code>x-bf-dim-*</code>系列（Prometheus / OTEL — 需要在网关的<code>client.prometheus_labels</code>配置中有对应声明）。也可改用<code>x-bf-lh-*</code>，走 Bifrost 始终开启的日志元数据通道 — 该方式无需网关侧配置。",
     userIdentityKeyLabel: "用户身份键",
-    userIdentityKeyHelp: "接收调用方用户邮箱（未关联时为节点名称）的 JSON 键。留空则跳过。",
+    userIdentityKeyHelp:
+      "接收调用方用户邮箱（未关联时为节点名称）的 JSON 键。留空则跳过。",
     groupsKeyLabel: "组键",
-    groupsKeyHelp: "以逗号分隔字符串接收调用方 NetBird 组的 JSON 键。留空则跳过。",
+    groupsKeyHelp:
+      "以逗号分隔字符串接收调用方 NetBird 组的 JSON 键。留空则跳过。",
     identityMetadataHelp:
       "NetBird 会在<code>{header}</code>请求头中写入一个包含调用方身份的 JSON 对象，以便网关的日志与分析按真实用户归集，而不是按恰好持有 API Token 的应用进程。请选择与您现有日志过滤规则匹配的 JSON 键名；留空某个字段即可在 JSON 中省略该键。代理会先移除客户端提供的值，因此应用无法伪造身份。",
-    stampTrustedIdentityHeadersHelp: "将下文的受信任 NetBird 身份请求头写入上游请求。",
-    trustedIdentityHeadersHelp: "NetBird 会先移除调用方提供的值，再添加下文所示的已认证身份。上游监听器必须仅能通过 NetBird 代理访问。",
-    agentgatewayVirtualKeyCaveat: "虚拟密钥用于向 NetBird 认证，但不会使来自其他网络路径的请求头变得可信。",
+    stampTrustedIdentityHeadersHelp:
+      "将下文的受信任 NetBird 身份请求头写入上游请求。",
+    trustedIdentityHeadersHelp:
+      "NetBird 会先移除调用方提供的值，再添加下文所示的已认证身份。上游监听器必须仅能通过 NetBird 代理访问。",
+    agentgatewayVirtualKeyCaveat:
+      "虚拟密钥用于向 NetBird 认证，但不会使来自其他网络路径的请求头变得可信。",
     agentgatewayGroupsGuidance:
       "<code>x-netbird-groups</code>包含用于归因的已排序组显示名称。它并非分隔符安全的稳定组 ID 集合，不得用作 agentgateway 的授权声明。",
     userIdentitySourceLabel: "用户身份",
@@ -5272,23 +5481,28 @@ export default {
     cacheWriteRateLabel: "缓存写入 $/1k",
     requestHeading: "请求",
     sessionIdHeading: "会话 ID",
-    sessionIdTooltip: "此请求所属的提供商侧会话。同一用户可能发起多次独立调用，提供商会将它们归入同一个会话 ID。",
+    sessionIdTooltip:
+      "此请求所属的提供商侧会话。同一用户可能发起多次独立调用，提供商会将它们归入同一个会话 ID。",
     requestDeniedWithReason: "请求被拒绝：{reason}",
     requestDeniedByPolicy: "请求已被策略拒绝。",
     promptHeading: "提示词",
     completionHeading: "补全结果",
     noResponseCaptured: "未捕获响应。",
     promptAndResponseHeading: "提示词与响应",
-    noPromptOrResponseCaptured: "此请求未捕获提示词或响应 — 对于非补全调用（例如列出模型）或关闭了提示词采集时，仅记录元数据。",
+    noPromptOrResponseCaptured:
+      "此请求未捕获提示词或响应 — 对于非补全调用（例如列出模型）或关闭了提示词采集时，仅记录元数据。",
     metadataHeading: "元数据",
     searchAccessLogPlaceholder: "按用户、Agent、模型、提示词搜索...",
     noAccessLogEntriesTitle: "暂无访问日志记录",
-    noAccessLogEntriesDescription: "尚无 Agent Network 请求。请检查提供商是否已连接、策略是否允许流量，以及日志采集是否已开启。",
+    noAccessLogEntriesDescription:
+      "尚无 Agent Network 请求。请检查提供商是否已连接、策略是否允许流量，以及日志采集是否已开启。",
     policyAllowedRequest: "此策略允许了该请求",
     userGroupsLabel: "用户组",
     userGroupsDescription: "发起请求时该用户所属的组。",
-    providerNotAttributedHint: "未归因到任何提供商。该请求在 NetBird 识别为 LLM 调用之前就被拒绝了。",
-    providerNotAttributedShapeHint: "未归因到已配置的提供商。这是客户端调用的 API 形态。在路由前被拒绝的请求不会到达任何提供商。",
+    providerNotAttributedHint:
+      "未归因到任何提供商。该请求在 NetBird 识别为 LLM 调用之前就被拒绝了。",
+    providerNotAttributedShapeHint:
+      "未归因到已配置的提供商。这是客户端调用的 API 形态。在路由前被拒绝的请求不会到达任何提供商。",
     tokenInputLower: "输入",
     tokenOutputLower: "输出",
     cacheReadLabel: "缓存读取",
@@ -5301,12 +5515,15 @@ export default {
     requestsInSession: "{count, plural, other {此会话中有 {count} 个请求}}",
     updateGlobalLimitTitle: "更新全局上限",
     createGlobalLimitTitle: "创建全局上限",
-    globalLimitModalDescription: "Token 与预算上限，可应用于整个账户，或限定到组和用户。",
+    globalLimitModalDescription:
+      "Token 与预算上限，可应用于整个账户，或限定到组和用户。",
     globalLimitNameHelp: "为此上限设置一个易于识别的名称。",
     globalLimitNamePlaceholder: "例如 账户级月度上限",
-    restrictToSelectedGroupsHelp: "将此规则限定到所选组的成员。留空且不选用户时，将应用于整个账户。",
+    restrictToSelectedGroupsHelp:
+      "将此规则限定到所选组的成员。留空且不选用户时，将应用于整个账户。",
     selectTargetGroups: "选择目标组...",
-    restrictToSelectedUsersHelp: "将此规则限定到特定用户。留空且不选组时，将应用于整个账户。",
+    restrictToSelectedUsersHelp:
+      "将此规则限定到特定用户。留空且不选组时，将应用于整个账户。",
     noTargetsAccountWideCallout:
       "未选择任何目标时，此规则将应用于<accent>整个账户</accent> — 每个 Agent Network 请求都会计入其上限。",
     saveGlobalLimit: "保存全局上限",
@@ -5322,25 +5539,31 @@ export default {
     globalLimitsTitle: "全局上限",
     searchGlobalLimitsPlaceholder: "按名称搜索全局上限...",
     setGlobalLimitTitle: "设置全局上限",
-    setGlobalLimitDescription: "全局上限可限制所有策略的 Token 用量与费用。可将上限应用于整个账户，或限定到特定组或用户。",
+    setGlobalLimitDescription:
+      "全局上限可限制所有策略的 Token 用量与费用。可将上限应用于整个账户，或限定到特定组或用户。",
     copySnippetAria: "复制代码片段",
     kimiClaudeCodePairing:
       "与保留默认上游 URL <code>https://api.moonshot.ai</code>的 Kimi 提供商搭配使用。基础 URL 中的<code>/anthropic</code>后缀会随端点透传到 Moonshot，该端点在对应路径下提供 Anthropic Messages API。",
     kimiCliOpenAiShape:
-      "与保留默认上游 URL <code>https://api.moonshot.ai</code>的 Kimi 提供商搭配使用。若改用 OpenAI 形态，请使用<code>type = \"openai_legacy\"</code>并设置<code>base_url = \"{openaiBase}\"</code>。",
+      '与保留默认上游 URL <code>https://api.moonshot.ai</code>的 Kimi 提供商搭配使用。若改用 OpenAI 形态，请使用<code>type = "openai_legacy"</code>并设置<code>base_url = "{openaiBase}"</code>。',
     browseGuardrailsDescription: "选择一个或多个现有护栏进行关联。",
-    noMoreGuardrailsAvailable: "没有更多可用的护栏 — 所有已定义的护栏均已关联。",
+    noMoreGuardrailsAvailable:
+      "没有更多可用的护栏 — 所有已定义的护栏均已关联。",
     modelAllowlistTooltip: "模型允许列表 · {count} 个模型",
     updateGuardrailTitle: "更新护栏",
     createGuardrailTitle: "创建护栏",
-    guardrailModalDescription: "定义一组可复用的 LLM 护栏，以关联到一个或多个策略。",
+    guardrailModalDescription:
+      "定义一组可复用的 LLM 护栏，以关联到一个或多个策略。",
     guardrailNameHelp: "为此护栏集设置一个易于识别的名称。",
     guardrailNamePlaceholder: "例如 严格 — 生产",
     guardrailDescriptionHelp: "写一段简短描述，为此护栏补充更多背景信息。",
-    guardrailDescriptionPlaceholder: "例如 严格模型允许列表、PII 脱敏、月度硬预算。",
+    guardrailDescriptionPlaceholder:
+      "例如 严格模型允许列表、PII 脱敏、月度硬预算。",
     modelAllowlistCheckDescription: "阻止对不在允许列表中的模型的请求。",
-    allowlistNoModelsFromSelected: "所选提供商尚未公开任何模型。请先为目标提供商添加模型 — 允许列表仅限于这些提供商公开的模型。",
-    allowlistNoModelsAtAll: "尚无任何提供商配置模型。请先为提供商添加模型 — 允许列表仅限于提供商实际公开的模型。",
+    allowlistNoModelsFromSelected:
+      "所选提供商尚未公开任何模型。请先为目标提供商添加模型 — 允许列表仅限于这些提供商公开的模型。",
+    allowlistNoModelsAtAll:
+      "尚无任何提供商配置模型。请先为提供商添加模型 — 允许列表仅限于提供商实际公开的模型。",
     selectAllModelsAria: "选择所有模型",
     promptCaptureCheckDescription: "在存储提示词正文前对 PII 进行脱敏。",
     promptCaptureRedactionHelp:
@@ -5350,7 +5573,8 @@ export default {
     tokensPerDayDescription: "每日输入与输出 Token。",
     spendPerDayDescription: "每日预估费用。",
     noUsageRecordedTitle: "暂无用量记录",
-    noUsageRecordedDescription: "当 Agent 通过您已连接的提供商发送请求时，每日 Token 与费用总计会显示在此处。",
+    noUsageRecordedDescription:
+      "当 Agent 通过您已连接的提供商发送请求时，每日 Token 与费用总计会显示在此处。",
     sourceGroupsLabel: "源组",
     sourceGroupsCellDescription: "这些组的成员可调用目标提供商。",
     andNMore: "· 另有 {count} 个",
@@ -5361,7 +5585,8 @@ export default {
     attachedGuardrailCount: "{count, plural, other {# 个护栏}}",
     guardrailsTabDescription: "护栏会按请求强制执行模型允许列表与提示词采集。",
     noGuardrailsYetTitle: "您尚未添加任何护栏",
-    noGuardrailsYetDescription: "添加护栏，以按请求强制执行模型允许列表与提示词采集。",
+    noGuardrailsYetDescription:
+      "添加护栏，以按请求强制执行模型允许列表与提示词采集。",
     attachedLimitCount: "{count, plural, other {# 个上限}}",
     limitsTabDescription: "直接应用于此策略的 Token 与预算上限。",
     limitSummaryLine: "组 {group} · 个人 {individual} · 每 {window} 重置",
@@ -5369,17 +5594,22 @@ export default {
     noLimitsYetDescription: "添加直接应用于此策略的 Token 或预算上限。",
     tokenLimitModalDescription: "在滚动窗口内限制每组和每用户的 Token 用量。",
     budgetLimitModalDescription: "在滚动窗口内限制每组和每用户的美元费用。",
-    groupCapHelp: "限制组在窗口内的总用量。一旦达到上限，无论个人用量如何，所有成员都会被阻止，直到窗口重置。",
+    groupCapHelp:
+      "限制组在窗口内的总用量。一旦达到上限，无论个人用量如何，所有成员都会被阻止，直到窗口重置。",
     groupTotalWithinWindow: "窗口内的组总用量。",
     zeroMeansUncapped: "0 = 不限制",
-    individualCapHelp: "限制每个成员在窗口内的自身用量。达到此上限的用户将被阻止，即使组仍有剩余额度。",
+    individualCapHelp:
+      "限制每个成员在窗口内的自身用量。达到此上限的用户将被阻止，即使组仍有剩余额度。",
     perUserLimitWithinWindow: "窗口内的每用户上限。",
     resetWindowHelp: "上限计数器的重置频率。最短为 1 分钟。",
     updatePolicyTitle: "更新 Agent 策略",
     createPolicyTitle: "创建 Agent 策略",
-    policyModalDescription: "管理哪些组可以调用哪些 AI 提供商，以及在何种护栏下调用。",
-    sourceGroupsHelp: "此策略授权可调用目标提供商的用户组。本版本中每个策略仅支持一个组。",
-    legacyExtraGroupsWarning: "此策略创建时包含多个源组。保存时仅保留第一个组 — {name} 将被保留，其余将被移除。",
+    policyModalDescription:
+      "管理哪些组可以调用哪些 AI 提供商，以及在何种护栏下调用。",
+    sourceGroupsHelp:
+      "此策略授权可调用目标提供商的用户组。本版本中每个策略仅支持一个组。",
+    legacyExtraGroupsWarning:
+      "此策略创建时包含多个源组。保存时仅保留第一个组 — {name} 将被保留，其余将被移除。",
     destinationProvidersHelp: "源组允许访问的 AI 提供商。",
     policyNamePlaceholder: "例如 工程部 → OpenAI",
     policyDescriptionPlaceholder: "例如 工程团队可在生产护栏下调用 OpenAI。",
@@ -5392,16 +5622,20 @@ export default {
     endpointHelpText:
       "在配置 AI Agent 或 LLM SDK 客户端时，请将此 URL 用作基础 URL（例如 OpenAI 的<code>base_url</code>、Anthropic 的<code>baseURL</code>，或任意 HTTP 客户端）。请求会先到达 NetBird，经您的策略授权后才会转发到上游提供商。",
     deleteProviderTitle: "删除“{name}”？",
-    providerInUseCannotDelete: "{count, plural, other {此提供商被 {count} 个策略引用，无法删除。请先从策略中移除。}}",
+    providerInUseCannotDelete:
+      "{count, plural, other {此提供商被 {count} 个策略引用，无法删除。请先从策略中移除。}}",
     allModels: "全部模型",
     searchProvidersByName: "按名称搜索...",
     providersEmptyDescription:
       "通过 NetBird 路由 OpenAI、Anthropic 及其他 LLM API，以实施访问控制、跟踪 Token 费用并采集提示词。",
-    noModelRestrictionUnknownList: "无模型限制。此提供商未公开模型列表，因此可使用其上游接受的任意模型 ID。",
+    noModelRestrictionUnknownList:
+      "无模型限制。此提供商未公开模型列表，因此可使用其上游接受的任意模型 ID。",
     noModelRestrictionKnownModels: "无模型限制。此提供商的已知模型：",
     noProvidersAvailableTitle: "暂无可用提供商",
-    noAccessPolicyCoversUser: "尚无访问策略覆盖您的用户。请将您所在的某个组添加到策略中，以便通过 NetBird 路由您的 Agent。",
-    noProviderAccessAskAdmin: "您目前无权访问任何提供商。请联系管理员将您加入 Agent Network 访问策略。",
+    noAccessPolicyCoversUser:
+      "尚无访问策略覆盖您的用户。请将您所在的某个组添加到策略中，以便通过 NetBird 路由您的 Agent。",
+    noProviderAccessAskAdmin:
+      "您目前无权访问任何提供商。请联系管理员将您加入 Agent Network 访问策略。",
     couldNotReachProvider: "无法连接到提供商",
     requestFailed: "请求失败",
     savingChanges: "正在保存更改...",
@@ -5409,7 +5643,8 @@ export default {
     openRouterAppBrandingHelp:
       "<strong>{branding}</strong>(HTTP-Referer + X-OpenRouter-Title) 在 Provider 选项卡上按提供商设置，而不是按请求设置。填写这些信息的运营者可以让其应用出现在 OpenRouter 的公开排行榜和按应用分析中。",
     accessLogRetentionHelp: "访问日志在被删除前的保留时长。用量历史单独保留。",
-    connectFirstProviderDescription: "连接第一个提供商以设置您的 Agent Network 端点。",
+    connectFirstProviderDescription:
+      "连接第一个提供商以设置您的 Agent Network 端点。",
     providersPageDescription:
       "通过一个无需密钥的端点连接 LiteLLM、OpenAI、Anthropic 等 AI 提供商和网关，且仅可通过 NetBird 隧道访问。",
     denyReasonModelNotAvailable: "模型不可用",
@@ -5422,12 +5657,20 @@ export default {
     aiGateways: "AI 网关",
     aiProviders: "AI 提供商",
     otherProviderGroup: "其他",
+    pathRoutedNote:
+      "{provider} 按 URL 路径路由请求，只有 Claude Code 支持这种方式。请在上方选择其他提供商来配置此工具。",
+    claudeProviderUnsupported:
+      "Claude Code 使用 Anthropic Messages API 通信，而 {provider} 不支持该接口。请在上方选择一个 Anthropic、Vertex AI、Bedrock 或 Kimi 提供商。",
+    runInShell: "在 Shell 中运行",
+    modelLabel: "模型",
   },
   integrations: {
     edrTabTitle: "MDM 与 EDR",
-    edrTabDescription: "端点检测与响应 (EDR) 和移动设备管理 (MDM) 集成可让您仅允许 IT 部门管理的设备访问网络。",
+    edrTabDescription:
+      "端点检测与响应 (EDR) 和移动设备管理 (MDM) 集成可让您仅允许 IT 部门管理的设备访问网络。",
     eventStreamingTabTitle: "事件流",
-    eventStreamingTabDescription: "事件流可将 NetBird 的审计与流量事件流式传输到不同的第三方服务。",
+    eventStreamingTabDescription:
+      "事件流可将 NetBird 的审计与流量事件流式传输到不同的第三方服务。",
     eventStreamingCardDescription: "将活动事件流式传输到第三方服务。",
     peerApproval: "节点审批",
     compliance: "合规",
@@ -5451,14 +5694,16 @@ export default {
     connectNamed: "连接 {name}",
     deleteIntegrationQuestion: "删除集成？",
     deleteIntegrationDescription: "确定要删除此集成吗？",
-    deleteIntegrationDescriptionSetupAgain: "确定要删除此集成吗？您将需要重新进行配置。",
+    deleteIntegrationDescriptionSetupAgain:
+      "确定要删除此集成吗？您将需要重新进行配置。",
     deletingIntegration: "正在删除集成...",
     updatingIntegration: "正在更新集成...",
     settingUpIntegration: "正在配置集成...",
     disconnectingIntegration: "正在断开集成...",
     enablingIntegration: "正在启用集成...",
     disablingIntegration: "正在禁用集成...",
-    disconnectConfirmDescription: "断开连接会删除当前配置，您将需要重新进行配置。",
+    disconnectConfirmDescription:
+      "断开连接会删除当前配置，您将需要重新进行配置。",
     integrationWasDisconnected: "{name} 已成功断开连接",
     integrationWasConnectedToNetBird: "{name} 已成功连接到 NetBird。",
     integrationWasDeleted: "{name} 已成功删除",
@@ -5503,9 +5748,11 @@ export default {
     configurationTitle: "{name} 配置",
     connectNetBirdWith: "将 NetBird 与 {name} 连接",
     restrictItManaged: "仅允许公司 IT 部门管理的设备访问网络",
-    crowdstrikeDescription: "CrowdStrike 是一个云原生平台，用于保护端点、云工作负载、身份与数据。",
+    crowdstrikeDescription:
+      "CrowdStrike 是一个云原生平台，用于保护端点、云工作负载、身份与数据。",
     crowdstrikeSelectRegion: "选择您的 CrowdStrike 地区",
-    crowdstrikeRegionHelp: "要确定您所在的地区，请查看 CrowdStrike 控制台的 URL。",
+    crowdstrikeRegionHelp:
+      "要确定您所在的地区，请查看 CrowdStrike 控制台的 URL。",
     crowdstrikeApiCredentialsTitle: "获取您的 API 凭据",
     crowdstrikeNavigateToApiPage: "前往 CrowdStrike 的 API Clients & Keys 页面",
     crowdstrikeApiClientsAndKeys: "打开 API Clients & Keys",
@@ -5514,22 +5761,29 @@ export default {
     crowdstrikeCreateStep: "点击<mark>Create</mark>并输入您的凭据",
     crowdstrikeDeleteHelp: "删除此集成将移除当前配置。删除后，您需要重新配置。",
     ztaToggleLabel: "使用 Zero Trust Assessment 评分",
-    ztaToggleHelp: "<link>ZTA 评分</link>是一个参数，可让您设置节点获批的最低 ZTA 评分",
+    ztaToggleHelp:
+      "<link>ZTA 评分</link>是一个参数，可让您设置节点获批的最低 ZTA 评分",
     scoreThreshold: "评分阈值",
-    scoreThresholdHelp: "如果节点的 ZTA 评分低于阈值，该节点将被拒绝。评分应在 1 到 100 之间。",
+    scoreThresholdHelp:
+      "如果节点的 ZTA 评分低于阈值，该节点将被拒绝。评分应在 1 到 100 之间。",
     scoreRangeError: "评分应在 1 到 100 之间",
-    fleetdmDescription: "面向 macOS、Windows 和 Linux 的开源设备管理平台，提供基于 osquery 的合规策略。",
-    fleetdmSetupDescription: "仅允许 FleetDM 管理且符合其合规策略的设备访问网络。",
-    fleetdmConfigurationHelp: "基于 FleetDM 合规策略，仅允许 IT 管理的设备访问网络。",
+    fleetdmDescription:
+      "面向 macOS、Windows 和 Linux 的开源设备管理平台，提供基于 osquery 的合规策略。",
+    fleetdmSetupDescription:
+      "仅允许 FleetDM 管理且符合其合规策略的设备访问网络。",
+    fleetdmConfigurationHelp:
+      "基于 FleetDM 合规策略，仅允许 IT 管理的设备访问网络。",
     fleetdmPermissionsIntro:
       "请确保您拥有 <accent>FleetDM 账户</accent>，并具备以下<accent>权限</accent>。如果您没有所需的权限，请联系管理员为您授予。",
     fleetdmPermissionsLine1: "仅 API 用户或管理员权限",
     fleetdmPermissionsLine2: "主机与策略的读取权限",
     fleetdmServerUrlTitle: "输入您的 FleetDM 服务器 URL",
     fleetdmNavigateConsole: "前往您的 FleetDM 管理控制台。",
-    fleetdmCopyUrlStep: "从浏览器地址栏复制您的 FleetDM 服务器 URL，并在此输入。",
+    fleetdmCopyUrlStep:
+      "从浏览器地址栏复制您的 FleetDM 服务器 URL，并在此输入。",
     fleetdmCreateTokenTitle: "创建 FleetDM API 令牌",
-    fleetdmLoginWithFleetctl: "使用<link>fleetctl</link>以管理员身份登录您的 Fleet 实例",
+    fleetdmLoginWithFleetctl:
+      "使用<link>fleetctl</link>以管理员身份登录您的 Fleet 实例",
     fleetdmCreateApiOnlyUser: "创建一个<link>仅 API 用户</link>",
     fleetdmPasteToken: "创建后，将收到的 API 令牌粘贴到下方。",
     fleetdmApiTokenPlaceholder: "输入您的 FleetDM API 令牌",
@@ -5540,15 +5794,19 @@ export default {
     maxVulnerableSoftwareHelp: "一台设备允许的最大易受攻击软件数量。",
     requiredPolicyIds: "必需的 FleetDM 策略 ID",
     requiredPolicyIdsHelp: "必须在该设备上通过的策略 ID，以逗号分隔。",
-    fleetdmDeleteHelp: "删除此集成将无法根据 FleetDM 执行合规策略。删除后，您需要重新配置。",
+    fleetdmDeleteHelp:
+      "删除此集成将无法根据 FleetDM 执行合规策略。删除后，您需要重新配置。",
     diskEncryption: "磁盘加密",
     diskEncryptionHelpFleet: "设备必须启用磁盘加密 (FileVault/BitLocker)。",
     diskEncryptionHelpSimple: "设备必须启用磁盘加密。",
     onlineStatus: "在线状态",
     onlineStatusHelp: "要求主机在线（近期被 Fleet 检测到）。",
-    huntressDescription: "EDR 提供全面的企业级防护，并由 7x24 小时 AI 辅助的 SOC 持续支持。",
-    huntressSetupDescription: "基于安全态势，仅允许 Huntress 管理的设备访问网络。",
-    huntressConfigurationHelp: "仅允许在 Huntress 中标记为合规的 IT 管理设备访问网络。",
+    huntressDescription:
+      "EDR 提供全面的企业级防护，并由 7x24 小时 AI 辅助的 SOC 持续支持。",
+    huntressSetupDescription:
+      "基于安全态势，仅允许 Huntress 管理的设备访问网络。",
+    huntressConfigurationHelp:
+      "仅允许在 Huntress 中标记为合规的 IT 管理设备访问网络。",
     huntressPermissionsIntro:
       "请确保您拥有 <accent>Huntress 账户</accent>，并具备以下<accent>权限</accent>。如果您没有所需的权限，请联系管理员为您授予。",
     huntressPermissionsLine1: "创建 API 密钥",
@@ -5558,16 +5816,21 @@ export default {
       "前往您的<link>Huntress 管理控制台</link>，然后打开右上角的菜单并点击<mark>API Credentials</mark>",
     huntressAddCredentialsStep:
       "在 User API Credentials 下点击<mark>+ Add</mark>，然后选择您的用户，并将<copy>NetBird</copy>添加为描述",
-    huntressComplianceHelp: "设置设备必须满足的合规要求。请在<link>Huntress 文档</link>中了解各种状态的更多信息。",
+    huntressComplianceHelp:
+      "设置设备必须满足的合规要求。请在<link>Huntress 文档</link>中了解各种状态的更多信息。",
     defenderLabel: "受管理的 Microsoft Defender",
-    defenderHelp: "Defender 已启用、为最新版本、近期已扫描，且未检测到冲突的防病毒软件",
+    defenderHelp:
+      "Defender 已启用、为最新版本、近期已扫描，且未检测到冲突的防病毒软件",
     defenderPolicyLabel: "Defender 策略合规",
     defenderPolicyHelp: "Defender 配置应符合您组织的安全策略要求",
     firewall: "防火墙",
     firewallHelpHuntress: "设备已启用防火墙，且所有必需的配置文件均已启用",
-    intuneDescription: "Microsoft Intune 是面向您组织的基于云的统一端点管理服务。",
-    intuneSetupDescription: "仅允许在 Intune 中标记为合规的 IT 管理设备访问网络。请按以下步骤开始配置。",
-    intuneConfigurationHelp: "仅允许在 Intune 中标记为合规的 IT 管理设备访问网络。",
+    intuneDescription:
+      "Microsoft Intune 是面向您组织的基于云的统一端点管理服务。",
+    intuneSetupDescription:
+      "仅允许在 Intune 中标记为合规的 IT 管理设备访问网络。请按以下步骤开始配置。",
+    intuneConfigurationHelp:
+      "仅允许在 Intune 中标记为合规的 IT 管理设备访问网络。",
     intunePermissionsIntro:
       "请确保您拥有 <accent>Azure AD 用户账户</accent>，并具备以下<accent>权限</accent>。如果您没有所需的权限，请联系 Azure AD 管理员为您授予。",
     intunePermissionsLine1: "创建 Azure AD 应用程序",
@@ -5579,7 +5842,8 @@ export default {
     intuneFillFormStep: "使用以下值填写表单并点击<mark>Register</mark>",
     intuneFormNameLabel: "名称",
     intuneFormAccountTypesLabel: "账户类型",
-    intuneFormAccountTypesValue: "仅此组织目录中的账户（仅默认目录 - 单一租户）",
+    intuneFormAccountTypesValue:
+      "仅此组织目录中的账户（仅默认目录 - 单一租户）",
     intuneAddPermissionsTitle: "添加 API 权限",
     intuneApiPermissionsStep: "点击左侧菜单中的<mark>API permissions</mark>",
     intuneAddPermissionStep:
@@ -5589,9 +5853,11 @@ export default {
     intuneGrantConsentStep:
       "点击<mark>Grant admin consent for Default Directory</mark>，然后点击<mark>是</mark>",
     intuneGenerateSecretTitle: "生成客户端密钥",
-    intuneCertificatesStep: "在左侧菜单中前往<mark>Certificates & secrets</mark>",
+    intuneCertificatesStep:
+      "在左侧菜单中前往<mark>Certificates & secrets</mark>",
     intuneNewSecretStep: "点击<mark>+ New client secret</mark>",
-    intuneAddDescriptionStep: "将<copy>NetBird</copy>添加为描述，然后点击<mark>添加</mark>",
+    intuneAddDescriptionStep:
+      "将<copy>NetBird</copy>添加为描述，然后点击<mark>添加</mark>",
     intuneCopyValueStep: "复制<mark>Value</mark>并粘贴到此处",
     intuneEnterIdsTitle: "输入应用程序 ID 和目录 ID",
     intuneAllApplicationsStep: "前往<link>All applications</link>",
@@ -5599,19 +5865,24 @@ export default {
       "在概览页面中选择<mark>NetBird</mark>应用程序，并输入您的<mark>Application (client) ID</mark>和<mark>Directory (tenant) ID</mark>",
     intuneDeleteHelp:
       "删除此集成将无法把用户和组从您的 Identity Provider 同步到 NetBird。删除后，您需要重新配置以启用同步。",
-    sentineloneDescription: "由 AI 驱动的端点防护平台，可实现实时威胁检测与自动化响应。",
-    sentineloneSetupDescription: "基于安全态势，仅允许 SentinelOne 管理的设备访问网络。",
-    sentineloneConfigurationHelp: "仅允许在 SentinelOne 中标记为合规的 IT 管理设备访问网络。",
+    sentineloneDescription:
+      "由 AI 驱动的端点防护平台，可实现实时威胁检测与自动化响应。",
+    sentineloneSetupDescription:
+      "基于安全态势，仅允许 SentinelOne 管理的设备访问网络。",
+    sentineloneConfigurationHelp:
+      "仅允许在 SentinelOne 中标记为合规的 IT 管理设备访问网络。",
     sentinelonePermissionsIntro:
       "请确保您拥有 <accent>SentinelOne 账户</accent>，并具备以下<accent>权限</accent>。如果您没有所需的权限，请联系管理员为您授予。",
     sentinelonePermissionsLine1: "创建 API 令牌",
     sentinelonePermissionsLine2: "管理 API 令牌",
     sentineloneConsoleUrlTitle: "获取您的 SentinelOne 控制台 URL",
     sentineloneNavigateConsole: "前往您的 SentinelOne 管理控制台。",
-    sentineloneCopyUrlStep: "从浏览器地址栏复制您的 SentinelOne 控制台 URL，并在此输入。",
+    sentineloneCopyUrlStep:
+      "从浏览器地址栏复制您的 SentinelOne 控制台 URL，并在此输入。",
     sentineloneCreateTokenTitle: "创建 SentinelOne API 令牌",
     sentineloneServiceUsersPath: "设置 » 用户 » 服务用户",
-    sentineloneServiceUsersStep: "前往<link>Settings » Users » Service Users</link>",
+    sentineloneServiceUsersStep:
+      "前往<link>Settings » Users » Service Users</link>",
     sentineloneCreateServiceUserStep: "点击<mark>Create Service User</mark>",
     sentineloneNameStep:
       "输入<copy>NetBird 集成</copy>作为名称，填写可选的描述，并选择您偏好的到期日期。点击<mark>Next</mark>",
@@ -5631,7 +5902,8 @@ export default {
     latestAgentVersion: "最新代理版本",
     latestAgentVersionHelp: "SentinelOne 代理应运行最新版本。",
     s3Description: "Amazon S3 是可扩展的云存储服务。",
-    s3SetupDescription: "开始将 NetBird 的审计与流量事件流式传输到 Amazon S3。请按以下步骤开始配置。",
+    s3SetupDescription:
+      "开始将 NetBird 的审计与流量事件流式传输到 Amazon S3。请按以下步骤开始配置。",
     s3SelectRegion: "选择您的 Amazon S3 地区",
     s3RegionHelp: "要确定您所在的地区，请查看<link>Amazon S3 控制台。</link>",
     s3DashboardButton: "Amazon S3 控制台",
@@ -5649,24 +5921,30 @@ export default {
       "选择该用户并前往<mark>Security Credentials</mark>选项卡，然后选择<mark>Create access key</mark>",
     s3AssignPolicyStep:
       "创建包含<mark>s3:PutObject</mark>和<mark>s3:PutObjectAcl</mark>的策略并分配给该用户，同时将其范围限定为所创建的存储桶",
-    firehoseDescription: "Firehose 可将实时数据流式传输到 Amazon S3、Amazon Redshift 等目标。",
-    firehoseSetupDescription: "开始将 NetBird 的审计与流量事件流式传输到 Amazon Data Firehose。请按以下步骤开始配置。",
+    firehoseDescription:
+      "Firehose 可将实时数据流式传输到 Amazon S3、Amazon Redshift 等目标。",
+    firehoseSetupDescription:
+      "开始将 NetBird 的审计与流量事件流式传输到 Amazon Data Firehose。请按以下步骤开始配置。",
     firehoseSelectRegion: "选择您的 Amazon Data Firehose 地区",
-    firehoseRegionHelp: "要确定您所在的地区，请查看<link>Amazon Data Firehose 控制台。</link>",
+    firehoseRegionHelp:
+      "要确定您所在的地区，请查看<link>Amazon Data Firehose 控制台。</link>",
     firehoseStreamDashboardButton: "Amazon Data Firehose 流控制台",
     firehoseCreateStreamTitle: "创建您的 Firehose 流",
     firehoseNavigateStreamDashboard: "前往 Amazon Data Firehose 流控制台",
     firehoseCreateStreamStep: "点击右上角的<mark>Create Firehose stream</mark>",
     firehoseSourceStep: "在<mark>Source</mark>中选择<mark>Direct PUT</mark>",
-    firehoseDestinationStep: "在<mark>Destination</mark>中选择您要将事件推送到的 AWS 服务",
+    firehoseDestinationStep:
+      "在<mark>Destination</mark>中选择您要将事件推送到的 AWS 服务",
     firehoseDescribeNameStep:
       "为其指定一个描述性名称，例如<copy>netbird-activity-events</copy>，然后点击<mark>Create Firehose stream</mark>",
-    firehoseTransformTooltip: "您可以对事件消息进行转换和修改，以满足您的需求。",
+    firehoseTransformTooltip:
+      "您可以对事件消息进行转换和修改，以满足您的需求。",
     firehoseEnterStreamName: "输入您的 Firehose 流名称",
     firehoseAssignPolicyStep:
       "创建包含<mark>firehose:PutRecord</mark>和<mark>firehose:PutRecordBatch</mark>的策略并分配给该用户，同时将其范围限定为所创建的流",
     datadogDescription: "Datadog 是面向云规模应用的监控服务。",
-    datadogSetupDescription: "开始将 NetBird 的审计与流量事件流式传输到 Datadog。请按以下步骤开始配置。",
+    datadogSetupDescription:
+      "开始将 NetBird 的审计与流量事件流式传输到 Datadog。请按以下步骤开始配置。",
     datadogSelectRegion: "选择您的 Datadog 地区",
     datadogRegionHelp: "要确定您所在的地区，请查看<docs>Datadog 文档。</docs>",
     datadogGetApiKeyTitle: "获取您的 Datadog API 密钥",
@@ -5675,33 +5953,41 @@ export default {
     datadogNewKeyStep: "点击顶部的<mark>+ New Key</mark>",
     datadogDescribeNameStep:
       "为其指定一个描述性名称，例如<copy>NetBird 活动事件</copy>，然后点击<mark>Create Key</mark>",
-    datadogApiKeyDelayTooltip: "新建 Datadog API 密钥后，该密钥最多可能需要 5 分钟才能使用。",
-    genericHttpDescription: "提供您的自定义 HTTP 端点以流式传输审计与流量事件。",
-    genericHttpSetupDescription: "开始将 NetBird 的审计与流量事件流式传输到 Generic HTTP 端点。{extra}",
+    datadogApiKeyDelayTooltip:
+      "新建 Datadog API 密钥后，该密钥最多可能需要 5 分钟才能使用。",
+    genericHttpDescription:
+      "提供您的自定义 HTTP 端点以流式传输审计与流量事件。",
+    genericHttpSetupDescription:
+      "开始将 NetBird 的审计与流量事件流式传输到 Generic HTTP 端点。{extra}",
     genericHttpSetupDescriptionExtra: "请按以下步骤开始配置。",
     genericHttpConnectDescription: "HTTP 集成已成功连接。",
     genericHttpUpdateDescription: "HTTP 集成已成功更新。",
     genericHttpSetupLoading: "正在配置 HTTP 集成...",
     genericHttpUpdateLoading: "正在更新 HTTP 集成...",
     genericHttpEnabledNotification: "HTTP 集成已成功{status}。",
-    genericHttpConnectionSubtitle: "后续将通过 POST 请求发送事件的完整 HTTP(S) URL。",
+    genericHttpConnectionSubtitle:
+      "后续将通过 POST 请求发送事件的完整 HTTP(S) URL。",
     configuration: "配置",
     general: "常规",
     headers: "标头",
     bodyTemplate: "请求体模板",
     customBodyTemplate: "自定义请求体模板（可选）",
-    customBodyTemplateHelp: "为您的事件自定义请求体模板。可使用纯文本或 JSON 格式自行构建。",
-    bodyTemplateHelp: "有多种变量可用于构建请求体模板。请参阅文档了解使用方法的详细信息。",
+    customBodyTemplateHelp:
+      "为您的事件自定义请求体模板。可使用纯文本或 JSON 格式自行构建。",
+    bodyTemplateHelp:
+      "有多种变量可用于构建请求体模板。请参阅文档了解使用方法的详细信息。",
     bodyTemplateVariablesLink: "请求体模板变量",
     genericHttpStreamingLink: "Generic HTTP 事件流",
-    genericHttpDeleteHelp: "删除此集成将无法流式传输事件。删除后，您需要重新配置以启用事件流。",
+    genericHttpDeleteHelp:
+      "删除此集成将无法流式传输事件。删除后，您需要重新配置以启用事件流。",
   },
   idpSync: {
     identityProviderLabel: "Identity Provider",
     idpSyncTitle: "Identity Provider 同步",
     idpSyncFeatureText: "Identity Provider(IdP) 同步",
     idpSyncCardDescription: "从 Okta、Microsoft 或 Google IdP 同步用户与组",
-    idpSyncDescription: "配置您偏好的 Identity Provider(IdP)，将用户与组同步到 NetBird。",
+    idpSyncDescription:
+      "配置您偏好的 Identity Provider(IdP)，将用户与组同步到 NetBird。",
     customIdpCallout:
       "想要启用 Keycloak 等自定义 IdP？<br></br>请联系我们：<link>support@netbird.io</link>",
     selectIdpPlaceholder: "选择您的 Identity Provider...",
@@ -5712,10 +5998,12 @@ export default {
       "未找到兼容的 Identity Provider。请前往<link>设置 › Identity Providers</link>进行配置。",
     defaultSyncAllUsers:
       "默认情况下，您的 IdP 中的所有用户 (<accent>All Users</accent>) 都会同步到 NetBird。",
-    userGroupPrefixHelp: "如果您只想同步属于特定组的用户，可在下方添加。请注意，前缀匹配区分大小写。",
+    userGroupPrefixHelp:
+      "如果您只想同步属于特定组的用户，可在下方添加。请注意，前缀匹配区分大小写。",
     defaultSyncAllGroups:
       "默认情况下，您的 IdP 中的所有组 (<accent>All Groups</accent>) 都会同步到 NetBird。",
-    groupPrefixHelp: "如果您只想同步以特定前缀开头的组，可在下方添加。请注意，前缀匹配区分大小写。",
+    groupPrefixHelp:
+      "如果您只想同步以特定前缀开头的组，可在下方添加。请注意，前缀匹配区分大小写。",
     addGroupFilter: "添加组筛选",
     addUserGroupFilter: "添加用户组筛选",
     groupStartsWith: "组名以...开头",
@@ -5733,8 +6021,10 @@ export default {
     configurationTitle: "{name} 配置",
     integrationLinkText: "{name} 集成",
     learnMoreAboutIntegration: "详细了解<link>{name} 集成</link>",
-    startSyncingWithProvider: "开始将您的用户与组从 {name} 同步到 NetBird。请按以下步骤开始配置。",
-    genericSyncDescription: "将您的用户与组从 Identity Provider 同步到 NetBird。",
+    startSyncingWithProvider:
+      "开始将您的用户与组从 {name} 同步到 NetBird。请按以下步骤开始配置。",
+    genericSyncDescription:
+      "将您的用户与组从 Identity Provider 同步到 NetBird。",
     requiredPermissions: "所需权限",
     estimatedSetupTime: "预计配置时间：",
     setupDuration: "{duration} 分钟",
@@ -5747,7 +6037,8 @@ export default {
     deleteIntegration: "删除集成",
     deleteIntegrationQuestion: "删除集成？",
     deleteIntegrationDescription: "确定要删除此集成吗？",
-    deleteIntegrationHelp: "删除此集成后将无法把用户与组从您的 IdP 同步到 NetBird。删除后，您需要重新配置以启用同步。",
+    deleteIntegrationHelp:
+      "删除此集成后将无法把用户与组从您的 IdP 同步到 NetBird。删除后，您需要重新配置以启用同步。",
     deletingIntegration: "正在删除集成...",
     updatingIntegration: "正在更新集成...",
     settingUpIntegration: "正在配置集成...",
@@ -5785,7 +6076,8 @@ export default {
     authTokenCopyLabel: "认证令牌",
     regenerateAuthToken: "重新生成认证令牌",
     regenerateAuthTokenQuestion: "重新生成认证令牌？",
-    regenerateAuthTokenDescription: "确定要重新生成认证令牌吗？您需要在 {provider} 配置中更新此令牌。",
+    regenerateAuthTokenDescription:
+      "确定要重新生成认证令牌吗？您需要在 {provider} 配置中更新此令牌。",
     updatingAuthToken: "正在更新您的认证令牌...",
     authTokenRegenerated: "认证令牌已成功重新生成",
     regenerateAction: "重新生成",
@@ -5812,7 +6104,8 @@ export default {
       "SCIM 配置因 Identity Provider 而异。请参阅我们的<link>IdP 文档</link>获取各服务商的配置指南。",
     idpNotListedHelp:
       "如果我们的文档中未列出您的 Identity Provider，请联系我们：<link>support@netbird.io</link>",
-    ssoRequiredForIdpSync: "启用 IdP 同步前，需要先启用并激活单点登录。<link>如何启用 SSO</link>",
+    ssoRequiredForIdpSync:
+      "启用 IdP 同步前，需要先启用并激活单点登录。<link>如何启用 SSO</link>",
     entraIdPermissionsIntro:
       "请确保您拥有 <accent>Azure AD 用户账户</accent>，并具备以下<accent>权限</accent>。如果您没有所需的权限，请联系 Azure AD 管理员为您授予。",
     createAzureAdApplications: "创建 Azure AD 应用程序",
@@ -5827,15 +6120,18 @@ export default {
     entraIdApiWasUpdated: "Entra ID (API) 已成功更新",
     entraIdApiWasSynced: "Entra ID (API) 已成功同步",
     entraIdWasConnected: "Entra ID 已成功连接到 NetBird。",
-    entraIdDescription: "Microsoft Entra ID 是一款基于云的身份与访问管理解决方案。",
+    entraIdDescription:
+      "Microsoft Entra ID 是一款基于云的身份与访问管理解决方案。",
     entraIdSyncFromDescription: "将您的用户与组从 Entra ID 同步到 NetBird。",
-    entraIdStartSyncDescription: "开始将您的用户与组从 Entra ID 同步到 NetBird。请按以下步骤开始配置。",
+    entraIdStartSyncDescription:
+      "开始将您的用户与组从 Entra ID 同步到 NetBird。请按以下步骤开始配置。",
     entraIdCreateAppTitle: "创建并配置 Azure AD 应用程序",
     entraIdNavigateToAzureAd: "前往<link>Azure Active Directory</link>",
     entraIdAppRegistrationsStep:
       "点击左侧菜单中的<mark>App Registrations</mark>，然后点击<mark>+ New registration</mark>按钮创建新应用程序。",
     entraIdFillFormStep: "使用以下值填写表单并点击<mark>Register</mark>",
-    entraIdFormAccountTypesValue: "仅此组织目录中的账户（仅默认目录 - 单一租户）",
+    entraIdFormAccountTypesValue:
+      "仅此组织目录中的账户（仅默认目录 - 单一租户）",
     entraIdAddPermissionsTitle: "添加 API 权限",
     entraIdApiPermissionsStep: "点击左侧菜单中的<mark>API permissions</mark>",
     entraIdAddPermissionStep:
@@ -5845,9 +6141,11 @@ export default {
     entraIdGrantConsentStep:
       "点击<mark>Grant admin consent for Default Directory</mark>，然后点击<mark>是</mark>",
     entraIdGenerateSecretTitle: "生成客户端密钥",
-    entraIdCertificatesStep: "在左侧菜单中前往<mark>Certificates & secrets</mark>",
+    entraIdCertificatesStep:
+      "在左侧菜单中前往<mark>Certificates & secrets</mark>",
     entraIdNewSecretStep: "点击<mark>+ New client secret</mark>",
-    entraIdAddDescriptionStep: "将<copy>NetBird</copy>添加为描述，然后点击<mark>添加</mark>",
+    entraIdAddDescriptionStep:
+      "将<copy>NetBird</copy>添加为描述，然后点击<mark>添加</mark>",
     entraIdCopyValueStep: "复制<mark>Value</mark>并粘贴到此处",
     entraIdEnterIdsTitle: "输入应用程序 ID 和目录 ID",
     entraIdAllApplicationsStep: "前往<link>All applications</link>",
@@ -5875,24 +6173,31 @@ export default {
       "前往<mark>Attribute mapping</mark>部分，然后选择<mark>Groups</mark>选项卡",
     entraScimGroupMappingStep2:
       "在属性映射列表中找到<mark>externalId</mark>行，<br></br>然后点击<mark>Delete</mark>",
-    entraScimGroupMappingStep3: "点击<mark>Save</mark>以应用更新后的组属性映射配置",
+    entraScimGroupMappingStep3:
+      "点击<mark>Save</mark>以应用更新后的组属性映射配置",
     userAttributeMapping: "用户属性映射",
-    entraScimUserMappingStep1: "前往<mark>Attribute mapping</mark>部分，然后选择<mark>Users</mark>选项卡",
-    entraScimUserMappingStep2: "在属性映射列表中，移除除以下项之外的所有属性映射：",
+    entraScimUserMappingStep1:
+      "前往<mark>Attribute mapping</mark>部分，然后选择<mark>Users</mark>选项卡",
+    entraScimUserMappingStep2:
+      "在属性映射列表中，移除除以下项之外的所有属性映射：",
     entraScimUserMappingStep3:
       "在属性映射列表中找到<mark>externalId</mark>行，<br></br>然后点击<mark>Edit</mark>。将<mark>Source attribute</mark>从<mark>mailNickname</mark>改为<mark>objectId</mark>，然后点击<mark>Ok</mark>保存更改",
     entraScimUserMappingStep4: "点击<mark>Save</mark>以应用最终的属性映射配置",
     assignUsersAndGroups: "分配用户与组",
-    entraScimAssignStep1: "前往您的 NetBird 企业应用程序，并点击左侧菜单中的<mark>Users and groups</mark>",
-    entraScimAssignStep2: "点击<mark>+ Add user/group</mark>，选择您要同步到 NetBird 的用户与组",
+    entraScimAssignStep1:
+      "前往您的 NetBird 企业应用程序，并点击左侧菜单中的<mark>Users and groups</mark>",
+    entraScimAssignStep2:
+      "点击<mark>+ Add user/group</mark>，选择您要同步到 NetBird 的用户与组",
     entraScimAssignStep3: "点击<mark>Assign</mark>保存分配",
     entraScimStartProvisioningStep1:
       "分配用户与组后，返回预配配置，点击<mark>Overview</mark>，然后点击<mark>Start provisioning</mark>按钮以启用自动同步",
-    entraScimStartProvisioningStep2: "预配开始后不久将进行首次同步。<br></br>点击下方的<mark>Finish Setup</mark>以完成配置。",
+    entraScimStartProvisioningStep2:
+      "预配开始后不久将进行首次同步。<br></br>点击下方的<mark>Finish Setup</mark>以完成配置。",
     genericScimDescription: "提供您自己的自定义 SCIM 服务商以同步用户与组。",
     googleWorkspaceIntegrationTitle: "Google Workspace 集成",
     googleWorkspaceConfigurationTitle: "Google Workspace 配置",
-    googleWorkspaceDescription: "为个人与组织提供灵活、创新的解决方案，助其成就更多。",
+    googleWorkspaceDescription:
+      "为个人与组织提供灵活、创新的解决方案，助其成就更多。",
     googleWorkspaceSyncDescription: "从 Google Workspace 同步您的用户与组。",
     googleWorkspacePermissionsIntro:
       "请确保您拥有 <accent>Google Workspace 用户账户</accent>，并具备以下<accent>权限</accent>。如果您没有所需的权限，请联系您的 Workspace 管理员为您授予。",
@@ -5906,7 +6211,8 @@ export default {
     createNetBirdProject: "创建 NetBird 项目",
     googleCreateProjectStep1:
       "在<link>Google Cloud Console</link>中创建一个新的<copy>NetBird</copy>项目",
-    googleEnableAdminSdkStep: "为<mark>NetBird</mark>项目启用<link>Admin SDK API</link>",
+    googleEnableAdminSdkStep:
+      "为<mark>NetBird</mark>项目启用<link>Admin SDK API</link>",
     createServiceAccount: "创建服务账户",
     googleNavigateApiCredentials: "前往<link>API Credentials</link>",
     googleCreateCredentialsStep:
@@ -5914,24 +6220,31 @@ export default {
     googleFillFormDoneStep: "使用以下值填写表单，然后点击<mark>DONE</mark>",
     getServiceAccountEmail: "获取您的服务账户邮箱",
     googleNavigateServiceAccounts: "前往<link>Service Accounts</link>",
-    googleEditServiceAccountStep: "点击<mark>NetBird</mark>编辑该服务账户。复制服务账户邮箱地址。",
+    googleEditServiceAccountStep:
+      "点击<mark>NetBird</mark>编辑该服务账户。复制服务账户邮箱地址。",
     googleEnterServiceAccountEmailStep: "输入您的服务账户邮箱地址",
     createServiceAccountKey: "创建服务账户密钥",
     googleCreateKeyStep:
       "在同一页面中，点击<mark>Keys</mark>选项卡，打开<mark>Add key</mark>下拉菜单并选择<mark>Create new key</mark>",
-    googleSelectKeyTypeStep: "选择<mark>JSON</mark>作为密钥类型，然后点击<mark>Create</mark>",
+    googleSelectKeyTypeStep:
+      "选择<mark>JSON</mark>作为密钥类型，然后点击<mark>Create</mark>",
     googleDownloadKeyStep:
       "大多数浏览器会立即下载新密钥，并将其保存到您电脑的下载文件夹中。请阅读<link>此处</link>了解如何管理和保护您的服务密钥。",
     createAdminRole: "创建管理员角色",
     googleNavigateAdminConsole: "前往<link>Admin Console</link>",
-    googleAdminRolesStep: "在左侧菜单中选择<mark>Account</mark>，然后点击<mark>Admin Roles</mark>",
-    googleCreateNewRoleStep: "点击<mark>Create new role</mark>，并使用以下值填写表单",
+    googleAdminRolesStep:
+      "在左侧菜单中选择<mark>Account</mark>，然后点击<mark>Admin Roles</mark>",
+    googleCreateNewRoleStep:
+      "点击<mark>Create new role</mark>，并使用以下值填写表单",
     addRolePrivileges: "添加角色权限",
-    googleAddPrivilegesStep: "向下滚动至<mark>Admin API privileges</mark>，并为该角色添加以下权限",
-    googleVerifyPrivilegesStep: "查看已分配的 Admin API 权限预览，确认所有配置均正确，然后点击<mark>CREATE ROLE</mark>",
+    googleAddPrivilegesStep:
+      "向下滚动至<mark>Admin API privileges</mark>，并为该角色添加以下权限",
+    googleVerifyPrivilegesStep:
+      "查看已分配的 Admin API 权限预览，确认所有配置均正确，然后点击<mark>CREATE ROLE</mark>",
     assignServiceAccount: "分配服务账户",
     googleAssignServiceAccountsStep: "点击<mark>Assign service accounts</mark>",
-    googleEnterEmailStep: "输入您的<mark>E-Mail</mark>，然后点击<mark>ADD</mark>",
+    googleEnterEmailStep:
+      "输入您的<mark>E-Mail</mark>，然后点击<mark>ADD</mark>",
     googleAssignRoleStep: "点击<mark>ASSIGN ROLE</mark>",
     enterCustomerId: "输入客户 ID",
     googleNavigateAccountSettings: "前往<link>Account Settings</link>",
@@ -5945,7 +6258,8 @@ export default {
     jumpcloudWasUpdated: "Jumpcloud 已成功更新",
     jumpcloudWasSetUp: "Jumpcloud 已成功配置",
     jumpcloudAuthTokenRegenerated: "Jumpcloud 的认证令牌已成功重新生成",
-    jumpcloudRegenerateDescription: "确定要重新生成认证令牌吗？您需要在 Jumpcloud 配置中更新此令牌。",
+    jumpcloudRegenerateDescription:
+      "确定要重新生成认证令牌吗？您需要在 Jumpcloud 配置中更新此令牌。",
     jumpcloudPermissionsIntro:
       "请确保您拥有 <accent>Jumpcloud 用户账户</accent>，并具备以下<accent>角色</accent>。这些角色拥有配置 SSO 应用程序和管理 SCIM 预配所需的权限。",
     jumpcloudAdminMinimum: "管理员（最低要求）",
@@ -5956,7 +6270,8 @@ export default {
     jumpcloudNavigateAdminConsole: "前往您的<link>Jumpcloud 管理控制台</link>",
     jumpcloudSsoAppsStep:
       "前往<mark>SSO Applications</mark>并选择您的<mark>NetBird</mark>应用程序，然后选择<mark>Identity Management</mark>选项卡。",
-    jumpcloudCredentialsStep: "在<mark>Credentials Details</mark>中输入以下信息。",
+    jumpcloudCredentialsStep:
+      "在<mark>Credentials Details</mark>中输入以下信息。",
     jumpcloudTestConnectionStep:
       "之后点击<mark>Test Connection</mark>验证 SCIM 连接。如果连接成功，请点击<mark>Activate</mark>以启用 SCIM 预配。",
     unusedTestEmailValue: "未使用的邮箱，例如 test@yourdomain.com",
@@ -5971,13 +6286,16 @@ export default {
     oktaWasDeleted: "Okta 已成功删除",
     oktaWasUpdated: "Okta 已成功更新",
     oktaAuthTokenRegenerated: "Okta 的认证令牌已成功重新生成",
-    oktaRegenerateDescription: "确定要重新生成认证令牌吗？您需要在 Okta 配置中更新此令牌。",
-    oktaSsoRequiredTooltip: "请先在单点登录选项卡中配置 Okta SSO，以启用用户与组同步。",
+    oktaRegenerateDescription:
+      "确定要重新生成认证令牌吗？您需要在 Okta 配置中更新此令牌。",
+    oktaSsoRequiredTooltip:
+      "请先在单点登录选项卡中配置 Okta SSO，以启用用户与组同步。",
     oktaSsoRequiredButton: "需要 Okta SSO",
     configureSsoInOkta: "在 Okta 中配置 SSO",
     oktaConfigureSsoStep1:
       "访问 Okta 控制台，前往<mark>Applications > Applications</mark>，选择先前安装的<mark>NetBird</mark>应用程序",
-    oktaSignOnSettingsStep: "前往<mark>Sign On > Settings</mark>，然后选择<mark>Edit</mark>",
+    oktaSignOnSettingsStep:
+      "前往<mark>Sign On > Settings</mark>，然后选择<mark>Edit</mark>",
     oktaUsernameFormatStep:
       "在<mark>Credentials Details</mark>部分中，将<mark>Application username format</mark>改为<mark>Email</mark>，然后选择<mark>Save</mark>",
     enableOktaScimInNetBird: "在 NetBird 中启用 Okta SCIM",
@@ -6000,20 +6318,25 @@ export default {
       "前往<mark>Assignments</mark>选项卡，选择<mark>Assign</mark>并点击<mark>Assign to Groups</mark>",
     oktaSyncUsersStep2:
       "选择您要预配的组，然后选择<mark>Assign</mark>并点击<mark>Save and Go Back</mark>",
-    oktaSyncUsersStep3: "完成组分配后选择<mark>Done</mark>。此时，分配给该应用程序的组的所有成员都将同步到 NetBird。",
+    oktaSyncUsersStep3:
+      "完成组分配后选择<mark>Done</mark>。此时，分配给该应用程序的组的所有成员都将同步到 NetBird。",
     syncGroupsToNetBird: "将组同步到 NetBird",
     oktaSyncGroupsStep1:
       "前往<mark>Push Groups</mark>选项卡，选择<mark>Push Groups</mark>并点击<mark>Find groups by name</mark>",
-    oktaSyncGroupsStep2: "搜索要推送的组，然后点击<mark>Save</mark>。所选组随后将同步到 NetBird。",
+    oktaSyncGroupsStep2:
+      "搜索要推送的组，然后点击<mark>Save</mark>。所选组随后将同步到 NetBird。",
     oktaInstallAppTitle: "为 Okta 安装 NetBird 应用程序",
     oktaNavigateIntegrationNetwork: "前往<link>Okta Integration Network</link>",
-    oktaAddIntegrationStep: "点击<mark>+ Add Integration</mark>，然后点击<mark>Done</mark>",
+    oktaAddIntegrationStep:
+      "点击<mark>+ Add Integration</mark>，然后点击<mark>Done</mark>",
     oktaAssignPeopleStep:
       "安装应用程序后，前往<mark>Assignments</mark>选项卡，选择<mark>Assign</mark>并点击<mark>Assign to People</mark>，将您的用户分配给该应用程序",
     oktaEnterDetailsTitle: "输入您的 Okta 信息",
     oktaEnterDetailsStep1: "点击<mark>Sign On</mark>选项卡，输入您的客户端凭据",
-    oktaAccountDomainStep: "在您的用户资料中，输入您的<mark>Okta 账户域名</mark>",
-    primaryEmailDomainStep: "输入您的<mark>主邮箱域名</mark>，稍后将用于登录 NetBird。",
+    oktaAccountDomainStep:
+      "在您的用户资料中，输入您的<mark>Okta 账户域名</mark>",
+    primaryEmailDomainStep:
+      "输入您的<mark>主邮箱域名</mark>，稍后将用于登录 NetBird。",
     oktaAccountDomainLabel: "Okta 账户域名",
     oktaDomainLabel: "Okta 域名",
     primaryEmailDomainLabel: "主邮箱域名",
@@ -6034,20 +6357,28 @@ export default {
     oktaSsoConnectFailed: "连接 Okta SSO 失败",
     oidcIntegrationTitle: "OIDC 集成",
     oktaSsoSetupTitle: "将 NetBird 与 Okta SSO 连接",
-    oktaSsoUseAsProvider: "使用 Okta 作为单点登录服务商来验证用户身份。请按以下步骤开始配置。",
+    oktaSsoUseAsProvider:
+      "使用 Okta 作为单点登录服务商来验证用户身份。请按以下步骤开始配置。",
     oktaSsoUseAsProviderShort: "使用 Okta 作为单点登录服务商来验证用户身份。",
-    oidcUseAsProvider: "使用 {name} 作为单点登录服务商来验证用户身份。请按以下步骤开始配置。",
-    oidcClientCredentialsHelp: "获取客户端 ID 与密钥的方式因服务商而异。请查阅您服务商的文档。",
-    oidcDiscoveryEndpointHelp: "请提供<mark>OpenID Connect Discovery</mark>端点。该端点应可公开访问并启用 SSL。",
-    oidcDiscoveryPlaceholder: "例如 https://id.mydomain.com/.well-known/openid-configuration",
+    oidcUseAsProvider:
+      "使用 {name} 作为单点登录服务商来验证用户身份。请按以下步骤开始配置。",
+    oidcClientCredentialsHelp:
+      "获取客户端 ID 与密钥的方式因服务商而异。请查阅您服务商的文档。",
+    oidcDiscoveryEndpointHelp:
+      "请提供<mark>OpenID Connect Discovery</mark>端点。该端点应可公开访问并启用 SSL。",
+    oidcDiscoveryPlaceholder:
+      "例如 https://id.mydomain.com/.well-known/openid-configuration",
     singleSignOnTitle: "单点登录",
-    ssoDescription: "配置您偏好的 Identity Provider(IdP)，为您的团队启用单点登录 (SSO)。",
+    ssoDescription:
+      "配置您偏好的 Identity Provider(IdP)，为您的团队启用单点登录 (SSO)。",
     domainVerificationTitle: "域名验证",
     verifyDomainOwnershipTitle: "验证域名所有权",
-    verifyDomainOwnershipStep1: "登录您的域名服务商（例如 cloudflare.com 或 godaddy.com）",
+    verifyDomainOwnershipStep1:
+      "登录您的域名服务商（例如 cloudflare.com 或 godaddy.com）",
     verifyDomainOwnershipStep2:
       "复制下方的<mark>TXT 记录</mark>，并将其添加到<mark>{domain}</mark>的 DNS 配置中",
-    verifyDomainDnsNote: "注意：DNS 变更可能需要一些时间才能生效。如果 NetBird 未能立即找到该记录，请等待一天后重试。",
+    verifyDomainDnsNote:
+      "注意：DNS 变更可能需要一些时间才能生效。如果 NetBird 未能立即找到该记录，请等待一天后重试。",
     verifyDomainEmailFallback:
       "如果您无法访问自己的 DNS 配置，也可以通过向我们发送邮件至<link>support@netbird.io</link>来验证域名。该邮件必须从您要验证的域名发送。",
     verifyDomainLearnMore: "详细了解<link>域名验证</link>",
@@ -6076,14 +6407,16 @@ export default {
     domainsTitle: "域名",
     deleteIntegrationUndoneQuestion: "删除集成？",
     deleteIntegrationUndoneDescription: "确定要删除此集成吗？此操作无法撤销。",
-    oktaSsoDeleteHelp: "删除此集成后将无法使用 Okta 作为 SSO 服务商。<br></br>删除后，您需要重新配置以启用单点登录。",
+    oktaSsoDeleteHelp:
+      "删除此集成后将无法使用 Okta 作为 SSO 服务商。<br></br>删除后，您需要重新配置以启用单点登录。",
     configurationTab: "配置",
     txtValueLabel: "值",
   },
   integrationsWave2: {
     sentineloneApplyGroupsHelp: "选择要应用 SentinelOne Integration 的组",
     sentineloneSyncWindowTitle: "SentinelOne 同步窗口",
-    sentineloneSyncWindowHelp: "在此时间段内未与 SentinelOne 同步的设备将无法访问网络。",
+    sentineloneSyncWindowHelp:
+      "在此时间段内未与 SentinelOne 同步的设备将无法访问网络。",
     sentineloneSyncWindowExample:
       "示例：此属性设置为 24 小时。Jane 的笔记本电脑已 27 小时未与 SentinelOne 同步。即使在 SentinelOne 中标记为合规，该设备仍会被阻止访问网络。",
     serviceAccountKeyLabel: "服务账号密钥",
@@ -6096,8 +6429,10 @@ export default {
     rdpCertificate: "RDP 证书",
     certificateChangedWarning: "警告！证书已变更。请仅在信任此连接时继续。",
     certificateDetails: "证书详情",
-    certificateUnverifiedHelp: "无法通过受信任的机构验证该证书。继续连接前请先检查证书信息。",
-    alwaysTrustIssuer: "连接到 \"<bold>{hostname}</bold>\" 时始终信任 \"<bold>{issuer}</bold>\"",
+    certificateUnverifiedHelp:
+      "无法通过受信任的机构验证该证书。继续连接前请先检查证书信息。",
+    alwaysTrustIssuer:
+      '连接到 "<bold>{hostname}</bold>" 时始终信任 "<bold>{issuer}</bold>"',
     acceptAndContinue: "接受并继续",
     notAvailable: "不可用",
     issuer: "颁发者",
@@ -6114,7 +6449,8 @@ export default {
     portRangeError: "端口必须是 1 到 65535 之间的数字",
     connectToPeerViaRdp: "通过 RDP 连接到 {ip}",
     connectToPeerViaSsh: "通过 SSH 连接到 {ip}",
-    rdpCredentialsHelp: "输入远程主机认证所需的凭据。域账号请使用 DOMAIN\\username 或 username@domain 格式。",
+    rdpCredentialsHelp:
+      "输入远程主机认证所需的凭据。域账号请使用 DOMAIN\\username 或 username@domain 格式。",
     rdpUsernamePlaceholder: "Administrator 或 DOMAIN\\username",
     enterPasswordPlaceholder: "输入密码",
     rdpPortHelp: "指定远程连接的 RDP 端口。",
@@ -6149,7 +6485,8 @@ export default {
     goToPlansAndBilling: "前往套餐与计费",
     netBirdSubscription: "NetBird 订阅",
     noticeTag: "通知",
-    planTransitionNotice: "切换到新套餐将立即生效。新套餐的费用将从现在开始计收。",
+    planTransitionNotice:
+      "切换到新套餐将立即生效。新套餐的费用将从现在开始计收。",
     subscribedToPlan: "已成功订阅 {plan} 套餐",
     subscribingViaAws: "正在通过 AWS Marketplace 订阅 NetBird...",
     subscriptionUpdated: "您的订阅已成功更新。",
@@ -6159,7 +6496,8 @@ export default {
     updatingSubscription: "正在更新您的订阅...",
     upgrade: "升级",
     upgradeToPlan: "升级到 {plan}？",
-    usageLimitText: "您已达到用量上限。如需更多功能与更高上限，请考虑升级套餐。",
+    usageLimitText:
+      "您已达到用量上限。如需更多功能与更高上限，请考虑升级套餐。",
   },
   dialog: {
     confirmDefaultDescription: "确定要继续吗？此操作无法撤销。",
@@ -6175,7 +6513,8 @@ export default {
     addingTarget: "正在添加目标...",
     creatingService: "正在创建服务...",
     deleteDomainDescription: "确定要删除此域名吗？此操作无法撤销。",
-    deleteOnlyTargetDescription: "这是该服务的唯一目标。删除后整个服务都会被移除。此操作无法撤销。",
+    deleteOnlyTargetDescription:
+      "这是该服务的唯一目标。删除后整个服务都会被移除。此操作无法撤销。",
     deleteProxyDescription: "确定要删除此反向代理吗？此操作无法撤销。",
     deleteTargetDescription: "确定要删除此目标吗？此操作无法撤销。",
     deleteTargetTitle: "删除目标？",
@@ -6223,14 +6562,16 @@ export default {
     asRoot: "root 身份",
     sshDesktopStep:
       "如果您通过桌面客户端使用 NetBird，请点击 NetBird 托盘图标，前往<settings>设置</settings>并点击<allowSsh>允许 SSH</allowSsh>。如需启用 root 登录，请前往<advanced>设置 > 高级设置</advanced>，在 SSH 标签页中启用 SSH root 登录。",
-    sshConfirmStep: "在客户端允许 NetBird SSH 服务器后，点击下方的<confirm>确认并启用</confirm>以完成设置。",
+    sshConfirmStep:
+      "在客户端允许 NetBird SSH 服务器后，点击下方的<confirm>确认并启用</confirm>以完成设置。",
   },
   search: {
     searchPlaceholder: "搜索...",
     noResults: "未找到结果",
     searchHint: "搜索节点、组、策略等",
     searchNetworksAndResources: "搜索网络与资源",
-    blankStateDescription: "快速查找网络及其关联资源。输入即可按名称、描述或地址搜索。",
+    blankStateDescription:
+      "快速查找网络及其关联资源。输入即可按名称、描述或地址搜索。",
     noResultsDescription: "未找到任何结果，请尝试其他搜索词。",
   },
   remoteAccessWave4: {
@@ -6238,7 +6579,8 @@ export default {
     rdpNoPermissionTooltip: "您没有权限启动 RDP 会话。请联系您的管理员。",
     sshNoPermissionTooltip: "您没有权限启动 SSH 控制台。请联系您的管理员。",
     sshOfflineTooltip: "仅当节点在线时才能通过 SSH 连接。",
-    sshDisabledTooltip: "该节点的 SSH 访问当前已禁用。请为此节点启用 SSH 访问，并确保添加一条允许 SSH 访问的明确访问控制策略。",
+    sshDisabledTooltip:
+      "该节点的 SSH 访问当前已禁用。请为此节点启用 SSH 访问，并确保添加一条允许 SSH 访问的明确访问控制策略。",
     rdpConnectionFailed: "RDP 连接失败",
     sshConnectionFailed: "SSH 连接失败。请查看控制台了解详情。",
     noAccessToken: "没有可用的访问令牌",
@@ -6246,7 +6588,8 @@ export default {
   },
   billing: {
     subscriptionLimitReached: "订阅已达上限",
-    subscriptionLimitReachedDescription: "您似乎已达到当前订阅的上限。立即升级以解锁更多功能并提升上限。",
+    subscriptionLimitReachedDescription:
+      "您似乎已达到当前订阅的上限。立即升级以解锁更多功能并提升上限。",
     upgradeNow: "立即升级",
     upgradePlan: "升级套餐",
     usageLimitReached: "已达用量上限",
@@ -6257,17 +6600,20 @@ export default {
     upgradeTo: "升级到",
     perUserPerMonth: "每位用户 / 月",
     machinesAndPerUser: "100 台设备 + 每位用户 10 台",
-    planUpdatedCooldown: "您的套餐最近已更新。请在距上次更新满 48 小时后再次更改套餐。",
+    planUpdatedCooldown:
+      "您的套餐最近已更新。请在距上次更新满 48 小时后再次更改套餐。",
     trialEndsInDays: "试用将在 {count} 天后结束",
     visitAwsMarketplace: "访问 AWS Marketplace",
     managePlan: "管理套餐",
     trialFullAccess: "您目前可以使用 NetBird 的全套功能与 Integration。",
     teamPlanRemainsActive: "试用期间，您的 Team 套餐保持生效。",
-    afterTrialReturnToPlan: "试用结束后，除非您选择升级，否则将回到 {plan} 套餐。",
+    afterTrialReturnToPlan:
+      "试用结束后，除非您选择升级，否则将回到 {plan} 套餐。",
     perMonth: "每月",
     estimatedPriceTooltip: "估算价格根据活跃用户数与活动节点数计算。",
     thanksForSubscribing: "感谢订阅 NetBird！🎉",
-    subscriptionActivated: "您的订阅已成功激活。您现在可以使用所选套餐的全部 NetBird 功能。",
+    subscriptionActivated:
+      "您的订阅已成功激活。您现在可以使用所选套餐的全部 NetBird 功能。",
     updateYourPlan: "更新您的 NetBird 套餐",
     upgradeYourPlan: "升级您的 NetBird 套餐",
     increaseLimitHint: "升级套餐即可提升用户数与节点数上限。",
@@ -6284,10 +6630,12 @@ export default {
     noCreditCardRequired: "无需信用卡",
     getLicense: "获取许可证",
     trialStarted: "您的 14 天试用已开始！",
-    trialWelcomeLead: "欢迎加入！您现在可以使用 NetBird 的全套功能与 Integration",
+    trialWelcomeLead:
+      "欢迎加入！您现在可以使用 NetBird 的全套功能与 Integration",
     trialWelcomeBold: "为期两周",
     whatsNext: "接下来做什么？",
-    trialExploreIntro: "探索仪表板、各项 Integration 与全部功能。您可以先试试这些重点功能：",
+    trialExploreIntro:
+      "探索仪表板、各项 Integration 与全部功能。您可以先试试这些重点功能：",
     trialFeatureIdpSync: "配置 IdP 同步以自动同步用户与组",
     trialFeaturePostureChecks: "设置您的第一条设备态势检查",
     trialFeatureDeviceApprovals: "启用设备审批以获得更强控制",

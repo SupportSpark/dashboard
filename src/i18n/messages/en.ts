@@ -135,14 +135,17 @@ export default {
     peers: "Peers",
     resources: "Resources",
     assignedGroups: "Assigned Groups",
-    assignedGroupsDescription: "Use groups to control what this peer can access",
+    assignedGroupsDescription:
+      "Use groups to control what this peer can access",
     routeCount: "{count, plural, one {# Route} other {# Routes}}",
     domainCount: "{count, plural, one {# Domain} other {# Domains}}",
     allDomains: "All",
-    validDomainError: "Please enter a valid domain, e.g. example.com or intra.example.com",
+    validDomainError:
+      "Please enter a valid domain, e.g. example.com or intra.example.com",
     domainPlaceholder: "e.g., example.com",
     peerCount: "{count, plural, =0 {0 Peers} one {# Peer} other {# Peers}}",
-    resourceCount: "{count, plural, =0 {0 Resources} one {# Resource} other {# Resources}}",
+    resourceCount:
+      "{count, plural, =0 {0 Resources} one {# Resource} other {# Resources}}",
     selectAllGroups: "Select all groups on this page",
     lastSeenOn: "Last seen on",
     settingsAdvancedSettings: "Settings > Advanced Settings",
@@ -177,7 +180,8 @@ export default {
     codeCopiedToClipboard: "Code has been copied to clipboard",
     wrongFileType: "You uploaded the wrong file type",
     pleaseUploadJson: "Please upload a JSON file",
-    serviceAccountKeyUploaded: "You successfully uploaded your service account key",
+    serviceAccountKeyUploaded:
+      "You successfully uploaded your service account key",
     errorPrefix: "Error:",
     installed: "Installed",
     latest: "Latest",
@@ -186,7 +190,8 @@ export default {
     orDragAndDrop: "or drag and drop your file here",
     proxyClusters: "Proxy Clusters",
     addOrSelectGroups: "Add or select group(s)...",
-    searchGroupsOrAddNewGroup: "Search groups or add new group by pressing \"Enter\"...",
+    searchGroupsOrAddNewGroup:
+      'Search groups or add new group by pressing "Enter"...',
     searchResourcePlaceholder: "Search resource...",
     searchPeerByNameOrIp: "Search peer by name or ip...",
     searchClusterPlaceholder: "Search cluster...",
@@ -223,7 +228,8 @@ export default {
     noProxyClustersGoToCustomDomains:
       "No proxy clusters available. Go to <link>Custom Domains</link> to configure one that supports private services.",
     searchNetworkByNameOrCidr: "Search for network by name or cidr...",
-    noNetworkRoutesCreatedYet: "Seems like you don't have any network routes created yet.",
+    noNetworkRoutesCreatedYet:
+      "Seems like you don't have any network routes created yet.",
     noNetworksMatchingSearch: "There are no networks matching your search.",
     dontHaveRoutingPeer: "Don't have a routing peer?",
     parametersCount: "{count, plural, one {# Parameter} other {# Parameters}}",
@@ -238,7 +244,8 @@ export default {
     accessTokenCopyWarning:
       "This token will not be shown again, so be sure to copy it and store in a secure location.",
     accessTokenNamePlaceholder: "e.g., Infra token",
-    createAccessTokenDescription: "Use this token to access NetBird's public API",
+    createAccessTokenDescription:
+      "Use this token to access NetBird's public API",
     or: "or",
     accessTokenExpiryHelp: "Should be between 1 and 365 days.",
     createAccessTokenTitle: "Create Access Token",
@@ -400,7 +407,8 @@ export default {
     address: "Address",
     location: "Location",
     groups: "Groups",
-    groupsSuccessfullyAssigned: "Groups were successfully assigned to the peers",
+    groupsSuccessfullyAssigned:
+      "Groups were successfully assigned to the peers",
     users: "Users",
     routes: "Routes",
     ssh: "SSH",
@@ -644,10 +652,12 @@ export default {
     bypassComplianceConfirmBatch: "Bypass compliance for {count} {peerWord}?",
     bypassComplianceBatchDescription:
       "This will override compliance checks and grant network access to these peers. The bypass will be automatically removed if devices become compliant.",
-    bypassComplianceBatchSuccess: "Compliance was successfully bypassed for selected peers",
+    bypassComplianceBatchSuccess:
+      "Compliance was successfully bypassed for selected peers",
     bypassComplianceBatchLoading: "Bypassing compliance for selected peers...",
     revokeBypassTitle: "Revoke Compliance Bypass",
-    revokeBypassConfirmBatch: "Revoke compliance bypass for {count} {peerWord}?",
+    revokeBypassConfirmBatch:
+      "Revoke compliance bypass for {count} {peerWord}?",
     revokeBypassBatchDescription:
       "These peers will return to normal compliance validation. If they are non-compliant, they will lose network access.",
     revokeBypassBatchSuccess: "Compliance bypass was successfully revoked",
@@ -658,8 +668,10 @@ export default {
     nonCompliant: "Non-Compliant",
     bypassed: "Bypassed",
     pendingApprovalsTooltip: "Peers waiting for administrator approval",
-    nonCompliantTooltip: "Peers that failed compliance checks and need attention",
-    bypassedTooltip: "Peers with compliance checks bypassed by an administrator",
+    nonCompliantTooltip:
+      "Peers that failed compliance checks and need attention",
+    bypassedTooltip:
+      "Peers with compliance checks bypassed by an administrator",
     searchPlaceholderExtended: "Search by name, IP, MAC, owner or group...",
     addNewDeviceTitleLabel: "Add new device to your network",
     removePeerFromRouteConfirm:
@@ -807,7 +819,8 @@ export default {
     sshAccessPlaceholder: "Select ssh access type...",
 
     // SSH Authorized Groups
-    sshNoSourceGroups: "You have not added any source groups yet. Please add source groups in order to specify which user group has access to which system users on the destination machines.",
+    sshNoSourceGroups:
+      "You have not added any source groups yet. Please add source groups in order to specify which user group has access to which system users on the destination machines.",
 
     // SSH Username Selector
     sshAllLocalUsers: "All Local Users",
@@ -925,7 +938,8 @@ export default {
     confirmRemovePeersFromGroupDescription:
       "Are you sure you want to remove these peers from the group? You can add them back later if needed.",
     removePeerFromGroupTitle: "Remove Peer from Group",
-    peerRemovedFromGroup: "Peer '{peer}' successfully removed from group '{group}'",
+    peerRemovedFromGroup:
+      "Peer '{peer}' successfully removed from group '{group}'",
     peersRemovedFromGroup: "Peers successfully removed from group '{group}'",
     removingPeerFromGroup: "Removing peer from group...",
     removingPeersFromGroup: "Removing peers from group...",
@@ -933,7 +947,8 @@ export default {
     peersAddedToGroup: "Peers were successfully added to {group}.",
     addingPeersToGroup: "Adding peers to group...",
     removeUserFromGroupTitle: "Remove User from Group {group}",
-    userRemovedFromGroup: "User '{user}' was successfully removed from group '{group}'.",
+    userRemovedFromGroup:
+      "User '{user}' was successfully removed from group '{group}'.",
     removingUserFromGroup: "Removing user from group...",
     confirmRemoveUserFromGroupTitle: "Remove user '{user}' from '{group}'?",
     confirmRemoveUsersFromGroupTitle: "Remove users from '{group}'?",
@@ -942,9 +957,11 @@ export default {
     confirmRemoveUsersFromGroupDescription:
       "Are you sure you want to remove these users from the group? You can add them back later if needed.",
     removeUsersFromGroupTitle: "Remove Users from Group {group}",
-    usersRemovedFromGroup: "Users were successfully removed from group '{group}'.",
+    usersRemovedFromGroup:
+      "Users were successfully removed from group '{group}'.",
     removingUsersFromGroup: "Removing users from group...",
-    userAddedToGroup: "User '{user}' was successfully added to group '{group}'.",
+    userAddedToGroup:
+      "User '{user}' was successfully added to group '{group}'.",
     addingUserToGroup: "Adding user to group...",
     addUsersToGroupTitle: "Add Users to Group {group}",
     usersAddedToGroup: "Users were successfully added to group '{group}'.",
@@ -1217,17 +1234,22 @@ export default {
     agentNetworkAdmin: "Agent Network Admin",
     usageViewer: "Usage Viewer",
     roleOwnerDescription: "Full access, including transferring ownership.",
-    roleAdminDescription: "Manages users, peers, networks and account settings.",
+    roleAdminDescription:
+      "Manages users, peers, networks and account settings.",
     roleNetworkAdminDescription: "Manages peers, networks and access control.",
-    roleBillingAdminDescription: "Manages the subscription and billing details.",
-    roleAuditorDescription: "Read-only access to the configuration and audit events.",
+    roleBillingAdminDescription:
+      "Manages the subscription and billing details.",
+    roleAuditorDescription:
+      "Read-only access to the configuration and audit events.",
     roleUserDescription: "Access to their own peers only.",
-    roleAgentNetworkAdminDescription: "Manages AI providers, agent policies and guardrails.",
+    roleAgentNetworkAdminDescription:
+      "Manages AI providers, agent policies and guardrails.",
     roleUsageViewerDescription: "Read-only access to usage and logs.",
     accountCreated: "Account Created",
     changesSaved: "Changes successfully saved.",
     savingChanges: "Saving changes...",
-    onlyOwnerCanChangeRole: "Only the account owner can change the owner's role.",
+    onlyOwnerCanChangeRole:
+      "Only the account owner can change the owner's role.",
     eMail: "E-Mail",
     neverLoggedIn: "Never",
     userId: "User ID",
@@ -1468,7 +1490,8 @@ export default {
     clientSettings: "Client Settings",
     updatingClientSettings: "Updating client settings...",
     updatingLazyConnections: "Updating Lazy Connections setting...",
-    updatingAgentNetworkFocusedView: "Updating Agent Network focused view setting...",
+    updatingAgentNetworkFocusedView:
+      "Updating Agent Network focused view setting...",
     latestVersion: "Latest Version",
     customVersion: "Custom Version",
     groupSettings: "Group Settings",
@@ -1486,7 +1509,8 @@ export default {
     deletingIdentityProvider: "Deleting identity provider...",
     updatingMetricsSetting: "Updating metrics setting...",
     routingPeerDnsResolution: "Routing Peer DNS Resolution",
-    updatingRoutingPeerDnsResolution: "Updating routing peer DNS resolution setting...",
+    updatingRoutingPeerDnsResolution:
+      "Updating routing peer DNS resolution setting...",
     networkSettings: "Network Settings",
     updatingNetworkSettings: "Updating network settings...",
     permissionSettings: "Permission Settings",
@@ -1494,7 +1518,8 @@ export default {
     updatingPermissions: "Updating permissions...",
     deleteIdentityProviderConfirm:
       "Are you sure you want to delete this identity provider? This action cannot be undone.",
-    settingsAuthenticationDescription: "Control how peers and users authenticate.",
+    settingsAuthenticationDescription:
+      "Control how peers and users authenticate.",
     peerApprovalDisabledByIntegration:
       "Peer approval is disabled because the {integration} integration is enabled. If you want to enable peer approval, please disable first the {integration} integration.",
     peerApprovalLabel: "Peer Approval",
@@ -1506,7 +1531,8 @@ export default {
     enableLocalMfaHelp:
       "Require multi-factor authentication for users<br></br>authenticating with local credentials.",
     selectIntervalPlaceholder: "Select interval...",
-    metricsDescription: "Share client performance metrics to help us improve NetBird.",
+    metricsDescription:
+      "Share client performance metrics to help us improve NetBird.",
     metricsPushUpdated: "Metrics push successfully {state}.",
     sharePerformanceMetrics: "Share performance metrics",
     sharePerformanceMetricsHelp:
@@ -1517,21 +1543,26 @@ export default {
     lazyConnectionsUpdated: "Lazy Connections successfully {state}.",
     enabledState: "enabled",
     disabledState: "disabled",
-    agentNetworkFocusedViewUpdated: "Agent Network focused view successfully {state}.",
+    agentNetworkFocusedViewUpdated:
+      "Agent Network focused view successfully {state}.",
     onlyUsersInGroupCanAccess:
       "Only users part of the {group} group will be able to access NetBird. Are you sure you want to save the changes?",
-    preventLosingAccessNotice: "To prevent losing access, ensure you are part of this group.",
+    preventLosingAccessNotice:
+      "To prevent losing access, ensure you are part of this group.",
     manageGroupsHint:
       "Looking to view and manage your groups? You can find group management under <link></link>",
     accessControlGroups: "Access Control › Groups",
     editIdentityProvider: "Edit Identity Provider",
     addIdentityProvider: "Add Identity Provider",
-    updateIdentityProviderDescription: "Update the identity provider configuration",
-    addIdentityProviderDescription: "Configure a new identity provider for authentication",
+    updateIdentityProviderDescription:
+      "Update the identity provider configuration",
+    addIdentityProviderDescription:
+      "Configure a new identity provider for authentication",
     idpNamePlaceholder: "e.g., Corporate SSO",
     idpClientIdPlaceholder: "Enter client ID",
     idpClientSecretRequiredOnChange: "Required when client ID is changed",
-    idpClientSecretKeepExisting: "Leave empty to keep the existing secret, or enter a new one",
+    idpClientSecretKeepExisting:
+      "Leave empty to keep the existing secret, or enter a new one",
     idpClientSecretHelp: "The OAuth2 client secret",
     idpClientSecretPlaceholder: "Enter client secret",
     saveChangesButton: "Save Changes",
@@ -1670,7 +1701,8 @@ export default {
     forwardTrafficDesc: "Forward traffic directly to your backend service.",
     exposeServicesDesc:
       "Expose services securely through NetBird's reverse proxy.",
-    terminatedService: "This service has been terminated by the NetBird team as it violates the Terms of Service. For questions, please contact",
+    terminatedService:
+      "This service has been terminated by the NetBird team as it violates the Terms of Service. For questions, please contact",
     terminated: "Terminated",
     crowdSecIpReputation: "CrowdSec IP Reputation",
     crowdSecIpReputationHelp:
@@ -1774,10 +1806,12 @@ export default {
     dropletSizeLabel: "Droplet Size",
     proxyAccessToken: "Proxy Access Token",
     proxyRegisteredConnected: "Proxy registered with NetBird and connected.",
-    proxyWaitingRegistration: "Waiting for the proxy to register with NetBird...",
+    proxyWaitingRegistration:
+      "Waiting for the proxy to register with NetBird...",
     resourceTypeServer: "Server",
     resourceTypeDroplet: "Droplet",
-    dropletProvisioningNote: "and is provisioning. Waiting for its public IP...",
+    dropletProvisioningNote:
+      "and is provisioning. Waiting for its public IP...",
     dropletIpTimeoutNote:
       "but waiting for its public IP timed out - find the IP in the DigitalOcean control panel.",
     hetznerApiToken: "Hetzner API Token",
@@ -1824,7 +1858,8 @@ export default {
     clusterDeleting: "Deleting the proxy cluster...",
     addressCopied: "{address} has been copied to clipboard",
     featureCustomPorts: "Custom Ports",
-    featureCustomPortsDescription: "Cluster can bind arbitrary TCP/UDP ports for services.",
+    featureCustomPortsDescription:
+      "Cluster can bind arbitrary TCP/UDP ports for services.",
     featureSubdomainRequired: "Subdomain Required",
     featureSubdomainRequiredDescription:
       "Services on this cluster must use a subdomain — the bare cluster domain is not addressable.",
@@ -1853,7 +1888,8 @@ export default {
     setupClusterDescription: "Setup a proxy cluster on infra you own",
     tabDeploy: "Deploy",
     tabRunProxy: "Run the Proxy",
-    clusterDomainHelp: "Enter a domain name that will be used for your cluster.",
+    clusterDomainHelp:
+      "Enter a domain name that will be used for your cluster.",
     clusterDomainPlaceholder: "e.g., proxy.company.com",
     deploymentMethod: "Deployment Method",
     proxyRequirements:
@@ -1883,7 +1919,8 @@ export default {
     clusterTypeSelfHosted: "Self-Hosted",
     addCustomDomainTitle: "Add Custom Domain",
     addDomainBtn: "Add Domain",
-    addCustomDomainDescription: "You will need to verify the domain with DNS records",
+    addCustomDomainDescription:
+      "You will need to verify the domain with DNS records",
     noProxyClustersCloud:
       "No proxy clusters are currently connected. Please try again in a few minutes. If the issue persists, check <status>NetBird Status</status> or reach out to <support>support@netbird.io</support>",
     noProxyClustersSelfHostedDomain:
@@ -1892,7 +1929,8 @@ export default {
       "No proxy clusters are currently connected. Please ensure at least one proxy is running to configure DNS verification. <br /> Learn more about <link>Proxy Clusters</link>",
     companyDomainPlaceholder: "e.g., company.com",
     targetProxyCluster: "Target Proxy Cluster",
-    targetProxyClusterHelp: "Select the cluster your CNAME record should point to",
+    targetProxyClusterHelp:
+      "Select the cluster your CNAME record should point to",
     selectProxyClusterPlaceholder: "Select a proxy cluster...",
     domainTypeFree: "Free",
     domainTypeAccount: "Account",
@@ -1921,8 +1959,10 @@ export default {
     customDomainStatusPending: "Pending",
     domainsTableTitle: "Domains",
     pendingVerification: "Pending Verification",
-    subdomainRequiredHelp: "Enter a subdomain and select a domain for your service.",
-    subdomainOptionalHelp: "Optionally enter a subdomain, or use the domain directly.",
+    subdomainRequiredHelp:
+      "Enter a subdomain and select a domain for your service.",
+    subdomainOptionalHelp:
+      "Optionally enter a subdomain, or use the domain directly.",
     domainAlreadyUsed: "This domain is already used by another service.",
     subdomainPlaceholder: "myapp",
     subdomainOptionalPlaceholder: "myapp (optional)",
@@ -1954,7 +1994,8 @@ export default {
     blockedCidrs: "{count, plural, one {Blocked CIDR} other {Blocked CIDRs}}",
     actionEnable: "Enable",
     actionDisable: "Disable",
-    l4SingleTargetNotice: "L4 services (TCP / UDP / TLS) only support a single target.",
+    l4SingleTargetNotice:
+      "L4 services (TCP / UDP / TLS) only support a single target.",
     l4AuthNotSupported:
       "Auth methods are not supported for TCP/UDP and TLS passthrough services as they operate at the network layer.",
     noGroups: "No groups",
@@ -2000,11 +2041,14 @@ export default {
       "If you don't have resources yet, go to <networks>Networks</networks> to create some.",
     proxyClusterTooltip:
       "A <name>proxy cluster</name> forwards inbound traffic to an upstream the proxy reaches without WireGuard. Useful for external APIs and services co-located with the proxy.",
-    selectResourceHelp: "Select the resource from your network you want to expose.",
-    chooseTargetHelp: "Choose where the proxy should forward incoming requests.",
+    selectResourceHelp:
+      "Select the resource from your network you want to expose.",
+    chooseTargetHelp:
+      "Choose where the proxy should forward incoming requests.",
     selectResourcePlaceholder: "Select a resource...",
     selectPeerResourcePlaceholder: "Select a peer or resource...",
-    selectPeerResourceClusterPlaceholder: "Select a peer, resource, or proxy cluster...",
+    selectPeerResourceClusterPlaceholder:
+      "Select a peer, resource, or proxy cluster...",
     addTargetDescription: "Configure the target for your reverse proxy.",
     locationOptional: "Location (Optional)",
     locationOptionalHelp:
@@ -2034,15 +2078,18 @@ export default {
     timeoutPlaceholderShort: "e.g. 30s, 2m, 5m",
     targetsDocLabel: "Targets",
     destinationColumn: "Destination",
-    invalidTimeoutDuration: "Invalid duration, use e.g., \"10s\", \"30s\", \"1m\"",
-    invalidSessionTimeoutDuration: "Invalid duration, use e.g., \"30s\", \"2m\", \"5m\"",
+    invalidTimeoutDuration: 'Invalid duration, use e.g., "10s", "30s", "1m"',
+    invalidSessionTimeoutDuration:
+      'Invalid duration, use e.g., "30s", "2m", "5m"',
     hostPlaceholder: "e.g., 127.0.0.1 or backend.lan",
     ipAddressPlaceholderOnly: "e.g., 192.168.0.10",
     cidrHostHelp: "Enter an IP address within {address}",
     headerPlaceholder: "Header, e.g., Authorization",
     headerValuePlaceholder: "Value, e.g., Bearer eyJhbGci...",
-    invalidHeaderNameChars: "Invalid characters in header name. Please use another one.",
-    reservedHeaderName: "\"{name}\" is a reserved header. Please use another one.",
+    invalidHeaderNameChars:
+      "Invalid characters in header name. Please use another one.",
+    reservedHeaderName:
+      '"{name}" is a reserved header. Please use another one.',
     duplicateHeaderName: "Duplicate header name. Please use another one.",
     headerValueLineBreaks: "Value must not contain line breaks",
     authMagicLink: "Magic Link",
@@ -2195,9 +2242,12 @@ export default {
     port: "Port",
     // NameserverGroupTable
     searchNameserverPlaceholder: "Search by name, domains or nameservers...",
-    noNameserversGroupTitle: "This group is not used within any nameservers yet",
-    noNameserversGroupDesc: "Assign this group as a distribution group in your nameservers to see them listed here.",
-    noNameserversGetStartedDesc: "It looks like you don't have any nameservers. Get started by adding one to your network. Select a predefined or add your custom nameservers.",
+    noNameserversGroupTitle:
+      "This group is not used within any nameservers yet",
+    noNameserversGroupDesc:
+      "Assign this group as a distribution group in your nameservers to see them listed here.",
+    noNameserversGetStartedDesc:
+      "It looks like you don't have any nameservers. Get started by adding one to your network. Select a predefined or add your custom nameservers.",
     // NameserverNameserversCell
     serverCount: "{count} Servers",
     // DNSZonesProvider - Zone notifications
@@ -2221,18 +2271,24 @@ export default {
     notifyRecordDeletedDesc: "DNS Record was deleted successfully.",
     notifyRecordDeletedLoading: "Deleting DNS Record...",
     // DNSZonesProvider - Confirm/Ask dialogs
-    confirmDeleteZoneDesc: "Are you sure you want to delete this zone? This action cannot be undone.",
+    confirmDeleteZoneDesc:
+      "Are you sure you want to delete this zone? This action cannot be undone.",
     confirmDeleteRecordTitle: "Delete record '{name}'?",
-    confirmDeleteRecordDesc: "Are you sure you want to delete this record? This action cannot be undone.",
+    confirmDeleteRecordDesc:
+      "Are you sure you want to delete this record? This action cannot be undone.",
     askForRecordTitle: "Add new record to '{name}'?",
-    askForRecordDesc: "Add either an A, AAAA or a CNAME record to control domain name resolution for your network.",
+    askForRecordDesc:
+      "Add either an A, AAAA or a CNAME record to control domain name resolution for your network.",
     askForRecordCancel: "Later",
     // DNSZoneModal
-    validDomainErrorZone: "Please enter a valid domain, e.g. internal, company.internal or intra.example.com",
+    validDomainErrorZone:
+      "Please enter a valid domain, e.g. internal, company.internal or intra.example.com",
     // DNSRecordModal
     validIPv4Error: "Please enter a valid IPv4 address, e.g. 192.168.1.1",
-    validIPv6Error: "Please enter a valid IPv6 address, e.g. 2001:0db8:85a3::8a2e:0370:7334",
-    validCnameError: "Please enter a valid domain, e.g. example.com or server.example.com",
+    validIPv6Error:
+      "Please enter a valid IPv6 address, e.g. 2001:0db8:85a3::8a2e:0370:7334",
+    validCnameError:
+      "Please enter a valid domain, e.g. example.com or server.example.com",
     updateRecordDesc: "Update record of '{zone}' zone",
     addRecordDesc: "Add new record to the '{zone}' zone",
     ipv4Placeholder: "192.168.1.1",
@@ -2247,8 +2303,10 @@ export default {
     searchDomainColumn: "Search Domain",
     searchZonePlaceholder: "Search by domain, ip, content or group...",
     noZonesGroupTitle: "This group is not used within any zones yet",
-    noZonesGroupDesc: "Assign this group as a distribution group in your zones to see them listed here.",
-    noZonesGetStartedDesc: "It looks like you don't have any zones. Control domain name resolution for your network by adding a zone.",
+    noZonesGroupDesc:
+      "Assign this group as a distribution group in your zones to see them listed here.",
+    noZonesGetStartedDesc:
+      "It looks like you don't have any zones. Control domain name resolution for your network by adding a zone.",
     addZone: "Add Zone",
     // DNSZonesActionCell
     zoneActionsAria: "Zone actions",
@@ -2385,8 +2443,7 @@ export default {
     resourceDeleted: "Resource deleted successfully.",
     resourceDeleting: "Deleting resource...",
     confirmRemoveRouterTitle: "Remove this router?",
-    confirmRemoveRouterDesc:
-      "Are you sure you want to remove this router?",
+    confirmRemoveRouterDesc: "Are you sure you want to remove this router?",
     removeRouter: "Remove {name}",
     routerRemoved: "Router deleted successfully.",
     routerRemoving: "Deleting router...",
@@ -2397,8 +2454,7 @@ export default {
     confirmAddResourceTitle: "Add Resource to '{name}'?",
     confirmAddResourceDesc:
       "Peers will be able to access your network resources once you add them.",
-    multiResourceTitle:
-      "This policy is used by multiple resources",
+    multiResourceTitle: "This policy is used by multiple resources",
     multiResourceDesc:
       "This policy uses one or many resource group(s) as destinations. {action} this policy will also affect following resources:",
     deletePolicyDesc:
@@ -2463,8 +2519,7 @@ export default {
 
     // ResourceSingleAddressInput.tsx
     addressLabel: "Address",
-    addressDescription:
-      "Enter a single IP address, CIDR block or domain name",
+    addressDescription: "Enter a single IP address, CIDR block or domain name",
     addressPlaceholder: "Address (IP, CIDR or Domain)",
     domainError:
       "Please enter a valid domain, e.g. service.internal, example.com or *.example.com",
@@ -2525,22 +2580,18 @@ export default {
 
     // NetworkResourceModal.tsx
     resourceCreated: "Resource Created",
-    resourceCreatedDesc:
-      'The resource "{name}" has been created successfully.',
+    resourceCreatedDesc: 'The resource "{name}" has been created successfully.',
     resourceCreating: "Creating resource...",
     resourceUpdated: "Resource Updated",
-    resourceUpdatedDesc:
-      'Resource "{name}" has been updated successfully.',
+    resourceUpdatedDesc: 'Resource "{name}" has been updated successfully.',
     resourceUpdating: "Updating resource...",
     nameAlreadyExists:
       "A resource with this name already exists. Please use another name.",
-    noPoliciesConfirmTitle:
-      "No Access Control Policies Configured",
+    noPoliciesConfirmTitle: "No Access Control Policies Configured",
     noPoliciesConfirmDesc:
       "Without access control policies, this resource will not be accessible by any peers. You can also create policies later. Are you sure you want to continue?",
     resourceAddNewDesc: 'Add new resource to "{networkName}"',
-    resourceGroupsLearnMore:
-      "Learn more about <link>Resources</link>",
+    resourceGroupsLearnMore: "Learn more about <link>Resources</link>",
 
     // NetworkResourceAccessControl.tsx
     editPolicy: "Edit Policy",
@@ -2570,12 +2621,16 @@ export default {
     dontHaveRoutingPeerHelp:
       "You can install NetBird with a setup key on one or more machines to act as routing peers.",
     enableRoutingPeer: "Enable Routing Peer",
-    enableRoutingPeerHelp: "Use this switch to enable or disable the routing peer.",
+    enableRoutingPeerHelp:
+      "Use this switch to enable or disable the routing peer.",
     resourceGroupsUsedInPolicies:
       "Your selected resource groups are used in <policies>{count, plural, one {# Access Control Policy} other {# Access Control Policies}}</policies>. This resource will inherit access from {count, plural, one {this policy} other {these policies}}.",
-    reviewThemInAccessControlTab: "Please review them in the <link>Access Control</link> tab.",
-    resourceReviewInAccessControlTab: "Please review them in the Access Control tab.",
-    resourceReviewOnCanvasBeforeDeploy: "Review them on the canvas before you deploy.",
+    reviewThemInAccessControlTab:
+      "Please review them in the <link>Access Control</link> tab.",
+    resourceReviewInAccessControlTab:
+      "Please review them in the Access Control tab.",
+    resourceReviewOnCanvasBeforeDeploy:
+      "Review them on the canvas before you deploy.",
     searchResourcesPlaceholder: "Search resources by name or address...",
     resourceAddNewFallback: "Add a new resource",
     enterSingle: "Enter a single",
@@ -2929,8 +2984,7 @@ export default {
       "Group <Value>{group}</Value> was removed from the peer with the NetBird IP <Value>{peer_ip}</Value>",
     desc_peer_group_add:
       "Group <Value>{group}</Value> was added to the peer with the NetBird IP <Value>{peer_ip}</Value>",
-    desc_peer_login_expire:
-      "Login of the peer <Value>{name}</Value> expired",
+    desc_peer_login_expire: "Login of the peer <Value>{name}</Value> expired",
     desc_peer_login_expire_with_reason:
       "Login of the peer <Value>{name}</Value> expired due to <Value>{reason}</Value>",
     desc_peer_ssh_disable:
@@ -2969,8 +3023,10 @@ export default {
 
     // Nameserver
     desc_nameserver_group_add: "Nameserver <Value>{name}</Value> was added",
-    desc_nameserver_group_delete: "Nameserver <Value>{name}</Value> was deleted",
-    desc_nameserver_group_update: "Nameserver <Value>{name}</Value> was updated",
+    desc_nameserver_group_delete:
+      "Nameserver <Value>{name}</Value> was deleted",
+    desc_nameserver_group_update:
+      "Nameserver <Value>{name}</Value> was updated",
 
     // Personal Access Token
     desc_personal_access_token_create:
@@ -3049,12 +3105,9 @@ export default {
       "Routing peer deleted from network <Value>{network_name}</Value>",
     desc_network_router_update:
       "Routing peer updated from network <Value>{network_name}</Value>",
-    desc_network_create:
-      "Network with name <Value>{name}</Value> created",
-    desc_network_delete:
-      "Network with name <Value>{name}</Value> deleted",
-    desc_network_update:
-      "Network with name <Value>{name}</Value> updated",
+    desc_network_create: "Network with name <Value>{name}</Value> created",
+    desc_network_delete: "Network with name <Value>{name}</Value> deleted",
+    desc_network_update: "Network with name <Value>{name}</Value> updated",
 
     // Jobs
     desc_peer_job_create:
@@ -3227,7 +3280,8 @@ export default {
     users: "Users",
     policy: "Policy",
     provider: "Provider",
-    groupAlreadyExists: "This group already exists. Please choose another name.",
+    groupAlreadyExists:
+      "This group already exists. Please choose another name.",
     groupNamePlaceholder: "e.g., Developers",
     noResources: "No Resources",
     resourceAddressPlaceholder: "IP, CIDR or Domain",
@@ -3257,14 +3311,16 @@ export default {
     selectDestination: "Select Destination",
     selectDestinationDescription: "Access {network}",
     thisNetwork: "this network",
-    viaPolicy: "via \"{policy}\"",
+    viaPolicy: 'via "{policy}"',
     assignNetworkTitle: "Assign a network",
-    assignNetworkDescription: "Pick a network for this resource or create a new one.",
+    assignNetworkDescription:
+      "Pick a network for this resource or create a new one.",
     routingPeerNotInstalled: "Routing peer not installed yet",
     routingPeerNotInstalledDescription:
       "This routing peer uses a peer that hasn't been installed. Install it to edit these settings, or remove this change and add the routing peer again.",
     resolveIssuesBeforeDeploying: "Resolve issues before deploying",
-    policyTemplateDescription: "Control access between sources and destinations",
+    policyTemplateDescription:
+      "Control access between sources and destinations",
     providerTemplateDescription: "Connect an AI provider or gateway",
     agentPolicyTitle: "Agent Policy",
     agentPolicyTemplateDescription: "Authorize groups to reach providers",
@@ -3278,7 +3334,8 @@ export default {
     disableAction: "Disable",
     deletePolicyTitle: "Delete policy “{name}”?",
     deleteNamedTitle: "Delete “{name}”?",
-    markedForDeletionNamed: "“{name}” is marked for deletion and removed when you deploy.",
+    markedForDeletionNamed:
+      "“{name}” is marked for deletion and removed when you deploy.",
     liveModeDeletedNamed:
       "You are in live mode. “{name}” is deleted from your account immediately.",
     togglePolicyTitle: "{action} policy “{name}”?",
@@ -3296,7 +3353,8 @@ export default {
     renamePeerTitle: "Rename Peer",
     renameResourceTitle: "Rename Resource",
     renamePeerDescription: "Set an easily identifiable name for this peer.",
-    renameResourceDescription: "Set an easily identifiable name for this resource.",
+    renameResourceDescription:
+      "Set an easily identifiable name for this resource.",
     renamePeerPlaceholder: "e.g., Backup Server",
     renameResourcePlaceholder: "e.g., Internal API",
     changeCreateGroup: "Create group “{name}”",
@@ -3316,14 +3374,17 @@ export default {
     changeCreateResource: "Create resource “{name}”",
     changeCreateResourceInNetwork: "Create resource “{name}” in “{network}”",
     changeAddRoutingPeer: "Add routing peer “{peer}” to “{network}”",
-    changeAddRoutingPeerGroup: "Add routing peer group “{group}” to “{network}”",
+    changeAddRoutingPeerGroup:
+      "Add routing peer group “{group}” to “{network}”",
     changeUpdateRoutingPeer: "Update routing peer “{peer}” in “{network}”",
-    changeUpdateRoutingPeerGroup: "Update routing peer group “{group}” in “{network}”",
+    changeUpdateRoutingPeerGroup:
+      "Update routing peer group “{group}” in “{network}”",
     changeEnableResource: "Enable resource “{name}” in “{network}”",
     changeDisableResource: "Disable resource “{name}” in “{network}”",
     changeDeleteResource: "Delete resource “{name}” from “{network}”",
     changeDeleteNetwork: "Delete network “{name}”",
-    changeDeleteNetworkDetail: "its resources and routing peers are removed too",
+    changeDeleteNetworkDetail:
+      "its resources and routing peers are removed too",
     changeConnectProvider: "Connect provider “{name}”",
     changeEnableProvider: "Enable provider “{name}”",
     changeDisableProvider: "Disable provider “{name}”",
@@ -3338,10 +3399,13 @@ export default {
     changeRemovedFromGroups: "removed from {groups}",
     changeUpdateUserGroups: "Update groups for “{name}”",
     changePeerInstalled: "Peer “{name}” installed",
-    changePeerInstalledDetail: "it joined your network — nothing left to deploy for it",
+    changePeerInstalledDetail:
+      "it joined your network — nothing left to deploy for it",
     changeInstallPeer: "Install peer “{name}”",
-    changeInstallPeerUserDeviceDetail: "select an existing peer or install a new one",
-    changeInstallPeerDetail: "install to complete the draft changes that reference it",
+    changeInstallPeerUserDeviceDetail:
+      "select an existing peer or install a new one",
+    changeInstallPeerDetail:
+      "install to complete the draft changes that reference it",
     cascadeRemovesFromPolicies:
       "{count, plural, one {Removes it from # policy} other {Removes it from # policies}}",
     cascadeRemovesFromResources:
@@ -3354,8 +3418,10 @@ export default {
     cascadeRemoveNewNetwork: "Remove the new network “{name}”?",
     cascadeRemoveNewResource: "Remove the new resource “{name}”?",
     cascadeRemoveNewPolicy: "Remove the new policy “{name}”?",
-    cascadeRemoveInstalledPeer: "Remove the installed peer “{name}” from this list?",
-    cascadeInstalledPeerStays: "The peer itself stays on the canvas and in your network",
+    cascadeRemoveInstalledPeer:
+      "Remove the installed peer “{name}” from this list?",
+    cascadeInstalledPeerStays:
+      "The peer itself stays on the canvas and in your network",
     cascadeRemovePeer: "Remove the peer “{name}”?",
     cascadeDeletesSetupKey: "Deletes its generated setup key",
     cascadeRestoreNetwork: "Restore the network “{name}”?",
@@ -3388,7 +3454,8 @@ export default {
       "Agent policy “{name}” references {count, plural, one {provider} other {providers}} {providers}, marked for deletion in this draft. Take it off the policy, or discard the deletion.",
     issueProviderMissing:
       "Agent policy “{name}” references a provider that is no longer in this draft. Pick another provider for it.",
-    issuePeerWaitingToRegister: "Waiting for “{name}” to register after install.",
+    issuePeerWaitingToRegister:
+      "Waiting for “{name}” to register after install.",
     issuePeerInstallOrSelect:
       "Peer “{name}” must be installed or selected before deploying.",
     issuePeerInstall: "Peer “{name}” must be installed before deploying.",
@@ -3417,7 +3484,8 @@ export default {
   },
   notifications: {
     title: "Notifications",
-    description: "Choose how to be notified when important events occur in your account.",
+    description:
+      "Choose how to be notified when important events occur in your account.",
     learnMore: "Learn more",
     learnMoreAbout: "Learn more about",
     notificationChannels: "Notification Channels",
@@ -3434,13 +3502,16 @@ export default {
     adding: "Adding",
     removing: "Removing",
     enableEmailChannel: "Enable Email Channel",
-    enableEmailChannelHelp: "Enable or disable all email notifications for your account",
+    enableEmailChannelHelp:
+      "Enable or disable all email notifications for your account",
     emailAddresses: "Email Addresses",
-    emailAddressesHelp: "Add one or more email addresses that should receive notifications",
+    emailAddressesHelp:
+      "Add one or more email addresses that should receive notifications",
     emailPlaceholder: "e.g. hello@company.com",
     add: "Add",
     connectNetBirdWithSlack: "Connect NetBird with Slack",
-    slackDescription: "Receive NetBird notification events directly in your Slack channel via an Incoming Webhook.",
+    slackDescription:
+      "Receive NetBird notification events directly in your Slack channel via an Incoming Webhook.",
     createSlackApp: "Create a Slack App",
     open: "Open",
     slackAppManagement: "Slack App Management",
@@ -3460,7 +3531,8 @@ export default {
     to: "to",
     on: "On",
     addNewWebhook: "Add New Webhook",
-    andSelectChannel: "and select the channel where you want to receive notifications and confirm with",
+    andSelectChannel:
+      "and select the channel where you want to receive notifications and confirm with",
     allow: "Allow",
     copyGenerated: "Copy the generated",
     webhookUrl: "Webhook URL",
@@ -3468,11 +3540,14 @@ export default {
     slackPlaceholder: "https://hooks.slack.com/services/T000/B000/XXXX",
     webhookConfiguration: "Webhook Configuration",
     connectWebhook: "Connect Webhook",
-    webhookUpdateDescription: "Update your webhook endpoint and authentication settings.",
-    webhookConnectDescription: "Configure a webhook endpoint to receive notification events.",
+    webhookUpdateDescription:
+      "Update your webhook endpoint and authentication settings.",
+    webhookConnectDescription:
+      "Configure a webhook endpoint to receive notification events.",
     general: "General",
     headers: "Headers",
-    webhookUrlHelp: "Full HTTP(S) URL where notification events will be sent via a POST request.",
+    webhookUrlHelp:
+      "Full HTTP(S) URL where notification events will be sent via a POST request.",
     saveChanges: "Save Changes",
     continue: "Continue",
     back: "Back",
@@ -3486,9 +3561,11 @@ export default {
     disconnecting: "Disconnecting",
     deleting: "Deleting",
     disconnectSlack: "Disconnect Slack",
-    disconnectSlackConfirm: "Are you sure you want to disconnect Slack? You will no longer receive notifications in your Slack channel.",
+    disconnectSlackConfirm:
+      "Are you sure you want to disconnect Slack? You will no longer receive notifications in your Slack channel.",
     deleteWebhookConnection: "Delete Webhook Connection",
-    deleteWebhookConfirm: "Are you sure you want to delete this webhook connection? This action cannot be undone.",
+    deleteWebhookConfirm:
+      "Are you sure you want to delete this webhook connection? This action cannot be undone.",
     notConnected: "Not Connected",
     edit: "Edit",
     delete: "Delete",
@@ -3502,23 +3579,29 @@ export default {
     userNotifications: "User Notifications",
     integrationNotifications: "Integration Notifications",
     pendingApproval: "Pending Approval",
-    peerPendingApprovalHelp: "Notify when a peer is waiting for approval to join the network",
+    peerPendingApprovalHelp:
+      "Notify when a peer is waiting for approval to join the network",
     peerAdded: "Peer Added",
     peerAddedHelp: "Notify when a new peer is added to the network",
     routingPeerDisconnected: "Routing Peer Disconnected",
-    routingPeerDisconnectedHelp: "Notify when a routing peer loses its connection",
+    routingPeerDisconnectedHelp:
+      "Notify when a routing peer loses its connection",
     routingPeerDeleted: "Routing Peer Deleted",
-    routingPeerDeletedHelp: "Notify when a routing peer is deleted from the network",
+    routingPeerDeletedHelp:
+      "Notify when a routing peer is deleted from the network",
     userPendingApproval: "User Pending Approval",
-    userPendingApprovalHelp: "Notify when a user is waiting for approval to join the network",
+    userPendingApprovalHelp:
+      "Notify when a user is waiting for approval to join the network",
     userJoined: "User Joined",
     userJoinedHelp: "Notify when a new user joins the account",
     serviceUserCreated: "Service User Created",
     serviceUserCreatedHelp: "Notify when a new service user is created",
     idpSyncTokenExpired: "IdP Sync Token Expired",
-    idpSyncTokenExpiredHelp: "Notify when the IdP sync token has expired and needs renewal",
+    idpSyncTokenExpiredHelp:
+      "Notify when the IdP sync token has expired and needs renewal",
     edrSyncTokenExpired: "EDR Sync Token Expired",
-    edrSyncTokenExpiredHelp: "Notify when the EDR sync token has expired and needs renewal",
+    edrSyncTokenExpiredHelp:
+      "Notify when the EDR sync token has expired and needs renewal",
     channelSlack: "Slack",
     webhookUrlLabel: "Webhook URL",
     invalidWebhookUrl:
@@ -3531,7 +3614,8 @@ export default {
     type: "Type",
     searchPlaceholder: "Search by invoice number or date...",
     noInvoicesTitle: "You don't have any invoices",
-    noInvoicesDescription: "Invoices are created at the end of each billing period. You will see them here once they are available.",
+    noInvoicesDescription:
+      "Invoices are created at the end of each billing period. You will see them here once they are available.",
     downloadPDF: "Download as PDF",
     downloadCSV: "Download as CSV",
     downloadInvoicePDF: "Download Invoice (PDF)",
@@ -3546,19 +3630,23 @@ export default {
     endpointUrl: "Endpoint URL",
     enterEndpointUrl: "Enter your Endpoint URL",
     authentication: "Authentication",
-    authHelpText: "Select your preferred authentication method for the endpoint.",
+    authHelpText:
+      "Select your preferred authentication method for the endpoint.",
     urlPlaceholder: "https://api.example.com/webhook",
     urlError: "Please enter a valid url, e.g., https://api.example.com/webhook",
     httpHeaders: "HTTP Headers (optional)",
-    httpHeadersHelp: "If your endpoint requires additional headers, you can add them here.",
+    httpHeadersHelp:
+      "If your endpoint requires additional headers, you can add them here.",
     addHeader: "Add Header",
     headerName: "Name",
     headerValue: "Value",
     headerNamePlaceholder: "e.g., Authorization",
-    headerValuePlaceholder: "e.g., Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InVURWw0SmJieUU4S00zY3NwcmdUSSJ9",
+    headerValuePlaceholder:
+      "e.g., Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InVURWw0SmJieUU4S00zY3NwcmdUSSJ9",
     headerKeyRequired: "Header key is required when value is provided",
     headerNameRequired: "Header name is required when a value is provided",
-    authHeaderConflict: "Warning: You have added an 'Authorization' header. This will override the {authType} authentication from the previous step. Please remove the 'Authorization' header.",
+    authHeaderConflict:
+      "Warning: You have added an 'Authorization' header. This will override the {authType} authentication from the previous step. Please remove the 'Authorization' header.",
     basicAuth: "Basic Auth",
     bearerToken: "Bearer Token",
     noAuthentication: "No Authentication",
@@ -3566,7 +3654,8 @@ export default {
     username: "Username",
     password: "Password",
     httpHeaderNameValue: "HTTP Header Name & Value",
-    customAuthHelp: "Specify the header name and value for your custom authentication",
+    customAuthHelp:
+      "Specify the header name and value for your custom authentication",
     customAuthNamePlaceholder: "e.g. X-API-Key",
     customAuthValuePlaceholder: "e.g. AIiaSyDaGmWKa4JsXZ-HjGw7ISLn_3namBGewQe",
     tokenPlaceholder:
@@ -3574,22 +3663,26 @@ export default {
   },
   survey: {
     loveToHear: "We'd love to hear from you",
-    improveHelp: "Help us improve by sharing how you discovered NetBird. Your feedback truly helps us grow.",
+    improveHelp:
+      "Help us improve by sharing how you discovered NetBird. Your feedback truly helps us grow.",
     howDidYouHear: "How did you hear about NetBird?",
     selectOption: "Please select an option...",
     submitContinue: "Submit & Continue",
   },
   awsMarketplace: {
     thanksRegistering: "Thanks for registering via AWS Marketplace!",
-    activeStripePlan: "It seems you already have an active subscription with us. In order to use AWS as a billing provider, please contact our support team.",
-    flexiblePricing: "With our flexible pricing, you are only billed for active users and active peers through your AWS account. Please choose the plan that fits your needs.",
+    activeStripePlan:
+      "It seems you already have an active subscription with us. In order to use AWS as a billing provider, please contact our support team.",
+    flexiblePricing:
+      "With our flexible pricing, you are only billed for active users and active peers through your AWS account. Please choose the plan that fits your needs.",
     changePlanLater: "You can always change your plan later.",
     getSupport: "Get Support",
     continueDashboard: "Continue to Dashboard",
     logout: "Logout",
     subscribeTo: "Subscribe to",
     downgradeTo: "Downgrade to",
-    thanksRegisteringLineBreak: "Thanks for registering via <br />AWS Marketplace!",
+    thanksRegisteringLineBreak:
+      "Thanks for registering via <br />AWS Marketplace!",
   },
   routes: {
     // Table columns
@@ -3633,10 +3726,8 @@ export default {
       "Retain previously resolved routes after IP address updates to maintain stable connections.",
 
     // Routing peer section
-    assignSinglePeer:
-      "Assign a single peer as a routing peer for the {type}",
-    assignPeerGroup:
-      "Assign a peer group with machines to be used as {type}",
+    assignSinglePeer: "Assign a single peer as a routing peer for the {type}",
+    assignPeerGroup: "Assign a peer group with machines to be used as {type}",
     exitNode: "exit node",
     exitNodes: "exit nodes",
     networkRoute: "network route",
@@ -3668,8 +3759,7 @@ export default {
 
     // Settings
     enableRoute: "Enable Route",
-    enableRouteHelp:
-      "Use this switch to enable or disable the route.",
+    enableRouteHelp: "Use this switch to enable or disable the route.",
     autoApplyRoute: "Auto Apply Route",
     autoApplyRouteHelp:
       "Automatically apply this exit node to your distribution groups. This requires NetBird client v0.55.0 or higher.",
@@ -3726,18 +3816,15 @@ export default {
     colHighAvailability: "High Availability",
     filterStatus: "Status",
     searchRoutes: "Search by network, range, name or groups...",
-    groupNoRoutesTitle:
-      "This group is not used within any network routes yet",
+    groupNoRoutesTitle: "This group is not used within any network routes yet",
     groupNoRoutesDescription:
       "Assign this group when creating a new route to see them listed here.",
     getStartedDescription:
       "It looks like you don't have any routes. Access LANs and VPC by adding a network route.",
 
     // High availability cell
-    haDisabled:
-      "High availability is currently disabled for this route.",
-    haEnabled:
-      "High availability is enabled for this route.",
+    haDisabled: "High availability is currently disabled for this route.",
+    haEnabled: "High availability is enabled for this route.",
     haAddMorePeersTooltip:
       "Go ahead and add more routing peers to enable high availability for this network route.",
     haIncreasePeersTooltip:
@@ -3915,7 +4002,8 @@ export default {
     myFirstNetwork: "My First Network",
     networkAndResourceCreated: "Network & Resource created successfully",
     creatingYourResource: "Creating your resource...",
-    installOnAnotherDevice: "Install NetBird on another device using this link.",
+    installOnAnotherDevice:
+      "Install NetBird on another device using this link.",
     continueCreatesSetupKey:
       "If you continue, a one-off setup key will be automatically created and you will be able to install NetBird.",
     endPolicies: "Policies",
@@ -3929,7 +4017,8 @@ export default {
     youDeviceFallback: "your device",
     waitingForRoutingPeerToConnect: "Waiting for your routing peer to connect",
     waitingForOwnDeviceToConnect: "Waiting for your own device to connect",
-    allowsConnectionsBetweenAllDevices: "Allows connections between all your devices",
+    allowsConnectionsBetweenAllDevices:
+      "Allows connections between all your devices",
     waitingForYourDeviceToConnect: "Waiting for your device to connect",
     waitingForFirstRequest: "Waiting for your first request",
     waitingForNextRequest: "Waiting for your next request",
@@ -3945,18 +4034,21 @@ export default {
     installationLinkCopied: "Installation link successfully copied",
     commandCopied: "Command has been copied successfully",
     proxyAlreadySetUpTitle: "Your proxy is already set up",
-    proxyAlreadySetUpDescription: "This account already has an Agent Network endpoint.",
+    proxyAlreadySetUpDescription:
+      "This account already has an Agent Network endpoint.",
     setUpYourProxy: "Set up your proxy",
     gatewayChoiceDescription:
       "Your agents talk to providers through a private proxy that only your network can access. Use a managed proxy or your own.",
     managedProxy: "Managed proxy",
-    managedProxyDescription: "NetBird runs a dedicated, private proxy for your account.",
+    managedProxyDescription:
+      "NetBird runs a dedicated, private proxy for your account.",
     managedProxyUnavailable:
       "Managed proxies aren't available for this account, so Agent Network runs on a proxy of your own.",
     deployNewProxy: "Deploy a new proxy",
     onYourOwnInfrastructure: "On your own infrastructure",
     orUseOwnProxyInstead: "Or use your own proxy instead",
-    proxyCountConnected: "{count, plural, one {# proxy} other {# proxies}} connected",
+    proxyCountConnected:
+      "{count, plural, one {# proxy} other {# proxies}} connected",
     privateProxyCount:
       "{count, plural, one {# private proxy} other {# private proxies}}",
     reservingYourEndpoint: "Reserving your endpoint",
@@ -3989,7 +4081,8 @@ export default {
     proxyFoundWaitingOnline: "Proxy found, waiting for it to come online...",
     proxyNotPrivate:
       "This proxy isn't private-capable. Agent Network needs a private proxy",
-    redeployWithFlagHint: "Redeploy it with the flag and this page picks it up.",
+    redeployWithFlagHint:
+      "Redeploy it with the flag and this page picks it up.",
     proxyConnected: "Proxy connected",
     stillWaitingHint:
       "Still waiting. Check that the proxy container is running and can reach the address in",
@@ -4034,7 +4127,8 @@ export default {
       "Resources are your subnets, services, or machines inside your network. Pick the type you want to connect to.",
     domainTypeHint:
       "A domain like service.internal or a wildcard like *.services.internal",
-    resourceIpDescription: "Enter a single IPv4 or IPv6 address of your resource",
+    resourceIpDescription:
+      "Enter a single IPv4 or IPv6 address of your resource",
     resourceSubnetDescription: "Enter a CIDR range of your network",
     resourceDomainDescription: "Enter a domain name of your resource",
     resourceIpPlaceholder: "e.g., 192.168.31.45 or 2001:db8::1",
@@ -4046,7 +4140,8 @@ export default {
     addRoutingPeerTitle: "Add a routing peer and get the traffic flowing",
     routingPeerIntro:
       "Think of a routing peer as a connector to your internal network. It runs NetBird and lets your remote devices access internal resources, while enforcing access control policies.",
-    generateSetupKeyHint: "Generate a setup key and install NetBird on that machine.",
+    generateSetupKeyHint:
+      "Generate a setup key and install NetBird on that machine.",
     setupKeyLabel: "Setup-Key",
     generateSetupKey: "Generate Setup Key",
     installRoutingPeer: "Install Routing Peer",
@@ -4100,7 +4195,8 @@ export default {
       "By default Agent Network denies every request. Policies connect source groups, your users or agents, to providers, with optional token and budget limits and guardrails.",
     policyCreated: "Policy created.",
     policiesCreatedCount: "{count} policies created.",
-    authorizedAgentsCanReachProvider: "Authorized agents can now reach the provider.",
+    authorizedAgentsCanReachProvider:
+      "Authorized agents can now reach the provider.",
     agentProviderIntro:
       "A provider is an upstream LLM service NetBird routes to, such as OpenAI, Anthropic, Vertex AI, Bedrock, an AI gateway, or a self-hosted model server like vLLM. NetBird stores the API key securely, so your agents never hold it.",
     providerConnected: "Provider connected.",
@@ -4145,10 +4241,10 @@ export default {
     installOnMacos: "Install on macOS",
     downloadMacInstaller: "Download and run macOS Installer",
     managementUrlInstruction:
-      "Click on \"Settings\" then \"Advanced Settings\" from the NetBird icon in your system tray and enter the following \"Management URL\"",
+      'Click on "Settings" then "Advanced Settings" from the NetBird icon in your system tray and enter the following "Management URL"',
     openTerminalAndRun: "Open Terminal and run NetBird",
     clickConnectTray:
-      "Click on \"Connect\" from the NetBird icon in your system tray",
+      'Click on "Connect" from the NetBird icon in your system tray',
     signUpWithEmail: "Sign up using your email address",
     installWithTerminal: "Install manually with Terminal",
     installWithHomebrew: "Install manually with HomeBrew",
@@ -4169,10 +4265,9 @@ export default {
     downloadFromGooglePlay:
       "Download and install the application from Google Play Store:",
     googlePlayAlt: "Download NetBird from Google Play",
-    changeServer:
-      "Click on \"Change Server\" and enter the following \"Server\"",
+    changeServer: 'Click on "Change Server" and enter the following "Server"',
     clickConnectButton:
-      "Click on the \"Connect\" button in the middle of the screen",
+      'Click on the "Connect" button in the middle of the screen',
     installOnIos: "Install on iOS",
     downloadFromAppStore:
       "Download and install the application on the App Store:",
@@ -4187,7 +4282,8 @@ export default {
     amazonLinuxYum: "Amazon Linux (YUM)",
     sixtyFourBitMsi: "64-Bit (MSI)",
     selectDistribution: "Select distribution",
-    firstLaunchHintBefore: "On first launch, NetBird asks where to connect. Select",
+    firstLaunchHintBefore:
+      "On first launch, NetBird asks where to connect. Select",
     firstLaunchHintMiddle: "and enter the following",
     alreadyPastScreen:
       "Already past that screen? Click the NetBird icon in your {trayName}, open",
@@ -4202,7 +4298,8 @@ export default {
     customers_2: "Customers",
     integrations_3: "Integrations -",
     processing_your_invitation_4: "Processing your invitation...",
-    successfully_joined_as_an_managed_service_provider_5: "Successfully joined as an Managed Service Provider",
+    successfully_joined_as_an_managed_service_provider_5:
+      "Successfully joined as an Managed Service Provider",
     plans_6: "Plans -",
     tenants_7: "Tenants -",
     tenants_8: "Tenants",
@@ -4253,8 +4350,10 @@ export default {
     customer_id__optional_4: "Customer ID (optional)",
     domain_5: "Domain",
     update_6: "Update",
-    select_the_plan_that_best_fits_your_customer_s_nee_7: "Select the plan that best fits your customer's needs.",
-    are_you_sure_you_want_to_grant_access__this_action_8: "Are you sure you want to grant access? This action cannot be undone.",
+    select_the_plan_that_best_fits_your_customer_s_nee_7:
+      "Select the plan that best fits your customer's needs.",
+    are_you_sure_you_want_to_grant_access__this_action_8:
+      "Are you sure you want to grant access? This action cannot be undone.",
     grant_access_to_distributor_9: "Grant access to distributor?",
     request_account_access_10: "Request Account Access",
     successfully_unlinked_11: "Successfully unlinked  ()",
@@ -4263,7 +4362,8 @@ export default {
     unlinking_14: "Unlinking ...",
     subscribing_to_15: "Subscribing to ...",
     subscription_plan_16: "Subscription Plan",
-    successfully_subscribed_to_the__plan_17: "Successfully subscribed to the  plan.",
+    successfully_subscribed_to_the__plan_17:
+      "Successfully subscribed to the  plan.",
     customer_18: "Customer",
     customer_id_19: "Customer ID",
     customer_id_copied_to_clipboard_20: "Customer ID copied to clipboard",
@@ -4274,7 +4374,8 @@ export default {
     reset_multi_factor_authentication_25: "Reset Multi-factor Authentication?",
     txt_record_26: "TXT record",
     add__account_27: "Add  account",
-    enter_the_primary_domain_of_the_tenant_28: "Enter the primary domain of the tenant.",
+    enter_the_primary_domain_of_the_tenant_28:
+      "Enter the primary domain of the tenant.",
     name_29: "Name",
     primary_domain_of_the_tenant_30: "Primary domain of the tenant.",
     update__account_31: "Update  account",
@@ -4316,7 +4417,8 @@ export default {
     time_67: "Time",
     traffic_68: "Traffic",
     access_control_policy_xyz_passed_69: "Access Control Policy XYZ passed",
-    peer_2_accepted_the_connection_request_70: "Peer 2 accepted the connection request",
+    peer_2_accepted_the_connection_request_70:
+      "Peer 2 accepted the connection request",
     posture_check_xyz_passed_71: "Posture Check XYZ passed",
     unknown_72: "Unknown",
     bearer_73: "Bearer",
@@ -4334,38 +4436,48 @@ export default {
     next_locale_11: "NEXT_LOCALE",
     // contexts
     subscription__to_1: "Subscription  to  ()",
-    successfully_subscribed_to_the__plan_2: "Successfully subscribed to the  plan",
+    successfully_subscribed_to_the__plan_2:
+      "Successfully subscribed to the  plan",
     request_failed_with_status_code_3: "Request failed with status code",
     add_user_to_group_4: "Add User to Group",
     add_users_to_group_5: "Add Users to Group",
     delete_6: "Delete ''?",
     peers_were_successfully_added_to_7: "Peers were successfully added to .",
     rename_group_8: "Rename Group",
-    user____was_successfully_added_to_group_9: "User '' was successfully added to group ''.",
-    users_were_successfully_added_to_group_10: "Users were successfully added to group ''.",
+    user____was_successfully_added_to_group_9:
+      "User '' was successfully added to group ''.",
+    users_were_successfully_added_to_group_10:
+      "Users were successfully added to group ''.",
     delete_target_11: "Delete target?",
     reverse_proxy_12: "Reverse proxy",
     target_13: "Target",
     // hooks
     error_reading_localstorage_key_1: "Error reading localStorage key “”:",
     error_setting_localstorage_key_2: "Error setting localStorage key “”:",
-    tried_setting_localstorage_key____even_though_envi_3: "Tried setting localStorage key “” even though environment is not a client",
+    tried_setting_localstorage_key____even_though_envi_3:
+      "Tried setting localStorage key “” even though environment is not a client",
     invalid_time_unit_4: "Invalid time unit:",
     // modules
     delete_1: "Delete ''?",
     trial_ends_in__days_2: "Trial ends in  days",
     select_currency_3: "Select currency...",
-    upgrade_your__plan_to_access_this_feature_4: "Upgrade your  plan to access this feature.",
+    upgrade_your__plan_to_access_this_feature_4:
+      "Upgrade your  plan to access this feature.",
     free_trial_5: "Free Trial",
     what_s_next_6: "What's next?",
-    smart_firewall_translates_natural_language_prompts_7: "Smart Firewall translates natural language prompts into network\n            policies. You can describe your access needs in plain language, and\n            AI will handle the rest. If you're interested in early access,\n            please fill out the form below.",
+    smart_firewall_translates_natural_language_prompts_7:
+      "Smart Firewall translates natural language prompts into network\n            policies. You can describe your access needs in plain language, and\n            AI will handle the rest. If you're interested in early access,\n            please fill out the form below.",
     thank_you_for_signing_up_8: "Thank you for signing up!",
-    hello___i_m_here_to_help_you_configure_your_access_9: "Hello , I'm here to help you configure your access control rules securely and efficiently. How can I assist you today?",
-    we_will_notify_you_by_email_as_soon_as_it_s_availa_10: "We will notify you by email as soon as it's available for your account.",
+    hello___i_m_here_to_help_you_configure_your_access_9:
+      "Hello , I'm here to help you configure your access control rules securely and efficiently. How can I assist you today?",
+    we_will_notify_you_by_email_as_soon_as_it_s_availa_10:
+      "We will notify you by email as soon as it's available for your account.",
     policy__was_successfully_created_11: "Policy  was successfully created.",
     posture_check_failed_to_create_12: "Posture Check failed to create.",
-    it_s_configured_to_allow_connections_13: "It's configured to allow connections",
-    it_s_configured_to_allow_connections_through_14: "It's configured to allow connections through",
+    it_s_configured_to_allow_connections_13:
+      "It's configured to allow connections",
+    it_s_configured_to_allow_connections_through_14:
+      "It's configured to allow connections through",
     address_15: "Address",
     name_16: "Name",
     role_17: "Role",
@@ -4378,11 +4490,14 @@ export default {
     enter_a_strong_password_24: "Enter a strong password",
     password_25: "Password",
     your_name_26: "Your name",
-    crowdstrike_is_a_cloud_native_platform_for_protect_27: "CrowdStrike is a cloud-native platform for protecting endpoints, cloud workloads, identities and data.",
+    crowdstrike_is_a_cloud_native_platform_for_protect_27:
+      "CrowdStrike is a cloud-native platform for protecting endpoints, cloud workloads, identities and data.",
     crowdstrike_was_successfully_28: "CrowdStrike was successfully",
     disable_crowdstrike_29: "Disable CrowdStrike?",
-    crowdstrike_integration_was_successfully_deleted_30: "CrowdStrike Integration was successfully deleted",
-    crowdstrike_integration_was_successfully_updated_31: "CrowdStrike Integration was successfully updated",
+    crowdstrike_integration_was_successfully_deleted_30:
+      "CrowdStrike Integration was successfully deleted",
+    crowdstrike_integration_was_successfully_updated_31:
+      "CrowdStrike Integration was successfully updated",
     delete_integration_32: "Delete integration?",
     client_id_33: "Client ID",
     create_34: "Create",
@@ -4391,14 +4506,18 @@ export default {
     secret_37: "Secret",
     zero_trust_assessment__read_38: "Zero Trust Assessment (Read)",
     score_threshold_39: "Score Threshold",
-    are_you_sure_you_want_to_disable_the_fleetdm_integ_40: "Are you sure you want to disable the FleetDM integration?",
+    are_you_sure_you_want_to_disable_the_fleetdm_integ_40:
+      "Are you sure you want to disable the FleetDM integration?",
     disable_fleetdm_41: "Disable FleetDM?",
     fleetdm_was_successfully_42: "FleetDM was successfully",
-    open_source_device_management_platform_for_macos_43: "Open-source device management platform for macOS, Windows, and Linux with osquery-based compliance policies.",
+    open_source_device_management_platform_for_macos_43:
+      "Open-source device management platform for macOS, Windows, and Linux with osquery-based compliance policies.",
     fleetdm_was_successfully_deleted_44: "FleetDM was successfully deleted",
     fleetdm_was_successfully_updated_45: "FleetDM was successfully updated",
-    navigate_to_your_fleetdm_management_console_46: "Navigate to your FleetDM Management Console.",
-    are_you_sure_you_want_to_disable_the_huntress_inte_47: "Are you sure you want to disable the Huntress integration?",
+    navigate_to_your_fleetdm_management_console_46:
+      "Navigate to your FleetDM Management Console.",
+    are_you_sure_you_want_to_disable_the_huntress_inte_47:
+      "Are you sure you want to disable the Huntress integration?",
     disable_huntress_48: "Disable Huntress?",
     huntress_was_successfully_49: "Huntress was successfully",
     huntress_was_successfully_deleted_50: "Huntress was successfully deleted",
@@ -4409,7 +4528,8 @@ export default {
     enter_your_api_credentials_55: "Enter your API Credentials",
     disable_intune_56: "Disable Intune?",
     intune_was_successfully_57: "Intune was successfully",
-    microsoft_intune_is_a_cloud_based_unified_endpoint_58: "Microsoft Intune is a cloud-based unified endpoint management for your organization.",
+    microsoft_intune_is_a_cloud_based_unified_endpoint_58:
+      "Microsoft Intune is a cloud-based unified endpoint management for your organization.",
     intune_was_successfully_deleted_59: "Intune was successfully deleted",
     intune_was_successfully_updated_60: "Intune was successfully updated",
     api_permissions_61: "API permissions",
@@ -4418,25 +4538,32 @@ export default {
     app_registrations_64: "App Registrations",
     application__client__id_65: "Application (client) ID",
     application_permissions_66: "Application permissions",
-    devicemanagementmanageddevices_read_all_67: "DeviceManagementManagedDevices.Read.All",
+    devicemanagementmanageddevices_read_all_67:
+      "DeviceManagementManagedDevices.Read.All",
     directory__tenant__id_68: "Directory (tenant) ID",
     microsoft_graph_69: "Microsoft Graph",
     register_70: "Register",
     select_permissions_71: "Select permissions",
     value_72: "Value",
-    ai_powered_endpoint_protection_platform_for_real_t_73: "AI-powered endpoint protection platform for real-time threat detection and automated response.",
-    are_you_sure_you_want_to_disable_the_sentinelone_i_74: "Are you sure you want to disable the SentinelOne integration?",
+    ai_powered_endpoint_protection_platform_for_real_t_73:
+      "AI-powered endpoint protection platform for real-time threat detection and automated response.",
+    are_you_sure_you_want_to_disable_the_sentinelone_i_74:
+      "Are you sure you want to disable the SentinelOne integration?",
     disable_sentinelone_75: "Disable SentinelOne?",
     sentinelone_was_successfully_76: "SentinelOne was successfully",
-    sentinelone_was_successfully_deleted_77: "SentinelOne was successfully deleted",
-    sentinelone_was_successfully_updated_78: "SentinelOne was successfully updated",
+    sentinelone_was_successfully_deleted_77:
+      "SentinelOne was successfully deleted",
+    sentinelone_was_successfully_updated_78:
+      "SentinelOne was successfully updated",
     create_service_user_79: "Create Service User",
     create_user_80: "Create User",
-    navigate_to_your_sentinelone_management_console_81: "Navigate to your SentinelOne Management Console.",
+    navigate_to_your_sentinelone_management_console_81:
+      "Navigate to your SentinelOne Management Console.",
     next_82: "Next",
     viewer_83: "Viewer",
     event_streaming_84: "Event Streaming",
-    amazon_data_firehose_was_successfully_disconnected_85: "Amazon Data Firehose was successfully disconnected",
+    amazon_data_firehose_was_successfully_disconnected_85:
+      "Amazon Data Firehose was successfully disconnected",
     disconnect_amazon_data_firehose_86: "Disconnect Amazon Data Firehose?",
     create_firehose_stream_87: "Create Firehose stream",
     create_access_key_88: "Create access key",
@@ -4447,23 +4574,31 @@ export default {
     enter_your_secret_key_93: "Enter your Secret-Key",
     security_credentials_94: "Security Credentials",
     source_95: "Source",
-    you_can_transform_and_convert_the_event_messages_t_96: "You can transform and convert the event messages to fit your needs.",
-    amazon_s3_is_a_scalable_storage_in_the_cloud_97: "Amazon S3 is a scalable storage in the cloud.",
+    you_can_transform_and_convert_the_event_messages_t_96:
+      "You can transform and convert the event messages to fit your needs.",
+    amazon_s3_is_a_scalable_storage_in_the_cloud_97:
+      "Amazon S3 is a scalable storage in the cloud.",
     disconnect_s3_98: "Disconnect S3?",
     create_bucket_99: "Create bucket",
     enter_your_s3_bucket_name_100: "Enter your S3 Bucket name",
-    datadog_is_a_monitoring_service_for_cloud_scale_ap_101: "Datadog is a monitoring service for cloud-scale applications.",
-    datadog_was_successfully_disconnected_102: "Datadog was successfully disconnected",
+    datadog_is_a_monitoring_service_for_cloud_scale_ap_101:
+      "Datadog is a monitoring service for cloud-scale applications.",
+    datadog_was_successfully_disconnected_102:
+      "Datadog was successfully disconnected",
     disconnect_datadog_103: "Disconnect Datadog?",
     create_key_104: "Create Key",
     enter_your_api_key_105: "Enter your API-Key",
-    navigate_to_datadogs_api_keys_page_106: "Navigate to Datadogs API Keys page",
-    when_creating_a_new_datadog_api_key__it_could_take_107: "When creating a new Datadog API key, it could take up to 5 minutes for the key to be available for use.",
+    navigate_to_datadogs_api_keys_page_106:
+      "Navigate to Datadogs API Keys page",
+    when_creating_a_new_datadog_api_key__it_could_take_107:
+      "When creating a new Datadog API key, it could take up to 5 minutes for the key to be available for use.",
     generic_http_integration_108: "Generic HTTP Integration",
-    http_integration_was_successfully_109: "HTTP Integration was successfully .",
+    http_integration_was_successfully_109:
+      "HTTP Integration was successfully .",
     cancel_110: "Cancel",
     delete_generic_http_integration_111: "Delete Generic HTTP Integration?",
-    generic_http_was_successfully_deleted_112: "Generic HTTP was successfully deleted",
+    generic_http_was_successfully_deleted_112:
+      "Generic HTTP was successfully deleted",
     identity_provider_113: "Identity Provider",
     select_your_identity_provider_114: "Select your identity provider...",
     settings___identity_providers_115: "Settings › Identity Providers",
@@ -4471,10 +4606,14 @@ export default {
     all_users_117: "All Users",
     identity_provider_sync_118: "Identity Provider Sync",
     entra_id__api__was_successfully_119: "Entra ID (API) was successfully",
-    entra_id__api__was_successfully_synced_120: "Entra ID (API) was successfully synced",
-    microsoft_entra_id_is_a_cloud_based_identity_and_a_121: "Microsoft Entra ID is a cloud-based identity and access management solution.",
-    entra_id__api__was_successfully_deleted_122: "Entra ID (API) was successfully deleted",
-    entra_id__api__was_successfully_updated_123: "Entra ID (API) was successfully updated",
+    entra_id__api__was_successfully_synced_120:
+      "Entra ID (API) was successfully synced",
+    microsoft_entra_id_is_a_cloud_based_identity_and_a_121:
+      "Microsoft Entra ID is a cloud-based identity and access management solution.",
+    entra_id__api__was_successfully_deleted_122:
+      "Entra ID (API) was successfully deleted",
+    entra_id__api__was_successfully_updated_123:
+      "Entra ID (API) was successfully updated",
     sync_interval_124: "Sync Interval",
     group_read_all_125: "Group.Read.All",
     user_read_all_126: "User.Read.All",
@@ -4487,21 +4626,28 @@ export default {
     enterprise_applications_133: "Enterprise applications",
     finish_setup_134: "Finish Setup",
     get_started_135: "Get started",
-    provision_microsoft_entra_id_groups_136: "Provision Microsoft Entra ID Groups",
-    provision_microsoft_entra_id_users_137: "Provision Microsoft Entra ID Users",
+    provision_microsoft_entra_id_groups_136:
+      "Provision Microsoft Entra ID Groups",
+    provision_microsoft_entra_id_users_137:
+      "Provision Microsoft Entra ID Users",
     provision_user_accounts_138: "Provision User Accounts",
     save_139: "Save",
     source_attribute_140: "Source attribute",
     start_provisioning_141: "Start provisioning",
     test_connection_142: "Test Connection",
     users_and_groups_143: "Users and groups",
-    auth_token_was_successfully_regenerated_144: "Auth token was successfully regenerated",
+    auth_token_was_successfully_regenerated_144:
+      "Auth token was successfully regenerated",
     regenerate_auth_token_145: "Regenerate Auth Token?",
-    a_flexible__innovative_solution_for_people_and_org_146: "A flexible, innovative solution for people and organizations to achieve more.",
+    a_flexible__innovative_solution_for_people_and_org_146:
+      "A flexible, innovative solution for people and organizations to achieve more.",
     google_workspace_was_successfully_147: "Google Workspace was successfully",
-    google_workspace_was_successfully_synced_148: "Google Workspace was successfully synced",
-    google_workspace_was_successfully_deleted_149: "Google Workspace was successfully deleted",
-    google_workspace_was_successfully_updated_150: "Google Workspace was successfully updated",
+    google_workspace_was_successfully_synced_148:
+      "Google Workspace was successfully synced",
+    google_workspace_was_successfully_deleted_149:
+      "Google Workspace was successfully deleted",
+    google_workspace_was_successfully_updated_150:
+      "Google Workspace was successfully updated",
     assign_role_151: "ASSIGN ROLE",
     account_152: "Account",
     add_key_153: "Add key",
@@ -4516,18 +4662,24 @@ export default {
     json_162: "JSON",
     keys_163: "Keys",
     service_account_164: "Service account",
-    jumpcloud_is_a_unified_identity__device__and_acces_165: "Jumpcloud is a unified identity, device, and access management platform.",
+    jumpcloud_is_a_unified_identity__device__and_acces_165:
+      "Jumpcloud is a unified identity, device, and access management platform.",
     jumpcloud_was_successfully_166: "Jumpcloud was successfully",
-    auth_token_for_jumpcloud_was_successfully_regenera_167: "Auth token for Jumpcloud was successfully regenerated",
-    jumpcloud_was_successfully_deleted_168: "Jumpcloud was successfully deleted",
-    jumpcloud_was_successfully_updated_169: "Jumpcloud was successfully updated",
+    auth_token_for_jumpcloud_was_successfully_regenera_167:
+      "Auth token for Jumpcloud was successfully regenerated",
+    jumpcloud_was_successfully_deleted_168:
+      "Jumpcloud was successfully deleted",
+    jumpcloud_was_successfully_updated_169:
+      "Jumpcloud was successfully updated",
     activate_170: "Activate",
     credentials_details_171: "Credentials Details",
     identity_management_172: "Identity Management",
     jumpcloud_was_successfully_set_up_173: "Jumpcloud was successfully set up",
-    okta_is_a_platform_to_provision_and_manage_user_ac_174: "Okta is a platform to provision and manage user accounts in cloud-based applications.",
+    okta_is_a_platform_to_provision_and_manage_user_ac_174:
+      "Okta is a platform to provision and manage user accounts in cloud-based applications.",
     okta_was_successfully_175: "Okta was successfully",
-    auth_token_for_okta_was_successfully_regenerated_176: "Auth token for Okta was successfully regenerated",
+    auth_token_for_okta_was_successfully_regenerated_176:
+      "Auth token for Okta was successfully regenerated",
     okta_was_successfully_deleted_177: "Okta was successfully deleted",
     okta_was_successfully_updated_178: "Okta was successfully updated",
     api_token_179: "API Token",
@@ -4557,12 +4709,14 @@ export default {
     client_secret_203: "Client Secret",
     openid_connect_discovery_204: "OpenID Connect Discovery",
     primary_e_mail_domain_205: "Primary E-Mail Domain",
-    use__as_a_single_sign_on_provider_to_authenticate_206: "Use  as a Single Sign-On provider to authenticate users. Follow the steps below to get started.",
+    use__as_a_single_sign_on_provider_to_authenticate_206:
+      "Use  as a Single Sign-On provider to authenticate users. Follow the steps below to get started.",
     domain_207: "Domain",
     last_check_208: "Last Check",
     delete_integration_209: "Delete Integration?",
     debug_bundle_210: "Debug Bundle",
-    generate_a_debug_bundle_on_this_peer_with_logs_and_211: "Generate a debug bundle on this peer with logs and diagnostics. Useful for troubleshooting without CLI access.",
+    generate_a_debug_bundle_on_this_peer_with_logs_and_211:
+      "Generate a debug bundle on this peer with logs and diagnostics. Useful for troubleshooting without CLI access.",
     completed_212: "Completed",
     completed_at_213: "Completed at",
     created_214: "Created",
@@ -4580,18 +4734,25 @@ export default {
     congratulations_226: "Congratulations, !",
     skipped_onboarding_____step_227: "Skipped Onboarding -  (Step )",
     troubleshooting_228: "Troubleshooting -",
-    allows_access_to_this________issubnet_229: "Allows access to this ${\n				isSubnet ?",
+    allows_access_to_this________issubnet_229:
+      "Allows access to this ${\n				isSubnet ?",
     users_to_230: "Users to",
     set_the_rules__you_re_in_control_231: "Set the rules. You're in control",
-    let_s_put_that_connection_to_the_test_232: "Let's put that connection to the test",
-    nice_work_connecting_your_client_device__now__let_233: "Nice work connecting your client device! Now, let’s have a little fun and test if it can reach your resource.",
-    let_s_get_your_first_device_online_234: "Let's get your first device online",
+    let_s_put_that_connection_to_the_test_232:
+      "Let's put that connection to the test",
+    nice_work_connecting_your_client_device__now__let_233:
+      "Nice work connecting your client device! Now, let’s have a little fun and test if it can reach your resource.",
+    let_s_get_your_first_device_online_234:
+      "Let's get your first device online",
     share_link_235: "Share Link",
-    time_to_bring_in_your_second_device_236: "Time to bring in your second device",
+    time_to_bring_in_your_second_device_236:
+      "Time to bring in your second device",
     allow_ssh_237: "Allow SSH",
     settings_238: "Settings",
-    are_you_sure_you_want_to_delete_these_peers__this_239: "Are you sure you want to delete these peers? This action cannot be undone.",
-    are_you_sure_you_want_to_overwrite_the_existing_gr_240: "Are you sure you want to overwrite the existing groups of your  selected peer(s)? This action cannot be undone.",
+    are_you_sure_you_want_to_delete_these_peers__this_239:
+      "Are you sure you want to delete these peers? This action cannot be undone.",
+    are_you_sure_you_want_to_overwrite_the_existing_gr_240:
+      "Are you sure you want to overwrite the existing groups of your  selected peer(s)? This action cannot be undone.",
     delete_241: "Delete '' ?",
     delete_all_242: "Delete All",
     overwrite_existing_groups_243: "Overwrite existing groups?",
@@ -4605,7 +4766,8 @@ export default {
     certificate_details_251: "Certificate Details",
     connect_to__via_rdp_252: "Connect to  via RDP",
     port_253: "Port",
-    this_peer_is_offline_and_cannot_be_accessed_via_rd_254: "This peer is offline and cannot be accessed via RDP.",
+    this_peer_is_offline_and_cannot_be_accessed_via_rd_254:
+      "This peer is offline and cannot be accessed via RDP.",
     connection_failed____wsa_255: "Connection failed:  (WSA )",
     connection_failed__http_256: "Connection failed: HTTP",
     ironrdp_connection_failed_257: "IronRDP connection failed:",
@@ -4613,16 +4775,19 @@ export default {
     certificate_for__has_changed_259: "Certificate for  has changed!",
     do_you_trust_this_certificate_260: "Do you trust this certificate?",
     issuer_261: "Issuer:",
-    new_certificate_for____requesting_user_acceptance_262: "New certificate for  - requesting user acceptance",
+    new_certificate_for____requesting_user_acceptance_262:
+      "New certificate for  - requesting user acceptance",
     rdp_certificate_verification_263: "RDP Certificate Verification",
     reject_264: "Reject",
     sha_256_265: "SHA-256:",
     serial_266: "Serial:",
     subject_267: "Subject:",
     the_server_268: "The server",
-    rdcleanpath_websocket_handler_not_available_for_pr_269: "RDCleanPath WebSocket handler not available for proxy",
+    rdcleanpath_websocket_handler_not_available_for_pr_269:
+      "RDCleanPath WebSocket handler not available for proxy",
     connect_to__via_ssh_270: "Connect to  via SSH",
-    connecting_via_ssh_is_only_available_when_the_peer_271: "Connecting via SSH is only available when the peer is online.",
+    connecting_via_ssh_is_only_available_when_the_peer_271:
+      "Connecting via SSH is only available when the peer is online.",
     crowdsec_ip_reputation_272: "CrowdSec IP Reputation",
     enforce_273: "Enforce",
     observe_274: "Observe",
@@ -4633,13 +4798,17 @@ export default {
     http_headers_279: "HTTP Headers",
     header_280: "Header",
     header_281: "Header  -",
-    require_specific_http_headers_to_access_this_servi_282: "Require specific HTTP headers to access this service.",
+    require_specific_http_headers_to_access_this_servi_282:
+      "Require specific HTTP headers to access this service.",
     username_283: "Username",
     enter_password_284: "Enter password...",
-    require_a_password_to_access_this_service_285: "Require a password to access this service.",
+    require_a_password_to_access_this_service_285:
+      "Require a password to access this service.",
     pin_code_286: "PIN Code",
-    require_a_numeric_pin_code_to_access_this_service_287: "Require a numeric PIN code to access this service.",
-    require_users_to_authenticate_via_sso_to_access_th_288: "Require users to authenticate via SSO to access this service.",
+    require_a_numeric_pin_code_to_access_this_service_287:
+      "Require a numeric PIN code to access this service.",
+    require_users_to_authenticate_via_sso_to_access_th_288:
+      "Require users to authenticate via SSO to access this service.",
     sso__single_sign_on_289: "SSO (Single Sign-On)",
     account_cluster_290: "Account cluster.",
     shared_cluster_291: "Shared cluster.",
@@ -4666,7 +4835,8 @@ export default {
     enter_an_ip_address_within_312: "Enter an IP address within",
     header__e_g___authorization_313: "Header, e.g., Authorization",
     value__e_g___bearer_eyjhbgci_314: "Value, e.g., Bearer eyJhbGci...",
-    configure_the_target_for_your_reverse_proxy_315: "Configure the target for your reverse proxy.",
+    configure_the_target_for_your_reverse_proxy_315:
+      "Configure the target for your reverse proxy.",
     location__optional_316: "Location (Optional)",
     request_timeout_317: "Request Timeout",
     session_idle_timeout_318: "Session Idle Timeout",
@@ -4680,12 +4850,15 @@ export default {
     resources_326: "Resources ()",
     authentication_327: "Authentication",
     select_interval_328: "Select interval...",
-    client_settings_successfully_updated_329: "Client settings successfully updated.",
+    client_settings_successfully_updated_329:
+      "Client settings successfully updated.",
     lazy_connections_successfully_330: "Lazy Connections successfully .",
     access_control___groups_331: "Access Control › Groups",
     select_provider_type_332: "Select provider type...",
-    dns_wildcard_routing_successfully_333: "DNS Wildcard Routing successfully .",
-    network_settings_successfully_updated_334: "Network settings successfully updated.",
+    dns_wildcard_routing_successfully_333:
+      "DNS Wildcard Routing successfully .",
+    network_settings_successfully_updated_334:
+      "Network settings successfully updated.",
     auto_assigned_groups_335: "Auto-assigned groups",
     unlimited_336: "Unlimited",
   },
@@ -4957,7 +5130,8 @@ export default {
     tenantDeleteDescription:
       "Deleting this tenant will permanently remove all of its associated data, including its peers, users, groups and everything else. Please be aware that this action is irreversible and cannot be undone.",
     domainVerified: "The domain ownership has been verified successfully.",
-    verifyingDomainOwnership: "Please wait while we verify the domain ownership...",
+    verifyingDomainOwnership:
+      "Please wait while we verify the domain ownership...",
     dnsRecordNotFound: "DNS record not found. Please try again...",
     requestSent: "Request has been sent successfully.",
     sendingRequest: "Sending request...",
@@ -4976,8 +5150,10 @@ export default {
     trialExpiredOwn: "Your 14-Day Trial has expired!",
     tenantTrialEndedPrefix:
       "has reached the end of the free trial period. To continue using NetBird, please upgrade the plan for this tenant.",
-    ownTrialEndedBeforeContact: "Your account has reached the end of the free trial period.",
-    ownTrialEndedContactDistributor: "To continue using NetBird, please contact your distributor.",
+    ownTrialEndedBeforeContact:
+      "Your account has reached the end of the free trial period.",
+    ownTrialEndedContactDistributor:
+      "To continue using NetBird, please contact your distributor.",
     unlinkTenant: "Unlink Tenant",
     newOwnerHelp:
       "In order to unlink this tenant, you need to assign a new owner.",
@@ -5047,7 +5223,8 @@ export default {
     requestAccountAccess: "Request Account Access",
     requestDescription:
       "A Managed Service Provider (MSP) is requesting access to manage your account and all of its associated resources.",
-    requestHeading: "<tenant>{name}</tenant> is requesting access to your account",
+    requestHeading:
+      "<tenant>{name}</tenant> is requesting access to your account",
     requestHeadingWithOwner:
       "{owner} from <tenant>{name}</tenant> is requesting access to your account",
     reviewRequestNotice:
@@ -5055,7 +5232,8 @@ export default {
     saveChanges: "Save Changes",
     searchTenantsPlaceholder: "Search by name, email or group...",
     searchTenantsSwitcherPlaceholder: "Search by name or domain...",
-    selectPlanDescription: "Select the plan that best fits your tenant's needs.",
+    selectPlanDescription:
+      "Select the plan that best fits your tenant's needs.",
     startVerificationBtn: "Start Verification",
     subscribedToPlan: "Successfully subscribed to the {plan} plan.",
     subscribingToPlan: "Subscribing to {plan}...",
@@ -5111,14 +5289,17 @@ export default {
     accessGranted: "Access has been successfully granted.",
     grantingAccess: "Granting access...",
     accessRequestDenied: "Access request denied",
-    youDeniedDistributorAccess: "You have denied the distributor access request.",
+    youDeniedDistributorAccess:
+      "You have denied the distributor access request.",
     decliningAccess: "Declining access...",
     plan: "Plan",
     customersLabel: "Customers",
-    customersPageDescription: "Use this view to manage customer accounts and their plans.",
+    customersPageDescription:
+      "Use this view to manage customer accounts and their plans.",
     customersDocsSuffix: "in our documentation.",
     addCustomer: "Add Customer",
-    addCustomerDescription: "Add a new customer account to your distributor organization.",
+    addCustomerDescription:
+      "Add a new customer account to your distributor organization.",
     addDomainCustomer: "Add {domain} customer",
     addNewCustomer: "Add New Customer",
     companyNameHelp: "Enter the name of your customers company.",
@@ -5147,7 +5328,8 @@ export default {
       "Granting access allows the distributor to manage billing and subscription for your account.",
     requestHeading: "A distributor is requesting access to your account",
     searchCustomersPlaceholder: "Search by name, domain or id...",
-    selectPlanForCustomerDescription: "Select the plan that best fits your customer's needs.",
+    selectPlanForCustomerDescription:
+      "Select the plan that best fits your customer's needs.",
     tabGeneral: "General",
     tenantsColumn: "Tenants",
     unlinkCustomerTitle: "Unlink '{name}'?",
@@ -5164,7 +5346,8 @@ export default {
     settingsDescription: "Users from these domains can join your account.",
     learnMore: "Learn more",
     addSignInDomain: "Add Sign-in Domain",
-    addSignInDomainDescription: "Users on this domain are matched to your account.",
+    addSignInDomainDescription:
+      "Users on this domain are matched to your account.",
     removeDomainQuestion: "Remove {name}?",
     removeDomain: "Remove domain",
     domainRemoved: "{name} has been removed",
@@ -5306,7 +5489,8 @@ export default {
   instanceSetup: {
     genericError: "An error occurred. Please try again.",
     invalidRequest: "Invalid request. Please check your input.",
-    alreadyCompleted: "Setup has already been completed. Redirecting to login...",
+    alreadyCompleted:
+      "Setup has already been completed. Redirecting to login...",
     yourNamePlaceholder: "Your name",
     strongPasswordPlaceholder: "Enter a strong password",
     reEnterPasswordPlaceholder: "Re-enter your password",
@@ -5382,7 +5566,8 @@ export default {
     appUrlDescription:
       "Stamped on every request as HTTP-Referer. OpenRouter creates a per-app page from this URL and uses it as the primary identifier in their public rankings and per-app analytics. Leave blank to skip; requests still flow but won't attribute to any app on OpenRouter's side.",
     appDisplayName: "App display name",
-    appDisplayNameHelp: "Human-readable app name shown in OpenRouter's rankings.",
+    appDisplayNameHelp:
+      "Human-readable app name shown in OpenRouter's rankings.",
     appDisplayNameDescription:
       "Stamped on every request as X-OpenRouter-Title. Sets the display name of your app in OpenRouter's public rankings and analytics. Requires HTTP-Referer to be set too — without it, X-OpenRouter-Title is ignored.",
     appNamePlaceholder: "Your App Name",
@@ -5397,11 +5582,13 @@ export default {
       "No active proxy clusters are available. Connect at least one proxy under",
     providerConnected: "AI provider connected",
     providerNotUpdated: "Provider not updated",
-    providerNotUpdatedDescription: "This provider is no longer available. Reload the page.",
+    providerNotUpdatedDescription:
+      "This provider is no longer available. Reload the page.",
     providerUpdated: "Provider updated",
     settingsSaved: "Settings saved.",
     providerRemoved: "Provider removed",
-    providerRemovedDescription: "Endpoint will be torn down on next mapping update.",
+    providerRemovedDescription:
+      "Endpoint will be torn down on next mapping update.",
     removeProviderFailed: "Failed to remove provider",
     policyCreated: "Policy created",
     createPolicyFailed: "Failed to create policy",
@@ -5534,14 +5721,16 @@ export default {
     groupSingular: "Group",
     json: "JSON",
     brand: "Agent Network",
-    persistAccessLogs: "Persist access log entries for every agent-network request.",
+    persistAccessLogs:
+      "Persist access log entries for every agent-network request.",
     retentionHelp:
       "How long access logs are kept before they're deleted. Usage history is kept separately.",
     selectRetention: "Select retention...",
     capturePromptHelp:
       "Capture prompt and completion bodies. A policy guardrail must also be enabled.",
     discoveryEnterEndpointFirst: "Enter the endpoint URL first.",
-    discoveryEnterEndpointAndKeyFirst: "Enter the endpoint URL and API key first.",
+    discoveryEnterEndpointAndKeyFirst:
+      "Enter the endpoint URL and API key first.",
     discoveryNotSupported:
       "This provider has no model listing endpoint — the catalog list is used instead.",
     discoveryModelsLoaded:
@@ -5579,7 +5768,8 @@ export default {
     displayNameLabel: "Display name",
     displayNameHelp: "Shown in the Agent Network table.",
     displayNamePlaceholder: "e.g. OpenAI",
-    stampIdentityLiteLlmHelp: "Stamp the identity mappings below onto LiteLLM requests.",
+    stampIdentityLiteLlmHelp:
+      "Stamp the identity mappings below onto LiteLLM requests.",
     liteLlmTagsHelp:
       "Groups are written into <tags>metadata.tags</tags> in the JSON body so LiteLLM can enforce tag budgets and rate limits. The user identity is sent in the <header>x-litellm-end-user-id</header> header. The proxy strips any client-supplied value first, so an app can't spoof identity. The configured API key must be a LiteLLM virtual key with <allowTags>metadata.allow_client_tags: true</allowTags>, or LiteLLM silently drops these tags.",
     userIdentityHeaderLabel: "User identity header",
@@ -5612,7 +5802,8 @@ export default {
     groupsCsvSourceLabel: "Groups (CSV)",
     portkeyMetadataHelp:
       "NetBird stamps the <code>x-portkey-metadata</code> header with a JSON object so Portkey's analytics and budgets key off the real caller. The proxy strips any client-supplied value first, so an app can't spoof identity. Per Portkey's 128-character cap each value is truncated when needed. The mapping is fixed in this release.",
-    stampIdentityBedrockHelp: "Stamp the identity metadata below onto Bedrock requests.",
+    stampIdentityBedrockHelp:
+      "Stamp the identity metadata below onto Bedrock requests.",
     bedrockMetadataHelp:
       "NetBird stamps the caller's identity into the <link>{header}</link> header, so you can break Bedrock spend down by user and group. Client-supplied values are stripped and sanitized.",
     caveatsLabel: "Caveats:",
@@ -5658,7 +5849,8 @@ export default {
       "No agent network requests yet. Check that providers are connected, policies allow traffic, and log collection is on.",
     policyAllowedRequest: "This policy allowed the request",
     userGroupsLabel: "User Groups",
-    userGroupsDescription: "Groups the user belonged to at the time of the request.",
+    userGroupsDescription:
+      "Groups the user belonged to at the time of the request.",
     providerNotAttributedHint:
       "Not attributed to a provider. The request was rejected before NetBird recognised it as an LLM call.",
     providerNotAttributedShapeHint:
@@ -5692,7 +5884,8 @@ export default {
     searchUsersPlaceholder: "Search users by name or email...",
     noUsersToSelect: "No users to select yet.",
     noUsersMatch: "No users match.",
-    targetGroupsLimitCellDescription: "This limit applies to members of these groups.",
+    targetGroupsLimitCellDescription:
+      "This limit applies to members of these groups.",
     groupCapTooltip: "· Group: {value}",
     individualCapTooltip: "· Individual: {value}",
     resetsEveryTooltip: "· Resets every {window}",
@@ -5706,8 +5899,9 @@ export default {
     kimiClaudeCodePairing:
       "Pairs with a Kimi provider keeping the default upstream URL <code>https://api.moonshot.ai</code>. The <code>/anthropic</code> suffix in the base URL rides through the endpoint to Moonshot, which serves the Anthropic Messages API under that path.",
     kimiCliOpenAiShape:
-      "Pairs with a Kimi provider keeping the default upstream URL <code>https://api.moonshot.ai</code>. For the OpenAI shape instead, use <code>type = \"openai_legacy\"</code> with <code>base_url = \"{openaiBase}\"</code>.",
-    browseGuardrailsDescription: "Pick one or more existing guardrails to attach.",
+      'Pairs with a Kimi provider keeping the default upstream URL <code>https://api.moonshot.ai</code>. For the OpenAI shape instead, use <code>type = "openai_legacy"</code> with <code>base_url = "{openaiBase}"</code>.',
+    browseGuardrailsDescription:
+      "Pick one or more existing guardrails to attach.",
     noMoreGuardrailsAvailable:
       "No more guardrails available — all defined guardrails are already attached.",
     modelAllowlistTooltip: "Model allowlist · {count} model(s)",
@@ -5715,13 +5909,15 @@ export default {
     createGuardrailTitle: "Create Guardrail",
     guardrailModalDescription:
       "Define a reusable set of LLM guardrails to attach to one or more policies.",
-    guardrailNameHelp: "Set an easily identifiable name for this guardrail set.",
+    guardrailNameHelp:
+      "Set an easily identifiable name for this guardrail set.",
     guardrailNamePlaceholder: "e.g., Strict — Production",
     guardrailDescriptionHelp:
       "Write a short description to add more context to this guardrail.",
     guardrailDescriptionPlaceholder:
       "e.g., Tight model allowlist, PII redaction, hard monthly budget.",
-    modelAllowlistCheckDescription: "Block requests for models not on the allowlist.",
+    modelAllowlistCheckDescription:
+      "Block requests for models not on the allowlist.",
     allowlistNoModelsFromSelected:
       "The selected providers don't expose any models yet. Add models to a destination provider first — the allowlist is restricted to what those providers expose.",
     allowlistNoModelsAtAll:
@@ -5745,20 +5941,25 @@ export default {
     createFirstPolicyTitle: "Create your first policy",
     createFirstPolicyDescription:
       "Policies connect user and agent groups to AI providers, with optional token and budget limits and guardrails for model access and prompt capture.",
-    attachedGuardrailCount: "{count, plural, one {# Guardrail} other {# Guardrails}}",
+    attachedGuardrailCount:
+      "{count, plural, one {# Guardrail} other {# Guardrails}}",
     guardrailsTabDescription:
       "Guardrails enforce model allowlists and prompt capture per request.",
     noGuardrailsYetTitle: "You haven't added any guardrails yet",
     noGuardrailsYetDescription:
       "Add guardrails to enforce model allowlists and prompt capture per request.",
     attachedLimitCount: "{count, plural, one {# Limit} other {# Limits}}",
-    limitsTabDescription: "Token and budget caps applied directly to this policy.",
+    limitsTabDescription:
+      "Token and budget caps applied directly to this policy.",
     limitSummaryLine:
       "Group {group} · Individual {individual} · resets every {window}",
     noLimitsYetTitle: "You haven't added any limits yet",
-    noLimitsYetDescription: "Add token or budget caps that apply directly to this policy.",
-    tokenLimitModalDescription: "Cap tokens per group and per user over a rolling window.",
-    budgetLimitModalDescription: "Cap USD spend per group and per user over a rolling window.",
+    noLimitsYetDescription:
+      "Add token or budget caps that apply directly to this policy.",
+    tokenLimitModalDescription:
+      "Cap tokens per group and per user over a rolling window.",
+    budgetLimitModalDescription:
+      "Cap USD spend per group and per user over a rolling window.",
     groupCapHelp:
       "Caps the group's total consumption within the window. Once reached, every member is blocked until the window resets, regardless of individual usage.",
     groupTotalWithinWindow: "Group total within the window.",
@@ -5777,7 +5978,8 @@ export default {
       "This policy was created with multiple source groups. Only the first group is kept on save — {name} will be retained, the others removed.",
     destinationProvidersHelp: "AI providers the source is allowed to reach.",
     policyNamePlaceholder: "e.g. Engineering → OpenAI",
-    policyDescriptionPlaceholder: "e.g., Engineers can call OpenAI under production guardrails.",
+    policyDescriptionPlaceholder:
+      "e.g., Engineers can call OpenAI under production guardrails.",
     selectSourceGroupsPlaceholder: "Select source group(s)...",
     selectProvidersPlaceholder: "Select provider(s)...",
     noProvidersConnectedYet: "No providers connected yet.",
@@ -5795,7 +5997,8 @@ export default {
       "Route OpenAI, Anthropic, and other LLM APIs through NetBird to enforce access control, track token spend, and capture prompts.",
     noModelRestrictionUnknownList:
       "No model restriction. This provider doesn't publish a model list, so use any model id its upstream accepts.",
-    noModelRestrictionKnownModels: "No model restriction. Known models for this provider:",
+    noModelRestrictionKnownModels:
+      "No model restriction. Known models for this provider:",
     noProvidersAvailableTitle: "No providers available yet",
     noAccessPolicyCoversUser:
       "No access policy covers your user yet. Add one of your groups to a policy to route your agent through NetBird.",
@@ -5823,6 +6026,12 @@ export default {
     aiGateways: "AI Gateways",
     aiProviders: "AI Providers",
     otherProviderGroup: "Other",
+    pathRoutedNote:
+      "{provider} routes requests by URL path, which only Claude Code supports. Pick another provider above to configure this tool.",
+    claudeProviderUnsupported:
+      "Claude Code speaks the Anthropic Messages API, which {provider} doesn''t. Pick an Anthropic, Vertex AI, Bedrock or Kimi provider above.",
+    runInShell: "Run in your shell",
+    modelLabel: "Model",
   },
   integrations: {
     edrTabTitle: "MDM & EDR",
@@ -5831,7 +6040,8 @@ export default {
     eventStreamingTabTitle: "Event Streaming",
     eventStreamingTabDescription:
       "Event Streaming allows you to stream NetBirds audit & traffic events to different third-party services.",
-    eventStreamingCardDescription: "Stream your activity events to third-party services.",
+    eventStreamingCardDescription:
+      "Stream your activity events to third-party services.",
     peerApproval: "Peer Approval",
     compliance: "Compliance",
     complianceRequirements: "Compliance Requirements",
@@ -5854,7 +6064,8 @@ export default {
     threatsSuffix: "Threats",
     connectNamed: "Connect {name}",
     deleteIntegrationQuestion: "Delete integration?",
-    deleteIntegrationDescription: "Are you sure you want to delete this integration?",
+    deleteIntegrationDescription:
+      "Are you sure you want to delete this integration?",
     deleteIntegrationDescriptionSetupAgain:
       "Are you sure you want to delete this integration? You will need to start the setup process again.",
     deletingIntegration: "Deleting integration...",
@@ -5866,19 +6077,22 @@ export default {
     disconnectConfirmDescription:
       "Disconnecting deletes the current configuration. You will need to start the setup process again.",
     integrationWasDisconnected: "{name} was successfully disconnected",
-    integrationWasConnectedToNetBird: "{name} was successfully connected to NetBird.",
+    integrationWasConnectedToNetBird:
+      "{name} was successfully connected to NetBird.",
     integrationWasDeleted: "{name} was successfully deleted",
     integrationWasUpdated: "{name} was successfully updated",
     integrationWasEnabledOrDisabled: "{name} was successfully {status}",
     enableAction: "enable",
     disableAction: "disable",
     disableIntegrationTitle: "Disable {name}?",
-    disableIntegrationDescription: "Are you sure you want to disable the {name} integration?",
+    disableIntegrationDescription:
+      "Are you sure you want to disable the {name} integration?",
     disconnectIntegrationTitle: "Disconnect {name}?",
     deleteIntegrationNameTitle: "Delete {name} Integration?",
     integrationLinkText: "{name} Integration",
     learnMoreAbout: "Learn more about",
-    selectGroupsHelp: "Select groups you want to apply the {name} integration to",
+    selectGroupsHelp:
+      "Select groups you want to apply the {name} integration to",
     syncWindow: "Sync Window",
     syncWindowName: "{name} Sync Window",
     syncWindowHelp:
@@ -5917,11 +6131,13 @@ export default {
     crowdstrikeRegionHelp:
       "To identify which region you are on check your CrowdStrike dashboard url.",
     crowdstrikeApiCredentialsTitle: "Get your API Credentials",
-    crowdstrikeNavigateToApiPage: "Navigate to the CrowdStrike's API Clients & Keys page",
+    crowdstrikeNavigateToApiPage:
+      "Navigate to the CrowdStrike's API Clients & Keys page",
     crowdstrikeApiClientsAndKeys: "Open API Clients & Keys",
     crowdstrikeCreateApiClientStep:
       "Click <mark>Create API client</mark> and enter <copy>NetBird</copy> as the client name and select <mark>Hosts (Read)</mark> and <mark>Zero Trust Assessment (Read)</mark> as the scope",
-    crowdstrikeCreateStep: "Click <mark>Create</mark> and enter your credentials",
+    crowdstrikeCreateStep:
+      "Click <mark>Create</mark> and enter your credentials",
     crowdstrikeDeleteHelp:
       "Deleting this integration will remove the current configuration. If you delete the integration you will need to reconfigure it again.",
     ztaToggleLabel: "Use Zero Trust Assessment Score",
@@ -5951,13 +6167,17 @@ export default {
     fleetdmCreateApiOnlyUser: "Create an <link>API-only user</link>",
     fleetdmPasteToken: "Once created, paste the received API token below.",
     fleetdmApiTokenPlaceholder: "Enter your FleetDM API token",
-    fleetdmUrlError: "Please enter a valid url, e.g., https://fleet.example.com",
+    fleetdmUrlError:
+      "Please enter a valid url, e.g., https://fleet.example.com",
     maxFailingPolicies: "Max Failing Policies",
-    maxFailingPoliciesHelp: "Maximum number of allowed failing policies on a device.",
+    maxFailingPoliciesHelp:
+      "Maximum number of allowed failing policies on a device.",
     maxVulnerableSoftware: "Max Vulnerable Software",
-    maxVulnerableSoftwareHelp: "Maximum number of allowed vulnerable software on a device.",
+    maxVulnerableSoftwareHelp:
+      "Maximum number of allowed vulnerable software on a device.",
     requiredPolicyIds: "Required FleetDM Policy IDs",
-    requiredPolicyIdsHelp: "Comma-separated policy IDs that must pass on the device.",
+    requiredPolicyIdsHelp:
+      "Comma-separated policy IDs that must pass on the device.",
     fleetdmDeleteHelp:
       "Deleting this integration will remove the ability to enforce compliance policies from FleetDM. If you delete the integration you will need to reconfigure it again.",
     diskEncryption: "Disk Encryption",
@@ -6013,7 +6233,8 @@ export default {
     intuneFormAccountTypesValue:
       "Accounts in this organizational directory only (Default Directory only - Single tenant)",
     intuneAddPermissionsTitle: "Add API permissions",
-    intuneApiPermissionsStep: "Click <mark>API permissions</mark> on the left side menu",
+    intuneApiPermissionsStep:
+      "Click <mark>API permissions</mark> on the left side menu",
     intuneAddPermissionStep:
       "Click <mark>Add a permission</mark> then <mark>Microsoft Graph</mark> and then on the <mark>Application permissions</mark> tab.",
     intuneSelectPermissionsStep:
@@ -6044,12 +6265,14 @@ export default {
     sentinelonePermissionsLine1: "Create API Tokens",
     sentinelonePermissionsLine2: "Manage API Tokens",
     sentineloneConsoleUrlTitle: "Get your SentinelOne Console URL",
-    sentineloneNavigateConsole: "Navigate to your SentinelOne Management Console.",
+    sentineloneNavigateConsole:
+      "Navigate to your SentinelOne Management Console.",
     sentineloneCopyUrlStep:
       "Copy your SentinelOne console URL from the browser's address bar and enter it here.",
     sentineloneCreateTokenTitle: "Create a SentinelOne API Token",
     sentineloneServiceUsersPath: "Settings » Users » Service Users",
-    sentineloneServiceUsersStep: "Navigate to <link>Settings » Users » Service Users</link>",
+    sentineloneServiceUsersStep:
+      "Navigate to <link>Settings » Users » Service Users</link>",
     sentineloneCreateServiceUserStep: "Click <mark>Create Service User</mark>",
     sentineloneNameStep:
       "Enter <copy>NetBird Integration</copy> as the name, a optional description and select your preferred expiration date. Click <mark>Next</mark>",
@@ -6058,16 +6281,20 @@ export default {
     sentineloneUrlError:
       "Please enter a valid SentinelOne url e.g., https://your-tenant.sentinelone.net",
     allowedActiveThreats: "Allowed Active Threats",
-    allowedActiveThreatsHelp: "Maximum allowed number of active threats on a device.",
+    allowedActiveThreatsHelp:
+      "Maximum allowed number of active threats on a device.",
     firewallHelpSentinel: "Devices must have their firewall enabled.",
     blockInfectedDevices: "Block Infected Devices",
-    blockInfectedDevicesHelp: "Prevent access for devices with active infections.",
+    blockInfectedDevicesHelp:
+      "Prevent access for devices with active infections.",
     networkConnectivity: "Network Connectivity",
-    networkConnectivityHelp: "Require active network connection to SentinelOne.",
+    networkConnectivityHelp:
+      "Require active network connection to SentinelOne.",
     activeStatusLabel: "Active Status",
     activeStatusHelp: "SentinelOne agent must be active and reporting.",
     latestAgentVersion: "Latest Agent Version",
-    latestAgentVersionHelp: "SentinelOne agent should be running on the latest version.",
+    latestAgentVersionHelp:
+      "SentinelOne agent should be running on the latest version.",
     s3Description: "Amazon S3 is a scalable storage in the cloud.",
     s3SetupDescription:
       "Start streaming your NetBird audit & traffic events to Amazon S3. Follow the steps below to get started.",
@@ -6077,7 +6304,8 @@ export default {
     s3DashboardButton: "Amazon S3 Dashboard",
     s3CreateBucketTitle: "Create your S3 Bucket",
     s3NavigateDashboard: "Navigate to the Amazon S3 Dashboard",
-    s3CreateBucketStep: "Click <mark>Create bucket</mark> at the top right corner",
+    s3CreateBucketStep:
+      "Click <mark>Create bucket</mark> at the top right corner",
     s3DescribeNameStep:
       "Give it a descriptive name like <copy>netbird-activity-events</copy> and click <mark>Create bucket</mark>",
     s3EnterBucketName: "Enter your S3 Bucket name",
@@ -6099,7 +6327,8 @@ export default {
       "To identify which region you are on please check out the <link>Amazon Data Firehose Dashboard.</link>",
     firehoseStreamDashboardButton: "Amazon Data Firehose Stream Dashboard",
     firehoseCreateStreamTitle: "Create your Firehose Stream",
-    firehoseNavigateStreamDashboard: "Navigate to the Amazon Data Firehose Stream Dashboard",
+    firehoseNavigateStreamDashboard:
+      "Navigate to the Amazon Data Firehose Stream Dashboard",
     firehoseCreateStreamStep:
       "Click <mark>Create Firehose stream</mark> at the top right corner",
     firehoseSourceStep: "As <mark>Source</mark> select <mark>Direct PUT</mark>",
@@ -6132,11 +6361,13 @@ export default {
     genericHttpSetupDescription:
       "Start streaming your NetBird audit & traffic events to a Generic HTTP endpoint. {extra}",
     genericHttpSetupDescriptionExtra: "Follow the steps to get started.",
-    genericHttpConnectDescription: "HTTP Integration was successfully connected.",
+    genericHttpConnectDescription:
+      "HTTP Integration was successfully connected.",
     genericHttpUpdateDescription: "HTTP Integration was updated successfully.",
     genericHttpSetupLoading: "Setting up HTTP integration...",
     genericHttpUpdateLoading: "Updating HTTP integration...",
-    genericHttpEnabledNotification: "HTTP Integration was successfully {status}.",
+    genericHttpEnabledNotification:
+      "HTTP Integration was successfully {status}.",
     genericHttpConnectionSubtitle:
       "Full HTTP(S) URL where events will be sent later via a POST request.",
     configuration: "Configuration",
@@ -6157,7 +6388,8 @@ export default {
     identityProviderLabel: "Identity Provider",
     idpSyncTitle: "Identity Provider Sync",
     idpSyncFeatureText: "Identity Provider (IdP) Sync",
-    idpSyncCardDescription: "Sync users and groups from Okta, Microsoft or Google IdP",
+    idpSyncCardDescription:
+      "Sync users and groups from Okta, Microsoft or Google IdP",
     idpSyncDescription:
       "Configure your preferred Identity Provider (IdP) to synchronize your users and groups to NetBird.",
     customIdpCallout:
@@ -6193,7 +6425,8 @@ export default {
     connectNetBirdWith: "Connect NetBird with {name}",
     configurationTitle: "{name} Configuration",
     integrationLinkText: "{name} Integration",
-    learnMoreAboutIntegration: "Learn more about <link>{name} Integration</link>",
+    learnMoreAboutIntegration:
+      "Learn more about <link>{name} Integration</link>",
     startSyncingWithProvider:
       "Start syncing your users and groups from {name} to NetBird. Follow the steps below to get started.",
     genericSyncDescription:
@@ -6210,7 +6443,8 @@ export default {
     syncedRelative: "Synced {time}",
     deleteIntegration: "Delete Integration",
     deleteIntegrationQuestion: "Delete integration?",
-    deleteIntegrationDescription: "Are you sure you want to delete this integration?",
+    deleteIntegrationDescription:
+      "Are you sure you want to delete this integration?",
     deleteIntegrationHelp:
       "Deleting this integration will remove the ability to sync users and groups from your IdP to NetBird. If you delete the integration you will need to reconfigure it again to enable the synchronization.",
     deletingIntegration: "Deleting integration...",
@@ -6221,7 +6455,8 @@ export default {
     integrationWasDeleted: "{name} was successfully deleted",
     integrationWasUpdated: "{name} was successfully updated",
     integrationWasSetUp: "{name} was successfully set up",
-    integrationWasConnectedToNetBird: "{name} was successfully connected to NetBird.",
+    integrationWasConnectedToNetBird:
+      "{name} was successfully connected to NetBird.",
     enableAction: "enable",
     disableAction: "disable",
     groupSync: "Group Sync",
@@ -6296,7 +6531,8 @@ export default {
     entraIdWasConnected: "Entra ID was successfully connected to NetBird.",
     entraIdDescription:
       "Microsoft Entra ID is a cloud-based identity and access management solution.",
-    entraIdSyncFromDescription: "Sync your users and groups from Entra ID to NetBird.",
+    entraIdSyncFromDescription:
+      "Sync your users and groups from Entra ID to NetBird.",
     entraIdStartSyncDescription:
       "Start syncing your users and groups from Entra ID to NetBird. Follow the steps below to get started.",
     entraIdCreateAppTitle: "Create and configure Azure AD application",
@@ -6308,7 +6544,8 @@ export default {
     entraIdFormAccountTypesValue:
       "Accounts in this organizational directory only (Default Directory only - Single tenant)",
     entraIdAddPermissionsTitle: "Add API permissions",
-    entraIdApiPermissionsStep: "Click <mark>API permissions</mark> on the left side menu",
+    entraIdApiPermissionsStep:
+      "Click <mark>API permissions</mark> on the left side menu",
     entraIdAddPermissionStep:
       "Click <mark>Add a permission</mark> then <mark>Microsoft Graph</mark> and then on the <mark>Application permissions</mark> tab.",
     entraIdSelectPermissionsStep:
@@ -6376,16 +6613,19 @@ export default {
     googleWorkspaceConfigurationTitle: "Google Workspace Configuration",
     googleWorkspaceDescription:
       "A flexible, innovative solution for people and organizations to achieve more.",
-    googleWorkspaceSyncDescription: "Sync your users and groups from Google Workspace.",
+    googleWorkspaceSyncDescription:
+      "Sync your users and groups from Google Workspace.",
     googleWorkspacePermissionsIntro:
       "Ensure that you have an <accent>Google Workspace user account</accent> with the following <accent>permissions</accent>. If you don't have the required permissions, ask your workspace administrator to grant them to you.",
     createGoogleWorkspaceApplications: "Create Google Workspace applications",
     manageGoogleWorkspaceApplications: "Manage Google Workspace applications",
-    googleWorkspaceWasConnected: "Google Workspace was successfully connected to NetBird.",
+    googleWorkspaceWasConnected:
+      "Google Workspace was successfully connected to NetBird.",
     googleWorkspaceWasDeleted: "Google Workspace was successfully deleted",
     googleWorkspaceWasUpdated: "Google Workspace was successfully updated",
     googleWorkspaceWasSynced: "Google Workspace was successfully synced",
-    googleWorkspaceWasEnabledOrDisabled: "Google Workspace was successfully {status}",
+    googleWorkspaceWasEnabledOrDisabled:
+      "Google Workspace was successfully {status}",
     createNetBirdProject: "Create NetBird project",
     googleCreateProjectStep1:
       "Create a new <copy>NetBird</copy> project in the <link>Google Cloud Console</link>",
@@ -6401,7 +6641,8 @@ export default {
     googleNavigateServiceAccounts: "Navigate to <link>Service Accounts</link>",
     googleEditServiceAccountStep:
       "Click <mark>NetBird</mark> to edit the service account. Copy the service account email address.",
-    googleEnterServiceAccountEmailStep: "Enter your service account email address",
+    googleEnterServiceAccountEmailStep:
+      "Enter your service account email address",
     createServiceAccountKey: "Create service account key",
     googleCreateKeyStep:
       "On the same page, now click the <mark>Keys</mark> tab, open the <mark>Add key</mark> dropdown and select <mark>Create new key</mark>",
@@ -6421,23 +6662,27 @@ export default {
     googleVerifyPrivilegesStep:
       "Verify preview of assigned Admin API privileges to ensure that everything is properly configured, and then click <mark>CREATE ROLE</mark>",
     assignServiceAccount: "Assign service account",
-    googleAssignServiceAccountsStep: "Click <mark>Assign service accounts</mark>",
+    googleAssignServiceAccountsStep:
+      "Click <mark>Assign service accounts</mark>",
     googleEnterEmailStep:
       "Enter your <mark>E-Mail</mark> and then click <mark>ADD</mark>",
     googleAssignRoleStep: "Click <mark>ASSIGN ROLE</mark>",
     enterCustomerId: "Enter Customer ID",
     googleNavigateAccountSettings: "Navigate to <link>Account Settings</link>",
-    googleNoteCustomerIdStep: "Take note of the <mark>Customer ID</mark> and enter it below",
+    googleNoteCustomerIdStep:
+      "Take note of the <mark>Customer ID</mark> and enter it below",
     jumpcloudIntegrationTitle: "Jumpcloud Integration",
     jumpcloudConfigurationTitle: "Jumpcloud Configuration",
     jumpcloudDescription:
       "Jumpcloud is a unified identity, device, and access management platform.",
-    jumpcloudSyncDescription: "Sync your users and groups from Jumpcloud to NetBird.",
+    jumpcloudSyncDescription:
+      "Sync your users and groups from Jumpcloud to NetBird.",
     jumpcloudWasEnabledOrDisabled: "Jumpcloud was successfully {status}",
     jumpcloudWasDeleted: "Jumpcloud was successfully deleted",
     jumpcloudWasUpdated: "Jumpcloud was successfully updated",
     jumpcloudWasSetUp: "Jumpcloud was successfully set up",
-    jumpcloudAuthTokenRegenerated: "Auth token for Jumpcloud was successfully regenerated",
+    jumpcloudAuthTokenRegenerated:
+      "Auth token for Jumpcloud was successfully regenerated",
     jumpcloudRegenerateDescription:
       "Are you sure you want to regenerate the auth token? You will need to update the token in your Jumpcloud configuration.",
     jumpcloudPermissionsIntro:
@@ -6447,7 +6692,8 @@ export default {
     jumpcloudSsoRequiredCallout:
       "Jumpcloud SSO needs to be enabled before you can enable IdP sync. <link>How to enable Jumpcloud SSO</link>",
     configureScimApplication: "Configure SCIM Application",
-    jumpcloudNavigateAdminConsole: "Navigate to your <link>Jumpcloud admin console</link>",
+    jumpcloudNavigateAdminConsole:
+      "Navigate to your <link>Jumpcloud admin console</link>",
     jumpcloudSsoAppsStep:
       "Go to <mark>SSO Applications</mark> and select your <mark>NetBird</mark> application, and then select <mark>Identity Management</mark> tab.",
     jumpcloudCredentialsStep:
@@ -6466,7 +6712,8 @@ export default {
     oktaWasEnabledOrDisabled: "Okta was successfully {status}",
     oktaWasDeleted: "Okta was successfully deleted",
     oktaWasUpdated: "Okta was successfully updated",
-    oktaAuthTokenRegenerated: "Auth token for Okta was successfully regenerated",
+    oktaAuthTokenRegenerated:
+      "Auth token for Okta was successfully regenerated",
     oktaRegenerateDescription:
       "Are you sure you want to regenerate the auth token? You will need to update the token in your Okta configuration.",
     oktaSsoRequiredTooltip:
@@ -6507,7 +6754,8 @@ export default {
     oktaSyncGroupsStep2:
       "Search groups to push and then click <mark>Save</mark>. The selected groups will then be synced to NetBird.",
     oktaInstallAppTitle: "Install NetBird application for Okta",
-    oktaNavigateIntegrationNetwork: "Navigate to <link>Okta Integration Network</link>",
+    oktaNavigateIntegrationNetwork:
+      "Navigate to <link>Okta Integration Network</link>",
     oktaAddIntegrationStep:
       "Click <mark>+ Add Integration</mark> and then <mark>Done</mark>",
     oktaAssignPeopleStep:
@@ -6542,14 +6790,16 @@ export default {
     oktaSsoSetupTitle: "Connect NetBird with Okta SSO",
     oktaSsoUseAsProvider:
       "Use Okta as a Single Sign-On provider to authenticate users. Follow the steps below to get started.",
-    oktaSsoUseAsProviderShort: "Use Okta as a Single Sign-On provider to authenticate users.",
+    oktaSsoUseAsProviderShort:
+      "Use Okta as a Single Sign-On provider to authenticate users.",
     oidcUseAsProvider:
       "Use {name} as a Single Sign-On provider to authenticate users. Follow the steps below to get started.",
     oidcClientCredentialsHelp:
       "Obtaining the Client ID and Secret differs across providers. Please check your provider's documentation.",
     oidcDiscoveryEndpointHelp:
       "Please provide the <mark>OpenID Connect Discovery</mark> endpoint. It should be publicly accessible and SSL secured.",
-    oidcDiscoveryPlaceholder: "https://id.mydomain.com/.well-known/openid-configuration",
+    oidcDiscoveryPlaceholder:
+      "https://id.mydomain.com/.well-known/openid-configuration",
     singleSignOnTitle: "Single Sign-On",
     ssoDescription:
       "Configure your preferred Identity Provider (IdP) to enable Single Sign-On (SSO) for your team.",
@@ -6617,7 +6867,7 @@ export default {
     certificateUnverifiedHelp:
       "Certificated could not be verified by a trusted authority. Review the certificate information before proceeding with the connection.",
     alwaysTrustIssuer:
-      "Always trust \"<bold>{issuer}</bold>\" when connecting to \"<bold>{hostname}</bold>\"",
+      'Always trust "<bold>{issuer}</bold>" when connecting to "<bold>{hostname}</bold>"',
     acceptAndContinue: "Accept & Continue",
     notAvailable: "N/A",
     issuer: "Issuer",
@@ -6741,7 +6991,8 @@ export default {
   },
   peerSsh: {
     sshInstructionsTitle: "Connect via SSH",
-    sshInstructionsDescription: "Use the command below to connect to this peer over SSH.",
+    sshInstructionsDescription:
+      "Use the command below to connect to this peer over SSH.",
     sshPolicyRequired: "An SSH policy is required before you can connect.",
     createSshPolicy: "Create SSH Policy",
     sshNotEnabled: "SSH is not enabled on this peer.",
@@ -6780,7 +7031,8 @@ export default {
     sshDisabledTooltip:
       "SSH Access is currently disabled for this peer. Please enable SSH access for this peer and make sure to add an explicit access control policy allowing SSH access.",
     rdpConnectionFailed: "RDP connection failed",
-    sshConnectionFailed: "SSH connection failed. Check the console for details.",
+    sshConnectionFailed:
+      "SSH connection failed. Check the console for details.",
     noAccessToken: "No access token available",
     unableToParse: "Unable to parse",
   },
@@ -6816,7 +7068,8 @@ export default {
       "Your subscription has been successfully activated. You have now full access to all NetBird features of your selected plan.",
     updateYourPlan: "Update your NetBird Plan",
     upgradeYourPlan: "Upgrade your NetBird Plan",
-    increaseLimitHint: "Increase your user and peer limit by upgrading your plan.",
+    increaseLimitHint:
+      "Increase your user and peer limit by upgrading your plan.",
     flexiblePricingHint:
       "With our flexible pricing, you are only billed for active users and active peers.",
     pricingPlanLead: "Find out which",
@@ -6825,8 +7078,10 @@ export default {
     tryAllFeaturesFree: "Try all of NetBird's features for free",
     trialGradientDescription:
       "Activate your 14-day trial to access NetBird's full set of features & integrations. After the trial, you will return to your {plan} plan unless you choose to upgrade.",
-    trialOwnerOnly: "Only the owner or an administrator can start a free trial.",
-    upgradeOwnerOnly: "Only the owner or an administrator can upgrade the plan.",
+    trialOwnerOnly:
+      "Only the owner or an administrator can start a free trial.",
+    upgradeOwnerOnly:
+      "Only the owner or an administrator can upgrade the plan.",
     startFreeTrial: "Start 14-Day Free Trial",
     noCreditCardRequired: "No credit card required",
     getLicense: "Get a License",
@@ -6849,9 +7104,11 @@ export default {
     availableOnBusinessPlan: "Business plan",
     availableOnEnterpriseOrCloud:
       "{feature} is available with a NetBird Enterprise commercial license, or on NetBird Cloud with the {plan}.",
-    contactAdminToUpgrade: "Contact your account administrator to upgrade the plan.",
+    contactAdminToUpgrade:
+      "Contact your account administrator to upgrade the plan.",
     ownerOrAdminUpgradeOnly: "Only the owner or an admin can upgrade the plan.",
-    upgradeOrStartTrial: "Upgrade or start a 14-day free trial to access this feature.",
+    upgradeOrStartTrial:
+      "Upgrade or start a 14-day free trial to access this feature.",
     upgradePlanToAccess: "Upgrade your {scope} plan to access this feature.",
     scopeCurrent: "current",
     scopeTenants: "tenants",
