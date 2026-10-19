@@ -30,7 +30,7 @@ OVERLAY_COMPOSE="$STACK_DIR/docker-compose.i18n.yml"
 ZERO_DOWNTIME="$STACK_DIR/zero-downtime-deploy.sh"
 BACKUP_DIR="$STACK_DIR/backups"
 LOCK=/var/lock/netbird-auto-update.lock
-PULL_TIMEOUT=${PULL_TIMEOUT:-1800}   # seconds; the GHCR link can be slow
+PULL_TIMEOUT=${PULL_TIMEOUT:-5400}   # seconds; the GHCR link can be slow (90 min)
 HEALTH_WAIT=${HEALTH_WAIT:-90}       # seconds to wait for the management API
 KEEP_DB_BACKUPS=${KEEP_DB_BACKUPS:-3}
 

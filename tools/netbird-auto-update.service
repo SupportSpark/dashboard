@@ -11,4 +11,6 @@ ExecStart=/usr/local/bin/netbird-auto-update.sh
 Nice=10
 IOSchedulingClass=idle
 # A slow GHCR pull must not be killed mid-flight by systemd's default timeouts.
-TimeoutStartSec=45min
+# Kept above the script's own 90 min pull cap so the script decides; if a pull
+# does need the full window the next hourly timer just skips (flock).
+TimeoutStartSec=100min
