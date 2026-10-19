@@ -1,0 +1,13 @@
+[Unit]
+Description=Hourly image refresh for the NetBird stack
+
+[Timer]
+# Every hour on the hour; the random delay keeps this host off the same second
+# as every other instance hammering Docker Hub / GHCR.
+OnCalendar=hourly
+RandomizedDelaySec=300
+Persistent=true
+AccuracySec=1min
+
+[Install]
+WantedBy=timers.target

@@ -299,6 +299,45 @@ docker ps --format '{{.Names}} {{.Image}} {{.Status}}'           # server 应为
 > ⚠️ server 升级会重启 signal/relay，节点会短暂显示离线，客户端会自动重连
 > （WireGuard 会话恢复后重新上报）。这不是故障。
 
+### 7.1 每小时自动更新镜像（systemd timer）
+
+服务器上装了 `netbird-auto-update.timer`，每小时整点（加 0–5 分钟随机延迟）跑一次
+[`tools/vps-auto-update.sh`](../tools/vps-auto-update.sh)：
+
+| 服务 | 更新依据 | 说明 |
+| --- | --- | --- |
+| `netbird-server` | GitHub 最新**稳定** release（`/releases/latest`，跳过 prerelease） | compose 里是**固定 tag**，所以只看 digest 永远发现不了新版本；脚本会改写 `docker-compose.yml` 里的 tag |
+| `dashboard` | `ghcr.io/supportspark/dashboard:zh-latest` 的 digest | 变了就走 `zero-downtime-deploy.sh`（cover 容器 + 10/10 自检） |
+| `netbird-traefik` / `netbird-acme` | 同上（digest） | 固定 tag 一般不动，只在 upstream 重新推同一个 tag 时才重建 |
+
+**没更新就什么都不做**：脚本比对「运行中容器的 image id」和「本地 tag 的 image id」，
+一致就不重启，所以平稳的一小时不会产生任何中断。
+
+**server 升级的保护**：
+
+1. 重建前把数据卷打成 `backups/netbird-data-pre-<tag>-<时间>.tar.gz`（只保留最近 3 份）；
+2. 重建后轮询 `https://<host>/api/users` 最多 90 秒，等到 401/200 才算成功；
+3. 超时就把 compose 里的 tag **改回旧版本**并重建（旧镜像还在本地，不依赖网络），
+   日志里留 `ERROR`，`systemctl status` 能看到失败状态。
+
+**安装 / 查看 / 停用**：
+
+```bash
+install -m 755 vps-auto-update.sh /usr/local/bin/netbird-auto-update.sh
+install -m 644 netbird-auto-update.{service,timer} /etc/systemd/system/
+systemctl daemon-reload && systemctl enable --now netbird-auto-update.timer
+
+systemctl list-timers netbird-auto-update.timer      # 下次触发时间
+journalctl -u netbird-auto-update.service -n 50      # 每次运行的结论
+tail -f /opt/netbird/auto-update.log                 # docker 侧的详细输出
+
+systemctl disable --now netbird-auto-update.timer    # 停用
+/usr/local/bin/netbird-auto-update.sh                # 手动跑一次（幂等）
+```
+
+`flock` 保证不会叠加运行：一次拉取超过一小时，下一个整点会直接跳过；
+`docker compose pull` 外面套了 30 分钟 `timeout`，超时就放弃这一轮、下一轮续传。
+
 ### 方案 A：拉构建好的镜像（推荐，已采用）
 
 服务器上已有覆盖文件 `/opt/netbird/docker-compose.i18n.yml`：

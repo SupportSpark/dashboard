@@ -1,0 +1,14 @@
+[Unit]
+Description=Refresh the NetBird container images (hourly)
+Documentation=file:/opt/netbird/README.md
+After=docker.service network-online.target
+Wants=network-online.target
+Requires=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/netbird-auto-update.sh
+Nice=10
+IOSchedulingClass=idle
+# A slow GHCR pull must not be killed mid-flight by systemd's default timeouts.
+TimeoutStartSec=45min

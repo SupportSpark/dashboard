@@ -16,6 +16,21 @@ on:
   push:
     branches: ["i18n-zh"]
     tags: ["i18n-v*"]
+    # Only rebuild when something that ends up in the image changed. Docs and
+    # the VPS deployment tooling live in the same branch, and the deployment
+    # host pulls the image hourly over a slow link - a rebuild triggered by a
+    # README edit costs an hour of transfer and a needless dashboard swap for
+    # a byte-identical app.
+    paths:
+      - "src/**"
+      - "public/**"
+      - "docker/**"
+      - "package.json"
+      - "package-lock.json"
+      - "next.config.js"
+      - "postbuild.js"
+      - "tsconfig.json"
+      - ".github/workflows/build-localized.yml"
   workflow_dispatch:
 
 concurrency:
