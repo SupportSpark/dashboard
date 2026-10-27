@@ -208,6 +208,7 @@ jobs:
       - name: Localization checks (merge gate)
         if: steps.guard.outputs.up_to_date == 'false' && (steps.merge.outcome == 'success' || steps.ours.outputs.manual == 'false')
         run: |
+          node tools/check-fork-deps.mjs .
           node tools/check-catalog-parity.mjs .
           node tools/check-translation-keys.mjs
           node tools/check-message-rendering.mjs

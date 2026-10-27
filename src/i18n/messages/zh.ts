@@ -438,7 +438,7 @@ export default {
     loginExpirationUpdateDescription: "节点 {name} 的会话过期已成功{state}。",
     loginExpirationUpdating: "正在更新会话过期...",
     loginRequired: "需要登录",
-    loginExpiredTooltip: "此节点已离线，由于其登录已过期，需要重新认证。",
+    loginExpiredTooltip: "此节点已离线，<br/>由于其登录已过期，需要重新认证。",
     enableSSH: "启用 SSH 访问",
     disableSSH: "禁用 SSH 访问",
     disableSSHConfirmation: "禁用 SSH 访问？",

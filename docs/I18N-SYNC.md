@@ -21,13 +21,15 @@
 
 | 项 | 状态 |
 | --- | --- |
-| 已同步的上游版本 | ✅ `v2.95.0`（`0d020d44`），`main` 已快进到同一 commit |
+| 已同步的上游版本 | ✅ `v2.95.0` + 之后的 8 个提交（`02f39c38`，上游未升版本号）；`main` 已镜像到同一 commit |
+| 依赖 | ✅ Next.js 16.4.0、React 19.2、Tailwind CSS v4.3、next-intl 4.14.9 |
 | 构建 | ✅ `npm run build` 通过，静态导出全部路由预渲染 |
-| 单元测试 | ✅ 910/910 通过（78 个文件） |
+| 单元测试 | ✅ 923/923 通过（81 个文件） |
 | 目录一致性 | ✅ en/zh 各 5567 个叶子 key，无缺失、无孤立 |
-| key 解析 | ✅ 5955 个命名空间内字面量 key 全部可解析 |
-| 消息渲染 | ✅ 13466 条消息编排通过，343 处 `t.rich()` 标签齐备 |
+| key 解析 | ✅ 5991 个命名空间内字面量 key 全部可解析 |
+| 消息渲染 | ✅ 13466 条消息编排通过，344 处 `t.rich()` 标签齐备 |
 | 缩进 | ✅ 无 Tab 缩进行（`tools/check-indentation.mjs`） |
+| 依赖完整性 | ✅ `next-intl` 与 i18n 文件齐全（`tools/check-fork-deps.mjs`） |
 | 语言探测断言 | ✅ `npm run test:i18n` 全通过 |
 | CI（parity + 镜像构建） | ✅ 已跑绿 |
 | 线上部署 | ✅ 返回 200，中文包随镜像下发（站点地址见你的部署环境） |
@@ -535,7 +537,46 @@ node tools/check-indentation.mjs .   # 提交前自检；CI 也会跑
 （bash 片段、PEM 块）会被跳过——那些 Tab 是给用户复制的，改掉就改变了内容。
 需要豁免某行时在该行写 `indent-ok`。
 
-### 9.4 其他
+### 9.4 整份取上游 `package.json` 会删掉 `next-intl`（v2.96 前实测）
+
+冲突解决时 `package.json` / `package-lock.json` 的标准做法是整份取上游（`git checkout --theirs`）——
+锁文件几千行，手改必错。但**上游没有 `next-intl`**，这份文件被整份替换后，我们自己的依赖就跟着没了。
+
+症状不是"编译报错"，而是构建在一段时间后才炸：
+
+```
+⨯ Failed to load next.config.js
+Error: Cannot find module 'next-intl/plugin'
+```
+
+2026-10 那次合并（Next.js 16.4 + Tailwind v4 那批 8 个提交）就踩了这个坑，而且是在**合并已经提交、
+推到远端之后**才发现。同一个坑还会带走 `package.json` 里的 **npm 脚本**——`test:i18n` 也跟着消失了，
+症状是 CI 里 `npm error Missing script: "test:i18n"`。
+
+现在由 `tools/check-fork-deps.mjs` 兜住，它检查三件事：
+
+1. 本 fork 独有的依赖（目前只有 `next-intl`）在 `package.json` 里、且已装进 `node_modules`；
+2. 本 fork 独有的脚本（`test:i18n`）存在，并且它指向的 `scripts/run-i18n-test.mjs` 也在；
+3. i18n 层不可丢失的文件（`src/i18n/messages/{en,zh}.ts`、`config.ts`、`request.ts`、`global.d.ts`、
+   `src/contexts/LocaleProvider.tsx`）都在。
+
+它接在同步流水线的"Localization checks (merge gate)"第一步、以及 `i18n-parity.yml` 里；
+push 到 `i18n-zh` 时只要 `package.json`/`package-lock.json` 变了就会触发。
+
+修法（脚本会把这些命令原样打出来）：
+
+```bash
+npm install next-intl --save      # 写回 package.json 并更新锁文件
+node tools/check-fork-deps.mjs .
+```
+
+> 合并 `package.json` 的正确姿势：`git checkout --theirs package.json` 之后**立刻**把上面两项补回去
+> （只加行、不改顺序），这样 `git diff upstream/main -- package.json` 永远只有两行增项，
+> 下次同步不会再把顺序差异当成冲突。
+
+以后再加"上游没有、只有我们有"的依赖，记得同步加进 `FORK_ONLY_DEPENDENCIES`。
+
+### 9.5 其他
 
 - **`npm run lint` 目前是坏的**：上游改用 `eslint .`，本地化分支的部分历史提交
   仍按旧脚本调用。以 `npx tsc --noEmit` + `npm run build` 作为准入门槛。

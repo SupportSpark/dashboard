@@ -455,7 +455,7 @@ export default {
     loginExpirationUpdating: "Updating session expiration...",
     loginRequired: "Login required",
     loginExpiredTooltip:
-      "This peer is offline and needs to be re-authenticated because its login has expired.",
+      "This peer is offline and needs to be <br/>re-authenticated because its login has expired.",
     enableSSH: "Enable SSH Access",
     disableSSH: "Disable SSH Access",
     disableSSHConfirmation: "Disable SSH Access?",

@@ -15,16 +15,24 @@ on:
   pull_request:
     paths:
       - "src/i18n/**"
+      - "package.json"
+      - "package-lock.json"
       - "tools/check-catalog-parity.mjs"
       - "tools/check-translation-keys.mjs"
       - "tools/check-message-rendering.mjs"
       - "tools/check-indentation.mjs"
+      - "tools/check-fork-deps.mjs"
       - ".github/workflows/i18n-parity.yml"
   push:
     branches: ["i18n-zh"]
     paths:
       - "src/i18n/**"
       - "src/**"
+      # A dependency resolution can silently drop next-intl; that is precisely
+      # what the fork-deps step below exists to catch.
+      - "package.json"
+      - "package-lock.json"
+      - "tools/check-fork-deps.mjs"
   workflow_dispatch:
 
 permissions:
@@ -58,6 +66,14 @@ jobs:
 
       - name: Catalog parity (en → zh)
         run: node tools/check-catalog-parity.mjs .
+
+      # The fork carries runtime dependencies upstream does not have, next-intl
+      # above all. A sync merge that resolves the package.json/lock conflict by
+      # taking upstream's file wholesale deletes them, and the only symptom is
+      # `next build` dying with "Cannot find module 'next-intl/plugin'" long
+      # after the merge was pushed. This fails first, with the fix.
+      - name: Fork-only dependencies present
+        run: node tools/check-fork-deps.mjs .
 
       # A tab-indented file differs from upstream on every line, so git cannot
       # 3-way merge it: each upstream release turns it into a whole-file
