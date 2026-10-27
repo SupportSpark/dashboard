@@ -18,8 +18,8 @@ export default function LoginExpiredBadge({ loginExpired }: Props) {
         </Badge>
       </TooltipTrigger>
       <TooltipContent>
-        <div className={"text-neutral-300 text-xs leading-1.5"}>
-          {t("loginExpiredTooltip")}
+        <div className={"text-neutral-300 text-xs"}>
+          {t.rich("loginExpiredTooltip", { br: () => <br /> })}
         </div>
       </TooltipContent>
     </Tooltip>

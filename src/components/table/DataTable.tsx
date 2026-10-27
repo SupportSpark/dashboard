@@ -332,6 +332,13 @@ export function DataTable<TData, TValue>({
 
   const hasInitialData = !!(data && data.length > 0);
 
+  // The pagination prop is undefined while server data is loading,
+  // so fall back to the first page instead of handing updaters undefined.
+  const manualPaginationState: PaginationState = {
+    pageIndex: pagination?.pageIndex ?? 0,
+    pageSize: pagination?.pageSize ?? initialPageSize,
+  };
+
   const table = useReactTable({
     data: hasInitialData ? data : [],
     columns,
@@ -356,12 +363,7 @@ export function DataTable<TData, TValue>({
         : localColumnFilters,
       columnVisibility: columnVisibility,
       globalFilter: manualFiltering ? globalFilter : localGlobalSearch,
-      pagination: manualPagination
-        ? {
-            pageIndex: pagination?.pageIndex ?? 0,
-            pageSize: pagination?.pageSize ?? initialPageSize,
-          }
-        : paginationState,
+      pagination: manualPagination ? manualPaginationState : paginationState,
     },
     initialState: {
       pagination: {
@@ -388,7 +390,7 @@ export function DataTable<TData, TValue>({
           return;
         }
         if (typeof updater === "function") {
-          const newState = updater(pagination!);
+          const newState = updater(manualPaginationState);
           onPaginationChange?.(newState);
         } else {
           onPaginationChange?.(updater);
