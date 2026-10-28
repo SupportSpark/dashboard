@@ -23,7 +23,7 @@ interface TrustedCertificate {
 export interface RDCleanPathResponse {
   ServerAddr?: string;
   ServerCertChain?: Uint8Array[];
-  CertificateInfo?: CertificateInfo;
+  CertificateInfo?: Partial<CertificateInfo>;
 }
 
 export interface CertificatePromptInfo {
@@ -40,6 +40,17 @@ export interface CertificateValidationResult {
 }
 
 const STORAGE_KEY = "netbird-rdp-trusted-certs";
+export const FINGERPRINT_CALCULATION_FAILED = "FINGERPRINT_CALCULATION_FAILED";
+
+export const isUsableFingerprint = (fingerprint?: string): boolean =>
+  !!fingerprint && fingerprint !== FINGERPRINT_CALCULATION_FAILED;
+
+export const hostFromServerAddr = (serverAddr: string): string => {
+  const bracketed = serverAddr.match(/^\[(.+)\](?::\d+)?$/);
+  if (bracketed) return bracketed[1];
+  const hostAndPort = serverAddr.match(/^([^:]+):\d+$/);
+  return hostAndPort ? hostAndPort[1] : serverAddr;
+};
 
 export const useRDPCertificateHandler = () => {
   const t = useTranslations("remoteAccessWave4");
@@ -59,7 +70,7 @@ export const useRDPCertificateHandler = () => {
           .toUpperCase();
         return fingerprint;
       } catch (error) {
-        return "FINGERPRINT_CALCULATION_FAILED";
+        return FINGERPRINT_CALCULATION_FAILED;
       }
     },
     [],
@@ -177,6 +188,7 @@ export const useRDPCertificateHandler = () => {
 
   const saveTrustedCert = useCallback(
     (hostname: string, certInfo: CertificateInfo): void => {
+      if (!isUsableFingerprint(certInfo.fingerprint)) return;
       try {
         const trustedCerts = getTrustedCerts();
         trustedCerts[hostname] = {
@@ -203,7 +215,10 @@ export const useRDPCertificateHandler = () => {
       const stored = trustedCerts[host];
 
       if (stored) {
-        if (stored.fingerprint === certInfo.fingerprint) {
+        if (
+          isUsableFingerprint(certInfo.fingerprint) &&
+          stored.fingerprint === certInfo.fingerprint
+        ) {
           return { isValid: true, needsUserConfirmation: false };
         }
 
@@ -236,6 +251,7 @@ export const useRDPCertificateHandler = () => {
   const handleRDCleanPathResponse = useCallback(
     async (
       response: RDCleanPathResponse,
+      expectedHostname?: string,
     ): Promise<CertificateValidationResult> => {
       setIsValidating(true);
 
@@ -244,18 +260,32 @@ export const useRDPCertificateHandler = () => {
           return { isValid: false, needsUserConfirmation: false };
         }
 
-        const serverAddr = response.ServerAddr || "unknown";
-        const hostname = serverAddr.split(":")[0];
+        const reportedHostname = response.ServerAddr
+          ? hostFromServerAddr(response.ServerAddr)
+          : undefined;
+        if (
+          expectedHostname &&
+          reportedHostname &&
+          reportedHostname !== expectedHostname
+        ) {
+          console.error(
+            `Certificate presented for ${reportedHostname}, expected ${expectedHostname}`,
+          );
+          return { isValid: false, needsUserConfirmation: false };
+        }
+
+        const hostname = expectedHostname || reportedHostname || "unknown";
         const certBytes = response.ServerCertChain[0];
 
         let certInfo: CertificateInfo;
 
         if (response.CertificateInfo) {
-          certInfo = response.CertificateInfo;
-          // Add missing fingerprint and keySize that the server doesn't provide
-          if (!certInfo.fingerprint) {
-            certInfo.fingerprint = await calculateFingerprint(certBytes);
-          }
+          certInfo = {
+            ...response.CertificateInfo,
+            raw: certBytes,
+            fingerprint: await calculateFingerprint(certBytes),
+            hostname,
+          };
           if (!certInfo.keySize && certBytes.length > 100) {
             if (certBytes.length > 1400) {
               certInfo.keySize = 2048;
