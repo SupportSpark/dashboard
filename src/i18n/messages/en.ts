@@ -6438,6 +6438,12 @@ export default {
     genericHttpStreamingLink: "Generic HTTP Streaming",
     genericHttpDeleteHelp:
       "Deleting this integration will remove the ability to stream events. If you delete the integration you will need to reconfigure it again to enable event streaming.",
+    edrSyncFrequency: "Sync Frequency",
+    edrSyncFrequencyHelp: "How often NetBird checks {name} for device status changes.",
+    edrSyncFrequencyTooltip:
+      "Example: this property is set to 1 minute. If Jane''s laptop stops meeting the requirements in {name}, NetBird picks up the change on its next check, within 1 minute, and blocks network access.",
+    edrSyncIntervalInvalid: "Must be a whole number between 1 and {max}",
+    edrSyncIntervalUnit: "Minutes",
   },
   idpSync: {
     identityProviderLabel: "Identity Provider",

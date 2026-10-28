@@ -6031,6 +6031,12 @@ export default {
     genericHttpStreamingLink: "Generic HTTP 事件流",
     genericHttpDeleteHelp:
       "删除此集成将无法流式传输事件。删除后，您需要重新配置以启用事件流。",
+    edrSyncFrequency: "同步频率",
+    edrSyncFrequencyHelp: "NetBird 检查 {name} 设备状态变化的频率。",
+    edrSyncFrequencyTooltip:
+      "例如：该值设为 1 分钟。如果 Jane 的笔记本在 {name} 中不再满足要求，NetBird 会在下一次检查时（1 分钟内）发现变更并阻断网络访问。",
+    edrSyncIntervalInvalid: "必须是 1 到 {max} 之间的整数",
+    edrSyncIntervalUnit: "分钟",
   },
   idpSync: {
     identityProviderLabel: "Identity Provider",
