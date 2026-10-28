@@ -21,7 +21,7 @@
 
 | 项 | 状态 |
 | --- | --- |
-| 已同步的上游版本 | ✅ `v2.95.0` + 之后的 8 个提交（`02f39c38`，上游未升版本号）；`main` 已镜像到同一 commit |
+| 已同步的上游版本 | ✅ `v2.96.0`（`d8b0aa3a`，Next.js 16.4.3 / React 19.3.1 / Tailwind v4）；`main` 已镜像到同一 commit |
 | 依赖 | ✅ Next.js 16.4.0、React 19.2、Tailwind CSS v4.3、next-intl 4.14.9 |
 | 构建 | ✅ `npm run build` 通过，静态导出全部路由预渲染 |
 | 单元测试 | ✅ 923/923 通过（81 个文件） |
@@ -109,7 +109,7 @@ git push origin main
 | 项 | 值 |
 | --- | --- |
 | 触发 | 每天 `03:17 UTC` 定时 + 手动 `workflow_dispatch` |
-| 目标 | 默认取**最新上游 release tag**（如 `v2.95.0`），可手动指定任意 ref |
+| 目标 | 默认取**最新上游 release tag**（如 `v2.96.0`），可手动指定任意 ref |
 | 动作 | 把该 ref 合并进 `i18n-zh` |
 | 安全门 | 合并后**必须**通过 `npm run build` + `npx tsc --noEmit` + 四项本地化检查（目录对齐 / key 解析 / 消息渲染 / 缩进）才会 push |
 | 失败处理 | 冲突 → 自动 `git merge --abort`（分支保持干净）；报告写到**本次 run 的 Summary**（run 页面一打开就能看到）+ 一行 `::error::` 注解；仓库开启 Issues 时再额外开 issue |
@@ -259,7 +259,7 @@ src/components/ui/LocaleSwitcher.tsx  # 头部语言切换器
 环境替换，本文档不记录实例地址）。
 **已完成本地化部署**：dashboard 容器现在跑
 `ghcr.io/supportspark/dashboard:zh-latest`，回滚只需回到同一主 compose 里的官方
-`netbirdio/dashboard` 镜像（主 compose 里写的是当前上游版本，`v2.95.0`）。
+`netbirdio/dashboard` 镜像（主 compose 里写的是当前上游版本，`v2.96.0`）。
 
 > **占位符**：下文命令里的 `$DEPLOY_HOST` 指你的服务器地址。
 > 先 `export DEPLOY_HOST=你的地址`，再照抄命令。
@@ -267,7 +267,7 @@ src/components/ui/LocaleSwitcher.tsx  # 头部语言切换器
 ### 服务端容器版本（dashboard 之外的另一个升级对象）
 
 dashboard 与 server 是**两条独立的版本线**：dashboard 跟 `netbirdio/dashboard` 的
-release（`v2.95.0`），server 跟 `netbirdio/netbird` 的 release（`v0.81.2`）。升级
+release（`v2.96.0`），server 跟 `netbirdio/netbird` 的 release（`v0.81.3`）。升级
 server **不会**顺带更新 dashboard，反之亦然。
 
 ```bash
