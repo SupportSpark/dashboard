@@ -38,6 +38,11 @@ import { PeerGroupSelector } from "@/components/PeerGroupSelector";
 import { Account } from "@/interfaces/Account";
 import { IntuneIntegration } from "@/interfaces/EDR";
 import useGroupHelper from "@/modules/groups/useGroupHelper";
+import {
+  DEFAULT_SYNC_INTERVAL,
+  EDRSyncIntervalInput,
+  isValidSyncInterval,
+} from "@/modules/integrations/edr/EDRSyncIntervalInput";
 import azureGrantAdmin from "@/modules/integrations/edr/intune/images/azure-grant-admin-conset.png";
 import { IntegrationModalHeader } from "@/modules/integrations/IntegrationModalHeader";
 
@@ -89,6 +94,9 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
   const [clientId, setClientId] = useState("");
   const [tenantId, setTenantId] = useState("");
   const [lastSyncedInterval, setLastSyncedInterval] = useState("24");
+  const [syncInterval, setSyncInterval] = useState(
+    DEFAULT_SYNC_INTERVAL.toString(),
+  );
 
   const clientSecretEntered = !isEmpty(clientSecret);
   const clientIdEntered = !isEmpty(clientId);
@@ -103,7 +111,8 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
   const isDisabled =
     (step == 3 && !clientSecretEntered) ||
     (step == 4 && !allEntered) ||
-    (step == 5 && groups.length == 0);
+    (step == 5 && groups.length == 0) ||
+    (step == 6 && !isValidSyncInterval(syncInterval));
 
   const connect = async () => {
     await settingsRequest.put({
@@ -132,6 +141,7 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
           tenant_id: tenantId,
           groups: savedGroups.map((group) => group.id) || [],
           last_synced_interval: Number(lastSyncedInterval || 24),
+          sync_interval: Number(syncInterval),
         })
         .then(() => {
           mutate("/accounts");
@@ -482,6 +492,12 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
               customSuffix={t("hoursSuffix")}
             />
           </div>
+          <EDRSyncIntervalInput
+            name={"Intune"}
+            value={syncInterval}
+            onChange={setSyncInterval}
+            className={"mt-6"}
+          />
         </div>
       )}
 

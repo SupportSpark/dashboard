@@ -37,6 +37,11 @@ import {
 } from "@/modules/integrations/edr/crowdstrike/CrowdStrikeRegions";
 import { CrowdStrikeZtaScoreInput } from "@/modules/integrations/edr/crowdstrike/CrowdStrikeZtaScoreInput";
 import { CrowdStrikeZtaToggle } from "@/modules/integrations/edr/crowdstrike/CrowdStrikeZtaToggle";
+import {
+  DEFAULT_SYNC_INTERVAL,
+  EDRSyncIntervalInput,
+  isValidSyncInterval,
+} from "@/modules/integrations/edr/EDRSyncIntervalInput";
 import { IntegrationModalHeader } from "@/modules/integrations/IntegrationModalHeader";
 
 type Props = {
@@ -106,6 +111,9 @@ export function SetupContent({ onSuccess, account }: ModalProps) {
 
   const [ztaScore, setZtaScore] = useState("80");
   const [ztaEnabled, setZtaEnabled] = useState(false);
+  const [syncInterval, setSyncInterval] = useState(
+    DEFAULT_SYNC_INTERVAL.toString(),
+  );
 
   const connect = async () => {
     await settingsRequest.put({
@@ -134,6 +142,7 @@ export function SetupContent({ onSuccess, account }: ModalProps) {
         groups: savedGroups.map((group) => group.id) || [],
         zta_score_threshold:
           ztaEnabled && score > 0 && score <= 100 ? score : 0,
+        sync_interval: Number(syncInterval),
       }).then(() => {
         mutate("/accounts");
         mutate("/integrations/edr/falcon");
@@ -151,7 +160,8 @@ export function SetupContent({ onSuccess, account }: ModalProps) {
   const hasZtaError = ztaError != undefined;
 
   const isDisabled =
-    (step == 1 && !secretAndClientIDEntered) || (step == 2 && isEmpty(groups));
+    (step == 1 && !secretAndClientIDEntered) ||
+    (step == 2 && (isEmpty(groups) || !isValidSyncInterval(syncInterval)));
 
   return (
     <ModalContent
@@ -287,6 +297,11 @@ export function SetupContent({ onSuccess, account }: ModalProps) {
                 onChange={setZtaScore}
               />
             </div>
+            <EDRSyncIntervalInput
+              name={"CrowdStrike"}
+              value={syncInterval}
+              onChange={setSyncInterval}
+            />
           </div>
         </div>
       )}
