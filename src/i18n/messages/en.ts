@@ -6454,7 +6454,7 @@ export default {
     idpSyncDescription:
       "Configure your preferred Identity Provider (IdP) to synchronize your users and groups to NetBird.",
     customIdpCallout:
-      "Looking to enable a custom IdP like Keycloak? <br></br> Please contact us at <link>support@netbird.io</link>",
+      "Using Keycloak or another IdP? See our <link>documentation</link>.",
     selectIdpPlaceholder: "Select your identity provider...",
     idpConnectorSelectHelp:
       "Select your identity provider connector for this integration.",

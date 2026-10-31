@@ -85,12 +85,12 @@ export default function IdentityProviderTab() {
               </>
             )}
           </div>
-            { isNetBirdCloud() && <Callout variant={"warning"} className={"max-w-lg mt-6"}>
+            { isNetBirdCloud() && <Callout variant={"info"} className={"max-w-lg mt-6"}>
             {t.rich("customIdpCallout", {
-              br: () => <br />,
               link: (chunks) => (
                 <InlineLink
-                  href={"mailto:support@netbird.io"}
+                  href={"https://docs.netbird.io/manage/team/idp-sync"}
+                  target={"_blank"}
                   className={"inline !text-netbird-500 font-medium"}
                 >
                   {chunks}

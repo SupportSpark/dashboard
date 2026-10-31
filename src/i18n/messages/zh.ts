@@ -6046,7 +6046,7 @@ export default {
     idpSyncDescription:
       "配置您偏好的 Identity Provider(IdP)，将用户与组同步到 NetBird。",
     customIdpCallout:
-      "想要启用 Keycloak 等自定义 IdP？<br></br>请联系我们：<link>support@netbird.io</link>",
+      "使用 Keycloak 或其他 IdP？请参阅我们的<link>文档</link>。",
     selectIdpPlaceholder: "选择您的 Identity Provider...",
     idpConnectorSelectHelp: "为此集成选择 Identity Provider 连接器。",
     idpConnectorLockedHelp:
