@@ -7,6 +7,7 @@ import { useMemo } from "react";
 import { useTranslations } from "next-intl";
 import NetworkRoutesIcon from "@/assets/icons/NetworkRoutesIcon";
 import PeerIcon from "@/assets/icons/PeerIcon";
+import { useMatomoEvent } from "@/cloud/analytics/MatomoProvider";
 import { Intent } from "@/modules/onboarding/Onboarding";
 
 type Props = {
@@ -57,6 +58,13 @@ export const OnboardingIntent = ({ onSelect, useCases, isBusiness }: Props) => {
     return false;
   }, [useCases]);
 
+  useMatomoEvent(
+    !!useCases && "intent_recommended",
+    isNetworksRecommended && "networks",
+    isP2PRecommended && "p2p",
+    !isNetworksRecommended && !isP2PRecommended && "none",
+  );
+
   return (
     <div className={"relative flex flex-col h-full justify-between"}>
       <div>
@@ -103,81 +111,81 @@ export const OnboardingIntent = ({ onSelect, useCases, isBusiness }: Props) => {
 };
 
 type IntentCardProps = {
-    title: string;
-    description: string;
-    icon: React.ReactNode;
-    onClick: () => void;
-    recommended?: boolean;
-    "data-testid"?: string;
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  onClick: () => void;
+  recommended?: boolean;
+  "data-testid"?: string;
 };
 
 export const IntentCard = ({
-                        title,
-                        description,
-                        icon,
-                        onClick,
-                        recommended,
-                        "data-testid": dataTestId,
-                    }: IntentCardProps) => {
-    const t = useTranslations("onboarding");
-    return (
-        <button
-            className={
-                "px-6 py-6 flex items-start flex-col relative hover:bg-nb-gray-920 transition-all group border-b last:border-b-0 border-nb-gray-900"
-            }
-            onClick={onClick}
-            data-testid={dataTestId}
+  title,
+  description,
+  icon,
+  onClick,
+  recommended,
+  "data-testid": dataTestId,
+}: IntentCardProps) => {
+  const t = useTranslations("onboarding");
+  return (
+    <button
+      className={
+        "px-6 py-6 flex items-start flex-col relative hover:bg-nb-gray-920 transition-all group border-b last:border-b-0 border-nb-gray-900"
+      }
+      onClick={onClick}
+      data-testid={dataTestId}
+    >
+      <div className={"flex gap-6"}>
+        <div
+          className={cn(
+            "h-10 w-10 flex items-center justify-center rounded-md shrink-0 mt-2",
+            "bg-nb-gray-900 border border-nb-gray-800 ",
+          )}
         >
-            <div className={"flex gap-6"}>
-                <div
-                    className={cn(
-                        "h-10 w-10 flex items-center justify-center rounded-md shrink-0 mt-2",
-                        "bg-nb-gray-900 border border-nb-gray-800 ",
-                    )}
+          {icon}
+        </div>
+        <div className={"flex gap-4 items-center"}>
+          <div className={"text-left"}>
+            <h2
+              className={
+                "text-base font-medium mb-.5 group-hover:text-netbird transition-all inline-flex gap-x-2 gap-y-1 flex-wrap"
+              }
+            >
+              {title}
+              {recommended && (
+                <FullTooltip
+                  content={
+                    <div className={"text-xs max-w-xs"}>
+                      {t("recommendedTooltip", { title })}
+                    </div>
+                  }
                 >
-                    {icon}
-                </div>
-                <div className={"flex gap-4 items-center"}>
-                    <div className={"text-left"}>
-                        <h2
-                            className={
-                                "text-base font-medium mb-.5 group-hover:text-netbird transition-all inline-flex gap-x-2 gap-y-1 flex-wrap"
-                            }
-                        >
-                            {title}
-                            {recommended && (
-                                <FullTooltip
-                                    content={
-                                        <div className={"text-xs max-w-xs"}>
-                                            {t("recommendedTooltip", { title })}
-                                        </div>
-                                    }
-                                >
                   <span
-                      className={cn(
-                          "relative",
-                          "inline-flex text-[0.7rem] font-light bg-netbird/10 border border-netbird-400/30 text-netbird-400 rounded-full px-2 py-1 pb-0.5 leading-none",
-                          "hover:bg-netbird/20 cursor-help transition-all self-center",
-                      )}
+                    className={cn(
+                      "relative",
+                      "inline-flex text-[0.7rem] font-light bg-netbird/10 border border-netbird-400/30 text-netbird-400 rounded-full px-2 py-1 pb-0.5 leading-none",
+                      "hover:bg-netbird/20 cursor-help transition-all self-center",
+                    )}
                   >
                     {t("recommended")}
-                    <HelpCircle size={10} className={"ml-1"}/>
+                    <HelpCircle size={10} className={"ml-1"} />
                   </span>
-                                </FullTooltip>
-                            )}
-                        </h2>
-                        <p className={"!text-nb-gray-300 text-[.85rem]"}>{description}</p>
-                    </div>
-                    <div
-                        className={"h-full items-center text-nb-gray-400 hidden sm:flex"}
-                    >
-                        <IconArrowRight
-                            size={24}
-                            className={"shrink-0 group-hover:text-netbird"}
-                        />
-                    </div>
-                </div>
-            </div>
-        </button>
-    );
+                </FullTooltip>
+              )}
+            </h2>
+            <p className={"!text-nb-gray-300 text-[.85rem]"}>{description}</p>
+          </div>
+          <div
+            className={"h-full items-center text-nb-gray-400 hidden sm:flex"}
+          >
+            <IconArrowRight
+              size={24}
+              className={"shrink-0 group-hover:text-netbird"}
+            />
+          </div>
+        </div>
+      </div>
+    </button>
+  );
 };

@@ -2544,7 +2544,7 @@ export default {
     addressDescription: "Enter a single IP address, CIDR block or domain name",
     addressPlaceholder: "Address (IP, CIDR or Domain)",
     domainError:
-      "Please enter a valid domain, e.g. service.internal, example.com or *.example.com",
+      "Please enter a valid domain, e.g. service.internal, example.com, *.example.com or service",
     ipCidrError:
       "Please enter a valid IP or CIDR, e.g., 10.0.0.21, 192.168.1.0/24, 2001:db8::1 or 2001:db8::/64",
     ipAddressTooltip:
@@ -6078,6 +6078,27 @@ export default {
     denyReasonTokenLimitExceeded: "Token limit exceeded",
     denyReasonBudgetLimitExceeded: "Budget limit exceeded",
     denyReasonAccountScoped: "Account {reason}",
+    denyReasonDeniedByPolicy: "Denied by policy",
+    errorSourceLabelProvider: "Provider error",
+    errorSourceLabelProxy: "Proxy error",
+    errorSourceLabelPolicy: "Policy",
+    errorSourceLabelAuth: "Authentication",
+    errorSourceDescProvider:
+      "The LLM provider answered with this error, e.g. an invalid API key, a quota or a rejected request.",
+    errorSourceDescProxy:
+      "The NetBird proxy could not reach the provider, e.g. a timeout, a refused connection, a disconnected peer or a blocked address.",
+    errorSourceDescPolicy:
+      "A NetBird policy, limit, guardrail or routing rule denied the request.",
+    errorSourceDescAuth:
+      "The NetBird proxy rejected the request''s credentials before it reached the provider.",
+    errorSourceHeading: "Error source",
+    blockedByHeading: "Blocked by",
+    errorDetailHeading: "Error detail",
+    blockedByPolicyTooltip: "This policy blocked the request",
+    blockedByGlobalLimitTooltip: "This global limit blocked the request",
+    errorReasonProvider: "Provider error ({status})",
+    errorReasonProxy: "Proxy error: {title}",
+    errorReasonProxyGeneric: "Proxy error",
     aiGateways: "AI Gateways",
     aiProviders: "AI Providers",
     otherProviderGroup: "Other",

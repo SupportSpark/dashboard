@@ -394,7 +394,7 @@ export function RouteModalContent({
   }, [routingPeer]);
 
   return (
-    <ModalContent maxWidthClass={"max-w-2xl"}>
+    <ModalContent flow="route" maxWidthClass={"max-w-2xl"}>
       <ModalHeader
         icon={
           exitNode ? (

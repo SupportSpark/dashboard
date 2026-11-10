@@ -2376,7 +2376,7 @@ export default {
     addressDescription: "输入单个 IP 地址、CIDR 块或域名",
     addressPlaceholder: "地址（IP、CIDR 或域名）",
     domainError:
-      "请输入有效域名，例如 service.internal、example.com 或 *.example.com",
+      "请输入有效域名，例如 service.internal、example.com、*.example.com 或 service",
     ipCidrError:
       "请输入有效的 IP 或 CIDR，例如 10.0.0.21、192.168.1.0/24、2001:db8::1 或 2001:db8::/64",
     ipAddressTooltip:
@@ -5705,6 +5705,25 @@ export default {
     denyReasonTokenLimitExceeded: "已超出令牌限制",
     denyReasonBudgetLimitExceeded: "已超出预算限制",
     denyReasonAccountScoped: "账户{reason}",
+    denyReasonDeniedByPolicy: "已被策略拒绝",
+    errorSourceLabelProvider: "提供商错误",
+    errorSourceLabelProxy: "代理错误",
+    errorSourceLabelPolicy: "策略",
+    errorSourceLabelAuth: "身份验证失败",
+    errorSourceDescProvider:
+      "LLM 提供商返回了该错误，例如 API 密钥无效、配额用尽或请求被拒绝。",
+    errorSourceDescProxy:
+      "NetBird 代理无法连接到提供商，例如超时、连接被拒绝、节点断开或地址被拦截。",
+    errorSourceDescPolicy: "被 NetBird 的策略、限额、护栏或路由规则拒绝。",
+    errorSourceDescAuth: "NetBird 代理在请求到达提供商之前拒绝了其凭证。",
+    errorSourceHeading: "错误来源",
+    blockedByHeading: "拦截者",
+    errorDetailHeading: "错误详情",
+    blockedByPolicyTooltip: "该策略拦截了此请求",
+    blockedByGlobalLimitTooltip: "该全局限额拦截了此请求",
+    errorReasonProvider: "提供商错误（{status}）",
+    errorReasonProxy: "代理错误：{title}",
+    errorReasonProxyGeneric: "代理错误",
     aiGateways: "AI 网关",
     aiProviders: "AI 提供商",
     otherProviderGroup: "其他",

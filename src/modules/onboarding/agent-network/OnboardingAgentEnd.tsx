@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import * as React from "react";
 import { useEffect, useState } from "react";
+import { useMatomoEvent } from "@/cloud/analytics/MatomoProvider";
 import type {
   APIAgentNetworkAccessLog,
   APIAgentNetworkAccessLogsResponse,
@@ -57,6 +58,7 @@ export const OnboardingAgentEnd = ({
 }: Props) => {
   const tonb = useTranslations("onboarding");
   const outcome = useTestRequest(userId);
+  useMatomoEvent(outcome.kind !== "waiting" && "test_request", outcome.kind);
 
   if (outcome.kind === "passed") {
     return <AllSet entry={outcome.entry} onBack={onBack} onFinish={onFinish} />;

@@ -92,6 +92,7 @@ const PeersTableColumns = (
 ): ColumnDef<Peer>[] => [
   {
     id: "select",
+    meta: { fit: true },
     header: ({ table }) => (
       <div className={"min-w-[20px] max-w-[20px]"}>
         <Checkbox
@@ -121,7 +122,8 @@ const PeersTableColumns = (
       return <DataTableHeader column={column}>{t("name")}</DataTableHeader>;
     },
     sortingFn: "text",
-    cell: ({ row }) => <PeerNameCell peer={row.original} />,
+    meta: { minWidth: 280 },
+    cell: ({ row }) => <PeerNameCell peer={row.original} fluid={true} />,
   },
   {
     id: "approval_required",
@@ -158,7 +160,10 @@ const PeersTableColumns = (
     header: ({ column }) => {
       return <DataTableHeader column={column}>{t("address")}</DataTableHeader>;
     },
-    cell: ({ row }) => <PeerAddressCell peer={row.original} />,
+    // The cell content brings its own hover padding,
+    // so the cell padding on the left is trimmed to give the columns more room.
+    meta: { minWidth: 300, className: "pl-1" },
+    cell: ({ row }) => <PeerAddressCell peer={row.original} fluid={true} />,
   },
   {
     accessorKey: "group_name_strings",
@@ -228,6 +233,7 @@ const PeersTableColumns = (
   },
   {
     accessorKey: "version",
+    meta: { minWidth: 150 },
     header: ({ column }) => {
       return <DataTableHeader column={column}>{t("version")}</DataTableHeader>;
     },
@@ -242,6 +248,7 @@ const PeersTableColumns = (
   },
   {
     id: "status",
+    meta: { fit: true },
     accessorFn: (peer) => {
       let statusCount = 0;
       if (peer.login_expired) statusCount++;
@@ -260,6 +267,7 @@ const PeersTableColumns = (
   },
   {
     id: "actions",
+    meta: { fit: true },
     accessorKey: "id",
     header: "",
     cell: ({ row }) => (
@@ -579,16 +587,6 @@ export default function PeersTable({
               </ButtonGroup.Button>
             </ButtonGroup>
 
-            <DataTableResetFilterButton
-              table={table}
-              onClick={() => {
-                table.setPageIndex(0);
-                table.resetColumnFilters();
-                table.resetGlobalFilter();
-                resetSelectedRows();
-              }}
-            />
-
             {pendingApprovalCount > 0 && (
               <FullTooltip
                 content={
@@ -740,6 +738,16 @@ export default function PeersTable({
                 if (!isUser) mutate("/groups").then();
                 mutate("/users").then();
                 mutate("/peers").then();
+              }}
+            />
+
+            <DataTableResetFilterButton
+              table={table}
+              onClick={() => {
+                table.setPageIndex(0);
+                table.resetColumnFilters();
+                table.resetGlobalFilter();
+                resetSelectedRows();
               }}
             />
           </>

@@ -173,7 +173,7 @@ export function DNSRecordModalContent({
   const tCommon = useTranslations("common");
 
   return (
-    <ModalContent maxWidthClass={"max-w-xl"}>
+    <ModalContent flow="dns_record" maxWidthClass={"max-w-xl"}>
       <ModalHeader
         title={record ? t("updateDNSRecord") : t("addDNSRecord")}
         description={

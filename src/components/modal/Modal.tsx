@@ -7,6 +7,7 @@ import { cn } from "@utils/helpers";
 import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import * as React from "react";
+import { ModalInsights } from "@/cloud/analytics/MatomoProvider";
 import { headerHeight } from "@/layouts/Header";
 
 const Modal = DialogPrimitive.Root;
@@ -48,6 +49,7 @@ ModalOverlay.displayName = DialogPrimitive.Overlay.displayName;
 type ModalContentProps = {
   showClose?: boolean;
   maxWidthClass?: string;
+  flow?: string;
 };
 
 const ModalContent = React.forwardRef<
@@ -62,6 +64,7 @@ const ModalContent = React.forwardRef<
       showClose = true,
       maxWidthClass = "max-w-3xl",
       onPointerDownOutside,
+      flow,
       ...props
     },
     ref,
@@ -73,7 +76,7 @@ const ModalContent = React.forwardRef<
         <DialogPrimitive.Content
           ref={ref}
           className={cn(
-            "mx-auto relative top-0 z-[52] grid w-full focus:outline-0 border border-neutral-200 bg-white py-6 dark:shadow-lg shadow-sm duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1  data-[state=open]:slide-in-from-left-1 sm:rounded-lg md:w-full dark:border-nb-gray-900 dark:bg-nb-gray",
+            "mx-auto relative top-0 z-[52] grid w-full focus:outline-none border border-neutral-200 bg-white py-6 dark:shadow-lg shadow-sm duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1  data-[state=open]:slide-in-from-left-1 sm:rounded-lg md:w-full dark:border-nb-gray-900 dark:bg-nb-gray",
             className,
             maxWidthClass,
           )}
@@ -96,6 +99,7 @@ const ModalContent = React.forwardRef<
           <VisuallyHidden asChild>
             <DialogPrimitive.Title>{t("dialog")}</DialogPrimitive.Title>
           </VisuallyHidden>
+          {flow && <ModalInsights flow={flow} />}
           {children}
           {showClose && (
             <DialogPrimitive.Close

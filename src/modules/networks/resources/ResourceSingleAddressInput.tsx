@@ -54,11 +54,7 @@ export const ResourceSingleAddressInput = ({
 
     // Case 1: If it has characters (potential domain) but is not a CIDR block
     if (hasChars && !isCIDRBlock) {
-      if (
-        !validator.isValidDomain(value) ||
-        !value.includes(".") ||
-        value.endsWith(".")
-      ) {
+      if (!validator.isValidDomain(value) || value.endsWith(".")) {
         return t("domainError");
       }
       return ""; // Valid domain

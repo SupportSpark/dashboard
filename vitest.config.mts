@@ -8,7 +8,7 @@ export default defineConfig({
   },
   test: {
     environment: "jsdom",
-    include: ["src/**/*.test.{ts,tsx}"],
+    include: ["src/**/*.test.{ts,tsx}", "scripts/**/*.test.mjs"],
     // Provides a translation context for upstream component tests, which render
     // components bare. See the file for why this is preferable to editing
     // upstream's tests: it keeps them byte-identical to upstream so they keep

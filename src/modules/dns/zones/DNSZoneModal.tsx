@@ -134,7 +134,7 @@ export function DNSZoneModalContent({
   const tCommon = useTranslations("common");
 
   return (
-    <ModalContent maxWidthClass={"max-w-2xl"}>
+    <ModalContent flow="dns_zone" maxWidthClass={"max-w-2xl"}>
       <ModalHeader
         icon={<DNSZoneIcon size={20} className={"fill-netbird"} />}
         title={zone ? t("updateDNSZone") : t("addDNSZone")}

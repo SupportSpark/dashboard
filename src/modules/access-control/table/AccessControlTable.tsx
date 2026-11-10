@@ -82,7 +82,10 @@ function createAccessControlTableColumns(
       },
       sortingFn: "text",
       filterFn: "fuzzy",
-      cell: ({ cell }) => <AccessControlNameCell policy={cell.row.original} />,
+      meta: { minWidth: 280 },
+      cell: ({ cell }) => (
+        <AccessControlNameCell policy={cell.row.original} fluid={true} />
+      ),
     },
     {
       id: "description",
@@ -95,15 +98,17 @@ function createAccessControlTableColumns(
       accessorKey: "enabled",
       accessorFn: (row) => row.enabled,
       enableSorting: false,
-      meta: { className: ENABLED_COLUMN_CLASS.xl },
+      meta: { className: ENABLED_COLUMN_CLASS.xl, fit: true },
       header: ({ column }) => {
         return (
           <DataTableHeader column={column} sorting={false}>
-            Active
+            {tCommon("active")}
           </DataTableHeader>
         );
       },
-      cell: ({ cell }) => <AccessControlActiveCell policy={cell.row.original} />,
+      cell: ({ cell }) => (
+        <AccessControlActiveCell policy={cell.row.original} />
+      ),
     },
     {
       id: "sources",
@@ -117,9 +122,13 @@ function createAccessControlTableColumns(
       },
       sortingFn: "basic",
       header: ({ column }) => {
-        return <DataTableHeader column={column}>{t("sources")}</DataTableHeader>;
+        return (
+          <DataTableHeader column={column}>{t("sources")}</DataTableHeader>
+        );
       },
-      cell: ({ cell }) => <AccessControlSourcesCell policy={cell.row.original} />,
+      cell: ({ cell }) => (
+        <AccessControlSourcesCell policy={cell.row.original} />
+      ),
     },
     {
       id: "direction",
@@ -133,7 +142,9 @@ function createAccessControlTableColumns(
       },
       sortingFn: "basic",
       header: ({ column }) => {
-        return <DataTableHeader column={column}>{t("direction")}</DataTableHeader>;
+        return (
+          <DataTableHeader column={column}>{t("direction")}</DataTableHeader>
+        );
       },
       cell: ({ cell }) => (
         <AccessControlDirectionCell policy={cell.row.original} />
@@ -151,7 +162,9 @@ function createAccessControlTableColumns(
       },
       sortingFn: "basic",
       header: ({ column }) => {
-        return <DataTableHeader column={column}>{t("destinations")}</DataTableHeader>;
+        return (
+          <DataTableHeader column={column}>{t("destinations")}</DataTableHeader>
+        );
       },
       cell: ({ cell }) => (
         <AccessControlDestinationsCell policy={cell.row.original} />
@@ -163,7 +176,9 @@ function createAccessControlTableColumns(
       accessorFn: (row) => row.rules?.[0]?.protocol || "",
       sortingFn: "text",
       header: ({ column }) => {
-        return <DataTableHeader column={column}>{t("protoPorts")}</DataTableHeader>;
+        return (
+          <DataTableHeader column={column}>{t("protoPorts")}</DataTableHeader>
+        );
       },
       cell: ({ cell }) => (
         <AccessControlProtoPortsCell policy={cell.row.original} />
@@ -198,23 +213,6 @@ function createAccessControlTableColumns(
       filterFn: "arrIncludesSome",
     },
     {
-      id: "protocol_filter",
-      accessorFn: (row) => [row.rules?.[0]?.protocol || "all"],
-      filterFn: "arrIncludesSome",
-    },
-    {
-      id: "ports_filter",
-      accessorFn: (row) => {
-        const rule = row.rules?.[0];
-        const ports = rule?.ports || [];
-        const ranges = (rule?.port_ranges || []).map(
-          (r) => `${r.start}-${r.end}`,
-        );
-        return [...ports, ...ranges].join(" ");
-      },
-      filterFn: "includesString",
-    },
-    {
       id: "has_posture_checks",
       accessorFn: (row) =>
         (row.source_posture_checks?.length ?? 0) > 0 ? "with" : "without",
@@ -228,7 +226,10 @@ function createAccessControlTableColumns(
       id: "actions",
       accessorKey: "id",
       header: "",
-      cell: ({ cell }) => <AccessControlActionCell policy={cell.row.original} />,
+      meta: { fit: true },
+      cell: ({ cell }) => (
+        <AccessControlActionCell policy={cell.row.original} />
+      ),
     },
   ];
 }
@@ -632,15 +633,6 @@ export default function AccessControlTable({
                 disabled={policies?.length == 0}
               />
 
-              <DataTableResetFilterButton
-                table={table}
-                onClick={() => {
-                  table.setPageIndex(0);
-                  table.setColumnFilters([]);
-                  table.setGlobalFilter("");
-                }}
-              />
-
               {tempPolicies?.length > 0 && (
                 <FullTooltip
                   content={
@@ -666,6 +658,15 @@ export default function AccessControlTable({
                 onClick={() => {
                   mutate("/policies").then();
                   mutate("/groups").then();
+                }}
+              />
+
+              <DataTableResetFilterButton
+                table={table}
+                onClick={() => {
+                  table.setPageIndex(0);
+                  table.setColumnFilters([]);
+                  table.setGlobalFilter("");
                 }}
               />
             </>

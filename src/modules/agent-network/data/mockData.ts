@@ -1,6 +1,8 @@
 // Mock data for the Agent Network section. No backend wired up yet.
 // All numbers, IDs, and text are static placeholders for click-through.
 
+import type { APIAgentNetworkAccessLog } from "@/modules/agent-network/agentAccessLogApi";
+
 // AIProviderId is the union of catalog provider ids. The canonical catalog
 // (with names, default hosts, brand colors, and models) lives on the
 // management server and is fetched via useProviderCatalog().
@@ -33,10 +35,34 @@ export type AgentPeer = {
 };
 
 export const MOCK_PEERS: AgentPeer[] = [
-  { id: "peer_us_east_1", name: "proxy-us-east-1", ip: "100.64.10.21", region: "us-east-1", online: true },
-  { id: "peer_eu_central_1", name: "proxy-eu-central-1", ip: "100.64.10.42", region: "eu-central-1", online: true },
-  { id: "peer_ap_southeast_1", name: "proxy-ap-southeast-1", ip: "100.64.10.71", region: "ap-southeast-1", online: true },
-  { id: "peer_dev_lab", name: "dev-lab-mac", ip: "100.64.20.5", region: "office", online: false },
+  {
+    id: "peer_us_east_1",
+    name: "proxy-us-east-1",
+    ip: "100.64.10.21",
+    region: "us-east-1",
+    online: true,
+  },
+  {
+    id: "peer_eu_central_1",
+    name: "proxy-eu-central-1",
+    ip: "100.64.10.42",
+    region: "eu-central-1",
+    online: true,
+  },
+  {
+    id: "peer_ap_southeast_1",
+    name: "proxy-ap-southeast-1",
+    ip: "100.64.10.71",
+    region: "ap-southeast-1",
+    online: true,
+  },
+  {
+    id: "peer_dev_lab",
+    name: "dev-lab-mac",
+    ip: "100.64.20.5",
+    region: "office",
+    online: false,
+  },
 ];
 
 export type ProviderModel = {
@@ -220,7 +246,21 @@ export type AIAccessLogEntry = {
   // calls like "GET /v1/models" are self-explanatory.
   method: string;
   path: string;
+  // Error attribution for failed requests (status >= 400). Optional —
+  // absent on successful rows and on older management servers.
+  errorSource?: AIAccessLogErrorSource;
+  // Id of the policy (llm_policy.* deny) or global limit (llm_account.* deny)
+  // that blocked the request.
+  blockedBy?: string;
+  // Free-text explanation for the admin, e.g. "Destination Not Allowed: dial
+  // tcp 10.255.255.1:443: direct upstream address is not allowed".
+  errorDetail?: string;
 };
+
+// AIAccessLogErrorSource says who failed a request: the upstream provider,
+// the NetBird proxy reaching it, a NetBird policy/limit, or the proxy's own
+// authentication.
+export type AIAccessLogErrorSource = "provider" | "proxy" | "policy" | "auth";
 
 // AIAccessLogSession is a session-grouped view of access-log entries: all
 // requests sharing a provider session id (or a single session-less request,
@@ -322,6 +362,265 @@ export function formatDenyReason(
   );
 }
 
+export const ERROR_SOURCE_INFO: Record<
+  AIAccessLogErrorSource,
+  { label: string; description: string }
+> = {
+  provider: {
+    label: "Provider error",
+    description:
+      "The LLM provider answered with this error, e.g. an invalid API key, a quota or a rejected request.",
+  },
+  proxy: {
+    label: "Proxy error",
+    description:
+      "The NetBird proxy could not reach the provider, e.g. a timeout, a refused connection, a disconnected peer or a blocked address.",
+  },
+  policy: {
+    label: "Policy",
+    description:
+      "A NetBird policy, limit, guardrail or routing rule denied the request.",
+  },
+  auth: {
+    label: "Authentication",
+    description:
+      "The NetBird proxy rejected the request's credentials before it reached the provider.",
+  },
+};
+
+// ERROR_SOURCE_KEYS names the catalog entries for each error source. The English
+// text in ERROR_SOURCE_INFO stays as the fallback so a caller without a
+// translator (tests, non-React code) still renders something readable.
+const ERROR_SOURCE_KEYS: Record<
+  AIAccessLogErrorSource,
+  { label: string; description: string }
+> = {
+  provider: {
+    label: "errorSourceLabelProvider",
+    description: "errorSourceDescProvider",
+  },
+  proxy: {
+    label: "errorSourceLabelProxy",
+    description: "errorSourceDescProxy",
+  },
+  policy: {
+    label: "errorSourceLabelPolicy",
+    description: "errorSourceDescPolicy",
+  },
+  auth: { label: "errorSourceLabelAuth", description: "errorSourceDescAuth" },
+};
+
+// lookupKey treats an unresolved next-intl lookup as absent: next-intl returns
+// the key itself when it cannot resolve one, so `t(key) ?? fallback` never falls
+// back and the user reads the raw path.
+function lookupKey(
+  t: ((key: string, values?: any) => string) | undefined,
+  key: string,
+  values?: Record<string, unknown>,
+): string | undefined {
+  if (!t) return undefined;
+  const out = t(key, values);
+  return out === key ? undefined : out;
+}
+
+export function errorSourceInfo(
+  source: AIAccessLogErrorSource,
+  t?: (key: string, values?: any) => string,
+): { label: string; description: string } {
+  const fallback = ERROR_SOURCE_INFO[source];
+  const keys = ERROR_SOURCE_KEYS[source];
+  return {
+    label: lookupKey(t, keys.label) ?? fallback.label,
+    description: lookupKey(t, keys.description) ?? fallback.description,
+  };
+}
+
+// formatErrorReason is the short REASON-column text for a failed request with
+// error attribution. Undefined when the entry has none (successful rows, older
+// management servers), so callers keep their existing text. The catalog is used
+// when a translator is passed; the literals below keep English identical for
+// callers that have none.
+export function formatErrorReason(
+  entry: AIAccessLogEntry,
+  t?: (key: string, values?: any) => string,
+): string | undefined {
+  if (!entry.errorSource || entry.status < 400) return undefined;
+  switch (entry.errorSource) {
+    case "policy":
+      return (
+        formatDenyReason(entry.denyReason, t) ||
+        lookupKey(t, "denyReasonDeniedByPolicy") ||
+        "Denied by policy"
+      );
+    case "provider":
+      return (
+        lookupKey(t, "errorReasonProvider", { status: entry.status }) ||
+        `Provider error (${entry.status})`
+      );
+    case "proxy": {
+      const title = entry.errorDetail?.split(":")[0].trim();
+      if (!title)
+        return lookupKey(t, "errorReasonProxyGeneric") || "Proxy error";
+      return (
+        lookupKey(t, "errorReasonProxy", { title }) || `Proxy error: ${title}`
+      );
+    }
+    case "auth":
+      return lookupKey(t, "errorSourceLabelAuth") || "Authentication";
+  }
+}
+
+// sessionReasonEntry picks the entry whose reason stands for a session: a
+// successful allowed request (so a session that succeeded shows the policy that
+// authorised it), then any allowed request, then the first one. A deny reason
+// only shows when every request was denied.
+export function sessionReasonEntry(
+  entries: AIAccessLogEntry[],
+): AIAccessLogEntry | undefined {
+  return (
+    entries.find((e) => e.decision === "allow" && e.status < 400) ??
+    entries.find((e) => e.decision === "allow") ??
+    entries[0]
+  );
+}
+
+export type BlockedByTarget = {
+  kind: "policy" | "global_limit";
+  id: string;
+  // The current name, or the id when the policy / limit has since been deleted.
+  name: string;
+  href: string;
+};
+
+// resolveBlockedBy names the policy or global limit that blocked a request.
+// The deny reason's prefix says which: llm_policy.* is an agent-network policy,
+// llm_account.* an account global limit.
+export function resolveBlockedBy(
+  entry: AIAccessLogEntry,
+  policies: AgentPolicy[] | undefined,
+  budgetRules: AgentBudgetRule[] | undefined,
+): BlockedByTarget | undefined {
+  const id = entry.blockedBy;
+  if (!id) return undefined;
+  if (entry.denyReason?.startsWith("llm_account.")) {
+    const name = budgetRules?.find((r) => r.id === id)?.name ?? id;
+    return {
+      kind: "global_limit",
+      id,
+      name,
+      href: "/agent-network/configuration?tab=budget-settings",
+    };
+  }
+  const name = policies?.find((p) => p.id === id)?.name ?? id;
+  return {
+    kind: "policy",
+    id,
+    name,
+    href: `/agent-network/policies?search=${encodeURIComponent(name)}`,
+  };
+}
+
+// Failed access-log rows, one per kind of error attribution, in the shape the
+// management API returns. Ids match the Storybook fixtures.
+export const MOCK_ERROR_ACCESS_LOGS: APIAgentNetworkAccessLog[] = [
+  {
+    id: "anlog-err-policy",
+    service_id: "svc-agent-network",
+    timestamp: "2026-10-08T12:10:00Z",
+    status_code: 403,
+    duration_ms: 4,
+    input_tokens: 0,
+    output_tokens: 0,
+    total_tokens: 0,
+    cost_usd: 0,
+    method: "POST",
+    path: "/v1/responses",
+    provider: "openai",
+    model: "gpt-5.5",
+    decision: "deny",
+    deny_reason: "llm_policy.budget_cap_exceeded",
+    error_source: "policy",
+    blocked_by: "anpol-contractors",
+    error_detail:
+      "user budget cap exhausted on policy anpol-contractors (used $0.0002 of $0.0001)",
+  },
+  {
+    id: "anlog-err-limit",
+    service_id: "svc-agent-network",
+    timestamp: "2026-10-08T12:08:00Z",
+    status_code: 403,
+    duration_ms: 3,
+    input_tokens: 0,
+    output_tokens: 0,
+    total_tokens: 0,
+    cost_usd: 0,
+    method: "POST",
+    path: "/v1/chat/completions",
+    provider: "openai",
+    model: "gpt-4o",
+    decision: "deny",
+    deny_reason: "llm_account.token_cap_exceeded",
+    error_source: "policy",
+    blocked_by: "anb-contractors",
+    error_detail:
+      "user token cap exhausted on account limit anb-contractors (used 512000 of 500000)",
+  },
+  {
+    id: "anlog-err-provider",
+    service_id: "svc-agent-network",
+    timestamp: "2026-10-08T12:06:00Z",
+    status_code: 401,
+    duration_ms: 210,
+    input_tokens: 0,
+    output_tokens: 0,
+    total_tokens: 0,
+    cost_usd: 0,
+    method: "POST",
+    path: "/v1/messages",
+    provider: "anthropic",
+    model: "claude-sonnet-5",
+    decision: "allow",
+    selected_policy_id: "anpol-eng",
+    error_source: "provider",
+  },
+  {
+    id: "anlog-err-proxy",
+    service_id: "svc-agent-network",
+    timestamp: "2026-10-08T12:04:00Z",
+    status_code: 502,
+    duration_ms: 12,
+    input_tokens: 0,
+    output_tokens: 0,
+    total_tokens: 0,
+    cost_usd: 0,
+    method: "POST",
+    path: "/v1/chat/completions",
+    provider: "mistral",
+    model: "mistral-large-latest",
+    decision: "allow",
+    selected_policy_id: "anpol-eng",
+    error_source: "proxy",
+    error_detail:
+      "Destination Not Allowed: dial tcp 10.255.255.1:443: direct upstream address is not allowed",
+  },
+  {
+    // Rejected by the proxy's own authentication before it was parsed as an
+    // LLM call, so no provider, model or policy decision is recorded.
+    id: "anlog-err-auth",
+    service_id: "svc-agent-network",
+    timestamp: "2026-10-08T12:03:00Z",
+    status_code: 401,
+    duration_ms: 2,
+    input_tokens: 0,
+    output_tokens: 0,
+    total_tokens: 0,
+    cost_usd: 0,
+    method: "POST",
+    path: "/v1/chat/completions",
+    error_source: "auth",
+  },
+];
+
 export const MOCK_GROUPS = [
   { id: "engineering", name: "Engineering" },
   { id: "data-science", name: "Data Science" },
@@ -384,8 +683,18 @@ export type PolicyLimits = {
 const DEFAULT_LIMIT_WINDOW_SECONDS = 2_592_000;
 
 export const EMPTY_POLICY_LIMITS: PolicyLimits = {
-  tokenLimit: { enabled: false, groupCap: 0, userCap: 0, windowSeconds: DEFAULT_LIMIT_WINDOW_SECONDS },
-  budgetLimit: { enabled: false, groupCapUsd: 0, userCapUsd: 0, windowSeconds: DEFAULT_LIMIT_WINDOW_SECONDS },
+  tokenLimit: {
+    enabled: false,
+    groupCap: 0,
+    userCap: 0,
+    windowSeconds: DEFAULT_LIMIT_WINDOW_SECONDS,
+  },
+  budgetLimit: {
+    enabled: false,
+    groupCapUsd: 0,
+    userCapUsd: 0,
+    windowSeconds: DEFAULT_LIMIT_WINDOW_SECONDS,
+  },
 };
 
 // BudgetWindow mirrors the backend enum: how a budget period rolls.
@@ -427,7 +736,10 @@ export type AgentBudgetRule = {
   updatedAt: string;
 };
 
-export const EMPTY_BUDGET_RULE: Omit<AgentBudgetRule, "id" | "createdAt" | "updatedAt"> = {
+export const EMPTY_BUDGET_RULE: Omit<
+  AgentBudgetRule,
+  "id" | "createdAt" | "updatedAt"
+> = {
   name: "",
   enabled: true,
   targetGroups: [],

@@ -1,5 +1,6 @@
 "use client";
 
+import Button from "@components/Button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,6 +10,8 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@components/DropdownMenu";
+import { cn } from "@utils/helpers";
+import { isNetBirdCloud } from "@utils/netbird";
 import {
   ArrowUpRightIcon,
   BookText,
@@ -20,10 +23,8 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import Button from "@components/Button";
-import { cn } from "@utils/helpers";
+import { FaDiscord } from "react-icons/fa6";
 import SlackIcon from "@/assets/icons/SlackIcon";
-import { isNetBirdCloud } from "@utils/netbird";
 
 export default function HelpAndSupportButton() {
   const tNav = useTranslations("navigation");
@@ -119,6 +120,20 @@ export default function HelpAndSupportButton() {
           <div className={"flex gap-3 items-center"}>
             <SlackIcon size={14} />
             {tNav("slack")}
+          </div>
+          <DropdownMenuShortcut>
+            <ArrowUpRightIcon size={16} />
+          </DropdownMenuShortcut>
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          href="https://docs.netbird.io/discord-url"
+          target="_blank"
+          rel="noopener noreferrer"
+          asChild
+        >
+          <div className={"flex gap-3 items-center"}>
+            <FaDiscord size={14} />
+            NetBird Discord
           </div>
           <DropdownMenuShortcut>
             <ArrowUpRightIcon size={16} />
