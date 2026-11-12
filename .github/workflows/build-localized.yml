@@ -131,6 +131,12 @@ jobs:
             # describe's nearest ancestor: on a merge-heavy history an old tag can
             # be fewer commits away than the latest release, and describe picked
             # v2.70.0 for a tree that had v2.96.1 in it.
+            #
+            # This reads the tags as they are when the build runs, so a release
+            # cut AFTER a merge leaves the label one release behind until the
+            # next build: the sidebar reshape was merged as v2.97.0's content but
+            # built as 2.96.1 because upstream tagged it two hours later. Any
+            # later build of the same tree picks the tag up.
             git remote add upstream https://github.com/netbirdio/dashboard.git 2>/dev/null \
               || git remote set-url upstream https://github.com/netbirdio/dashboard.git
             git fetch --tags --force upstream >/dev/null 2>&1 \
