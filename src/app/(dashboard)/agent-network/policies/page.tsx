@@ -33,16 +33,16 @@ export default function AgentNetworkPoliciesPage() {
           />
           <Breadcrumbs.Item
             href={"/agent-network/policies"}
-            label={tNav("policies")}
+            label={tNav("agentPolicies")}
             active={true}
           />
         </Breadcrumbs>
-        <h1 ref={headingRef}>{tNav("policies")}</h1>
+        <h1 ref={headingRef}>{tNav("agentPolicies")}</h1>
         <Paragraph>{tAn("policiesDescription")}</Paragraph>
       </div>
 
       <RestrictedAccess
-        page={tNav("policies")}
+        page={tNav("agentPolicies")}
         hasAccess={permission?.["agent_network.policies"]?.read}
       >
         <AIProvidersProvider>

@@ -290,6 +290,10 @@ export default {
     usageAndLogs: "用量与日志",
     configuration: "配置",
     agentNetwork: "Agent Network",
+    networking: "网络",
+    account: "账户",
+    agents: "智能体",
+    agentPolicies: "Agent 策略",
     beta: "Beta",
   },
   table: {

@@ -300,6 +300,10 @@ export default {
     usageAndLogs: "Usage & Logs",
     configuration: "Configuration",
     agentNetwork: "Agent Network",
+    networking: "Networking",
+    account: "Account",
+    agents: "Agents",
+    agentPolicies: "Agent Policies",
     beta: "Beta",
   },
   table: {

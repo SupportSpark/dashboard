@@ -9,7 +9,6 @@ import dayjs from "dayjs";
 import { ArrowLeftRightIcon, ExternalLinkIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import React, { useMemo } from "react";
-import ActivityIcon from "@/assets/icons/ActivityIcon";
 import { useIsFeatureLocked } from "@/cloud/cloud-hooks/useIsFeatureLocked";
 import { TRAFFIC_EVENTS_DOC_LINK } from "@/cloud/traffic-events/TrafficEventSetting";
 import TrafficEventsTable from "@/cloud/traffic-events/TrafficEventsTable";
@@ -45,11 +44,6 @@ export default function NetworkTrafficPage() {
     <PageContainer>
       <div className="p-default py-6">
         <Breadcrumbs>
-          <Breadcrumbs.Item
-            label={tNav("activity")}
-            disabled
-            icon={<ActivityIcon size={13} />}
-          />
           <Breadcrumbs.Item
             href="/events/traffic"
             label={tNav("trafficEvents")}

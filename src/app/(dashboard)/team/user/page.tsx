@@ -30,7 +30,6 @@ import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useMemo, useState } from "react";
 import { useSWRConfig } from "swr";
-import TeamIcon from "@/assets/icons/TeamIcon";
 import { UserMfaListItem } from "@/cloud/mfa/UserMFAListItem";
 import { usePermissions } from "@/contexts/PermissionsProvider";
 import { useLoggedInUser } from "@/contexts/UsersProvider";
@@ -157,19 +156,19 @@ function UserOverview({ user, initialGroups }: Readonly<Props>) {
     <PageContainer>
       <div className={"p-default py-6 mb-4"}>
         <Breadcrumbs>
-          <Breadcrumbs.Item
-            href={"/team"}
-            label={t("team")}
-            disabled={!permission.users.read}
-            icon={<TeamIcon size={13} />}
-          />
-
           {isServiceUser ? (
-            <Breadcrumbs.Item
-              href={"/team/service-users"}
-              label={tNav("serviceUsers")}
-              icon={<IconSettings2 size={17} />}
-            />
+            <>
+              <Breadcrumbs.Item
+                href={"/team/users"}
+                label={t("title")}
+                disabled={!permission.users.read}
+                icon={<User2 size={16} />}
+              />
+              <Breadcrumbs.Item
+                href={"/team/service-users"}
+                label={tNav("serviceUsers")}
+              />
+            </>
           ) : (
             <Breadcrumbs.Item
               href={"/team/users"}

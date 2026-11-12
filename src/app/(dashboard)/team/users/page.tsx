@@ -10,14 +10,14 @@ import useFetchApi from "@utils/api";
 import { isNetBirdCloud } from "@utils/netbird";
 import { ExternalLinkIcon, User2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { lazy, Suspense } from "react";
-import TeamIcon from "@/assets/icons/TeamIcon";
+import React, { lazy, Suspense } from "react";
 import { useGroups } from "@/contexts/GroupsProvider";
 import { usePermissions } from "@/contexts/PermissionsProvider";
 import { User } from "@/interfaces/User";
 import PageContainer from "@/layouts/PageContainer";
 import { AccountMfaCard } from "@/cloud/mfa/AccountMFACard";
 import { IdentityProviderCard } from "@/modules/integrations/idp-sync/IdentityProviderCard";
+import UsersTabs from "@/modules/users/UsersTabs";
 
 const UsersTable = lazy(() => import("@/modules/users/UsersTable"));
 
@@ -37,11 +37,6 @@ export default function TeamUsers() {
       <div className={"p-default py-6"}>
         <Breadcrumbs>
           <Breadcrumbs.Item
-            href={"/team"}
-            label={t("team")}
-            icon={<TeamIcon size={13} />}
-          />
-          <Breadcrumbs.Item
             href={"/team/users"}
             label={t("title")}
             active
@@ -60,6 +55,7 @@ export default function TeamUsers() {
           </InlineLink>
         </Paragraph>
       </div>
+      <UsersTabs current={"users"} />
       <RestrictedAccess page={t("title")} hasAccess={permission.users.read}>
         <Suspense fallback={<SkeletonTable />}>
           {permission.settings.read && (

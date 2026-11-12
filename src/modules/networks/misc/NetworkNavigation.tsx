@@ -3,6 +3,7 @@ import * as React from "react";
 import { useTranslations } from "next-intl";
 import NetworkRoutesIcon from "@/assets/icons/NetworkRoutesIcon";
 import { usePermissions } from "@/contexts/PermissionsProvider";
+import { NETWORKS_ACTIVE_ROUTES } from "@/modules/navigation/sections";
 
 export const NetworkNavigation = () => {
   const t = useTranslations("navigation");
@@ -19,6 +20,7 @@ export const NetworkNavigation = () => {
         isChild
         href={"/networks"}
         exactPathMatch={true}
+        activeRoutes={NETWORKS_ACTIVE_ROUTES}
         visible={permission.networks.read}
       />
       <SidebarItem
