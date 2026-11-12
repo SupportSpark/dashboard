@@ -126,11 +126,16 @@ jobs:
             # "v2.94.0+7d429c9c" and the sidebar kept offering an upgrade to the
             # version it was already running. Ask upstream directly so the number
             # always names the release actually merged in.
+            #
+            # Then take the highest semver among the reachable tags rather than
+            # describe's nearest ancestor: on a merge-heavy history an old tag can
+            # be fewer commits away than the latest release, and describe picked
+            # v2.70.0 for a tree that had v2.96.1 in it.
             git remote add upstream https://github.com/netbirdio/dashboard.git 2>/dev/null \
               || git remote set-url upstream https://github.com/netbirdio/dashboard.git
             git fetch --tags --force upstream >/dev/null 2>&1 \
               || echo "::warning::could not fetch upstream tags; falling back to local tags"
-            BASE="$(git describe --tags --abbrev=0 --match 'v[0-9]*' 2>/dev/null || true)"
+            BASE="$(git tag --merged HEAD --list 'v[0-9]*' --sort=-v:refname 2>/dev/null | head -1)"
             BASE="${BASE#v}"
             if [ -z "$BASE" ]; then
               BASE="$(node -p "require('./package.json').version" 2>/dev/null || echo 0.0.0)"
