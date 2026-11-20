@@ -1,4 +1,3 @@
-import Breadcrumbs from "@components/Breadcrumbs";
 import Button from "@components/Button";
 import FancyToggleSwitch from "@components/FancyToggleSwitch";
 import HelpText from "@components/HelpText";
@@ -14,11 +13,10 @@ import { useApiCall } from "@utils/api";
 import { validator } from "@utils/helpers";
 import { isValidCIDR } from "@utils/ip";
 import { isNetBirdCloud } from "@utils/netbird";
-import { ExternalLinkIcon, GlobeIcon, NetworkIcon } from "lucide-react";
+import { ExternalLinkIcon, GlobeIcon } from "lucide-react";
 import React, { useMemo, useState } from "react";
 import { useSWRConfig } from "swr";
 import { useTranslations } from "next-intl";
-import SettingsIcon from "@/assets/icons/SettingsIcon";
 import { TrafficEventSetting } from "@/cloud/traffic-events/TrafficEventSetting";
 import { useGroups } from "@/contexts/GroupsProvider";
 import { usePermissions } from "@/contexts/PermissionsProvider";
@@ -190,19 +188,6 @@ function NetworkSettingsTabContent({ account }: Readonly<Props>) {
   return (
     <Tabs.Content value={"networks"}>
       <div className={"p-default py-6 max-w-2xl"}>
-        <Breadcrumbs>
-          <Breadcrumbs.Item
-            href={"/settings"}
-            label={t("title")}
-            icon={<SettingsIcon size={13} />}
-          />
-          <Breadcrumbs.Item
-            href={"/settings?tab=networks"}
-            label={t("networksTab")}
-            icon={<NetworkIcon size={14} />}
-            active
-          />
-        </Breadcrumbs>
         <div className={"flex items-start justify-between -mt-1"}>
           <div>
             <h1>{t("networksTab")}</h1>

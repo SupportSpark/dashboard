@@ -323,18 +323,30 @@ const DeploySuccess = ({
   return (
     <div className={"flex flex-col gap-4"}>
       <Callout variant={"info"}>
-        {t.rich("resourceCreatedCloud", {
-          resource: resourceLabel,
-          // The instance name and the assigned address keep their highlight
-          // styling through rich placeholders in both locales.
-          name: (chunks) => (
-            <span className={"text-white font-medium"}>{chunks}</span>
-          ),
-          ipKind: isStaticIP ? t("staticIpKind") : t("ipKind"),
-          ip: (chunks) => (
-            <span className={"text-netbird font-medium"}>{chunks}</span>
-          ),
-        })}
+        {ip ? (
+          t.rich("resourceCreatedCloud", {
+            resource: resourceLabel,
+            // The instance name and the assigned address keep their highlight
+            // styling through rich placeholders in both locales.
+            name: (chunks) => (
+              <span className={"text-sky-900 dark:text-white font-medium"}>
+                {chunks}
+              </span>
+            ),
+            ipKind: isStaticIP ? t("staticIpKind") : t("ipKind"),
+            ip: (chunks) => (
+              <span className={"text-netbird font-medium"}>{chunks}</span>
+            ),
+          })
+        ) : (
+          <>
+            {resourceLabel}{" "}
+            <span className={"text-sky-900 dark:text-white font-medium"}>
+              {name}
+            </span>
+            {ipPendingNote}
+          </>
+        )}
       </Callout>
       {ip && (
         <div>

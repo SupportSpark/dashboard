@@ -136,7 +136,7 @@ export function DNSZoneModalContent({
   return (
     <ModalContent flow="dns_zone" maxWidthClass={"max-w-2xl"}>
       <ModalHeader
-        icon={<DNSZoneIcon size={20} className={"fill-netbird"} />}
+        icon={<DNSZoneIcon size={20} className={"fill-current"} />}
         title={zone ? t("updateDNSZone") : t("addDNSZone")}
         description={t("updateZoneDescription")}
         color={"netbird"}
@@ -147,9 +147,7 @@ export function DNSZoneModalContent({
       <div className={"px-8 pt-6 pb-7 flex-col flex gap-6"}>
         <div>
           <Label>{t("domainLabel")}</Label>
-          <HelpText>
-            {t("domainHelp")}
-          </HelpText>
+          <HelpText>{t("domainHelp")}</HelpText>
           <Input
             disabled={!!zone}
             readOnly={!!zone}
@@ -164,9 +162,7 @@ export function DNSZoneModalContent({
         </div>
         <div className={"mb-2"}>
           <Label>{t("distributionGroupsLabel")}</Label>
-          <HelpText>
-            {t("zoneGroupsHelp")}
-          </HelpText>
+          <HelpText>{t("zoneGroupsHelp")}</HelpText>
           <PeerGroupSelector
             onChange={setGroups}
             values={groups}

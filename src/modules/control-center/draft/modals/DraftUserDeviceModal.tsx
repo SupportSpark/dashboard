@@ -89,7 +89,7 @@ const StepperContent = ({
   return (
     <ModalContent maxWidthClass={"max-w-xl"}>
       <ModalHeader
-        icon={<MonitorSmartphoneIcon size={18} className={"text-netbird"} />}
+        icon={<MonitorSmartphoneIcon size={18} />}
         title={t("setupDeviceTitle", { name })}
         description={t("setupDeviceDescription")}
         color={"netbird"}

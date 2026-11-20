@@ -58,7 +58,7 @@ export default function DataTableRefreshButton({ onClick, isDisabled }: Props) {
           if (hovered) event.preventDefault();
         }}
       >
-        <span className={"text-xs text-neutral-300"}>
+        <span className={"text-xs text-nb-gray-300 dark:text-neutral-300"}>
           {disabled ? t("refreshCooldown") : t("refresh")}
         </span>
       </TooltipContent>

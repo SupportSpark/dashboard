@@ -113,7 +113,7 @@ export const RDPCredentialsModal = ({
     <Modal open={open} onOpenChange={undefined}>
       <ModalContent maxWidthClass={"max-w-xl"} showClose={false}>
         <ModalHeader
-          icon={<MonitorIcon className={"text-netbird"} size={18} />}
+          icon={<MonitorIcon size={18} />}
           title={peer.name}
           description={t("connectToPeerViaRdp", { ip: peer.ip })}
           color={"netbird"}

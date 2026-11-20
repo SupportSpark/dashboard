@@ -1,6 +1,5 @@
 "use client";
 
-import Breadcrumbs from "@components/Breadcrumbs";
 import InlineLink from "@components/InlineLink";
 import Paragraph from "@components/Paragraph";
 import SkeletonTable from "@components/skeletons/SkeletonTable";
@@ -8,8 +7,7 @@ import { RestrictedAccess } from "@components/ui/RestrictedAccess";
 import { usePortalElement } from "@hooks/usePortalElement";
 import { ExternalLinkIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { lazy, Suspense } from "react";
-import ReverseProxyIcon from "@/assets/icons/ReverseProxyIcon";
+import React, { lazy, Suspense } from "react";
 import { usePermissions } from "@/contexts/PermissionsProvider";
 import ReverseProxiesProvider from "@/contexts/ReverseProxiesProvider";
 import { REVERSE_PROXY_CUSTOM_DOMAINS_DOCS_LINK } from "@/interfaces/ReverseProxy";
@@ -30,18 +28,6 @@ export default function ReverseProxyCustomDomainsPage() {
   return (
     <PageContainer>
       <div className={"p-default py-6"}>
-        <Breadcrumbs>
-          <Breadcrumbs.Item
-            href={"/reverse-proxy/services"}
-            label={t("title")}
-            icon={<ReverseProxyIcon size={16} />}
-          />
-          <Breadcrumbs.Item
-            href={"/reverse-proxy/custom-domains"}
-            label={t("customDomains")}
-            active={true}
-          />
-        </Breadcrumbs>
         <h1 ref={headingRef}>{t("customDomains")}</h1>
         <Paragraph>
           {t("customDomainsDescription")}{" "}

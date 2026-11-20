@@ -148,6 +148,7 @@ export default {
       "{count, plural, =0 {0 Resources} one {# Resource} other {# Resources}}",
     selectAllGroups: "Select all groups on this page",
     lastSeenOn: "Last seen on",
+    absoluteDateTime: "D MMMM, YYYY [at] h:mm A",
     settingsAdvancedSettings: "Settings > Advanced Settings",
     confirmAndEnable: "Confirm & Enable",
     dashboard: "Dashboard",
@@ -1276,6 +1277,8 @@ export default {
     light: "Light",
     dark: "Dark",
     system: "System",
+    title: "Theme",
+    ariaLabel: "{theme} theme",
   },
   serviceUsers: {
     title: "Service Users",
@@ -3108,11 +3111,20 @@ export default {
     desc_integrated_validator_api_deleted:
       "<Value>{platform}</Value> integration deleted",
     desc_integrated_validator_host_check_approved:
-      "Peer approved by <Value>{platform}</Value> integration",
+      "Peer <peer>{name}</peer> approved by <Value>{platform}</Value> integration",
     desc_integrated_validator_host_check_denied:
-      "Peer rejected by <Value>{platform}</Value> integration",
+      "Peer <peer>{name}</peer> rejected by <Value>{platform}</Value> integration",
+    desc_integrated_validator_host_check_denied_reason:
+      ", reason: <Value>{reason}</Value>",
+    desc_integrated_validator_stale_grace_started:
+      "Peer <peer>{name}</peer> keeps access while it checks in with <Value>{platform}</Value> again",
+    desc_integrated_validator_stale_grace_started_for:
+      "Peer <peer>{name}</peer> keeps access for <Value>{duration}</Value> while it checks in with <Value>{platform}</Value> again",
+    desc_integrated_validator_peer_compliance_bypassed_reason:
+      " (original non-compliant reason: <Value>{reason}</Value>)",
+    durationMinutes: "{count, plural, one {# minute} other {# minutes}}",
     desc_integrated_validator_peer_compliance_bypassed:
-      "Peer <Value>{name}</Value> with the NetBird IP <Value>{ip}</Value> compliance bypassed for <Value>{platform}</Value> integration{original_reason}",
+      "Peer <Value>{name}</Value> with the NetBird IP <Value>{ip}</Value> compliance bypassed for <Value>{platform}</Value> integration",
     desc_integrated_validator_peer_compliance_bypass_revoked:
       "Peer <Value>{name}</Value> with the NetBird IP <Value>{ip}</Value> compliance bypass revoked for <Value>{platform}</Value> integration",
     desc_compliance_original_reason:
@@ -4220,7 +4232,7 @@ export default {
     testResourceIntro:
       "Nice work connecting your client device! Now, let's have a little fun and test if it can reach your resource.",
     pingResourceHint:
-      "Open your command line and run this command from {device} to ping your resource.",
+      "Open your command line and run this command from <span>{device}</span> to ping your resource.",
     yourDevice: "your device",
     anySubdomainOf: "(any subdomain of {address})",
     resourceIpInSubnet: "(resource ip in your subnet)",
@@ -6114,6 +6126,19 @@ export default {
     modelLabel: "Model",
   },
   integrations: {
+    edrStaleGraceLabel: "Grace Period",
+    edrStaleGraceHelp:
+      "Keep approved devices connected after a long absence, until they check in with {name} again or the duration runs out.",
+    edrStaleGraceDuration: "Duration",
+    edrStaleGraceDurationHelp:
+      "How long a returning device keeps network access.",
+    edrStaleGraceExample:
+      "Example: This property is set to {minutes} minutes. Jane''s laptop was off for a week, so its last check-in in {name} is too old. It keeps network access for up to {minutes} minutes after it comes back online, while it checks in with {name} again.",
+    edrStaleGraceInvalid: "Must be a whole number between 1 and {max}",
+    edrStaleGraceUnit: "Minutes",
+    edrStaleGraceNewPeersLabel: "Include new peers",
+    edrStaleGraceNewPeersHelp:
+      "Keep new peers connected while they aren''t in {name} yet or haven''t checked in recently.",
     edrTabTitle: "MDM & EDR",
     edrTabDescription:
       "Endpoint Detection and Response (EDR) and Mobile Device Management (MDM) integrations allow you to restrict network access only to devices managed by the IT department.",

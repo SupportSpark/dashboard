@@ -1,6 +1,5 @@
 "use client";
 
-import Breadcrumbs from "@components/Breadcrumbs";
 import Paragraph from "@components/Paragraph";
 import SkeletonTable from "@components/skeletons/SkeletonTable";
 import FullScreenLoading from "@components/ui/FullScreenLoading";
@@ -10,7 +9,6 @@ import useRedirect from "@hooks/useRedirect";
 import useFetchApi from "@utils/api";
 import { useTranslations } from "next-intl";
 import React, { Suspense, useMemo } from "react";
-import MSPIcon from "@/assets/icons/MSPIcon";
 import { useMSP } from "@/cloud/msp/contexts/MSPProvider";
 import { TenantsProvider } from "@/cloud/msp/contexts/TenantsProvider";
 import { Tenant } from "@/cloud/msp/interfaces/Tenant";
@@ -54,13 +52,6 @@ const TenantsPageContent = () => {
   return (
     <PageContainer>
       <div className={"p-default py-6"}>
-        <Breadcrumbs>
-          <Breadcrumbs.Item
-            href={"/tenants"}
-            label={t("tenantsLabel")}
-            icon={<MSPIcon size={15} />}
-          />
-        </Breadcrumbs>
         <h1 ref={headingRef}>{t("tenantsLabel")}</h1>
         <Paragraph>{t("tenantsPageDescription")}</Paragraph>
         <Paragraph>
@@ -68,7 +59,10 @@ const TenantsPageContent = () => {
           {t("tenantsDocsSuffix")}
         </Paragraph>
       </div>
-      <RestrictedAccess page={t("tenantsLabel")} hasAccess={permission.tenants.read}>
+      <RestrictedAccess
+        page={t("tenantsLabel")}
+        hasAccess={permission.tenants.read}
+      >
         <Suspense fallback={<SkeletonTable />}>
           <TenantsProvider>
             <MSPTenantsTable

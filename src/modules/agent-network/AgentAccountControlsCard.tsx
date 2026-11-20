@@ -1,6 +1,5 @@
 "use client";
 
-import Breadcrumbs from "@components/Breadcrumbs";
 import Button from "@components/Button";
 import FancyToggleSwitch from "@components/FancyToggleSwitch";
 import HelpText from "@components/HelpText";
@@ -17,7 +16,6 @@ import { useHasChanges } from "@hooks/useHasChanges";
 import { cn } from "@utils/helpers";
 import { Clock, FileText, ScrollText } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import AgentNetworkIcon from "@/assets/icons/AgentNetworkIcon";
 import { useAIProviders } from "@/modules/agent-network/AIProvidersProvider";
 import { useTranslations } from "next-intl";
 
@@ -87,20 +85,6 @@ export default function AgentAccountControlsCard() {
 
   return (
     <div className={"p-default py-6 max-w-2xl"}>
-      <Breadcrumbs>
-        <Breadcrumbs.Item
-          href={"/agent-network/providers"}
-          label={t("brand")}
-          icon={<AgentNetworkIcon size={16} />}
-        />
-        <Breadcrumbs.Item
-          href={"/agent-network/configuration?tab=log-settings"}
-          label={t("logCollection")}
-          icon={<ScrollText size={14} />}
-          active
-        />
-      </Breadcrumbs>
-
       <div className={"flex items-start justify-between"}>
         <h1>{t("logCollection")}</h1>
 
@@ -126,9 +110,7 @@ export default function AgentAccountControlsCard() {
                 {t("enableLogCollection")}
               </>
             }
-            helpText={
-              <>{t("persistAccessLogs")}</>
-            }
+            helpText={<>{t("persistAccessLogs")}</>}
           />
 
           <div

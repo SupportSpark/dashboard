@@ -1,4 +1,3 @@
-import Breadcrumbs from "@components/Breadcrumbs";
 import Button from "@components/Button";
 import { Callout } from "@components/Callout";
 import FancyToggleSwitch from "@components/FancyToggleSwitch";
@@ -16,7 +15,6 @@ import { isEmpty } from "lodash";
 import {
   AlertCircle,
   Braces,
-  FolderGit2Icon,
   FolderInput,
   FolderSync,
   ShieldCheck,
@@ -26,7 +24,6 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useSWRConfig } from "swr";
 import { useTranslations } from "next-intl";
-import SettingsIcon from "@/assets/icons/SettingsIcon";
 import Badge from "@/components/Badge";
 import { useDialog } from "@/contexts/DialogProvider";
 import { usePermissions } from "@/contexts/PermissionsProvider";
@@ -95,7 +92,7 @@ export default function GroupsSettings({ account }: Props) {
           children: (
             <div
               className={
-                "flex gap-2 items-center text-xs bg-netbird-950 px-4 justify-center py-3 rounded-md border border-netbird-500 text-netbird-200"
+                "flex gap-2 items-center text-xs bg-netbird-100 px-4 justify-center py-3 rounded-md border border-netbird-500 text-netbird-700 dark:bg-netbird-950 dark:text-netbird-200"
               }
             >
               <AlertCircle size={14} />
@@ -141,19 +138,6 @@ export default function GroupsSettings({ account }: Props) {
   return (
     <Tabs.Content value={"groups"} className={"w-full"}>
       <div className={"p-default py-6 max-w-xl"}>
-        <Breadcrumbs>
-          <Breadcrumbs.Item
-            href={"/settings"}
-            label={t("title")}
-            icon={<SettingsIcon size={13} />}
-          />
-          <Breadcrumbs.Item
-            href={"/settings"}
-            label={t("groupsTab")}
-            icon={<FolderGit2Icon size={14} />}
-            active
-          />
-        </Breadcrumbs>
         <div className={"flex items-start justify-between -mt-1"}>
           <h1>{t("groupsTab")}</h1>
           <Button
@@ -294,7 +278,7 @@ export default function GroupsSettings({ account }: Props) {
                     {jwtAllowGroupsWarning && (
                       <div
                         className={
-                          "flex gap-2 items-center text-xs bg-netbird-950 px-4 justify-center py-3 rounded-md border border-netbird-500 text-netbird-200"
+                          "flex gap-2 items-center text-xs bg-netbird-100 px-4 justify-center py-3 rounded-md border border-netbird-500 text-netbird-700 dark:bg-netbird-950 dark:text-netbird-200"
                         }
                       >
                         <AlertCircle size={14} />

@@ -145,6 +145,7 @@ export default {
     resourceCount: "{count, plural, =0 {0 个资源} other {# 个资源}}",
     selectAllGroups: "全选当前页的组",
     lastSeenOn: "上次出现于",
+    absoluteDateTime: "YYYY年M月D日 HH:mm",
     settingsAdvancedSettings: "设置 > 高级设置",
     confirmAndEnable: "确认并启用",
     dashboard: "仪表盘",
@@ -1204,6 +1205,8 @@ export default {
     light: "浅色",
     dark: "深色",
     system: "跟随系统",
+    title: "主题",
+    ariaLabel: "{theme}主题",
   },
   serviceUsers: {
     title: "服务用户",
@@ -2889,11 +2892,19 @@ export default {
     desc_integrated_validator_api_deleted:
       "<Value>{platform}</Value> 集成已被删除",
     desc_integrated_validator_host_check_approved:
-      "节点已通过 <Value>{platform}</Value> 集成批准",
+      "节点 <peer>{name}</peer> 已通过 <Value>{platform}</Value> 集成批准",
     desc_integrated_validator_host_check_denied:
-      "节点已被 <Value>{platform}</Value> 集成拒绝",
+      "节点 <peer>{name}</peer> 已被 <Value>{platform}</Value> 集成拒绝",
+    desc_integrated_validator_host_check_denied_reason: "，原因：<Value>{reason}</Value>",
+    desc_integrated_validator_stale_grace_started:
+      "节点 <peer>{name}</peer> 继续保有网络访问，同时重新向 <Value>{platform}</Value> 上报",
+    desc_integrated_validator_stale_grace_started_for:
+      "节点 <peer>{name}</peer> 在 <Value>{duration}</Value> 内继续保有网络访问，同时重新向 <Value>{platform}</Value> 上报",
+    desc_integrated_validator_peer_compliance_bypassed_reason:
+      "（原始不合规原因：<Value>{reason}</Value>）",
+    durationMinutes: "{count} 分钟",
     desc_integrated_validator_peer_compliance_bypassed:
-      "NetBird IP 为 <Value>{ip}</Value> 的节点 <Value>{name}</Value> 已绕过 <Value>{platform}</Value> 的合规检查{original_reason}",
+      "NetBird IP 为 <Value>{ip}</Value> 的节点 <Value>{name}</Value> 已绕过 <Value>{platform}</Value> 的合规检查",
     desc_integrated_validator_peer_compliance_bypass_revoked:
       "NetBird IP 为 <Value>{ip}</Value> 的节点 <Value>{name}</Value> 的合规绕过已对 <Value>{platform}</Value> 撤销",
     desc_compliance_original_reason:
@@ -3923,7 +3934,7 @@ export default {
       "您的第一个资源和路由节点已就绪。现在拿起您的设备，安装 NetBird，让我们连接起来。",
     testResourceIntro:
       "客户端设备连接成功！现在我们来轻松测试一下它能否访问您的资源。",
-    pingResourceHint: "打开命令行，在 {device} 上运行此命令来 ping 您的资源。",
+    pingResourceHint: "打开命令行，在 <span>{device}</span> 上运行此命令来 ping 您的资源。",
     yourDevice: "您的设备",
     anySubdomainOf: "（{address} 的任意子域名）",
     resourceIpInSubnet: "（您子网中的资源 IP）",
@@ -5739,6 +5750,18 @@ export default {
     modelLabel: "模型",
   },
   integrations: {
+    edrStaleGraceLabel: "宽限期",
+    edrStaleGraceHelp:
+      "长时间离线后仍保留已批准设备的连接，直到它重新向 {name} 上报或时长耗尽。",
+    edrStaleGraceDuration: "时长",
+    edrStaleGraceDurationHelp: "设备重新上线后保留网络访问的时长。",
+    edrStaleGraceExample:
+      "示例：该属性设为 {minutes} 分钟。Jane 的笔记本关机一周，因此它在 {name} 中的最后上报已过期。设备重新上线后，最多保留 {minutes} 分钟的网络访问，等待它重新向 {name} 上报。",
+    edrStaleGraceInvalid: "必须是 1 到 {max} 之间的整数",
+    edrStaleGraceUnit: "分钟",
+    edrStaleGraceNewPeersLabel: "包含新节点",
+    edrStaleGraceNewPeersHelp:
+      "让新节点在尚未加入 {name} 或近期未上报时保持连接。",
     edrTabTitle: "MDM 与 EDR",
     edrTabDescription:
       "端点检测与响应 (EDR) 和移动设备管理 (MDM) 集成可让您仅允许 IT 部门管理的设备访问网络。",

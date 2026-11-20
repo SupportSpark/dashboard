@@ -1,6 +1,5 @@
 "use client";
 
-import Breadcrumbs from "@components/Breadcrumbs";
 import InlineLink from "@components/InlineLink";
 import Paragraph from "@components/Paragraph";
 import SkeletonTable from "@components/skeletons/SkeletonTable";
@@ -9,8 +8,7 @@ import { usePortalElement } from "@hooks/usePortalElement";
 import dayjs from "dayjs";
 import { ExternalLinkIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { lazy, Suspense, useMemo } from "react";
-import ReverseProxyIcon from "@/assets/icons/ReverseProxyIcon";
+import React, { lazy, Suspense, useMemo } from "react";
 import PeersProvider from "@/contexts/PeersProvider";
 import { usePermissions } from "@/contexts/PermissionsProvider";
 import ServerPaginationProvider from "@/contexts/ServerPaginationProvider";
@@ -40,20 +38,9 @@ export default function ProxyLogsPage() {
 
   return (
     <PageContainer>
-      <div className={"p-default py-6"}>
-        <Breadcrumbs>
-          <Breadcrumbs.Item
-            href={"/reverse-proxy/services"}
-            label={t("title")}
-            icon={<ReverseProxyIcon size={16} />}
-          />
-          <Breadcrumbs.Item
-            href={"/reverse-proxy/logs"}
-            label={t("accessLogs")}
-            active={true}
-          />
-        </Breadcrumbs>
+      <div className="p-default py-6">
         <h1 ref={headingRef}>{t("accessLogs")}</h1>
+
         <Paragraph>
           {t("accessLogsDescription")}{" "}
           <InlineLink href={REVERSE_PROXY_EVENTS_DOCS_LINK} target={"_blank"}>

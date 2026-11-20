@@ -68,7 +68,7 @@ export default function UserStatusCell({ user }: Readonly<Props>) {
     <div className={"max-w-xs text-xs flex flex-col gap-2"}>
       <div>
         {t("pendingApprovalTooltip")}{" "}
-        <span className={"font-medium text-white"}>
+        <span className={"font-medium text-nb-gray-100 dark:text-white"}>
           {t("userApprovalRequiredLabel")}
         </span>{" "}
         <InlineLink href={"/settings?tab=authentication"}>{tCommon("settings")}</InlineLink>.

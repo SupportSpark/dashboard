@@ -57,7 +57,13 @@ export const RemoteJobDropdownButton = () => {
                   {t.rich("peerOfflineRemoteJob", {
                     name: peer.name,
                     bold: (chunks) => (
-                      <span className={"text-white font-medium"}>{chunks}</span>
+                      <span
+                        className={
+                          "text-nb-gray-100 dark:text-white font-medium"
+                        }
+                      >
+                        {chunks}
+                      </span>
                     ),
                   })}
                 </div>
@@ -77,7 +83,9 @@ export const RemoteJobDropdownButton = () => {
                 size={"small"}
               />
               <div className={"flex flex-col text-left"}>
-                <div className={"text-left text-white"}>{t("debugBundle")}</div>
+                <div className={"text-left text-nb-gray-100 dark:text-white"}>
+                  {t("debugBundle")}
+                </div>
                 <div className={"text-xs"}>{t("debugBundleDesc")}</div>
               </div>
             </div>

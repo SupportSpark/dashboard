@@ -373,7 +373,7 @@ export function ResourceModalContent({
                           {t.rich("resourceGroupsUsedInPolicies", {
                             count: groupPolicyCount,
                             policies: (chunks) => (
-                              <span className="text-white font-medium">
+                              <span className="text-sky-900 dark:text-white font-medium">
                                 {chunks}
                               </span>
                             ),

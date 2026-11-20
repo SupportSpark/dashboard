@@ -74,14 +74,19 @@ export const ReverseProxyCrowdSecIPReputation = ({
           <Label>{t("crowdSecIpReputation")}</Label>
           <HelpText>
             {t.rich("crowdSecIpReputationHelp", {
-              b: (chunks) => <b className={"text-white"}>{chunks}</b>,
+              b: (chunks) => (
+                <b className={"text-nb-gray-100 dark:text-white"}>{chunks}</b>
+              ),
             })}
           </HelpText>
         </div>
       </div>
 
       <Select value={value} onValueChange={(v) => onChange(v as CrowdSecMode)}>
-        <SelectTrigger className="w-[260px]" data-testid="crowdsec-mode-trigger">
+        <SelectTrigger
+          className="w-[260px]"
+          data-testid="crowdsec-mode-trigger"
+        >
           <div className="flex items-center gap-2 whitespace-nowrap">
             {selected.icon}
             <SelectValue />

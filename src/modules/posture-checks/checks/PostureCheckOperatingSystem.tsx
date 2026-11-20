@@ -64,7 +64,9 @@ export const PostureCheckOperatingSystem = ({
       title={t("operatingSystem")}
       modalWidthClass={"max-w-xl"}
       description={t("operatingSystemHelp")}
-      iconClass={"bg-gradient-to-tr from-nb-gray-500 to-nb-gray-300"}
+      iconClass={
+        "bg-gradient-to-tr from-[#616E79] to-[#7C8994] dark:to-[#A3ADB5]"
+      }
       active={value !== undefined}
       onReset={() => onChange(undefined)}
     >

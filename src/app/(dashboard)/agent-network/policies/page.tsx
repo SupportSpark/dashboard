@@ -1,6 +1,5 @@
 "use client";
 
-import Breadcrumbs from "@components/Breadcrumbs";
 import InlineLink from "@components/InlineLink";
 import Paragraph from "@components/Paragraph";
 import SkeletonTable from "@components/skeletons/SkeletonTable";
@@ -9,7 +8,6 @@ import { usePortalElement } from "@hooks/usePortalElement";
 import { ExternalLinkIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import React, { Suspense } from "react";
-import AgentNetworkIcon from "@/assets/icons/AgentNetworkIcon";
 import { usePermissions } from "@/contexts/PermissionsProvider";
 import PageContainer from "@/layouts/PageContainer";
 import AgentPoliciesTable from "@/modules/agent-network/AgentPoliciesTable";
@@ -25,18 +23,7 @@ export default function AgentNetworkPoliciesPage() {
   return (
     <PageContainer>
       <div className={"p-default py-6"}>
-        <Breadcrumbs>
-          <Breadcrumbs.Item
-            href={"/agent-network/providers"}
-            label={tNav("agentNetwork")}
-            icon={<AgentNetworkIcon size={16} />}
-          />
-          <Breadcrumbs.Item
-            href={"/agent-network/policies"}
-            label={tNav("agentPolicies")}
-            active={true}
-          />
-        </Breadcrumbs>
+        {/* "Agent Policies", next to Networking's Access Control › Policies. */}
         <h1 ref={headingRef}>{tNav("agentPolicies")}</h1>
         <Paragraph>{tAn("policiesDescription")}</Paragraph>
       </div>

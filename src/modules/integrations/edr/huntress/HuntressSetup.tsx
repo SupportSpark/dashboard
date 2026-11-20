@@ -49,6 +49,11 @@ import {
   matchAttributesReducer,
 } from "@/modules/integrations/edr/huntress/Huntress";
 import {
+  DEFAULT_STALE_GRACE,
+  EDRStaleGraceInput,
+  isValidStaleGrace,
+} from "@/modules/integrations/edr/EDRStaleGraceInput";
+import {
   DEFAULT_SYNC_INTERVAL,
   EDRSyncIntervalInput,
   isValidSyncInterval,
@@ -106,6 +111,9 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
   const [syncInterval, setSyncInterval] = useState(
     DEFAULT_SYNC_INTERVAL.toString(),
   );
+  const [staleGraceEnabled, setStaleGraceEnabled] = useState(false);
+  const [staleGrace, setStaleGrace] = useState(DEFAULT_STALE_GRACE.toString());
+  const [staleGraceNewPeers, setStaleGraceNewPeers] = useState(false);
 
   const [matchAttributes, dispatchMatchAttributes] = useReducer(
     matchAttributesReducer,
@@ -123,7 +131,9 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
   const isDisabled =
     (step === 1 && !allEntered) ||
     (step === 2 && groups.length === 0) ||
-    (step === 4 && !isValidSyncInterval(syncInterval));
+    (step === 4 &&
+      (!isValidSyncInterval(syncInterval) ||
+        !isValidStaleGrace(staleGraceEnabled, staleGrace)));
 
   const connect = async () => {
     await settingsRequest.put({
@@ -149,6 +159,8 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
           groups: savedGroups.map((group) => group.id) || [],
           last_synced_interval: Number(lastSyncedInterval || 24),
           sync_interval: Number(syncInterval),
+          stale_grace_minutes: staleGraceEnabled ? Number(staleGrace) : 0,
+          stale_grace_new_peers: staleGraceEnabled && staleGraceNewPeers,
           match_attributes: matchAttributes,
         })
         .then(() => {
@@ -338,6 +350,7 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
               link: (chunks) => (
                 <InlineLink href={HUNTRESS_DOCUMENTATION_URL} target={"_blank"}>
                   {chunks}
+                  <ExternalLinkIcon size={12} />
                 </InlineLink>
               ),
             })}
@@ -388,6 +401,16 @@ export function SetupContent({ onSuccess, account }: Readonly<ModalProps>) {
             name={"Huntress"}
             value={syncInterval}
             onChange={setSyncInterval}
+            className={"mt-6"}
+          />
+          <EDRStaleGraceInput
+            name={"Huntress"}
+            enabled={staleGraceEnabled}
+            onEnabledChange={setStaleGraceEnabled}
+            value={staleGrace}
+            onChange={setStaleGrace}
+            newPeers={staleGraceNewPeers}
+            onNewPeersChange={setStaleGraceNewPeers}
             className={"mt-6"}
           />
         </div>

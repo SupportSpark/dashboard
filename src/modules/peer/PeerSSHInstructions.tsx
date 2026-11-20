@@ -59,7 +59,7 @@ export const PeerSSHInstructions = ({
         showClose={true}
       >
         <ModalHeader
-          icon={<TerminalSquare size={16} className={"text-netbird"} />}
+          icon={<TerminalSquare size={16} />}
           title={tPeers("enableSSH")}
           description={tSsh("enableSSHDescription")}
           color={"netbird"}
@@ -86,9 +86,7 @@ export const PeerSSHInstructions = ({
               <Steps.Step step={1}>
                 <p className={"font-normal"}>
                   {tSsh("sshCliStep", {
-                    scope: isWindows
-                      ? tSsh("elevatedPrompt")
-                      : tSsh("asRoot"),
+                    scope: isWindows ? tSsh("elevatedPrompt") : tSsh("asRoot"),
                   })}
                 </p>
                 <Code codeToCopy={`${prefix}netbird down`}>

@@ -293,7 +293,7 @@ function AgentPolicyModalContent({
   return (
     <ModalContent maxWidthClass={"max-w-3xl"}>
       <ModalHeader
-        icon={<AccessControlIcon className={"fill-netbird"} />}
+        icon={<AccessControlIcon className={"fill-current"} />}
         title={policy ? t("updatePolicyTitle") : t("createPolicyTitle")}
         description={t("policyModalDescription")}
         color={"netbird"}
@@ -353,9 +353,7 @@ function AgentPolicyModalContent({
 
             <div>
               <Label>{t("nameOfPolicy")}</Label>
-              <HelpText>
-                {tPolicies("ruleNameHelp")}
-              </HelpText>
+              <HelpText>{tPolicies("ruleNameHelp")}</HelpText>
               <Input
                 value={name}
                 onChange={(e) => {
@@ -367,9 +365,7 @@ function AgentPolicyModalContent({
             </div>
             <div>
               <Label>{tPolicies("policyDescriptionLabel")}</Label>
-              <HelpText>
-                {tPolicies("policyDescriptionHelp")}
-              </HelpText>
+              <HelpText>{tPolicies("policyDescriptionHelp")}</HelpText>
               <Textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -573,9 +569,7 @@ function ProviderMultiSelect({
             }
           >
             {selected.length === 0 ? (
-              <span className={"pl-1"}>
-                {t("selectProvidersPlaceholder")}
-              </span>
+              <span className={"pl-1"}>{t("selectProvidersPlaceholder")}</span>
             ) : (
               selected.map((p) => (
                 <Badge

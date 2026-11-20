@@ -3,7 +3,10 @@
 import HelpText from "@components/HelpText";
 import { Label } from "@components/Label";
 import { Modal } from "@components/modal/Modal";
-import { ClusterOption, PeerGroupSelector } from "@components/PeerGroupSelector";
+import {
+  ClusterOption,
+  PeerGroupSelector,
+} from "@components/PeerGroupSelector";
 import React, { useMemo, useState } from "react";
 import { Network } from "@/interfaces/Network";
 import {
@@ -60,15 +63,12 @@ export default function ReverseProxyTargetSelector({
     if (initialNetwork) return [];
     const privateCapable = (domains ?? []).filter(
       (d) =>
-        d.supports_private === true &&
-        d.type === ReverseProxyDomainType.FREE,
+        d.supports_private === true && d.type === ReverseProxyDomainType.FREE,
     );
     if (privateCapable.length === 0) return [];
     if (serviceCluster) {
       const match = privateCapable.find((d) => d.domain === serviceCluster);
-      return match
-        ? [{ domain: match.domain }]
-        : [{ domain: serviceCluster }];
+      return match ? [{ domain: match.domain }] : [{ domain: serviceCluster }];
     }
     return privateCapable.map((d) => ({ domain: d.domain }));
   }, [domains, initialNetwork, serviceCluster]);
@@ -96,7 +96,13 @@ export default function ReverseProxyTargetSelector({
                 <>
                   {t.rich("peerTooltipPart1", {
                     name: (chunks) => (
-                      <span className={"text-white font-medium"}>{chunks}</span>
+                      <span
+                        className={
+                          "text-nb-gray-100 dark:text-white font-medium"
+                        }
+                      >
+                        {chunks}
+                      </span>
                     ),
                   })}
                   <span className={"mt-1 block"}>
@@ -121,7 +127,13 @@ export default function ReverseProxyTargetSelector({
                 <>
                   {t.rich("resourceTooltipPart1", {
                     name: (chunks) => (
-                      <span className={"text-white font-medium"}>{chunks}</span>
+                      <span
+                        className={
+                          "text-nb-gray-100 dark:text-white font-medium"
+                        }
+                      >
+                        {chunks}
+                      </span>
                     ),
                   })}
                   <span className={"mt-1 block"}>
@@ -145,7 +157,13 @@ export default function ReverseProxyTargetSelector({
                   className={"max-w-sm"}
                   content={t.rich("proxyClusterTooltip", {
                     name: (chunks) => (
-                      <span className={"text-white font-medium"}>{chunks}</span>
+                      <span
+                        className={
+                          "text-nb-gray-100 dark:text-white font-medium"
+                        }
+                      >
+                        {chunks}
+                      </span>
                     ),
                   })}
                   interactive={true}

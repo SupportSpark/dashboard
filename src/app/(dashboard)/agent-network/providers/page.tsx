@@ -1,6 +1,5 @@
 "use client";
 
-import Breadcrumbs from "@components/Breadcrumbs";
 import FeatureCard from "@components/FeatureCard";
 import { HelpTooltip } from "@components/HelpTooltip";
 import InlineLink from "@components/InlineLink";
@@ -11,7 +10,6 @@ import { usePortalElement } from "@hooks/usePortalElement";
 import { ExternalLinkIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import React, { Suspense } from "react";
-import AgentNetworkIcon from "@/assets/icons/AgentNetworkIcon";
 import { usePermissions } from "@/contexts/PermissionsProvider";
 import PageContainer from "@/layouts/PageContainer";
 import AIProviderModal from "@/modules/agent-network/AIProviderModal";
@@ -76,7 +74,6 @@ export default function AgentNetworkProvidersPage() {
   const { permission } = usePermissions();
   const t = useTranslations("agentNetwork");
   const tCommon = useTranslations("common");
-  const tnav = useTranslations("navigation");
   const { ref: headingRef, portalTarget } =
     usePortalElement<HTMLHeadingElement>();
 
@@ -91,18 +88,6 @@ export default function AgentNetworkProvidersPage() {
       >
         <AIProvidersProvider>
           <div className={"p-default py-6"}>
-            <Breadcrumbs>
-              <Breadcrumbs.Item
-                href={"/agent-network/providers"}
-                label={tnav("agentNetwork")}
-                icon={<AgentNetworkIcon size={16} />}
-              />
-              <Breadcrumbs.Item
-                href={"/agent-network/providers"}
-                label={t("providers")}
-                active={true}
-              />
-            </Breadcrumbs>
             <h1 ref={headingRef}>{t("providers")}</h1>
             <Paragraph>
               {t("providersPageDescription")}

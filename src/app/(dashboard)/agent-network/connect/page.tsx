@@ -1,11 +1,9 @@
 "use client";
 
-import Breadcrumbs from "@components/Breadcrumbs";
 import Paragraph from "@components/Paragraph";
 import SkeletonTable from "@components/skeletons/SkeletonTable";
 import { useTranslations } from "next-intl";
 import React from "react";
-import AgentNetworkIcon from "@/assets/icons/AgentNetworkIcon";
 import PageContainer from "@/layouts/PageContainer";
 import {
   AgentConnectTabs,
@@ -26,7 +24,6 @@ import { useMyAgentNetworkSetup } from "@/modules/agent-network/useMyAgentNetwor
 export default function ConnectAgentPage() {
   const { setup, isLoading } = useMyAgentNetworkSetup();
   const tAn = useTranslations("agentNetworkLabels");
-  const tNav = useTranslations("navigation");
   const providers = setup?.providers ?? [];
   // EndpointBadge builds https:// URLs from a bare host.
   const bareEndpoint = (setup?.endpoint ?? "").replace(/^https?:\/\//, "");
@@ -40,18 +37,6 @@ export default function ConnectAgentPage() {
   return (
     <PageContainer>
       <div className={"p-default py-6"}>
-        <Breadcrumbs>
-          <Breadcrumbs.Item
-            href={"/agent-network/connect"}
-            label={tNav("agentNetwork")}
-            icon={<AgentNetworkIcon size={16} />}
-          />
-          <Breadcrumbs.Item
-            href={"/agent-network/connect"}
-            label={tNav("connectAgent")}
-            active
-          />
-        </Breadcrumbs>
         <h1>{tAn("connectAgentTitle")}</h1>
         {/* block, so the <br /> lands: Paragraph is a flex container by
             default and a break element does nothing between flex items. */}

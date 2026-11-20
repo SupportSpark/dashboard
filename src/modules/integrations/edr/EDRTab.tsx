@@ -1,11 +1,9 @@
-import Breadcrumbs from "@components/Breadcrumbs";
 import InlineLink from "@components/InlineLink";
 import Paragraph from "@components/Paragraph";
 import * as Tabs from "@radix-ui/react-tabs";
-import { ExternalLinkIcon, ShieldCheck } from "lucide-react";
+import { ExternalLinkIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import React from "react";
-import IntegrationIcon from "@/assets/icons/IntegrationIcon";
 import { Account } from "@/interfaces/Account";
 import { LockedFeatureInfoCard } from "@/modules/billing/locked-feature/LockedFeatureInfoCard";
 import { LockedFeatureOverlay } from "@/modules/billing/locked-feature/LockedFeatureOverlay";
@@ -21,26 +19,12 @@ type Props = {
 };
 export default function EDRTab({ account }: Props) {
   const t = useTranslations("integrations");
-  const tNavigation = useTranslations("navigation");
   const tCommon = useTranslations("common");
   useIntegrations();
 
   return (
     <Tabs.Content value={"edr"}>
       <div className={"p-default py-6"}>
-        <Breadcrumbs>
-          <Breadcrumbs.Item
-            href={"/integrations"}
-            label={tNavigation("integrations")}
-            icon={<IntegrationIcon size={13} />}
-          />
-          <Breadcrumbs.Item
-            href={"/integrations?tab=edr"}
-            label={t("edrTabTitle")}
-            icon={<ShieldCheck size={15} />}
-            active
-          />
-        </Breadcrumbs>
         <h1>{t("edrTabTitle")}</h1>
         <Paragraph className={"max-w-3xl"}>{t("edrTabDescription")}</Paragraph>
         <Paragraph>

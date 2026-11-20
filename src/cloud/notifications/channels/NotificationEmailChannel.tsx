@@ -17,7 +17,6 @@ import { Input } from "@components/Input";
 import Button from "@components/Button";
 import Badge from "@components/Badge";
 import { notify } from "@components/Notification";
-import SettingsIcon from "@/assets/icons/SettingsIcon";
 import { SmallUserAvatar } from "@/modules/users/SmallUserAvatar";
 import { NotificationEventTypes } from "@/cloud/notifications/NotificationEventTypes";
 import {
@@ -41,7 +40,6 @@ export const NotificationEmailChannel = ({ channel }: Props) => {
   const [emailInput, setEmailInput] = useState("");
   const emailInputRef = useRef<HTMLInputElement>(null);
   const t = useTranslations("notifications");
-  const tc = useTranslations("common");
 
   const target = channel.target as EmailTarget | undefined;
   const emails = target?.emails ?? [];
@@ -90,11 +88,6 @@ export const NotificationEmailChannel = ({ channel }: Props) => {
     <div className={"p-default py-6 max-w-2xl"}>
       <Breadcrumbs>
         <Breadcrumbs.Item
-          href={"/settings"}
-          label={tc("settings")}
-          icon={<SettingsIcon size={13} />}
-        />
-        <Breadcrumbs.Item
           href={"/settings?tab=notifications"}
           label={t("title")}
           icon={<MessageSquareDot size={14} />}
@@ -130,9 +123,7 @@ export const NotificationEmailChannel = ({ channel }: Props) => {
             <MailIcon size={14} />
             {t("emailAddresses")}
           </Label>
-          <HelpText>
-            {t("emailAddressesHelp")}
-          </HelpText>
+          <HelpText>{t("emailAddressesHelp")}</HelpText>
           <div className={"flex gap-3"}>
             <Input
               ref={emailInputRef}
@@ -166,9 +157,14 @@ export const NotificationEmailChannel = ({ channel }: Props) => {
                 <Badge
                   key={email}
                   variant={"lightGray"}
-                  className={cn("group py-1.5 pl-2", canUpdate ? "cursor-pointer" : "cursor-default")}
+                  className={cn(
+                    "group py-1.5 pl-2",
+                    canUpdate ? "cursor-pointer" : "cursor-default",
+                  )}
                   useHover={canUpdate}
-                  onClick={canUpdate ? () => handleRemoveEmail(email) : undefined}
+                  onClick={
+                    canUpdate ? () => handleRemoveEmail(email) : undefined
+                  }
                   data-testid="notification-email-recipient"
                 >
                   <SmallUserAvatar

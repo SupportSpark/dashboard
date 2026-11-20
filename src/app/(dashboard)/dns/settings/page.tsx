@@ -1,6 +1,5 @@
 "use client";
 
-import Breadcrumbs from "@components/Breadcrumbs";
 import Button from "@components/Button";
 import Card from "@components/Card";
 import HelpText from "@components/HelpText";
@@ -10,14 +9,12 @@ import { notify } from "@components/Notification";
 import Paragraph from "@components/Paragraph";
 import { PeerGroupSelector } from "@components/PeerGroupSelector";
 import { RestrictedAccess } from "@components/ui/RestrictedAccess";
-import { IconSettings2 } from "@tabler/icons-react";
 import useFetchApi, { useApiCall } from "@utils/api";
 import { ExternalLinkIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import React from "react";
 import Skeleton from "react-loading-skeleton";
 import { useSWRConfig } from "swr";
-import DNSIcon from "@/assets/icons/DNSIcon";
 import { usePermissions } from "@/contexts/PermissionsProvider";
 import { useHasChanges } from "@/hooks/useHasChanges";
 import { Group } from "@/interfaces/Group";
@@ -41,19 +38,6 @@ export default function NameServerSettings() {
   return (
     <PageContainer>
       <div className={"p-default py-6"}>
-        <Breadcrumbs>
-          <Breadcrumbs.Item
-            href={"/dns"}
-            label={t("title")}
-            icon={<DNSIcon size={13} />}
-          />
-          <Breadcrumbs.Item
-            href={"/dns/settings"}
-            label={t("dnsSettings")}
-            active
-            icon={<IconSettings2 size={15} />}
-          />
-        </Breadcrumbs>
         <h1>{t("dnsSettings")}</h1>
         <Paragraph>
           {t("dnsSettingsDescription")}{" "}

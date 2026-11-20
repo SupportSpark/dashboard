@@ -1,4 +1,3 @@
-import Breadcrumbs from "@components/Breadcrumbs";
 import { useTranslations } from "next-intl";
 import FancyToggleSwitch from "@components/FancyToggleSwitch";
 import InlineLink from "@components/InlineLink";
@@ -9,7 +8,6 @@ import { useApiCall } from "@utils/api";
 import { ChartNoAxesCombined, ExternalLinkIcon } from "lucide-react";
 import React, { useState } from "react";
 import { useSWRConfig } from "swr";
-import SettingsIcon from "@/assets/icons/SettingsIcon";
 import { usePermissions } from "@/contexts/PermissionsProvider";
 import { Account } from "@/interfaces/Account";
 
@@ -17,8 +15,7 @@ type Props = {
   account: Account;
 };
 
-export default function MetricsTab({
-account }: Readonly<Props>) {
+export default function MetricsTab({ account }: Readonly<Props>) {
   const t = useTranslations("settings");
   const { permission } = usePermissions();
   const { mutate } = useSWRConfig();
@@ -53,19 +50,6 @@ account }: Readonly<Props>) {
   return (
     <Tabs.Content value={"metrics"}>
       <div className={"p-default py-6 max-w-2xl"}>
-        <Breadcrumbs>
-          <Breadcrumbs.Item
-            href={"/settings"}
-            label={t("title")}
-            icon={<SettingsIcon size={13} />}
-          />
-          <Breadcrumbs.Item
-            href={"/settings?tab=metrics"}
-            label={t("metrics")}
-            icon={<ChartNoAxesCombined size={14} />}
-            active
-          />
-        </Breadcrumbs>
         <div>
           <h1>{t("metrics")}</h1>
           <Paragraph className={"block"}>

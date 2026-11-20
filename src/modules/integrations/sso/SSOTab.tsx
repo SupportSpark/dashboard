@@ -1,12 +1,10 @@
-import Breadcrumbs from "@components/Breadcrumbs";
 import InlineLink from "@components/InlineLink";
 import Paragraph from "@components/Paragraph";
 import { SkeletonIntegration } from "@components/skeletons/SkeletonIntegration";
 import * as Tabs from "@radix-ui/react-tabs";
-import { ExternalLinkIcon, KeyRoundIcon } from "lucide-react";
+import { ExternalLinkIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import React from "react";
-import IntegrationIcon from "@/assets/icons/IntegrationIcon";
 import { useAccount } from "@/modules/account/useAccount";
 import { LockedFeatureInfoCard } from "@/modules/billing/locked-feature/LockedFeatureInfoCard";
 import { LockedFeatureOverlay } from "@/modules/billing/locked-feature/LockedFeatureOverlay";
@@ -16,24 +14,10 @@ export default function SSOTab() {
   const account = useAccount();
   const t = useTranslations("idpSync");
   const tCommon = useTranslations("common");
-  const tNav = useTranslations("navigation");
 
   return (
     <Tabs.Content value={"sso"}>
       <div className={"p-default py-6"}>
-        <Breadcrumbs>
-          <Breadcrumbs.Item
-            href={"/integrations"}
-            label={tNav("integrations")}
-            icon={<IntegrationIcon size={13} />}
-          />
-          <Breadcrumbs.Item
-            href={"/settings?tab=sso"}
-            label={t("singleSignOnTitle")}
-            icon={<KeyRoundIcon size={14} />}
-            active
-          />
-        </Breadcrumbs>
         <h1>{t("singleSignOnTitle")}</h1>
         <Paragraph>{t("ssoDescription")}</Paragraph>
         <Paragraph>

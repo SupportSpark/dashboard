@@ -1,12 +1,11 @@
 "use client";
 
-import Breadcrumbs from "@components/Breadcrumbs";
 import InlineLink from "@components/InlineLink";
 import Paragraph from "@components/Paragraph";
 import { RestrictedAccess } from "@components/ui/RestrictedAccess";
 import { usePortalElement } from "@hooks/usePortalElement";
 import useFetchApi from "@utils/api";
-import { ExternalLinkIcon, LogsIcon } from "lucide-react";
+import { ExternalLinkIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import React from "react";
 import { usePermissions } from "@/contexts/PermissionsProvider";
@@ -29,13 +28,6 @@ export default function Activity() {
   return (
     <PageContainer>
       <div className={"p-default py-6"}>
-        <Breadcrumbs>
-          <Breadcrumbs.Item
-            href={"/events/audit"}
-            label={t("auditEvents")}
-            icon={<LogsIcon size={18} />}
-          />
-        </Breadcrumbs>
         <h1 ref={headingRef}>{t("auditEvents")}</h1>
         <Paragraph>
           {t("auditEventsDescription")}{" "}

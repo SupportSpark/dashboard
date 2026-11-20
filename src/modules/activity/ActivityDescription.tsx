@@ -949,7 +949,9 @@ export default function ActivityDescription({ event }: Props) {
     return (
       <div className={"inline"}>
         {t.rich("desc_integrated_validator_host_check_approved", {
+          name: m?.name,
           platform: m?.platform,
+          peer: (chunks) => <EDRPeerName name={String(chunks)} />,
           Value: (chunks) => <Value>{chunks}</Value>,
         })}
       </div>
@@ -959,11 +961,40 @@ export default function ActivityDescription({ event }: Props) {
     return (
       <div className={"inline"}>
         {t.rich("desc_integrated_validator_host_check_denied", {
+          name: m?.name,
           platform: m?.platform,
+          peer: (chunks) => <EDRPeerName name={String(chunks)} />,
           Value: (chunks) => <Value>{chunks}</Value>,
         })}
+        {m?.reason &&
+          t.rich("desc_integrated_validator_host_check_denied_reason", {
+            reason: edrRejectReason(m.reason),
+            Value: (chunks) => <Value>{chunks}</Value>,
+          })}
       </div>
     );
+
+  if (event.activity_code == "integrated-validator.peer.stale-grace-started") {
+    const grace = graceDuration(m?.grace_minutes, t);
+    return (
+      <div className={"inline"}>
+        {grace
+          ? t.rich("desc_integrated_validator_stale_grace_started_for", {
+              name: m?.name,
+              platform: m?.platform,
+              duration: grace,
+              peer: (chunks) => <EDRPeerName name={String(chunks)} />,
+              Value: (chunks) => <Value>{chunks}</Value>,
+            })
+          : t.rich("desc_integrated_validator_stale_grace_started", {
+              name: m?.name,
+              platform: m?.platform,
+              peer: (chunks) => <EDRPeerName name={String(chunks)} />,
+              Value: (chunks) => <Value>{chunks}</Value>,
+            })}
+      </div>
+    );
+  }
 
   if (event.activity_code == "integrated-validator.peer.compliance-bypassed")
     return (
@@ -972,11 +1003,13 @@ export default function ActivityDescription({ event }: Props) {
           name: m?.name,
           ip: m?.ip,
           platform: m?.platform,
-          original_reason: m?.original_reason
-            ? ` (original non-compliant reason: ${m.original_reason})`
-            : "",
           Value: (chunks) => <Value>{chunks}</Value>,
         })}
+        {m?.original_reason &&
+          t.rich("desc_integrated_validator_peer_compliance_bypassed_reason", {
+            reason: m.original_reason,
+            Value: (chunks) => <Value>{chunks}</Value>,
+          })}
       </div>
     );
 
@@ -1399,6 +1432,34 @@ function Value({
     >
       {children}
     </span>
+  ) : null;
+}
+
+const edrRejectReasons: Record<string, string> = {
+  NOT_FOUND_IN_EDR: "not found in EDR",
+  STALE_CHECK_IN: "no recent EDR check-in",
+  DUPLICATE_MATCH: "duplicate serial number",
+};
+
+// Vendor reasons are free text, so only own keys are translated: a reason such
+// as "constructor" must not resolve to an Object.prototype member.
+const edrRejectReason = (reason: string) =>
+  Object.hasOwn(edrRejectReasons, reason) ? edrRejectReasons[reason] : reason;
+
+const graceDuration = (
+  minutes: unknown,
+  t: ReturnType<typeof useTranslations>,
+) => {
+  const n = Number(minutes);
+  if (!Number.isInteger(n) || n <= 0) return undefined;
+  return t("durationMinutes", { count: n });
+};
+
+function EDRPeerName({ name }: { name?: string }) {
+  return name ? (
+    <>
+      <Value>{name}</Value>{" "}
+    </>
   ) : null;
 }
 

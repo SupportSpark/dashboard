@@ -1,14 +1,11 @@
-import Breadcrumbs from "@components/Breadcrumbs";
 import Button from "@components/Button";
 import Card from "@components/Card";
 import { notify } from "@components/Notification";
 import * as Tabs from "@radix-ui/react-tabs";
 import { useApiCall } from "@utils/api";
 import loadConfig from "@utils/config";
-import { AlertOctagonIcon } from "lucide-react";
 import React from "react";
 import { useTranslations } from "next-intl";
-import SettingsIcon from "@/assets/icons/SettingsIcon";
 import { useAuthService } from "@/cloud/cloud-hooks/useAuthService";
 import { useDialog } from "@/contexts/DialogProvider";
 import { useLoggedInUser } from "@/contexts/UsersProvider";
@@ -67,31 +64,24 @@ export default function DangerZoneTab({ account }: Props) {
   return (
     <Tabs.Content value={"danger-zone"}>
       <div className={"p-default py-6"}>
-        <Breadcrumbs>
-          <Breadcrumbs.Item
-            href={"/settings"}
-            label={t("title")}
-            icon={<SettingsIcon size={13} />}
-          />
-          <Breadcrumbs.Item
-            href={"/settings"}
-            label={t("dangerZone")}
-            icon={<AlertOctagonIcon size={14} />}
-            active
-          />
-        </Breadcrumbs>
         <h1>{t("dangerZone")}</h1>
         <div className={"gap-6 mt-6 max-w-lg"}>
           <Card
             className={
-              "w-full flex flex-col gap-2 border-red-600 bg-red-950/50"
+              "w-full flex flex-col gap-2 border-red-300 bg-red-50 dark:border-red-600 dark:bg-red-950/50"
             }
           >
             <div className={"px-8 py-6"}>
-              <p className={"text-xl font-medium mb-2 !text-red-50"}>
+              <p
+                className={
+                  "text-xl font-medium mb-2 !text-red-900 dark:!text-red-50"
+                }
+              >
                 {t("deleteAccountCardTitle")}
               </p>
-              <p className={"!text-red-50/80"}>{t("deleteAccountWarning")}</p>
+              <p className={"!text-red-900/80 dark:!text-red-50/80"}>
+                {t("deleteAccountWarning")}
+              </p>
               <div className={"mt-6"}>
                 <Button variant={"danger"} onClick={handleConfirm} size={"xs"}>
                   {t("deleteAccountButton")}

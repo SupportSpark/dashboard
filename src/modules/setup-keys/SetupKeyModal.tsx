@@ -228,7 +228,7 @@ export function SetupKeyModalContent({
   return (
     <ModalContent flow="setup_key" maxWidthClass={"max-w-xl"}>
       <ModalHeader
-        icon={<SetupKeysIcon className={"fill-netbird"} />}
+        icon={<SetupKeysIcon className={"fill-current"} />}
         title={t("createTitle")}
         description={t("createDescription")}
         color={"netbird"}

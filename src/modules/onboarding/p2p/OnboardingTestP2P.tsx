@@ -44,7 +44,11 @@ export const OnboardingTestP2P = ({
             {t.rich("pingHint", {
               first: firstDevice?.name ?? "",
               second: secondDevice?.name ?? "",
-              span: (chunks) => <span className={"text-white"}>{chunks}</span>,
+              span: (chunks) => (
+                <span className={"text-nb-gray-100 dark:text-white"}>
+                  {chunks}
+                </span>
+              ),
             })}
           </p>
           <Code message={t("commandCopied")}>ping {secondDevice?.ip}</Code>

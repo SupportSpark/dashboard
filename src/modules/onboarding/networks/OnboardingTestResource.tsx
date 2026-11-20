@@ -64,7 +64,11 @@ export const OnboardingTestResource = ({
             {t.rich("pingResourceHint", {
               device: device?.name || t("yourDevice"),
               span: (chunks) => (
-                <span className={cn(device && "text-white")}>{chunks}</span>
+                <span
+                  className={cn(device && "text-nb-gray-100 dark:text-white")}
+                >
+                  {chunks}
+                </span>
               ),
             })}
           </p>

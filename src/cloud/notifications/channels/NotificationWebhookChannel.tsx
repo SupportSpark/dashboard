@@ -21,7 +21,6 @@ import {
   DropdownMenuTrigger,
 } from "@components/DropdownMenu";
 import { notify } from "@components/Notification";
-import SettingsIcon from "@/assets/icons/SettingsIcon";
 import { NotificationEventTypes } from "@/cloud/notifications/NotificationEventTypes";
 import {
   NotificationChannel,
@@ -57,7 +56,9 @@ export const NotificationWebhookChannel = ({ channel }: Props) => {
         ? `Webhook ${t("connected")}.`
         : `Webhook ${t("updated")}.`,
       promise: updateChannel({ ...channel, enabled: true, target: newTarget }),
-      loadingMessage: isNew ? `${t("connecting")} Webhook...` : `${t("updating")} Webhook...`,
+      loadingMessage: isNew
+        ? `${t("connecting")} Webhook...`
+        : `${t("updating")} Webhook...`,
     });
   };
 
@@ -90,11 +91,6 @@ export const NotificationWebhookChannel = ({ channel }: Props) => {
     <div className={"p-default py-6 max-w-2xl"}>
       <Breadcrumbs>
         <Breadcrumbs.Item
-          href={"/settings"}
-          label={tc("settings")}
-          icon={<SettingsIcon size={13} />}
-        />
-        <Breadcrumbs.Item
           href={"/settings?tab=notifications"}
           label={t("title")}
           icon={<MessageSquareDot size={14} />}
@@ -114,7 +110,7 @@ export const NotificationWebhookChannel = ({ channel }: Props) => {
       <div className={"flex flex-col gap-8 mt-4"}>
         <Card
           className={
-            "w-full flex items-center gap-4 border-nb-gray-910 bg-nb-gray-935 px-5 py-4"
+            "w-full flex items-center gap-4 border-nb-gray-910 dark:border-nb-gray-910 bg-nb-gray-935 px-5 py-4"
           }
         >
           <div
@@ -153,7 +149,12 @@ export const NotificationWebhookChannel = ({ channel }: Props) => {
           {isConnected ? (
             <DropdownMenu modal={false}>
               <DropdownMenuTrigger asChild={true}>
-                <Button variant={"secondary"} size={"xs"} className={"!px-2"} data-testid="webhook-actions">
+                <Button
+                  variant={"secondary"}
+                  size={"xs"}
+                  className={"!px-2"}
+                  data-testid="webhook-actions"
+                >
                   <MoreVertical size={14} className={"shrink-0"} />
                 </Button>
               </DropdownMenuTrigger>
@@ -161,7 +162,11 @@ export const NotificationWebhookChannel = ({ channel }: Props) => {
                 className={"w-auto min-w-[140px]"}
                 align="end"
               >
-                <DropdownMenuItem onClick={() => setModalOpen(true)} disabled={!canUpdate} data-testid="webhook-edit">
+                <DropdownMenuItem
+                  onClick={() => setModalOpen(true)}
+                  disabled={!canUpdate}
+                  data-testid="webhook-edit"
+                >
                   <div className={"flex gap-3 items-center"}>
                     <SquarePen size={14} className={"shrink-0"} />
                     {tc("edit")}

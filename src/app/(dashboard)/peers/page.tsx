@@ -1,6 +1,5 @@
 "use client";
 
-import Breadcrumbs from "@components/Breadcrumbs";
 import InlineLink from "@components/InlineLink";
 import Paragraph from "@components/Paragraph";
 import SkeletonTable from "@components/skeletons/SkeletonTable";
@@ -10,7 +9,6 @@ import { ExternalLinkIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { lazy, Suspense, useMemo } from "react";
-import PeerIcon from "@/assets/icons/PeerIcon";
 import useDistributorRedirect from "@/cloud/distributor/useDistributorRedirect";
 import { useBypassedPeers } from "@/cloud/edr/useBypass";
 import PeersProvider, { usePeers } from "@/contexts/PeersProvider";
@@ -95,17 +93,9 @@ function PeersView() {
   return (
     <>
       <div className={"p-default py-6"}>
-        <Breadcrumbs>
-          <Breadcrumbs.Item
-            href={"/peers"}
-            label={tCommon("peers")}
-            icon={<PeerIcon size={13} />}
-            active
-          />
-        </Breadcrumbs>
         <h1 ref={headingRef}>{tCommon("peers")}</h1>
         <Paragraph>
-            {t("peersPageDescription")}{" "}
+          {t("peersPageDescription")}{" "}
           <InlineLink
             href={"https://docs.netbird.io/how-to/add-machines-to-your-network"}
             target={"_blank"}

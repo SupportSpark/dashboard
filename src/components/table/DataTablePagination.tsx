@@ -7,7 +7,7 @@ import {
   ChevronsLeft,
   ChevronsRight,
 } from "lucide-react";
-import { useTranslations } from 'next-intl';
+import { useTranslations } from "next-intl";
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;
@@ -22,7 +22,7 @@ export function DataTablePagination<TData>({
   paginationPadding = "px-8 py-8",
   totalRecords,
 }: DataTablePaginationProps<TData>) {
-  const t = useTranslations('table');
+  const t = useTranslations("table");
   const rowsPerPage = table.getState().pagination.pageSize;
   const currentPage = table.getState().pagination.pageIndex + 1;
   const pageCount = table.getPageCount();
@@ -41,11 +41,14 @@ export function DataTablePagination<TData>({
         className={cn("flex items-center justify-between", paginationPadding)}
       >
         <div className="text-nb-gray-400">
-          {t('showing')}{" "}
-          <span className={"font-medium text-white"}>
-            {showingFrom} {t('to')} {showingTo}
+          {t("showing")}{" "}
+          <span className={"font-medium text-nb-gray-100 dark:text-white"}>
+            {showingFrom} {t("to")} {showingTo}
           </span>{" "}
-          {t('of')} <span className={"font-medium text-white"}>{totalRows}</span>{" "}
+          {t("of")}{" "}
+          <span className={"font-medium text-nb-gray-100 dark:text-white"}>
+            {totalRows}
+          </span>{" "}
           {text}
         </div>
         {pageCount > 1 && (

@@ -258,7 +258,7 @@ export function NameserverModalContent({
   return (
     <ModalContent flow="dns_nameserver" maxWidthClass={"max-w-xl"}>
       <ModalHeader
-        icon={<DNSIcon className={"fill-netbird"} />}
+        icon={<DNSIcon className={"fill-current"} />}
         title={isUpdate ? preset?.name : t("createNameserver")}
         description={t("nameserverModalDescription")}
         color={"netbird"}
@@ -266,7 +266,10 @@ export function NameserverModalContent({
 
       <Tabs defaultValue={tab} onValueChange={(v) => setTab(v)} value={tab}>
         <TabsList justify={"start"} className={"px-8"}>
-          <TabsTrigger value={"nameserver"} data-testid="nameserver-tab-nameserver">
+          <TabsTrigger
+            value={"nameserver"}
+            data-testid="nameserver-tab-nameserver"
+          >
             <ServerIcon
               size={16}
               className={
@@ -346,9 +349,7 @@ export function NameserverModalContent({
 
             <div>
               <Label>{t("distributionGroups")}</Label>
-              <HelpText>
-                {t("advertiseToGroups")}
-              </HelpText>
+              <HelpText>{t("advertiseToGroups")}</HelpText>
               <PeerGroupSelector
                 onChange={setGroups}
                 values={groups}
@@ -376,9 +377,7 @@ export function NameserverModalContent({
           <div className={"px-8 flex flex-col gap-6"}>
             <div>
               <Label>{t("matchDomains")}</Label>
-              <HelpText>
-                {t("addDomainHelp")}
-              </HelpText>
+              <HelpText>{t("addDomainHelp")}</HelpText>
               <div>
                 {domains.length > 0 && (
                   <div className={"flex gap-3 w-full mb-3"}>
@@ -459,9 +458,7 @@ export function NameserverModalContent({
             </div>
             <div>
               <Label>{t("descriptionOptional")}</Label>
-              <HelpText>
-                {t("writeDescription")}
-              </HelpText>
+              <HelpText>{t("writeDescription")}</HelpText>
               <Textarea
                 placeholder={t("descriptionPlaceholder")}
                 value={description}

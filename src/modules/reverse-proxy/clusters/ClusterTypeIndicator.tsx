@@ -25,7 +25,11 @@ export const ClusterTypeIndicator = ({ cluster }: Props) => {
           <div className={"text-xs max-w-xs"}>
             {t.rich("accountClusterTooltip", {
               b: (chunks) => (
-                <span className={"font-medium text-white"}>{chunks}</span>
+                <span
+                  className={"font-medium text-nb-gray-100 dark:text-white"}
+                >
+                  {chunks}
+                </span>
               ),
             })}
           </div>
@@ -41,7 +45,9 @@ export const ClusterTypeIndicator = ({ cluster }: Props) => {
         <div className={"text-xs max-w-xs"}>
           {t.rich("sharedClusterTooltip", {
             b: (chunks) => (
-              <span className={"font-medium text-white"}>{chunks}</span>
+              <span className={"font-medium text-nb-gray-100 dark:text-white"}>
+                {chunks}
+              </span>
             ),
           })}
         </div>

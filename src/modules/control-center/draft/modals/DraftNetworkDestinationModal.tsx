@@ -98,10 +98,11 @@ const PickerContent = ({
     });
     // Existing-network cards: the groups of the network's API resources.
     if (ids.size === 0 && network?.id) {
-      resources.forEach((r) =>
-        (r.groups as (Group | string)[] | undefined)?.forEach((g) =>
-          ids.add(typeof g === "string" ? g : g.id ?? g.name),
-        ),
+      resources.forEach(
+        (r) =>
+          (r.groups as (Group | string)[] | undefined)?.forEach((g) =>
+            ids.add(typeof g === "string" ? g : g.id ?? g.name),
+          ),
       );
     }
     return Array.from(ids);
@@ -118,8 +119,8 @@ const PickerContent = ({
   const blockedReason = rule?.destinationResource
     ? "This policy already has a resource destination. Remove it from the policy first."
     : pickedResource && existingDestinations.length > 0
-      ? "This policy already has group destinations, and a resource can't be combined with them. Pick groups instead."
-      : null;
+    ? "This policy already has group destinations, and a resource can't be combined with them. Pick groups instead."
+    : null;
 
   const onConnect = () => {
     if (!policy || !rule || blockedReason) return;
@@ -146,15 +147,13 @@ const PickerContent = ({
   return (
     <ModalContent maxWidthClass={"max-w-lg"}>
       <ModalHeader
-        icon={<NetworkRoutesIcon className={"fill-netbird"} />}
+        icon={<NetworkRoutesIcon className={"fill-current"} />}
         title={t("selectDestination")}
         description={
           t("selectDestinationDescription", {
             network: network?.name ?? t("thisNetwork"),
           }) +
-          (policy?.name
-            ? " " + t("viaPolicy", { policy: policy.name })
-            : "")
+          (policy?.name ? " " + t("viaPolicy", { policy: policy.name }) : "")
         }
         color={"netbird"}
       />

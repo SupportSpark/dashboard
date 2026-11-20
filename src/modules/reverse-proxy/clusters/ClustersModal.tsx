@@ -429,16 +429,24 @@ spec:
                   {t("proxyRequirements")}
                   <ul className={"list-disc pl-4 mt-2 flex flex-col gap-1"}>
                     <li>
-                      <span className={"text-white font-medium"}>
+                      <span
+                        className={"text-sky-900 dark:text-white font-medium"}
+                      >
                         {t("reqPublicIp")}
                       </span>
                     </li>
                     <li>
-                      <span className={"text-white font-medium"}>Docker</span>{" "}
+                      <span
+                        className={"text-sky-900 dark:text-white font-medium"}
+                      >
+                        Docker
+                      </span>{" "}
                       {t("reqDockerInstalled")}
                     </li>
                     <li>
-                      <span className={"text-white font-medium"}>
+                      <span
+                        className={"text-sky-900 dark:text-white font-medium"}
+                      >
                         {t("reqPortsOpen")}
                       </span>{" "}
                       {t("reqPortsAvailable")}
@@ -461,7 +469,9 @@ spec:
                     {tCommon("type")}
                   </CardTable.HeaderCell>
                   <CardTable.HeaderCell>{tCommon("name")}</CardTable.HeaderCell>
-                  <CardTable.HeaderCell>{t("contentColumn")}</CardTable.HeaderCell>
+                  <CardTable.HeaderCell>
+                    {t("contentColumn")}
+                  </CardTable.HeaderCell>
                 </CardTable.Header>
                 <CardTable.Body>
                   <CardTable.Row>
@@ -582,7 +592,9 @@ spec:
                 </ModalClose>
                 <Button
                   variant={"primary"}
-                  onClick={() => (isCloudDeploy ? goToInstall() : setTab("dns"))}
+                  onClick={() =>
+                    isCloudDeploy ? goToInstall() : setTab("dns")
+                  }
                   disabled={!domain.trim() || !!domainError}
                 >
                   {tCommon("continue")}

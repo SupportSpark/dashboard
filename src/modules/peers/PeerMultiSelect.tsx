@@ -58,6 +58,7 @@ const PeerGroupMassAssignmentContent = ({
 }: Props) => {
   const t = useTranslations("peers");
   const tCommon = useTranslations("common");
+  const tGroups = useTranslations("groups");
   const { mutate } = useSWRConfig();
   const { confirm } = useDialog();
   const { permission } = usePermissions();
@@ -448,7 +449,20 @@ const PeerGroupMassAssignmentContent = ({
               >
                 <div className={"flex gap-2 items-center"}>
                   <MonitorSmartphoneIcon size={16} className={""} />
-                  <span>{t("selectedCount", { count: peerCount })}</span>
+                  <span>
+                    {tGroups.rich("peersSelected", {
+                      count: peerCount,
+                      count2: (chunks) => (
+                        <span
+                          className={
+                            "font-medium text-nb-gray-100 dark:text-white"
+                          }
+                        >
+                          {chunks}
+                        </span>
+                      ),
+                    })}
+                  </span>
                 </div>
                 <div className={"flex gap-2 items-center"}>
                   {!showGroupAssignment ? (

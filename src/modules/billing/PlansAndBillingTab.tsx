@@ -1,4 +1,3 @@
-import Breadcrumbs from "@components/Breadcrumbs";
 import InlineLink from "@components/InlineLink";
 import Paragraph from "@components/Paragraph";
 import Separator from "@components/Separator";
@@ -10,7 +9,6 @@ import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useState } from "react";
 import Skeleton from "react-loading-skeleton";
-import SettingsIcon from "@/assets/icons/SettingsIcon";
 import { useMSP } from "@/cloud/msp/contexts/MSPProvider";
 import { useBilling } from "@/contexts/BillingProvider";
 import { usePermissions } from "@/contexts/PermissionsProvider";
@@ -56,7 +54,6 @@ export const PlansAndBillingTabTrigger = () => {
 
 const PlansAndBillingTabContent = () => {
   const t = useTranslations("billing");
-  const tNav = useTranslations("navigation");
   const tSettings = useTranslations("settings");
   const tDropdown = useTranslations("userDropdown");
   const {
@@ -151,20 +148,6 @@ const PlansAndBillingTabContent = () => {
     >
       <PlanSuccessModal />
       <div className={"p-default py-6"}>
-        <Breadcrumbs>
-          <Breadcrumbs.Item
-            href={"/settings"}
-            label={tNav("settings")}
-            icon={<SettingsIcon size={13} />}
-          />
-          <Breadcrumbs.Item
-            href={"/settings?tab=plans-and-billing"}
-            label={tDropdown("plansAndBilling")}
-            icon={<CreditCardIcon size={14} />}
-            active
-          />
-        </Breadcrumbs>
-
         <div
           className={"flex items-start justify-between -mt-1 max-w-4xl mb-4"}
         >

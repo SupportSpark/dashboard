@@ -43,7 +43,7 @@ export const ResourceExposeServiceCell = ({ resource }: Props) => {
         <Badge
           variant={"gray"}
           useHover={false}
-          className={"select-none hover:bg-nb-gray-910 cursor-pointer"}
+          className={"select-none hover:bg-nb-gray-910 dark:hover:bg-nb-gray-910 cursor-pointer"}
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();

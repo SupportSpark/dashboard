@@ -54,10 +54,14 @@ export default function ClustersFeaturesCell({ cluster }: Readonly<Props>) {
       label: t("featurePrivate"),
       description: t.rich("featurePrivateDescription", {
         nbOnly: (chunks) => (
-          <span className={"font-medium text-white"}>{chunks}</span>
+          <span className={"font-medium text-nb-gray-100 dark:text-white"}>
+            {chunks}
+          </span>
         ),
         cluster: (chunks) => (
-          <span className={"font-medium text-white"}>{chunks}</span>
+          <span className={"font-medium text-nb-gray-100 dark:text-white"}>
+            {chunks}
+          </span>
         ),
       }),
       icon: <Lock size={14} className={"text-netbird"} />,
@@ -75,7 +79,9 @@ export default function ClustersFeaturesCell({ cluster }: Readonly<Props>) {
           key={f.key}
           content={
             <div className={"text-xs max-w-xs"}>
-              <div className={"font-medium text-white"}>{f.label}</div>
+              <div className={"font-medium text-nb-gray-100 dark:text-white"}>
+                {f.label}
+              </div>
               <div className={"text-nb-gray-300 mt-1"}>{f.description}</div>
             </div>
           }
