@@ -8,13 +8,13 @@
 
 | 项目 | 值 |
 | --- | --- |
-| 当前同步的上游版本 | `v2.98.0`（`7fed1508`） |
-| 与上游 `main` 的差异 | **0 落后 / 113 领先**（领先部分全部是本地化） |
+| 当前同步的上游版本 | `v2.99.0`（`25ae2e15`） |
+| 与上游 `main` 的差异 | **0 落后 / 115 领先**（领先部分全部是本地化） |
 | 镜像 | `ghcr.io/supportspark/dashboard:zh-latest` |
 | 支持架构 | `linux/amd64`、`linux/arm64` |
 | 公开性 | 镜像公开，拉取不需要登录 GHCR |
 | 许可证 | AGPL-3.0（与上游一致） |
-| 技术栈 | Next.js 16.4.3 · React 19.3.1 · Tailwind CSS v4.3 · next-intl 4.14 · React Flow |
+| 技术栈 | Next.js 16.4.6 · React 19.3.1 · Tailwind CSS v4.3 · next-intl 4.14 · React Flow |
 
 > 安装细节、慢网络绕行、自己维护一份的完整步骤见
 > **[docs/INSTALL-ZH.md](docs/INSTALL-ZH.md)**；同步机制与冲突处理规则见

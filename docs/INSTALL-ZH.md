@@ -154,3 +154,8 @@ Cluster=集群、Setup Key=安装密钥…）。
 另：部分功能（EDR/MDM 集成、SCIM、流量事件、事件流）需要 NetBird 商业许可，
 与语言无关——社区版服务端本身没有这些端点。见
 [COMMUNITY-VS-COMMERCIAL.md](./COMMUNITY-VS-COMMERCIAL.md)。
+
+上游 v2.99.0 起仪表盘内置了 **AI 助手**（右上角的对话入口）。它由配置里的
+`assistantApiOrigin` 控制：**留空即整体关闭**，自托管默认就是关的，界面上不会出现
+入口。界面文案已随本镜像翻译好，真要启用时把 `NETBIRD_ASSISTANT_API_ENDPOINT`
+指向你自己的助手服务即可，其余无需改动。
