@@ -3543,6 +3543,10 @@ export default {
     deleteGroupBlockedByChanges:
       "{count, plural, one {Your change to {changes} still references it, and the deletion can't deploy until you take the group off it.} other {Your changes to {changes} still reference them, and the deletion can't deploy until you take the group off them.}}",
     networkNoResourcesYet: "This network has no resources yet.",
+    networkConnectingNeedsResource:
+      "Connecting to a network needs something inside it to connect to. Add a resource to {network} first, then pick it here as the destination.",
+    waitForAssistantBeforeDeploying:
+      "Wait for the assistant to finish before deploying",
     setupDeviceTitle: "Set up “{name}”",
     setupDeviceDescription: "Install NetBird and assign the registered peer.",
     installOnDeviceStep:
@@ -6489,7 +6493,8 @@ export default {
     genericHttpDeleteHelp:
       "Deleting this integration will remove the ability to stream events. If you delete the integration you will need to reconfigure it again to enable event streaming.",
     edrSyncFrequency: "Sync Frequency",
-    edrSyncFrequencyHelp: "How often NetBird checks {name} for device status changes.",
+    edrSyncFrequencyHelp:
+      "How often NetBird checks {name} for device status changes.",
     edrSyncFrequencyTooltip:
       "Example: this property is set to 1 minute. If Jane''s laptop stops meeting the requirements in {name}, NetBird picks up the change on its next check, within 1 minute, and blocks network access.",
     edrSyncIntervalInvalid: "Must be a whole number between 1 and {max}",
@@ -7231,5 +7236,205 @@ export default {
     planAvailabilityAre: "{feature} are available on the {plan}.",
     availableOnEnterpriseOrCloudAre:
       "{feature} are available with a NetBird Enterprise commercial license, or on NetBird Cloud with the {plan}.",
+  },
+  assistant: {
+    title: "Assistant",
+    panelAriaLabel: "NetBird Assistant",
+    closeAssistant: "Close assistant",
+    closeAssistantButton: "Close the assistant",
+    openAssistant: "Open the NetBird assistant",
+    newChat: "New Chat",
+    newChatAction: "New chat",
+    stop: "Stop",
+    copyAnswer: "Copy answer",
+    copy: "Copy",
+    copyCode: "Copy code",
+    answerCopied: "The answer has been copied.",
+    showSteps: "Show {count} steps",
+    hideSteps: "Hide steps",
+    tryAgain: "Try again",
+    scrollToBottom: "Scroll to bottom",
+    disclaimer: "Assistant can make mistakes. Always check details.",
+    emptyStateLead: "Get started with some examples",
+    greeting: "{greeting}!",
+    greetingWithName: "{greeting}, {name}!",
+    stillUp: "Still up",
+    goodMorning: "Good morning",
+    goodAfternoon: "Good afternoon",
+    goodEvening: "Good evening",
+    noSuchOption:
+      "That is not one of the options. Pick one, or type its number or name.",
+    placeholder: {
+      howCanIHelp: "How can I help you today?",
+      typeAnswer: "Type your answer",
+      pickOrNumberOrName: "Pick an option, or type its number or name",
+      tickWhatApplies: "Tick what applies, or type your answer",
+      pickNumberOrType: "Pick an option, type its number, or type your answer",
+      pickOrType: "Pick an option, or type your answer",
+    },
+    starter: {
+      draftNetworkChanges: {
+        label: "Draft Network Changes",
+        prompt:
+          "Help me give a team access to a server. Ask me which server, its address or name, who needs to reach it and on which ports, then draft the groups, the network and the policy on the canvas for me to review and deploy.",
+      },
+      reviewAccessPolicies: {
+        label: "Review Access Policies",
+        prompt:
+          "Review my access control. Read my policies and groups, show me who can reach what, and point out anything too broad, like a policy from All to All or one that allows every port.",
+      },
+      troubleshootConnectivity: {
+        label: "Troubleshoot Connectivity",
+        prompt:
+          "One of my peers can't reach something it should. Ask me which peer and what it is trying to reach, then check whether both are online, which groups they are in and which policy should connect them.",
+      },
+      whatChangedRecently: {
+        label: "What Changed Recently",
+        prompt:
+          "What changed in my account in the last 7 days? Read the audit log and tell me who changed what, newest first, with anything that widened access called out.",
+      },
+    },
+    approval: {
+      titleWithTool: "{tool}?",
+      allowOnce: "Allow Once",
+      deny: "Deny",
+      sessionLimitExplanation:
+        "New chat starts fresh. Stop ends this answer and keeps this chat here to read.",
+      waitingExplanation:
+        "The assistant is waiting for you. Nothing else it has been asked will run until you answer.",
+      queuedPosition: "1 of {total}",
+      request: "Request",
+      result: "Result",
+    },
+    question: {
+      dismiss: "Dismiss",
+      send: "Send",
+      sendAnswer: "Send answer",
+      selectedCount: "{count} selected",
+    },
+    tool: {
+      netbird_api: "Read the NetBird API",
+      audit_events: "Read activity events",
+      account_search: "Look up",
+      docs_search: "Read the docs",
+      render_component: "Prepare a view",
+      ask_question: "Ask a question",
+      dashboard_page_redirect: "Navigate to",
+      control_center_state: "Read the canvas",
+      control_center_navigate: "Open the control center",
+      control_center_draft: "Set up a draft",
+      control_center_add: "Add to draft",
+      control_center_connect: "Connect",
+      control_center_node: "Edit the draft",
+      control_center_policy: "Edit policy",
+      control_center_canvas: "Arrange the canvas",
+    },
+    operation: {
+      get_api_peers: "Read peers",
+      get_api_peers_peerId: "Read peer details",
+      get_api_groups: "Read groups",
+      get_api_policies: "Read access policies",
+      get_api_routes: "Read networks & routes",
+      get_api_dns_nameservers: "Read DNS configuration",
+      get_api_setup_keys: "Read setup keys",
+      get_api_users: "Read users",
+      get_api_users_current: "Read your profile",
+      get_api_accounts: "Read account settings",
+      get_api_posture_checks: "Read posture checks",
+      get_api_networks: "Read networks",
+      get_api_dns_settings: "Read DNS settings",
+      get_api_events_network_traffic: "Read traffic events",
+      get_api_events_proxy: "Read reverse proxy access logs",
+      get_api_networks_routers: "Read network routers",
+      get_api_networks_networkId_resources: "Read network resources",
+      get_api_dns_zones: "Read DNS zones",
+      get_api_reverse_proxies_services: "Read reverse proxy services",
+      get_api_reverse_proxies_clusters: "Read proxy clusters",
+      get_api_reverse_proxies_domains: "Read custom domains",
+      get_api_agent_network_providers: "Read AI providers",
+      get_api_agent_network_policies: "Read agent policies",
+      get_api_agent_network_guardrails: "Read guardrails",
+      get_api_agent_network_budget_rules: "Read global limits",
+      get_api_agent_network_settings: "Read Agent Network settings",
+      get_api_agent_network_access_logs: "Read agent access logs",
+      get_api_agent_network_access_log_sessions: "Read agent sessions",
+      get_api_agent_network_consumption: "Read agent limit consumption",
+      get_api_agent_network_usage_overview: "Read agent usage",
+      get_api_agent_network_catalog_providers: "Read the AI provider catalog",
+      get_api_peers_peerId_accessible_peers:
+        "Read which peers a peer can reach",
+      get_api_users_invites: "Read user invites",
+      get_api_users_userId_tokens: "Read access tokens",
+      get_api_reverse_proxies_proxy_tokens: "Read proxy tokens",
+      get_api_identity_providers: "Read identity providers",
+      get_api_integrations_azure_idp: "Read Azure AD sync",
+      get_api_integrations_google_idp: "Read Google Workspace sync",
+      get_api_integrations_okta_scim_idp: "Read Okta SCIM sync",
+      get_api_integrations_scim_idp: "Read SCIM sync",
+      get_api_event_streaming: "Read event streaming",
+      get_api_integrations_notifications_channels: "Read notification channels",
+      get_api_integrations_edr_falcon: "Read CrowdStrike Falcon integration",
+      get_api_integrations_edr_fleetdm: "Read FleetDM integration",
+      get_api_integrations_edr_huntress: "Read Huntress integration",
+      get_api_integrations_edr_intune: "Read Intune integration",
+      get_api_integrations_edr_sentinelone: "Read SentinelOne integration",
+      get_api_peers_edr_bypassed: "Read EDR-bypassed peers",
+      get_api_integrations_billing_subscription: "Read your subscription",
+      get_api_integrations_billing_plans: "Read plans",
+      get_api_integrations_billing_usage: "Read billing usage",
+      get_api_integrations_billing_invoices: "Read invoices",
+      get_api_integrations_msp_tenants: "Read tenants",
+      get_api_instance_version: "Read the NetBird version",
+    },
+    loadSkill: "Load a skill",
+    loadSkillNamed: "Load skill ''{name}''",
+    scrollLinesOne: "Scroll to see {count} more line",
+    scrollLinesOther: "Scroll to see {count} more lines",
+    context: {
+      remove: "Remove context",
+      dontSend: "Don''t send this",
+    },
+    kind: {
+      peer: "Peer",
+      group: "Group",
+      network: "Network",
+      user: "User",
+      settings: "Settings",
+      integration: "Integration",
+    },
+    status: {
+      thinking: "Thinking",
+      working: "Working",
+      preparingQuestion: "Prepare a question",
+    },
+    error: {
+      sessionExpired:
+        "Your session expired. Reload the page and sign in again.",
+      wrongAddress:
+        "The assistant service isn''t available at this address. Ask your administrator to check the dashboard''s assistant configuration.",
+      tooManyRequests: "Too many requests — give it a moment and try again.",
+      temporarilyUnavailable:
+        "The assistant service is temporarily unavailable. It may be restarting — try again in a minute.",
+      requestFailed:
+        "The assistant couldn''t complete that request. Try again in a moment.",
+      timeout: "The assistant took too long to respond. Try again in a moment.",
+      unreachable:
+        "Can''t reach the assistant service — it looks offline or is restarting. Try again in a minute, or contact your administrator if it keeps happening.",
+      unexpected:
+        "The assistant ran into an unexpected problem. Try again in a moment.",
+      chatTooLong: "This chat is too long. Start a new one to continue.",
+    },
+    refusal: {
+      budgetSpent:
+        "You''ve reached today''s assistant usage limit. Try again tomorrow, or ask your administrator.",
+      turnTooLong:
+        "That took more steps than one answer may. Ask again, or split the question up.",
+      accountMismatch:
+        "This chat belongs to another account. Start a new chat.",
+      accountQuotaSpent:
+        "This account has reached its assistant spending limit for this period. Contact [REDACTED] to raise it.",
+    },
+    yes: "Yes",
+    no: "No",
   },
 };

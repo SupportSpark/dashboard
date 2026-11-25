@@ -1,9 +1,9 @@
-import { useMemo } from "react";
-import { useStore } from "@xyflow/react";
 import useFetchApi from "@utils/api";
-import { NetworkRouter } from "@/interfaces/Network";
-import { usePeers } from "@/contexts/PeersProvider";
+import { useStore } from "@xyflow/react";
+import { useMemo } from "react";
 import { useGroups } from "@/contexts/GroupsProvider";
+import { usePeers } from "@/contexts/PeersProvider";
+import { NetworkRouter } from "@/interfaces/Network";
 import {
   UpdateRouterChange,
   useDraftChangeset,
@@ -15,6 +15,7 @@ import {
   sortRoutingPeerRows,
 } from "@/modules/control-center/panels/RoutingPeersBar";
 import { useTranslations } from "next-intl";
+import { isDraftPeerId } from "@/modules/control-center/utils/helpers";
 
 // `enabled` defers the routers fetch until a frame actually needs it.
 export function useFrameRouterRows(
@@ -68,6 +69,7 @@ export function useFrameRouterRows(
           c.type === "update-router" && c.routerId === r.id,
       );
       const peerId = pending ? pending.peerId : r.peer;
+      const draftPeer = isDraftPeerId(peerId);
       const groupRef = pending ? pending.groupId : r.peer_groups?.[0];
       const enabled = pending ? pending.enabled ?? r.enabled : r.enabled;
       const peer = peerId ? peers?.find((p) => p.id === peerId) : undefined;
@@ -77,10 +79,15 @@ export function useFrameRouterRows(
       list.push({
         key: `api-${r.id}`,
         peerOs: peer?.os,
-        name: peer?.name ?? group?.name ?? tCommon("routingPeer"),
+        name:
+          peer?.name ??
+          (draftPeer ? pending?.peerName : undefined) ??
+          group?.name ??
+          tCommon("routingPeer"),
         isGroup: !peerId,
         peersCount: !peerId ? group?.peers_count ?? 0 : undefined,
         enabled,
+        pendingInstall: draftPeer,
         onEdit: () => setRoutingPeerModal({ networkNodeId, router: r }),
       });
     });
@@ -99,6 +106,7 @@ export function useFrameRouterRows(
         isGroup: !c.peerId,
         peersCount: !c.peerId ? group?.peers_count ?? 0 : undefined,
         enabled: c.enabled ?? true,
+        pendingInstall: isDraftPeerId(c.peerId),
         onEdit: () =>
           setRoutingPeerModal({ networkNodeId, editChangeId: c.id }),
       });

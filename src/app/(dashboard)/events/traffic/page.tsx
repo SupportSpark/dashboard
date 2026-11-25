@@ -6,6 +6,7 @@ import { RestrictedAccess } from "@components/ui/RestrictedAccess";
 import { usePortalElement } from "@hooks/usePortalElement";
 import dayjs from "dayjs";
 import { ExternalLinkIcon } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import React, { useMemo } from "react";
 import { useIsFeatureLocked } from "@/cloud/cloud-hooks/useIsFeatureLocked";
@@ -23,6 +24,7 @@ import { EventStreamingCard } from "@/modules/integrations/event-streaming/Event
 export default function NetworkTrafficPage() {
   const t = useTranslations("trafficEvents");
   const tNav = useTranslations("navigation");
+  const linkedSearch = useSearchParams().get("search") ?? "";
   const account = useAccount();
   const { permission } = usePermissions();
   const { ref: headingRef, portalTarget } =
@@ -70,9 +72,11 @@ export default function NetworkTrafficPage() {
           <EventStreamingCard />
           <PeersProvider>
             <ServerPaginationProvider
+              key={linkedSearch}
               url={"/events/network-traffic"}
               defaultPageSize={10}
               defaultFilters={defaultFilters}
+              initialSearch={linkedSearch}
               enabled={!isTrafficEventsLocked}
             >
               <TrafficEventsTable

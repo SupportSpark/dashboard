@@ -7,6 +7,7 @@ import { RestrictedAccess } from "@components/ui/RestrictedAccess";
 import { usePortalElement } from "@hooks/usePortalElement";
 import dayjs from "dayjs";
 import { ExternalLinkIcon } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import React, { lazy, Suspense, useMemo } from "react";
 import PeersProvider from "@/contexts/PeersProvider";
@@ -22,6 +23,7 @@ const ReverseProxyEventsTable = lazy(
 export default function ProxyLogsPage() {
   const t = useTranslations("reverseProxy");
   const tCommon = useTranslations("common");
+  const linkedSearch = useSearchParams().get("search") ?? "";
   const { permission } = usePermissions();
 
   const { ref: headingRef, portalTarget } =
@@ -48,23 +50,26 @@ export default function ProxyLogsPage() {
             <ExternalLinkIcon size={12} />
           </InlineLink>
         </Paragraph>
-        <RestrictedAccess
-          page={t("accessLogs")}
-          hasAccess={permission.services?.read}
-        >
-          <ServerPaginationProvider
-            url="/events/proxy"
-            defaultPageSize={25}
-            defaultFilters={defaultFilters}
-          >
-            <PeersProvider>
-              <Suspense fallback={<SkeletonTable />}>
-                <ReverseProxyEventsTable headingTarget={portalTarget} />
-              </Suspense>
-            </PeersProvider>
-          </ServerPaginationProvider>
-        </RestrictedAccess>
       </div>
+
+      <RestrictedAccess
+        page={t("accessLogs")}
+        hasAccess={permission?.services?.read}
+      >
+        <ServerPaginationProvider
+          key={linkedSearch}
+          url="/events/proxy"
+          defaultPageSize={25}
+          defaultFilters={defaultFilters}
+          initialSearch={linkedSearch}
+        >
+          <PeersProvider>
+            <Suspense fallback={<SkeletonTable />}>
+              <ReverseProxyEventsTable headingTarget={portalTarget} />
+            </Suspense>
+          </PeersProvider>
+        </ServerPaginationProvider>
+      </RestrictedAccess>
     </PageContainer>
   );
 }

@@ -20,6 +20,9 @@ import {
   Loader2,
 } from "lucide-react";
 import React, { useCallback, useMemo, useRef } from "react";
+import { AssistantIcon } from "@/assets/icons/AssistantIcon";
+import { useAIProviders } from "@/modules/agent-network/AIProvidersProvider";
+import { useAgentBusy } from "@/modules/assistant/hooks/useAgentBusy";
 import { useControlCenterPolicy } from "@/modules/control-center/contexts/ControlCenterPolicyModals";
 import { ChangeAccordionItem } from "@/modules/control-center/draft/changeset/ChangeAccordionItem";
 import {
@@ -30,9 +33,11 @@ import {
   useDraftChangeset,
 } from "@/modules/control-center/draft/DraftChangesetContext";
 import { useDraftMode } from "@/modules/control-center/draft/DraftModeContext";
-import { useAIProviders } from "@/modules/agent-network/AIProvidersProvider";
 import { useControlCenterData } from "@/modules/control-center/hooks/useControlCenterData";
-import { useDeployChangeset } from "@/modules/control-center/hooks/useDeployChangeset";
+import {
+  deployInFlight,
+  useDeployChangeset,
+} from "@/modules/control-center/hooks/useDeployChangeset";
 import { useRemoveChange } from "@/modules/control-center/hooks/useRemoveChange";
 import { LiveData } from "@/modules/control-center/utils/changeset-request";
 import { getPlaceholderSetupKey } from "@/modules/control-center/utils/helpers";
@@ -51,10 +56,11 @@ export const ReviewDeployModal = ({
 }: Props) => {
   const t = useTranslations("controlCenter");
   const tCommon = useTranslations("common");
-  const { changes, clearChanges } = useDraftChangeset();
+  const { changes, clearChanges, assistantChangeIds } = useDraftChangeset();
   const { removeWithCascade, previewRemove } = useRemoveChange();
   const { deploy, isDeploying, deployStatus } = useDeployChangeset();
-  const { policies, groups, networks, networkResources, users } =
+  const assistantBusy = useAgentBusy();
+  const { policies, groups, networks, networkResources, users, peers } =
     useControlCenterData();
   const { providers: agentProviders, policies: agentPolicies } =
     useAIProviders();
@@ -70,6 +76,7 @@ export const ReviewDeployModal = ({
       networks,
       networkResources,
       users,
+      peers,
       providers: agentProviders,
       agentPolicies,
       draftChanges: changes,
@@ -80,6 +87,7 @@ export const ReviewDeployModal = ({
       networks,
       networkResources,
       users,
+      peers,
       agentProviders,
       agentPolicies,
       changes,
@@ -173,6 +181,7 @@ export const ReviewDeployModal = ({
   } before deploying to your network.`;
 
   const handleDeploy = async () => {
+    if (assistantBusy) return;
     const ok = await deploy();
     // A partial failure keeps the modal open; deployed items are skipped on
     // retry.
@@ -190,7 +199,11 @@ export const ReviewDeployModal = ({
     // "no changes" state on the way out.
     onDeployed();
     onOpenChange(false);
-    window.setTimeout(() => clearChanges(), 400);
+    deployInFlight.current = true;
+    window.setTimeout(() => {
+      clearChanges();
+      deployInFlight.current = false;
+    }, 400);
   };
 
   return (
@@ -220,31 +233,47 @@ export const ReviewDeployModal = ({
               {t("noPendingChanges")}
             </div>
           ) : (
-            <Accordion
-              key={openKeyRef.current}
-              type={"multiple"}
-              defaultValue={sortedChanges[0] ? [sortedChanges[0].id] : []}
-              className={"flex flex-col gap-3"}
-            >
-              {sortedChanges.map((change) => (
-                <ChangeAccordionItem
-                  key={change.id}
-                  change={change}
-                  changes={changes}
-                  live={renderLive}
-                  onDiscard={() => removeWithCascade(change)}
-                  previewRemove={previewRemove}
-                  onResolveIssue={
-                    // An issue about a group deleted elsewhere has no fix on this row.
-                    getChangeIssue(change, changes)?.resolvable
-                      ? resolveIssue
-                      : undefined
+            <>
+              {assistantChangeIds.size > 0 && (
+                <div
+                  data-testid={"cc-assistant-changes-notice"}
+                  className={
+                    "mb-4 flex items-center gap-2 rounded-lg border border-netbird-500/20 bg-netbird-900/20 px-3 py-2 text-xs text-netbird-200"
                   }
-                  disabled={isDeploying}
-                  status={deployStatus[change.id]}
-                />
-              ))}
-            </Accordion>
+                >
+                  <AssistantIcon size={13} className={"shrink-0"} />
+                  {assistantChangeIds.size === 1
+                    ? "1 change was made by the assistant."
+                    : `${assistantChangeIds.size} changes were made by the assistant.`}{" "}
+                  Check them before you deploy.
+                </div>
+              )}
+              <Accordion
+                key={openKeyRef.current}
+                type={"multiple"}
+                defaultValue={sortedChanges[0] ? [sortedChanges[0].id] : []}
+                className={"flex flex-col gap-3"}
+              >
+                {sortedChanges.map((change) => (
+                  <ChangeAccordionItem
+                    key={change.id}
+                    change={change}
+                    changes={changes}
+                    live={renderLive}
+                    onDiscard={() => removeWithCascade(change)}
+                    previewRemove={previewRemove}
+                    onResolveIssue={
+                      getChangeIssue(change, changes)?.resolvable
+                        ? resolveIssue
+                        : undefined
+                    }
+                    disabled={isDeploying}
+                    status={deployStatus[change.id]}
+                    byAssistant={assistantChangeIds.has(change.id)}
+                  />
+                ))}
+              </Accordion>
+            </>
           )}
         </div>
 
@@ -272,8 +301,12 @@ export const ReviewDeployModal = ({
             {/* A disabled button emits no hover, so the wrapper div FullTooltip
                 adds carries the tooltip. */}
             <FullTooltip
-              content={t("resolveIssuesBeforeDeploying")}
-              disabled={!hasIssues}
+              content={
+                assistantBusy
+                  ? t("waitForAssistantBeforeDeploying")
+                  : t("resolveIssuesBeforeDeploying")
+              }
+              disabled={!hasIssues && !assistantBusy}
               side={"top"}
             >
               <Button
@@ -281,7 +314,8 @@ export const ReviewDeployModal = ({
                 disabled={
                   (deployableCount === 0 && installedCount === 0) ||
                   isDeploying ||
-                  hasIssues
+                  hasIssues ||
+                  assistantBusy
                 }
                 onClick={handleDeploy}
                 data-testid={"cc-deploy"}

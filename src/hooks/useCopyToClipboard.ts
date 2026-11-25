@@ -2,7 +2,10 @@ import { notify } from "@components/Notification";
 import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
 
-export default function useCopyToClipboard(textToCopy?: string) {
+export default function useCopyToClipboard(
+  textToCopy?: string,
+  options?: { silent?: boolean },
+) {
   const t = useTranslations("common");
   const tCopy = useTranslations("serviceUsers");
   const wrapper = useRef<HTMLDivElement>(null);
@@ -16,10 +19,12 @@ export default function useCopyToClipboard(textToCopy?: string) {
       await navigator.clipboard.writeText(copy);
       setCopied(true);
 
-      notify({
-        title: tCopy("copySuccess"),
-        description: description,
-      });
+      if (!options?.silent) {
+        notify({
+          title: tCopy("copySuccess"),
+          description: description,
+        });
+      }
 
       const timeout = setTimeout(() => {
         setCopied(false);

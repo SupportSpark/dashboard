@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import React from "react";
+import { AssistantIcon } from "@/assets/icons/AssistantIcon";
 import {
   ChangeKind,
   DraftChange,
@@ -184,6 +185,19 @@ export const KindBadge = ({ kind }: { kind: ChangeKind }) => {
     </span>
   );
 };
+
+export const AssistantBadge = () => (
+  <span
+    title={"The assistant made or changed this. Check it before deploying."}
+    className={cn(
+      "inline-flex items-center justify-center gap-1.5 text-[0.65rem] font-medium px-2 py-1 rounded shrink-0 [&>svg]:shrink-0",
+      "bg-netbird-900/30 text-netbird-300 border border-netbird-500/20",
+    )}
+  >
+    <AssistantIcon size={11} />
+    Assistant
+  </span>
+);
 
 export const DiffStat = ({
   additions,

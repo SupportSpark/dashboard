@@ -21,7 +21,7 @@ import { ColumnDef, SortingState } from "@tanstack/react-table";
 import dayjs from "dayjs";
 import { uniqBy } from "lodash";
 import { ExternalLinkIcon } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import React, { useMemo, useState } from "react";
 import { DateRange } from "react-day-picker";
@@ -41,6 +41,56 @@ type Props = {
   headingTarget?: HTMLHeadingElement | null;
 };
 
+const activityFeedColumnsTable = (
+  t: ReturnType<typeof useTranslations<"activity">>,
+): ColumnDef<ActivityEvent>[] => [
+  {
+    id: "id",
+    accessorKey: "id",
+    filterFn: "exactMatch",
+    enableGlobalFilter: false,
+  },
+  {
+    accessorKey: "activity_code",
+    header: ({ column }) => {
+      return <DataTableHeader column={column}>{t("code")}</DataTableHeader>;
+    },
+    sortingFn: "text",
+    filterFn: "arrIncludesSomeExact",
+    cell: ({ row }) => <ActivityEntryRow event={row.original} />,
+  },
+  {
+    id: "activity_text",
+    accessorFn: (event) => {
+      try {
+        if (event.meta) {
+          return Object.keys(event.meta)
+            .map((key) => {
+              return `${event?.meta[key]}`;
+            })
+            .join(" ");
+        }
+      } catch (error) {
+        return "";
+      }
+    },
+  },
+  {
+    accessorKey: "timestamp",
+    id: "timestamp",
+    filterFn: "dateRange",
+  },
+  {
+    accessorKey: "activity",
+    id: "name",
+  },
+  {
+    id: "initiator_email",
+    accessorFn: (row) => row.initiator_email || "NetBird",
+    filterFn: "exactMatch",
+  },
+];
+
 const defaultFromDate = dayjs().subtract(14, "day").toDate();
 const defaultToDate = dayjs().toDate();
 
@@ -54,51 +104,25 @@ export default function ActivityTable({
   const tPeers = useTranslations("peers");
   const { mutate } = useSWRConfig();
   const path = usePathname();
+  const router = useRouter();
+  const params = useSearchParams();
 
-  const columns = useMemo<ColumnDef<ActivityEvent>[]>(
-    () => [
-      {
-        accessorKey: "activity_code",
-        header: ({ column }) => {
-          return <DataTableHeader column={column}>{t("code")}</DataTableHeader>;
-        },
-        sortingFn: "text",
-        filterFn: "arrIncludesSomeExact",
-        cell: ({ row }) => <ActivityEntryRow event={row.original} />,
-      },
-      {
-        id: "activity_text",
-        accessorFn: (event) => {
-          try {
-            if (event.meta) {
-              return Object.keys(event.meta)
-                .map((key) => {
-                  return `${event?.meta[key]}`;
-                })
-                .join(" ");
-            }
-          } catch (error) {
-            return "";
-          }
-        },
-      },
-      {
-        accessorKey: "timestamp",
-        id: "timestamp",
-        filterFn: "dateRange",
-      },
-      {
-        accessorKey: "activity",
-        id: "name",
-      },
-      {
-        id: "initiator_email",
-        accessorFn: (row) => row.initiator_email || "NetBird",
-        filterFn: "exactMatch",
-      },
-    ],
-    [t],
-  );
+  const eventId = params.get("id") ?? undefined;
+  const removeEventParam = React.useCallback(() => {
+    if (!eventId) return;
+    // The single-event view keeps nothing in storage, so the table it returns to would restore what was saved before.
+    try {
+      ["columns", "search", "pagination"].forEach((state) =>
+        localStorage.removeItem(`netbird-table-${state}${path}`),
+      );
+    } catch {
+      // Storage is blocked, so nothing was saved to restore.
+    }
+    const newParams = new URLSearchParams(params.toString());
+    newParams.delete("id");
+    router.replace(`?${newParams.toString()}`, { scroll: false });
+  }, [eventId, params, path, router]);
+
 
   // Default sorting state of the table
   const [sorting, setSorting] = useState<SortingState>([
@@ -167,6 +191,7 @@ export default function ActivityTable({
 
   return (
     <DataTable
+      key={eventId ?? ""}
       headingTarget={headingTarget}
       paginationClassName={"max-w-[800px]"}
       as={"div"}
@@ -174,10 +199,12 @@ export default function ActivityTable({
       sorting={sorting}
       setSorting={setSorting}
       initialPageSize={25}
+      keepStateInLocalStorage={!eventId}
+      initialFilters={eventId ? [{ id: "id", value: eventId }] : undefined}
       showResetFilterButton={false}
       wrapperClassName={"gap-0 flex flex-col"}
       tableClassName={"px-8 pt-4"}
-      columns={columns}
+      columns={activityFeedColumnsTable(t)}
       data={events}
       searchPlaceholder={t("searchByAuditNameUserPeerMeta")}
       isLoading={isLoading}
@@ -185,6 +212,7 @@ export default function ActivityTable({
         <TableFilterChips table={table} filters={filterDefs} />
       )}
       columnVisibility={{
+        id: false,
         timestamp: false,
         name: false,
         activity_text: false,
@@ -217,6 +245,7 @@ export default function ActivityTable({
         />
       }
       onFilterReset={() => {
+        removeEventParam();
         const date = { from: defaultFromDate, to: defaultToDate };
         setInitialDateRange(date);
         setDateRange(date);
@@ -250,6 +279,7 @@ export default function ActivityTable({
             <DataTableResetFilterButton
               table={table}
               onClick={() => {
+                removeEventParam();
                 table.setPageIndex(0);
                 table.resetColumnFilters();
                 table.resetGlobalFilter();

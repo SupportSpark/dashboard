@@ -6,6 +6,7 @@ import { mutate } from "swr";
 import { usePermissions } from "@/contexts/PermissionsProvider";
 import { Group } from "@/interfaces/Group";
 import { Network, NetworkResource, NetworkRouter } from "@/interfaces/Network";
+import { Peer } from "@/interfaces/Peer";
 import { Policy, PolicyRuleResource } from "@/interfaces/Policy";
 import { User } from "@/interfaces/User";
 import { useAIProviders } from "@/modules/agent-network/AIProvidersProvider";
@@ -28,6 +29,7 @@ import {
   mergeGroupMembers,
   networkCreateBody,
   networkUpdateBody,
+  peerRequiresMasquerade,
   policyRequestBody,
   RequestResolvers,
   resourceCreateBody,
@@ -35,8 +37,11 @@ import {
   routerCreateBody,
   routerUpdateBody,
 } from "@/modules/control-center/utils/changeset-request";
-import { isDeployablePolicy } from "@/modules/control-center/utils/helpers";
 import { useTranslations } from "next-intl";
+import {
+  isDeployablePolicy,
+  isDraftPeerId,
+} from "@/modules/control-center/utils/helpers";
 
 // Executes the draft changeset in CHANGE_DEPLOY_ORDER, stopping on the first failure.
 export type DeployStatus = "deploying" | "done" | "error";
@@ -63,7 +68,8 @@ export function useDeployChangeset() {
   const t = useTranslations("controlCenter");
   const { changes } = useDraftChangeset();
   const { permission } = usePermissions();
-  const { groups, networks, networkResources, users } = useControlCenterData();
+  const { groups, networks, networkResources, users, peers } =
+    useControlCenterData();
   // Draft client ids → real API ids, persisted across deploy() calls so retries resolve them.
   const networkClientToId = useRef(new Map<string, string>());
   const resourceClientToId = useRef(
@@ -75,6 +81,7 @@ export function useDeployChangeset() {
   const resourceRequest = useApiCall<NetworkResource>("/networks", true);
   const routerRequest = useApiCall<NetworkRouter>("/networks", true);
   const userRequest = useApiCall<User>("/users", true);
+  const peerRequest = useApiCall<Peer>("/peers", true);
   const {
     addProvider,
     updateProvider: saveProvider,
@@ -203,6 +210,23 @@ export function useDeployChangeset() {
       return { id: created.id, type: created.type ?? r.type };
     };
 
+    // A peer installed moments ago can be missing from the `/peers` snapshot,
+    // or be in it before it has reported its OS, which would read as Linux.
+    // Its router is not written from the saved masquerade value then,
+    // because a retry skips a router that already deployed and would never correct it.
+    const routingPeers = new Map((peers ?? []).map((p) => [p.id, p]));
+    const loadRoutingPeer = async (peerId?: string) => {
+      if (!peerId || isDraftPeerId(peerId)) return;
+      if (routingPeers.get(peerId)?.os) return;
+      const peer = await peerRequest.get(`/${peerId}`).catch(() => undefined);
+      if (!peer?.os) {
+        throw new Error(
+          "The routing peer's operating system is not known yet. Check that it is connected, then deploy again.",
+        );
+      }
+      routingPeers.set(peerId, peer);
+    };
+
     const resolvers: RequestResolvers = {
       resolveGroupIds,
       resolveResource,
@@ -217,6 +241,14 @@ export function useDeployChangeset() {
           `Group "${ref}" is missing. It may have been removed from the draft.`,
         );
       },
+      peerIdForRef: (ref) => {
+        if (!isDraftPeerId(ref)) return ref;
+        throw new Error(
+          "A routing peer is not installed yet. Install it before deploying.",
+        );
+      },
+      peerRequiresMasquerade: (ref) =>
+        peerRequiresMasquerade(Array.from(routingPeers.values()), ref),
       normalizeAddress: normalizeHostCIDR,
       // The group POST/PUT sends resources as {id, type} objects.
       resourceType: (id) =>
@@ -372,6 +404,7 @@ export function useDeployChangeset() {
         case "create-router": {
           assertNoDoomedGroups(change);
           const networkId = resolveNetworkId(change);
+          await loadRoutingPeer(change.peerId);
           const body = routerCreateBody(change, resolvers);
           const existing = createdUnder(networkId);
           const saved = existing
@@ -384,6 +417,7 @@ export function useDeployChangeset() {
         }
         case "update-router": {
           assertNoDoomedGroups(change);
+          await loadRoutingPeer(change.peerId);
           await routerRequest.put(
             routerUpdateBody(change, resolvers),
             `/${change.networkId}/routers/${change.routerId}`,
@@ -644,6 +678,8 @@ export function useDeployChangeset() {
     networks,
     networkResources,
     users,
+    peers,
+    peerRequest,
     groupRequest,
     policyRequest,
     networkRequest,
