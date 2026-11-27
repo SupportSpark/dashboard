@@ -11,20 +11,20 @@ import ModalHeader from "@components/modal/ModalHeader";
 import Paragraph from "@components/Paragraph";
 import Separator from "@components/Separator";
 import Steps from "@components/Steps";
-import { Lightbox } from "@components/ui/Lightbox";
 import { Mark } from "@components/ui/Mark";
 import { cn } from "@utils/helpers";
 import { ExternalLinkIcon, PlusCircle, TerminalSquare } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useState } from "react";
-import sshImage from "@/assets/ssh/ssh-client.png";
 import { SegmentedTabs } from "@components/SegmentedTabs";
+import AndroidIcon from "@/assets/icons/AndroidIcon";
 import NetBirdIcon from "@/assets/icons/NetBirdIcon";
+import { getOperatingSystem } from "@hooks/useOperatingSystem";
+import { isNetbirdSSHProtocolSupported } from "@utils/version";
+import { OperatingSystem } from "@/interfaces/OperatingSystem";
 import { Peer } from "@/interfaces/Peer";
 import { PeerSSHPolicyModal } from "@/modules/peer/PeerSSHPolicyModal";
-import { getOperatingSystem } from "@hooks/useOperatingSystem";
-import { useTranslations } from "next-intl";
-import { OperatingSystem } from "@/interfaces/OperatingSystem";
 
 type Props = {
   open?: boolean;
@@ -44,6 +44,11 @@ export const PeerSSHInstructions = ({
   const tSsh = useTranslations("peerSsh");
   const tReverseProxy = useTranslations("reverseProxy");
   const [client, setClient] = useState("cli");
+  // Peers already on v0.61.0+ don't need to be told which release started
+  // requiring a policy.
+  const peerRequiresSSHPolicy = isNetbirdSSHProtocolSupported(
+    peer?.version ?? "",
+  );
   const [policyModal, setPolicyModal] = useState(false);
 
   // Enabling the SSH server and root login require root, or an administrator on
@@ -60,8 +65,10 @@ export const PeerSSHInstructions = ({
       >
         <ModalHeader
           icon={<TerminalSquare size={16} />}
-          title={tPeers("enableSSH")}
-          description={tSsh("enableSSHDescription")}
+          title={"Enable SSH Access"}
+          description={
+            "Allow remote SSH access from other connected network participants."
+          }
           color={"netbird"}
         />
 
@@ -76,41 +83,68 @@ export const PeerSSHInstructions = ({
               </SegmentedTabs.Trigger>
               <SegmentedTabs.Trigger value={"gui"}>
                 <NetBirdIcon size={16} />
-                {tSsh("desktopClient")}
+                Desktop Client
+              </SegmentedTabs.Trigger>
+              <SegmentedTabs.Trigger value={"android"}>
+                <AndroidIcon size={16} className={"fill-nb-gray-400"} />
+                Android
               </SegmentedTabs.Trigger>
             </SegmentedTabs.List>
           </SegmentedTabs>
 
           <Steps>
-            {client === "cli" ? (
-              <Steps.Step step={1}>
-                <p className={"font-normal"}>
-                  {tSsh("sshCliStep", {
-                    scope: isWindows ? tSsh("elevatedPrompt") : tSsh("asRoot"),
-                  })}
-                </p>
-                <Code codeToCopy={`${prefix}netbird down`}>
-                  <Code.Line>{`${prefix}netbird down`}</Code.Line>
-                </Code>
-                <Code>
-                  <Code.Line>{`${prefix}netbird up --allow-server-ssh --enable-ssh-root`}</Code.Line>
-                </Code>
-              </Steps.Step>
-            ) : (
-              <Steps.Step step={1}>
+            <Steps.Step step={1}>
+              {client === "cli" && (
+                <>
+                  <p className={"font-normal"}>
+                    {tSsh("sshCliStep", {
+                      scope: isWindows
+                        ? tSsh("elevatedPrompt")
+                        : tSsh("asRoot"),
+                    })}
+                  </p>
+                  <Code codeToCopy={`${prefix}netbird down`}>
+                    <Code.Line>{`${prefix}netbird down`}</Code.Line>
+                  </Code>
+                  <Code>
+                    <Code.Line>{`${prefix}netbird up --allow-server-ssh --enable-ssh-root`}</Code.Line>
+                  </Code>
+                </>
+              )}
+
+              {client === "gui" && (
                 <p className={"font-normal"}>
                   {tSsh.rich("sshDesktopStep", {
                     settings: (chunks) => <Mark>{chunks}</Mark>,
                     allowSsh: (chunks) => <Mark>{chunks}</Mark>,
-                    advanced: (chunks) => <Mark>{chunks}</Mark>,
+                    ssh: (chunks) => <Mark>{chunks}</Mark>,
+                    allowRoot: (chunks) => <Mark>{chunks}</Mark>,
+                    who: isWindows
+                      ? tSsh("asAdministrator")
+                      : tSsh("asRootLogin"),
                   })}
                 </p>
-                <Lightbox image={sshImage} />
-              </Steps.Step>
-            )}
+              )}
+
+              {client === "android" && (
+                <p className={"font-normal"}>
+                  {tSsh.rich("sshAndroidStep", {
+                    settings: (chunks) => <Mark>{chunks}</Mark>,
+                    advanced: (chunks) => <Mark>{chunks}</Mark>,
+                    enableSsh: (chunks) => <Mark>{chunks}</Mark>,
+                  })}
+                </p>
+              )}
+            </Steps.Step>
 
             <Steps.Step step={2}>
-              <p className={"font-normal"}>{tPeers("sshPolicyRequired")}</p>
+              <p className={"font-normal"}>
+                {tPeers(
+                  peerRequiresSSHPolicy
+                    ? "sshPolicyRequiredNow"
+                    : "sshPolicyRequired",
+                )}
+              </p>
               <div className={"mt-2"}>
                 <Button
                   variant={"secondary"}

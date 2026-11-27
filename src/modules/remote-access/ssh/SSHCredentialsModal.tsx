@@ -13,7 +13,7 @@ import ModalHeader from "@components/modal/ModalHeader";
 import Paragraph from "@components/Paragraph";
 import Separator from "@components/Separator";
 import { getOperatingSystem } from "@hooks/useOperatingSystem";
-import { isNativeSSHSupported } from "@utils/version";
+import { usesStandardSSHPort } from "@utils/version";
 import {
   ChevronsLeftRightEllipsis,
   ExternalLinkIcon,
@@ -24,6 +24,10 @@ import * as React from "react";
 import { useMemo, useState } from "react";
 import { OperatingSystem } from "@/interfaces/OperatingSystem";
 import { Peer } from "@/interfaces/Peer";
+import {
+  IPVersionSelect,
+  type IPVersion,
+} from "@/modules/remote-access/IPVersionSelect";
 import { SSH_DOCS_LINK } from "@/modules/remote-access/ssh/useSSH";
 import { useTranslations } from "next-intl";
 
@@ -42,8 +46,9 @@ export const SSHCredentialsModal = ({ open, onOpenChange, peer }: Props) => {
       : "root",
   );
 
-  const initialPort = isNativeSSHSupported(peer.version) ? "22" : "44338";
+  const initialPort = usesStandardSSHPort(peer.version) ? "22" : "44338";
   const [port, setPort] = useState(initialPort);
+  const [ipVersion, setIpVersion] = useState<IPVersion>("4");
 
   const userNameError = useMemo(() => {
     if (username?.length === 0) return tRemote("usernameCannotBeEmpty");
@@ -64,9 +69,10 @@ export const SSHCredentialsModal = ({ open, onOpenChange, peer }: Props) => {
   const openSSHWindow = () => {
     const encodedUsername = encodeURIComponent(username.trim());
     const encodedPort = encodeURIComponent(port.trim());
+    const ipVersionParam = ipVersion === "6" ? "&ip_version=6" : "";
 
     window.open(
-      `/peer/ssh?id=${peer.id}&user=${encodedUsername}&port=${encodedPort}`,
+      `/peer/ssh?id=${peer.id}&user=${encodedUsername}&port=${encodedPort}${ipVersionParam}`,
       "_blank",
       "noopener,noreferrer,width=800,height=450,left=100,top=100,location=no,toolbar=no,menubar=no,status=no",
     );
@@ -93,7 +99,9 @@ export const SSHCredentialsModal = ({ open, onOpenChange, peer }: Props) => {
                 placeholder={"root"}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                customSuffix={`@${peer.ip}`}
+                customSuffix={`@${
+                  ipVersion === "6" && peer.ipv6 ? peer.ipv6 : peer.ip
+                }`}
                 data-1p-ignore
                 autoComplete={"off"}
                 error={userNameError}
@@ -122,6 +130,17 @@ export const SSHCredentialsModal = ({ open, onOpenChange, peer }: Props) => {
                 }
               />
             </div>
+          </div>
+          <div>
+            <Label>IP Version</Label>
+            <HelpText>
+              The IP version used to connect to the remote host.
+            </HelpText>
+            <IPVersionSelect
+              value={ipVersion}
+              onChange={setIpVersion}
+              hasIPv6={!!peer.ipv6}
+            />
           </div>
         </div>
 

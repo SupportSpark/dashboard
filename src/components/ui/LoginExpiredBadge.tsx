@@ -1,7 +1,7 @@
 import Badge from "@components/Badge";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@components/Tooltip";
+import { Clock } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { AlertTriangle } from "lucide-react";
 
 type Props = {
   loginExpired: boolean;
@@ -12,8 +12,8 @@ export default function LoginExpiredBadge({ loginExpired }: Props) {
   return loginExpired ? (
     <Tooltip delayDuration={1}>
       <TooltipTrigger>
-        <Badge variant={"red"} className={"px-2"}>
-          <AlertTriangle size={12} />
+        <Badge variant={"yellow"} className={"px-2"}>
+          <Clock size={12} />
           {t("loginRequired")}
         </Badge>
       </TooltipTrigger>

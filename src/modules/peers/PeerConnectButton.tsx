@@ -4,12 +4,10 @@ import {
   DropdownMenuTrigger,
 } from "@components/DropdownMenu";
 import FullTooltip from "@components/FullTooltip";
-import { getOperatingSystem } from "@hooks/useOperatingSystem";
 import { IconChevronDown } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import * as React from "react";
 import { usePeer } from "@/contexts/PeerProvider";
-import { OperatingSystem } from "@/interfaces/OperatingSystem";
 import { RDPButton } from "@/modules/remote-access/rdp/RDPButton";
 import { SSHButton } from "@/modules/remote-access/ssh/SSHButton";
 import { cn } from "@utils/helpers";
@@ -18,10 +16,6 @@ export const PeerConnectButton = () => {
   const t = useTranslations("peers");
   const { peer } = usePeer();
   const isConnected = peer.connected;
-  const os = getOperatingSystem(peer?.os);
-  const isMobile = os === OperatingSystem.ANDROID || os === OperatingSystem.IOS;
-
-  if (isMobile) return;
 
   return isConnected ? (
     <>

@@ -570,7 +570,9 @@ export default {
     editPeerIPv6ErrorMessage:
       "Please enter a valid IPv6 address, e.g., fd00:1234::1",
     remoteAccess: "Remote Access",
-    remoteAccessDescription: "Connect directly to this peer via SSH or RDP.",
+    remoteAccessDescription: "Connect directly to this peer via {methods}.",
+    sshPolicyRequiredNow:
+      "SSH requires an explicit access control policy to allow SSH connections to this machine.",
     domainName: "Domain Name",
     hostname: "Hostname",
     operatingSystemLabel: "Operating System",
@@ -7122,9 +7124,13 @@ export default {
     elevatedPrompt: "these commands in an elevated prompt",
     asRoot: "these commands as root",
     sshDesktopStep:
-      "If you are using NetBird via the Desktop Client, click on the NetBird tray icon, go to <settings>Settings</settings> and click <allowSsh>Allow SSH</allowSsh>. If you want to enable Root Login go to <advanced>Settings > Advanced Settings</advanced> and enable SSH Root Login under the SSH tab.",
+      "If you are using NetBird via the Desktop Client, click on the NetBird tray icon, open <settings>Settings</settings> and turn on <allowSsh>Enable SSH Server</allowSsh> on the <ssh>SSH</ssh> tab. To log in as {who}, enable <allowRoot>Allow Root Login</allowRoot> on the same tab.",
+    sshAndroidStep:
+      "If you are using NetBird on Android, open the app, tap <settings>Settings</settings>, then <advanced>Advanced</advanced> and turn on <enableSsh>Enable SSH Server</enableSsh>.",
+    asAdministrator: "an administrator",
+    asRootLogin: "root",
     sshConfirmStep:
-      "Once the NetBird SSH server is allowed on the client, click <confirm>Confirm & Enable</confirm> below to finish the setup.",
+      "Once the NetBird SSH server is enabled on the client, click <confirm>Finish Setup</confirm> below to complete the setup.",
   },
   search: {
     searchPlaceholder: "Search...",
@@ -7436,5 +7442,97 @@ export default {
     },
     yes: "Yes",
     no: "No",
+  },
+  vnc: {
+    connectToPeerViaVnc: "Connect to {ip} via VNC",
+    server: "Server",
+    serverNetBirdHelp:
+      "Built into the client. Authenticated, and the peer''s user is asked to approve.",
+    serverExternalHelp:
+      "Requires a VNC server already running on the peer. Not authenticated by NetBird, and its user is not asked to approve.",
+    external: "External",
+    serverNotEnabledHelp:
+      "Not enabled on this peer. Turn it on with netbird up --allow-server-vnc.",
+    serverUnsupportedHelp: "Not available on this peer''s operating system.",
+    portHelp: "The port the VNC server listens on.",
+    session: "Session",
+    sessionHelp: "Attach to the screen in use, or start a new desktop.",
+    currentScreen: "Current screen",
+    newDesktop: "New desktop",
+    user: "User",
+    userHelp: "The account to start the desktop as.",
+    ipVersion: "IP Version",
+    ipVersionHelp: "The IP version used to reach the peer.",
+    ipVersionAutomatic: "Automatic",
+    passwordTitle: "VNC Password",
+    passwordDescription: "{peer} on port {port}",
+    passwordRejected: "The server rejected that password.",
+    passwordStale: "The server stopped waiting. Reconnect to try again.",
+    password: "Password",
+    passwordHelp:
+      "The external VNC server is asking for a password. It is set on the server, not your NetBird account.",
+    dragToReposition: "Drag to reposition",
+    externalBadgeLabel: "External VNC",
+    externalBadgeTooltip:
+      "External VNC server. Not authenticated by NetBird, and the peer''s user was not asked to approve this session.",
+    viewOnly: "View-only",
+    viewOnlyTooltip:
+      "The host granted view-only access. You can see the screen but cannot send input.",
+    sendCtrlAltDelTooltip: "Send Ctrl+Alt+Del to remote machine",
+    paste: "Paste",
+    pasteTooltip:
+      "Paste host clipboard into remote machine by typing the text (works on login screens too)",
+    remoteCursor: "Remote cursor",
+    remoteCursorTooltip:
+      "Show the remote user''s cursor (useful for remote support and view-only scenarios)",
+    endSession: "End session",
+    noPermissionTooltip:
+      "You do not have permission to launch a VNC session. Please contact your administrator.",
+    peerOfflineTooltip: "This peer is offline and cannot be accessed via VNC.",
+    unsupportedTooltip:
+      "NetBird''s VNC server is not available on this operating system. An external server can still be used.",
+    notEnabledTooltip:
+      "NetBird''s VNC server is not enabled on this peer. Enable it with <code>netbird up --allow-server-vnc</code>, or use an external server.",
+    peerLoadError: "Could not load this peer.",
+    peerLoadErrorHelp:
+      "Reload the window, or close it and try again from the dashboard.",
+    noPeerSelected: "No peer selected.",
+    noPeerSelectedHelp:
+      "Open the VNC viewer from a peer in the dashboard, or close this window.",
+    requestingTemporaryAccess: "Requesting temporary peer access…",
+    bringingUpOverlay: "Bringing up NetBird overlay…",
+    connectingToServer: "Connecting to VNC server…",
+    connectingToServerApproval:
+      "Connecting to VNC server… the peer may be prompting its user for approval.",
+    couldNotConnectToNetBird: "Could not connect to NetBird.",
+    vncSessionKeysUnavailable:
+      "The VNC session keys could not be obtained. The NetBird client may not support VNC.",
+    rejectAuthForbidden: "You are not allowed to connect to this peer.",
+    rejectSessionError: "Could not start the virtual session on the peer.",
+    rejectCapturerError: "The peer cannot capture its screen.",
+    rejectUnsupported: "This action is not supported on the peer''s platform.",
+    rejectBadRequest: "The connection request was rejected by the peer.",
+    rejectNoConsoleUser: "Nobody is signed in on the peer.",
+    rejectApprovalDenied: "The peer''s user declined the connection request.",
+    rejectApprovalTimeout:
+      "The peer''s user did not answer the connection request in time.",
+    rejectApprovalUnavailable:
+      "The connection request could not be shown to the peer''s user. Make sure the NetBird UI is running on the peer.",
+    rejectNoApprover:
+      "Approval prompt could not be delivered. Make sure the NetBird UI is running on the peer.",
+    errPeerDidNotRespondOnPort: "The peer did not respond on port {port}.",
+    errPeerDidNotRespond: "The peer did not respond.",
+    errNothingListeningOnPort:
+      "Nothing is listening on port {port} on the peer.",
+    errNothingListening: "Nothing is listening on the peer.",
+    errPeerUnreachable: "Could not reach the peer. It may be offline.",
+    errCouldNotConnect: "Could not connect to the peer.",
+    errSessionRejected: "The peer rejected the session request.",
+    errTransportLost: "The peer stopped responding. Connection lost.",
+    errConnectionLostUnexpected: "VNC connection lost unexpectedly.",
+    errConnectTimeout:
+      "VNC connection timed out. The peer may be unreachable or restarting.",
+    errUnsupportedCredentials:
+      "This VNC server asked for credentials the viewer cannot supply ({types}).",
   },
 };

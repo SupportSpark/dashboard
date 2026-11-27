@@ -11,7 +11,6 @@ import {
 import FullTooltip from "@components/FullTooltip";
 import InlineLink from "@components/InlineLink";
 import { notify } from "@components/Notification";
-import { getOperatingSystem } from "@hooks/useOperatingSystem";
 import { IconInfoCircle } from "@tabler/icons-react";
 import {
   CheckCircle2,
@@ -35,8 +34,10 @@ import { useDialog } from "@/contexts/DialogProvider";
 import { OperatingSystem } from "@/interfaces/OperatingSystem";
 import { ExitNodeDropdownButton } from "@/modules/exit-node/ExitNodeDropdownButton";
 import { useIntegrations } from "@/modules/integrations/edr/useIntegrations";
+import { isSSHSupportedOnOS } from "@/modules/remote-access/osSupport";
 import { RDPButton } from "@/modules/remote-access/rdp/RDPButton";
 import { SSHButton } from "@/modules/remote-access/ssh/SSHButton";
+import { VNCButton } from "@/modules/remote-access/vnc/VNCButton";
 
 export default function PeerActionCell() {
   const { peer, deletePeer, update, toggleSSH, setSSHInstructionsModal } =
@@ -127,21 +128,15 @@ export default function PeerActionCell() {
   const showRevokeBypass = isBypassed && canBypass;
   const showApprovalGroup = showApprove || showBypass || showRevokeBypass;
 
+  const isSSHSupported = isSSHSupportedOnOS(peer?.os);
+
   const showSSHButton = useMemo(() => {
+    if (!isSSHSupported) return false;
     const isClientSSHEnabled = peer?.local_flags?.server_ssh_allowed;
     const isDashboardSSHEnabled = peer?.ssh_enabled;
     if (isDashboardSSHEnabled) return true;
     return !isClientSSHEnabled;
-  }, [peer]);
-
-  // The Connect column previously hosted SSH / RDP entry points. We
-  // fold those into the action menu — gated on a non-mobile, online
-  // peer — so the table loses a column and the connect affordance is
-  // one click away inside the three-dot menu.
-  const peerOs = getOperatingSystem(peer?.os);
-  const isMobile =
-    peerOs === OperatingSystem.ANDROID || peerOs === OperatingSystem.IOS;
-  const showRemoteAccessItems = !isMobile && !!peer.connected;
+  }, [peer, isSSHSupported]);
 
   const toggleLoginExpiration = async () => {
     const state = peer.login_expiration_enabled
@@ -258,11 +253,12 @@ export default function PeerActionCell() {
             </>
           )}
 
-          {showRemoteAccessItems && (
+          {peer.connected && (
             <>
               <DropdownMenuSeparator />
               <SSHButton peer={peer} isDropdown={true} />
               <RDPButton peer={peer} isDropdown={true} />
+              <VNCButton peer={peer} isDropdown={true} />
             </>
           )}
 

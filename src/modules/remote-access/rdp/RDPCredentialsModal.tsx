@@ -1,30 +1,36 @@
-import * as React from "react";
+import Button from "@components/Button";
+import { Callout } from "@components/Callout";
+import HelpText from "@components/HelpText";
+import InlineLink from "@components/InlineLink";
+import { Input } from "@components/Input";
+import { Label } from "@components/Label";
 import { useTranslations } from "next-intl";
-import { useCallback, useMemo, useState } from "react";
 import { Modal, ModalContent, ModalFooter } from "@components/modal/Modal";
 import ModalHeader from "@components/modal/ModalHeader";
-import { Peer } from "@/interfaces/Peer";
+import Paragraph from "@components/Paragraph";
+import Separator from "@components/Separator";
 import { getOperatingSystem } from "@hooks/useOperatingSystem";
-import { OperatingSystem } from "@/interfaces/OperatingSystem";
+import { IconLoader2 } from "@tabler/icons-react";
 import {
   ChevronsLeftRightEllipsis,
   ExternalLinkIcon,
   KeyRoundIcon,
   MonitorIcon,
+  TriangleAlertIcon,
   User2,
 } from "lucide-react";
-import Separator from "@components/Separator";
-import Paragraph from "@components/Paragraph";
-import InlineLink from "@components/InlineLink";
-import Button from "@components/Button";
-import { Label } from "@components/Label";
-import HelpText from "@components/HelpText";
-import { Input } from "@components/Input";
+import * as React from "react";
+import { useCallback, useMemo, useState } from "react";
+import { OperatingSystem } from "@/interfaces/OperatingSystem";
+import { Peer } from "@/interfaces/Peer";
+import {
+  type IPVersion,
+  IPVersionSelect,
+} from "@/modules/remote-access/IPVersionSelect";
 import {
   RDP_DOCS_LINK,
   RDPCredentials,
 } from "@/modules/remote-access/rdp/useRemoteDesktop";
-import { IconLoader2 } from "@tabler/icons-react";
 
 type Props = {
   open: boolean;
@@ -32,6 +38,7 @@ type Props = {
   onConnect?: (credentials: RDPCredentials) => void;
   error?: string;
   loading?: boolean;
+  initialIpVersion?: string | null;
 };
 
 export const RDPCredentialsModal = ({
@@ -41,6 +48,7 @@ export const RDPCredentialsModal = ({
   onConnect,
   error,
   loading,
+  initialIpVersion,
 }: Props) => {
   const tcommon = useTranslations("common");
   const t = useTranslations("remoteAccess");
@@ -52,6 +60,11 @@ export const RDPCredentialsModal = ({
   const [password, setPassword] = useState("");
 
   const [port, setPort] = useState("3389");
+  // Anything the URL carried other than a usable "6" falls back to "4", so the
+  // state is always one of the two the select and the credentials accept.
+  const [ipVersion, setIpVersion] = useState<IPVersion>(
+    initialIpVersion === "6" && peer.ipv6 ? "6" : "4",
+  );
 
   const userNameError = useMemo(() => {
     if (username?.length === 0) return t("usernameCannotBeEmpty");
@@ -97,8 +110,9 @@ export const RDPCredentialsModal = ({
       password,
       domain: parsedDomain,
       port: Number(port),
+      ipVersion,
     });
-  }, [hasAnyError, onConnect, username, password, port]);
+  }, [hasAnyError, onConnect, username, password, port, ipVersion]);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
@@ -128,16 +142,9 @@ export const RDPCredentialsModal = ({
           }}
         >
           {error && (
-            <div className={"bg-red-50 border border-red-200 rounded-md p-4"}>
-              <div
-                className={
-                  "flex items-center gap-2 text-red-800 font-medium mb-1"
-                }
-              >
-                {tcommon("error")}
-              </div>
-              <p className={"text-sm text-red-700"}>{error}</p>
-            </div>
+            <Callout variant={"error"} icon={<TriangleAlertIcon size={14} />}>
+              {error}
+            </Callout>
           )}
           <div>
             <Label>{tcommon("usernameAndPassword")}</Label>
@@ -195,6 +202,17 @@ export const RDPCredentialsModal = ({
                   className={"text-nb-gray-300"}
                 />
               }
+            />
+          </div>
+          <div>
+            <Label>IP Version</Label>
+            <HelpText>
+              The IP version used to connect to the remote host.
+            </HelpText>
+            <IPVersionSelect
+              value={ipVersion}
+              onChange={setIpVersion}
+              hasIPv6={!!peer.ipv6}
             />
           </div>
         </form>

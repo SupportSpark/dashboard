@@ -1,8 +1,7 @@
 "use client";
 
-import { notify } from "@components/Notification";
+import { sendErrorNotification } from "@/modules/remote-access/errorNotification";
 import FullScreenLoading from "@components/ui/FullScreenLoading";
-import { IconCircleX } from "@tabler/icons-react";
 import useFetchApi from "@utils/api";
 import { Loader2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -25,7 +24,7 @@ import {
 import { cn } from "@utils/helpers";
 
 export default function RDPPage() {
-  const { peerId } = useRDPQueryParams();
+  const { peerId, ipVersion } = useRDPQueryParams();
 
   const {
     data: peer,
@@ -36,7 +35,7 @@ export default function RDPPage() {
   return (
     <div className={"w-screen h-screen overflow-hidden fixed inset-0"}>
       {peerId && peer && !isLoading ? (
-        <RDPSession key={peer.id} peer={peer} />
+        <RDPSession key={peer.id} peer={peer} ipVersion={ipVersion} />
       ) : (
         <FullScreenLoading />
       )}
@@ -46,9 +45,10 @@ export default function RDPPage() {
 
 type Props = {
   peer: Peer;
+  ipVersion: string | null;
 };
 
-function RDPSession({ peer }: Props) {
+function RDPSession({ peer, ipVersion }: Props) {
   const client = useNetBirdClient();
   const t = useTranslations("remoteAccess");
   const [isNetBirdConnecting, setIsNetBirdConnecting] = useState(false);
@@ -57,19 +57,13 @@ function RDPSession({ peer }: Props) {
   const [credentials, setCredentials] = useState<RDPCredentials | null>(null);
   const connected = useRef(false);
 
+  // Dial the IPv6 address when IPv6 was selected, IPv4 otherwise.
+  const rdpHost =
+    credentials?.ipVersion === "6" && peer.ipv6 ? peer.ipv6 : peer.ip;
+
   useEffect(() => {
     document.title = `${peer.name} - ${peer.ip} - RDP`;
   }, [peer.ip, peer.name, connected, rdp]);
-
-  const sendErrorNotification = (title: string, message: string) => {
-    notify({
-      title: title,
-      description: message,
-      icon: <IconCircleX size={24} />,
-      backgroundColor: "bg-red-500",
-      duration: 10000,
-    });
-  };
 
   /**
    * Reset the RDP session state but keep the NetBird client connected,
@@ -135,7 +129,7 @@ function RDPSession({ peer }: Props) {
     if (!credentials) return;
     try {
       const result = await rdp.connect({
-        hostname: peer.ip,
+        hostname: rdpHost,
         port: credentials.port,
         username: credentials.username,
         password: credentials.password,
@@ -154,7 +148,7 @@ function RDPSession({ peer }: Props) {
       setCredentialsModal(true);
       await reset();
     }
-  }, [credentials, peer.ip, rdp, reset]);
+  }, [credentials, rdpHost, rdp, reset]);
 
   /**
    * Establish RDP session when NetBird connection is ready
@@ -224,6 +218,7 @@ function RDPSession({ peer }: Props) {
         peer={peer}
         onConnect={connect}
         loading={isLoading}
+        initialIpVersion={ipVersion}
       />
 
       {/* Certificate Modal */}
